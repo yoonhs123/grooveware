@@ -5,6 +5,6 @@
  
 <div class="container body-container">
     <div class="inner-page">
-		홈 화면 입니다. 태겸수정
+		홈 화면 입니다. 태겸수정 123123
     </div>
 </div>
