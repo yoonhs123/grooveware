@@ -2,7 +2,7 @@
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
+ 
 <div class="container-fluid">
     <ul class="nav justify-content-center p-3">
         <li class="nav-item"><a class="text-reset" href="#">SPRING 정책 및 약관</a></li>
