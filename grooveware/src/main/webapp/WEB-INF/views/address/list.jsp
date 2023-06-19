@@ -49,7 +49,7 @@
                   <option value="all" ${condition == "all" ? "selected='selected'" : ""}>제목+내용</option>
                   <option value="name" ${condition == "name" ? "selected='selected'" : ""}>이름</option>
                 </select>
-                <input type="text" name="keyword" value="${keyword}" class="form-control" placeholder="검색어를 입력하세요">
+                <input type="text" name="keyword" value="${keyword}" class="addInput" placeholder="검색어를 입력하세요">
   				  <button type="button" class="btn" onclick="searchList();">검색</button>
  		 	</div>
             </form>

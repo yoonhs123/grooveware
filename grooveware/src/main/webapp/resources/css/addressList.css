@@ -40,7 +40,7 @@
 	line-height: 15px;
 	background-color: white;
 }
-input[type=text]{
+.addInput{
     width: 300px;
     height: 23px;
 }
