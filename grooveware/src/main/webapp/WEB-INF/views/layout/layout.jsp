@@ -21,7 +21,6 @@
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/login.css" type="text/css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/paginate.css" type="text/css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/addressList.css" type="text/css">
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/core.css" type="text/css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/approval.css" type="text/css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css" type="text/css">
 	
