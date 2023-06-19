@@ -2,12 +2,12 @@
 
 
 /* board */
-.board-insa { width: 100%; }
+.board-insaManage-home { width: 100%; }
 
 .table-list thead > tr { background: #f8f9fa; }
 .table-list th, .table-list td { text-align: center; }
 
-.btn {
+.btn-insaManage-home {
 	color: black;
 	border: 1px solid #999999;
 	padding: 5px 10px;
@@ -19,7 +19,7 @@
 	background-color: white;
 }
 
-input[name=insaManage]{
+.insaManageHome input[type=text]{
     width: 200px;
     height: 23px;
 }
