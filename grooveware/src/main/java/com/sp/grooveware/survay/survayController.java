@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller("survay.survayController")
 public class survayController {
-	@RequestMapping(value="survay", method=RequestMethod.GET)
+	@RequestMapping(value="/survay", method=RequestMethod.GET)
 	public String method() {
 		return ".survay.list";
 	}
