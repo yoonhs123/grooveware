@@ -42,7 +42,7 @@
           </td>
           <td align="right">
             <form name="searchForm" action="${pageContext.request.contextPath}/" method="post">
-              <div class="search-form">
+              <div class="address-select">
                 <select name="condition" class="form-select">
                   <option value="subject" ${condition == "subject" ? "selected='selected'" : ""}>제목</option>
                   <option value="content" ${condition == "content" ? "selected='selected'" : ""}>내용</option>
