@@ -28,7 +28,7 @@
 	                </div>
                        
                        <div class="d-grid">
-                           <button type="button" class="btn btn-lg btn-primary" onclick="location.href='${pageContext.request.contextPath}/';">메인화면으로 이동 <i class="bi bi-arrow-counterclockwise"></i> </button>
+                           <button type="button" class="btn btn-lg btn-primary" onclick="location.href='${pageContext.request.contextPath}/loginForm';">메인화면으로 이동 <i class="bi bi-arrow-counterclockwise"></i> </button>
                        </div>
                 </div>
             </div>
