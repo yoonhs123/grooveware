@@ -2,7 +2,7 @@
 
 
 /* board */
-.board { padding: 40px; width: 100%; }
+.board-insa { width: 100%; }
 
 .table-list thead > tr { background: #f8f9fa; }
 .table-list th, .table-list td { text-align: center; }

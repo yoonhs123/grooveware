@@ -35,7 +35,7 @@
         </ul>
     </div>
    <div class="right-contentbody">
-   		<div class="board">
+   		<div class="board-insa">
    			<div class="title_container">
    				<table class="table" style="margin-bottom: 20px">
    					<tr>
