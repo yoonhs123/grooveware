@@ -48,7 +48,7 @@
 									<option value="dept"  ${condition == "dept" ? "selected='selected'" : ""} > 부서 </option>
 									<option value="position"  ${condition == "position" ? "selected='selected'" : 	""} > 직위 </option>
 								</select>
-								<input type="text" name="keyword" value="" class="form-control">
+								<input name="insaManage" type="text" name="keyword" value="" class="form-control">
 								<button type="button" class="btn" onclick="searchList();">검색</button>
 							</form>
 						</td>

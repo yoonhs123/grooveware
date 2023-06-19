@@ -19,7 +19,7 @@
 	background-color: white;
 }
 
-input[type=text]{
+input[name=insaManage]{
     width: 200px;
     height: 23px;
 }
