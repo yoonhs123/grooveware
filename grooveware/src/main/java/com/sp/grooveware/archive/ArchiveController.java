@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller("arch.archiveController")
 public class ArchiveController {
 	 
-	@RequestMapping(value="/archive", method=RequestMethod.GET)
+	@RequestMapping(value="archive", method=RequestMethod.GET)
 	public String method() {
-		return ".archiveLayout";
+		return ".archive.list";
 	}
 }

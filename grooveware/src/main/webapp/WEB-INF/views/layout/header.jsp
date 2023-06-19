@@ -6,7 +6,7 @@
 <header> 
       <ul class="main-menu">
          
-         <li style="width: 250px; color: white; font-weight: bold; font-size : 18px;"> GROOVEWARE </li>
+         <li style="width: 230px; color: white; font-weight: bold; font-size : 18px;"> GROOVE WARE </li>
          
          <li><a href="#">전자결재</a></li>
          <li><a href="#">인사정보</a></li>
