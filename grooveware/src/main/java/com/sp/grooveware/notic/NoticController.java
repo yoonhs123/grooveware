@@ -1,13 +1,14 @@
-package com.sp.grooveware.survay;
+package com.sp.grooveware.notic;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-@Controller("survay.survayController")
-public class survayController {
-	@RequestMapping(value="survay", method=RequestMethod.GET)
+@Controller("arch.noticController")
+public class NoticController {
+	@RequestMapping(value="notic", method=RequestMethod.GET)
 	public String method() {
-		return ".survay.list";
+		return ".notic.list";
 	}
+
 }
