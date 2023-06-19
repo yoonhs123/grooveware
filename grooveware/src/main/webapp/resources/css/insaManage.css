@@ -19,7 +19,7 @@
 	background-color: white;
 }
 
-.insaManageHome input[type=text]{
+.insaManageHome {
     width: 200px;
     height: 23px;
 }
