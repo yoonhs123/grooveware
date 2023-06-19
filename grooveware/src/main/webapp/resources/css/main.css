@@ -57,7 +57,7 @@ li, ul {
 
 .main-menu li:first-child {
    display : flex;
-   align-items : ;
+   align-items : center;
    justify-content: center;
    width: 150px;
    
@@ -101,8 +101,7 @@ a {
 
 
 .left-side-bar ul > li > a:hover {
-    color: white;
-    background-color: green;
+    background-color: #efefef;
 }
 
 .left-side-bar ul > li > a:first-child {
