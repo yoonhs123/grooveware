@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
  
-<header>
+<header> 
       <ul class="main-menu">
          
          <li style="width: 250px; color: white; font-weight: bold; font-size : 18px;"> GROOVEWARE </li>
