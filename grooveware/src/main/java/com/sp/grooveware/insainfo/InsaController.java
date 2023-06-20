@@ -9,6 +9,6 @@ public class InsaController {
 	 
 	@RequestMapping(value="/insa", method=RequestMethod.GET)
 	public String method() {
-		return ".insaInfoLayout";
+		return ".insa.home";
 	}
 }
