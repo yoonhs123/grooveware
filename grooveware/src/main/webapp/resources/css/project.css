@@ -1,0 +1,31 @@
+@charset "UTF-8";
+
+
+.pj {
+	padding: 50px;
+	display: flex;
+	flex-direction : column;
+	justify-content: center;
+	position: relative;
+	top:50px;
+	left:50px;
+	text-align : center;
+}
+
+.no_pj_img{
+	
+}
+
+.no_pj_alert{
+	font-size : 50px;
+	padding: 20px;
+}
+
+.no_pj_ment{
+	font-size : 30px;
+	padding: 10px;
+}
+
+.no_pj_button{
+	padding: 50px;
+}
