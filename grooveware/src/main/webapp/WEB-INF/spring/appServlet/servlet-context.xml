@@ -72,5 +72,19 @@
         </beans:property>
         <beans:property name="defaultErrorView" value=".error.error"/>
     </beans:bean>
+    
+    <!-- Interceptor 설정 -->
+    <interceptors>
+        <interceptor>
+            <mapping path="/**"/>
+            <!-- 제외 -->
+            <exclude-mapping path="/"/>
+            <exclude-mapping path="/resources/**"/>
+            <exclude-mapping path="/member/login"/>
+            <exclude-mapping path="/member/logout"/>
+            <beans:bean class="com.sp.grooveware.member.LoginCheckInterceptor"/>
+        </interceptor>
+    </interceptors>	 
+    
 
 </beans:beans>

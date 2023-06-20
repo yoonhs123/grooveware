@@ -7,12 +7,12 @@
 <tiles-definitions>
 
 	<!-- 로그인 레이아웃 -->
-	<definition name=".loginLayout" template="/WEB-INF/views/login/layout.jsp">
-	  	<put-attribute name="body" value="/WEB-INF/views/login/login.jsp" />
+	<definition name=".loginLayout" template="/WEB-INF/views/layout/loginLayout.jsp">
+	  	<put-attribute name="body" value="/WEB-INF/views/member/login.jsp" />
 	</definition>
 
 	<!-- 기준 레이아웃 -->
-	<definition name=".mainLayout" template="/WEB-INF/views/layout/layout.jsp">
+	<definition name=".mainLayout" template="/WEB-INF/views/layout/mainLayout.jsp">
 	  	<put-attribute name="header" value="/WEB-INF/views/layout/header.jsp" />
 	</definition>
 	
