@@ -54,7 +54,7 @@
 						</td>
    					</tr>
    				</table>
-   				<table class="table table-border table-list" style="padding-left : 30px;">
+   				<table class="table table-border table-list insa-home">
    					<thead>
    					<tr>
    						<th> 번호 </th>
