@@ -3,8 +3,22 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+<style>
+.dContainer{
+  width : 100%;
+  height: 100%;
+  margin: 2.4% auto;
+  display: grid;
+  grid-template-rows : repeat(2, 1fr);
+  grid-template-columns :  repeat(3, 30%);
+  grid-gap: 40px;
+  align-items: center;
+  justify-content: center;
+  
+  }
+</style>
 			<div>
-			<div class="item-container">
+			<div class="dContainer">
 
 				<div class="item">
 					<div class="desc-area commuteBox">

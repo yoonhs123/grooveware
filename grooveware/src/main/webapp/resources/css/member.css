@@ -1,28 +1,6 @@
 @charset "UTF-8";
 
-
-.item-container {
-	width: 100%;
-	display: grid;
-	grid-template-rows: repeat(2, 1fr);
-	grid-template-columns: repeat(3, 450px);
-	grid-gap: 30px;
-	padding: 40px;
-}
-
-.item {
-	cursor: pointer;
-	border: 1px solid #787878;
-	height: 390px;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	border-radius: 3px;
-	background-color: white;
-	overflow: hidden;
-	word-wrap: break-word;
-}
-
+ 
 .img-area img {
 	display: block;
 	width: 100%;

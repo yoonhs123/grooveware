@@ -38,6 +38,22 @@
   cursor: pointer;
 }
 
+.winnerList-container {
+	display: grid;
+	grid-gap: 5px;
+	grid-template-columns: repeat(4, auto);
+}
+
+.winnerList-container .item {
+   border: 1px solid #333;
+   border-radius: 3px;
+   padding: 5px;
+
+   display: flex;
+   align-items: center;
+   justify-content: center;
+}
+
 .right-contentbody2 {
     width: 85%;
     position: absolute;
@@ -279,8 +295,7 @@
 								<div class="leftBox">
 									<label>내용 </label>
 								</div>
-								<input type="text" name="content"
-									style="display: block; width: 100%; padding: 7px 5px; height: 400px;" />
+									<textarea name="content" id="ir1" class="form-control" style="width: 93%; padding: 7px 5px; height: 400px;">${dto.content}</textarea>
 							</div>
 						</div>
 					</div>
@@ -313,35 +328,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="board1">
-						<div class="file_container">
-							<div>
-								<div class="title3">
-									<span> 참조문서</span>
-								</div>
-							</div>
-							<div class="file_container2">
-								<div class="table table-border table-form">
-									<div>
-										<input type="file" name="selectFile" accept="image/*"
-											multiple="multiple" class="form-control1">
-									</div>
-									<div>
-										<div></div>
-										<div>
-											<div class="img-box">
-												<c:forEach var="vo" items="${listFile}">
-													<img
-														src="${pageContext.request.contextPath}/ / /${vo.imageFilename}"
-														onclick="deleteFile('${vo.fileNum}');">
-												</c:forEach>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
+ 
 					<div class="board4 confirm">
 						<button type="button" class="btn2">취소</button>
 						<button type="button" class="btn2">임시저장</button>
@@ -388,16 +375,32 @@ function setDefaultFont() {
 		<!-- 모달 -->
 		<div id="myModal" class="modal">
 		  <div class="modal-content">
-		    <span class="close">&times;</span>
-		    <h2>이름 검색</h2>
-		    <form id="searchForm">
-		      <input type="text" id="nameInput" placeholder="이름을 입력하세요">
-		      <button type="submit">검색</button>
-		    </form>
-		    <div id="resultContainer"  >
-		      <h3>결과</h3>
-		      <div id="searchResult"></div>
-		    </div>
+			<form name="nameForm" method="post">
+			<div style="border-bottom: 1px solid #ced4da; padding-bottom: 10px;">
+			    <span class="close">&times;</span>
+			    <h3 style="margin-bottom: 10px;">이름 검색</h3>
+			   <input type="text" id="nameInput" placeholder="이름을 입력하세요" class="form-control" style="height: 26px;">
+		      <button type="submit" class="btn">검색</button>
+			</div>					
+			<table class="table table-border table-form">
+				<tbody>
+					<tr>
+						<td height="50%">
+						 <input type="text" name="keyword" id="keyword" class="form-control1" style="height: 150px;">
+						</td>
+					</tr>
+					<tr>
+						<td align="right">
+							<input type="hidden" name="num" value="${dto.num}">
+							<input type="hidden" name="winnerNumber" value="${dto.winnerNumber}">
+							<input type="hidden" name="page" value="${page}">
+							<button type="button" class="btn">추가</button>
+							<button type="button" class="btn">삭제</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</form>
 		  </div>
 		</div>
 
