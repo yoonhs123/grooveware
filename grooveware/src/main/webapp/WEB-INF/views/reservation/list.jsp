@@ -28,7 +28,7 @@
         <tr>
           <td class="title">
             <td class="Rtitle">
-            <h3>&nbsp;&nbsp;회의실 상세</h3>
+            <h3>&nbsp;&nbsp;회의실 관리</h3>
           
           </td>
 		  </tr>

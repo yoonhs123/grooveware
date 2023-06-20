@@ -1,0 +1,30 @@
+﻿@charset "UTF-8";
+
+.r-list {
+	
+	width: 100%;
+    height: 100%;
+    background-color: #FFFFFF;
+    padding: 20px;
+
+}
+
+
+
+.btn {
+	color: black;
+	border: 1px solid #999999;
+	padding: 5px 10px;
+	border-radius: 4px;
+	font-weight: 500;
+	cursor: pointer;
+	font-size: 14px;
+	line-height: 15px;
+	background-color: white;
+}
+.addInput{
+    width: 300px;
+    height: 23px;
+}
+
+.address-select{ height: 23px;}
