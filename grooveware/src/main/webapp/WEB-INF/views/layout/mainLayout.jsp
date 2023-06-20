@@ -31,6 +31,7 @@
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/chat.css" type="text/css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/insaManageHolidayList.css" type="text/css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/community.css" type="text/css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/myInsa.css" type="text/css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/project.css" type="text/css">
 	
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/vendor/jquery/js/jquery.min.js"></script>
