@@ -35,7 +35,7 @@
         </ul>
     </div>
    <div class="right-contentbody">
-   		<div class="board">
+   		<div class="board-insaManage-home">
    			<div class="title_container">
    				<table class="table" style="margin-bottom: 20px">
    					<tr>
@@ -48,13 +48,13 @@
 									<option value="dept"  ${condition == "dept" ? "selected='selected'" : ""} > 부서 </option>
 									<option value="position"  ${condition == "position" ? "selected='selected'" : 	""} > 직위 </option>
 								</select>
-								<input type="text" name="keyword" value="" class="form-control">
-								<button type="button" class="btn" onclick="searchList();">검색</button>
+								<input type="text" name="keyword" value="" class="insaManageHome">
+								<button type="button" class="btn-insaManage-home" onclick="searchList();">검색</button>
 							</form>
 						</td>
    					</tr>
    				</table>
-   				<table class="table table-border table-list" style="padding-left : 30px;">
+   				<table class="table table-border table-list insa-home">
    					<thead>
    					<tr>
    						<th> 번호 </th>

@@ -1,13 +1,14 @@
-package com.sp.grooveware.survay;
+package com.sp.grooveware.survey;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-@Controller("survay.survayController")
-public class survayController {
-	@RequestMapping(value="survay", method=RequestMethod.GET)
+@Controller("survay.surveyController")
+public class surveyController {
+	@RequestMapping(value="/survey", method=RequestMethod.GET)
 	public String method() {
-		return ".survay.list";
+		return ".survey.list";
 	}
 }
+

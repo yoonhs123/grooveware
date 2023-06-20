@@ -2,12 +2,12 @@
 
 
 /* board */
-.board { padding: 40px; width: 100%; }
+.board-insaManage-home { width: 100%; }
 
 .table-list thead > tr { background: #f8f9fa; }
 .table-list th, .table-list td { text-align: center; }
 
-.btn {
+.btn-insaManage-home {
 	color: black;
 	border: 1px solid #999999;
 	padding: 5px 10px;
@@ -19,9 +19,13 @@
 	background-color: white;
 }
 
-input[type=text]{
+.insaManageHome {
     width: 200px;
     height: 23px;
+}
+
+.insa-home{
+	padding-left : 30px;
 }
 
 .form-select{ height: 23px;}

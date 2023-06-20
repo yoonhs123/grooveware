@@ -42,14 +42,14 @@
           </td>
           <td align="right">
             <form name="searchForm" action="${pageContext.request.contextPath}/" method="post">
-              <div class="search-form">
+              <div class="address-select">
                 <select name="condition" class="form-select">
                   <option value="subject" ${condition == "subject" ? "selected='selected'" : ""}>제목</option>
                   <option value="content" ${condition == "content" ? "selected='selected'" : ""}>내용</option>
                   <option value="all" ${condition == "all" ? "selected='selected'" : ""}>제목+내용</option>
                   <option value="name" ${condition == "name" ? "selected='selected'" : ""}>이름</option>
                 </select>
-                <input type="text" name="keyword" value="${keyword}" class="form-control" placeholder="검색어를 입력하세요">
+                <input type="text" name="keyword" value="${keyword}" class="addInput" placeholder="검색어를 입력하세요">
   				  <button type="button" class="btn" onclick="searchList();">검색</button>
  		 	</div>
             </form>
