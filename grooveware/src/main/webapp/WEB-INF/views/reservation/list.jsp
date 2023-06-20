@@ -3,12 +3,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+
+<!--  회의실 상세  -->
+
 <div class="left-side-bar">
       
         <ul>
             <li>
                  <a href="#">회의실</a>
-                <a href="#">&nbsp;회의실 예약</a>
+                <a href="#">&nbsp;회의실 리스트</a>
                 <a href="#">&nbsp;회의실 관리</a>
             <li>
             
@@ -24,7 +27,9 @@
       <table class="table" style="margin-bottom: 20px;">
         <tr>
           <td class="title">
+            <td class="Rtitle">
             <h3>&nbsp;&nbsp;회의실 상세</h3>
+          
           </td>
 		  </tr>
 		 </table> 
@@ -60,8 +65,8 @@
 	  </div>
 	   <div class="button-container">
     	<div style="float: right;">
-			<button class="btn blueBtn" type="button" onclick="#">등록</button>
-			<button class="btn blueBtn" type="button" onclick="#">취소</button>
+			<button class="blueBtn" type="button" onclick="#">등록</button>
+			<button class="blueBtn" type="button" onclick="#">취소</button>
 		</div>
 	  </div>
   	  </div>
@@ -69,7 +74,3 @@
 	</div>
 	</div>
 </div>
-  </main>
-			  
-	</div>
-	

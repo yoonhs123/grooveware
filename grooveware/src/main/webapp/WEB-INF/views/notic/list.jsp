@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+
 <div class="left-side-bar">
       
         <ul>
@@ -23,82 +24,82 @@
                 <a href="#">&nbsp;반려</a>
                 <a href="#">&nbsp;완료</a>
             <li>
-            <hr>
-             <li>
-                <a href="#">주소록</a>
-                <a href="#">&nbsp;공용 주소록</a>
-                <a href="#">&nbsp;직원 주소록</a>
-                <a href="#">&nbsp;휴지통</a>
-            <li>
         </ul>
     </div>
-  <div class="right-contentbody">
-  <div class="board">
-    <div class="title_container">
-      <table class="table" style="margin-bottom: 20px;">
-        <tr>
-          <td class="title">
-            <h3><span>|</span> 공지 사항 </h3>
-          </td>
-          <td align="right">
-            <form name="searchForm" action="${pageContext.request.contextPath}/" method="post">
-              <div class="address-select">
-                <select name="condition" class="form-select">
-                  <option value="subject" ${condition == "subject" ? "selected='selected'" : ""}>제목</option>
-                  <option value="content" ${condition == "content" ? "selected='selected'" : ""}>내용</option>
-                  <option value="all" ${condition == "all" ? "selected='selected'" : ""}>제목+내용</option>
-                  <option value="name" ${condition == "name" ? "selected='selected'" : ""}>이름</option>
-                </select>
-                <input type="text" name="keyword" value="${keyword}" class="addInput" placeholder="검색어를 입력하세요">
-  				  <button type="button" class="btn" onclick="searchList();">검색</button>
- 		 	</div>
-            </form>
-          </td>
-        </tr>
-      </table>
-
-      
-    </div>
-
-   <table class="notic-table">
-   
-  <thead>
-    <tr>
-      <!-- 테이블 헤더 셀들 -->
-        <th width="5%;">
-	    <input type="checkbox" name="chkAll" value="all"> 
-		</th>
-		<th width="5%"> 이름 </th>
-		<th> 사명 </th>
-		<th> 전화번호 </th>
-		<th> 이메일 </th>
-		<th> 직급 </th>
-		<th> 재직현황 </th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <!-- 테이블 내용 셀들 -->
-     
-      	<tr>
-      	        <th width="5%;">
-				<input type="checkbox" name="chkAll" value="all"> 
-		        </th> 
-			    <td>
-				 김자바
-				</td>					
-				<td>다수결주식회사</td>
-				<td>010-1234-5678</td>				
-				<td>dasugyeol@naver.com</td>
-				<td>대리</td>
-				<td>재직</td>
+		<div class="right-contentbody">
 		
-	     </tr>
-  </tbody>
-	</table>
+			<div class="notic-list">
+			
+				<div class="title_container">
+				<table class="table" style="margin-bottom: 20px;">
+					<tr>
+						<td class="title" > <h3><span>|</span> 공지사항</h3> 
+						</td>
+						
+					
+					
+				<td align="right" width="100">
+					<button type="button" class="btn" onclick="location.href='${pageContext.request.contextPath}/admin/noticeManage/write';">글올리기</button>
+				</td>
+						
+						
+						<td align="right">
+							<form name="searchForm" action="${pageContext.request.contextPath}/ " method="post">
+								<select name="condition" class="form-select">
+									<option value="all"  ${condition == "all" ? "selected='selected'" : ""} >제목+내용</option>
+									<option value="name"  ${condition == "name" ? "selected='selected'" : ""} >작성자</option>
+									<option value="reg_date"  ${condition == "reg_date" ? "selected='selected'" : ""} >등록일</option>
+									<option value="subject"  ${condition == "subject" ? "selected='selected'" : ""} >제목</option>
+									<option value="content"  ${condition == "content" ? "selected='selected'" : ""} >내용</option>
+								</select>
+								<input type="text" name="keyword" value="${keyword}" class="form-control">
+								<button type="button" class="btn" onclick="searchList();">검색</button>
+							</form>
+						</td>
+					</tr>
+				</table>
+			 </div>
+			
+			<table class="table table-border table-list" >
+				<thead >
+					<tr>
+						<th width="5%;">
+							<input type="checkbox" name="chkAll" value="all"> 
+						</th> 
+						<th> 번호 </th>
+						<th width="60%;"> 제목 </th>
+						<th> 작성자 </th>						
+						<th> 작성일 </th>
+						<th> 조회수 </th>
+						<th> 첨부 </th>
+					</tr>
+				</thead>
+				
+				<tbody> 
+					<c:forEach var="n" begin="1" end="9">
+						<tr>
+							<td>
+								<input type="checkbox" name="" value=" ">
+							</td>					
+							<td>1</td>
+							<td>
+								<a href=" ">22년도 상반기 영업 매출의 보고</a>
+							</td>
+							<td>김자바</td>
+							<td>2023-06-01</td>
+							<td>14</td>
+							<td></td>
+							
+							<td></td>
+						</tr>
+					</c:forEach>
+				</tbody>
+			</table>
 	
-  
-	<div class="page-navigation" style="width: 900px; margin: 0 auto;">${dataCount == 0 ? "등록된 게시물이 없습니다." : "<span>-123-</span>"}</div>
+			<div class="page-navigation" style="width: 900px; margin: 0 auto;">${dataCount == 0 ? "등록된 게시물이 없습니다." : paging} 1 2 3</div>
 	
-	</div>
-	</div>
+			</div>
+		</div>
+
+</body>
+</html>

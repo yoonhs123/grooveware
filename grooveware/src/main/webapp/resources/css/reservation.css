@@ -97,7 +97,17 @@
   cursor: pointer;
   display: flex;
   justify-content: left;
-  align-items: left;
   margin-top: 30px;
  }
+ 
+ 
 
+ 
+.Rtitle {
+	
+	border-radius: 10px;
+	background-color: white;
+	font-size: 20px;
+    font-weight: bold;
+	
+}
