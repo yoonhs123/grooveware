@@ -2,8 +2,7 @@
 <%@ page trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
- 
- 
+  
 <style>
 .modal {
   display: none;
@@ -80,7 +79,7 @@
 						</div>
 					</li>
 
-					<li><a href="#">문서함</a> <a href="#">&nbsp;내 문서</a> <a href="#">&nbsp;부서문서</a>
+					<li><a href="#">문서함</a> <a href="#">&nbsp;내 문서</a> <a href="#">&nbsp;부서 문서</a>
 						<a href="#">&nbsp;임시보관 문서</a> <a href="#">&nbsp;중요 문서</a>
 					<li>
 
@@ -355,24 +354,6 @@
 			</div>
 
 
-
-		<!-- 모달 -->
-		<div id="myModal" class="modal">
-		  <div class="modal-content">
-		    <span class="close">&times;</span>
-		    <h2>이름 검색</h2>
-		    <form id="searchForm">
-		      <input type="text" id="nameInput" placeholder="이름을 입력하세요">
-		      <button type="submit">검색</button>
-		    </form>
-		    <div id="resultContainer"  >
-		      <h3>결과</h3>
-		      <div id="searchResult"></div>
-		    </div>
-		  </div>
-		</div>
-
-
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/vendor/se2/js/service/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript">
 var oEditors = [];
@@ -403,3 +384,20 @@ function setDefaultFont() {
 }
 </script>
  
+
+		<!-- 모달 -->
+		<div id="myModal" class="modal">
+		  <div class="modal-content">
+		    <span class="close">&times;</span>
+		    <h2>이름 검색</h2>
+		    <form id="searchForm">
+		      <input type="text" id="nameInput" placeholder="이름을 입력하세요">
+		      <button type="submit">검색</button>
+		    </form>
+		    <div id="resultContainer"  >
+		      <h3>결과</h3>
+		      <div id="searchResult"></div>
+		    </div>
+		  </div>
+		</div>
+

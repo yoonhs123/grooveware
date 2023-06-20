@@ -57,11 +57,23 @@ input[type=text]{
 <div class="left-side-bar">
       
         <ul>
+			<li>
+				<div class="box-wrapper">
+					<div class="borderBox">
+						<a href="${pageContext.request.contextPath}/approval/write">문서작성</a>
+					</div>
+					<div class="borderBox">
+						<a>내문서</a>
+					</div>
+				</div>
+			</li>        
+        
             <li>
                 <a href="#">문서함</a>
                 <a href="#">&nbsp;내 문서</a>
                 <a href="#">&nbsp;부서 문서</a>
                 <a href="#">&nbsp;임시보관 문서</a>
+                <a href="#">&nbsp;중요 문서</a>
             <li>
             
             <hr>
@@ -82,7 +94,7 @@ input[type=text]{
 				<div class="title_container">
 				<table class="table" style="margin-bottom: 20px;">
 					<tr>
-						<td class="title" > <h2><span>|</span> 내문서</h2> 
+						<td class="title" > <h3><span>|</span> 내문서</h3> 
 						</td>
 						<td class="title" >
 								<select name="condition" class="form-select"> 
@@ -110,7 +122,7 @@ input[type=text]{
 					</tr>
 				</table>
 			 </div>
-			
+			<div>
 			<table class="table table-border table-list" >
 				<thead >
 					<tr>
@@ -145,6 +157,7 @@ input[type=text]{
 					</c:forEach>
 				</tbody>
 			</table>
+				</div>
 	
 			<div class="page-navigation" style="width: 900px; margin: 0 auto;">${dataCount == 0 ? "등록된 게시물이 없습니다." : paging} 1 2 3</div>
 	

@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+			<div>
 			<div class="item-container">
 
 				<div class="item">
@@ -22,7 +23,7 @@
 							<p class="title">출근하기</p>
 							<i class="fa-solid fa-circle-arrow-right fa-2xl"
 								style="float: right; width: 40px;"></i>
-							<p class="date">Have a nice day</p>
+							<p style="margin-bottom: 10px;">Have a nice day</p>
 						</div>
 					</div>
 				</div>
@@ -98,9 +99,11 @@
 									<div  class="minibox2">
 									<span>문서 #2342345</span>
 									<span style="text-align: right;">댓글 0 최고관리자 2023.06.05</span>
-									</div>								</div>
+									</div>								
+								</div>
 							</c:forEach>
 						</div>
 					</div>
 				</div>
+			</div>
 			</div>
