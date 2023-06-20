@@ -1,0 +1,377 @@
+@charset "UTF-8";
+
+
+/* table */
+.table { width: 100%; border-spacing: 0; border-collapse: collapse; }
+.table th, .table td { padding-top: 10px; padding-bottom: 10px; }
+
+.table-border thead > tr { border-top: 2px solid #212529; border-bottom: 1px solid #ced4da;  }
+.table-border tbody > tr { border-bottom: 1px solid #ced4da; }
+.table-border tfoot > tr { border-bottom: 1px solid #ced4da; }
+.td-border td { border: 1px solid #ced4da; }
+
+/* board */
+.board1 { width: 100%; margin-bottom: 50px; }
+
+.board2 {
+	margin: 20px auto;
+	width: 100%;
+}
+
+.board3 {
+	margin: 50px auto;
+	width: 100%;
+}
+.board4 {
+	margin: 50px auto;
+	width: 100%;
+	padding: 0px 40px 60px 60px
+}
+.title {
+	font-size: 16px;
+	font-weight: bold;
+	padding: 13px 0px 0px 10px;
+}
+
+.title2 {
+	font-size: 20px;
+	font-weight: bold;
+	padding: 13px 0;
+}
+ 
+.title3 {
+	font-size: 16px;
+	font-weight: bold;
+	padding: 13px 0;
+	margin-left: 8px;
+}
+
+ 
+.text_box2 {
+	font-size: 14px;
+	padding: 8px 0;
+}
+
+.title { font-size: 20px; font-weight: bold; padding: 13px 0; }
+
+
+/*table*/
+.table-list thead > tr { background: #f8f9fa; }
+.table-list th, .table-list td { text-align: center; }
+.table-list td:nth-child(5n+2) {  padding-left: 5px; }
+
+.table-list .num { width: 60px; color: #787878; }
+.table-list .subject { color: #787878; }
+.table-list .name { width: 100px; color: #787878; }
+.table-list .date { width: 100px; color: #787878; }
+.table-list .hit { width: 70px; color: #787878; }
+
+
+
+.btn {
+	color: black;
+	border: 1px solid #999999;
+	padding: 5px 10px;
+	border-radius: 4px;
+	font-weight: 500;
+	cursor: pointer;
+	font-size: 14px;
+	line-height: 15px;
+	background-color: white;
+}
+.input-control{
+    width: 300px;
+    height: 26px;
+}
+
+.form-select2{ height: 26px; margin-right: 10px; border-radius: 4px;}
+
+.btn2 {
+	color: black;
+	border: 1px solid #999999;
+	padding: 5px 10px;
+	border-radius: 4px;
+	font-weight: 500;
+	cursor: pointer;
+	font-size: 14px;
+	line-height: 15px;
+	background-color: white;
+	margin-right: 8px;
+	line-height: 20px;
+}
+
+.line_container {
+	width: 100%;
+	height: 150px;
+	border: 1px solid #999999;
+	border-radius: 5px;
+	padding: 12px 60px;
+	background-color: white;
+}
+
+.line_container2 {
+	width: 100%;
+	min-height: 800px;
+	border: 1px solid #999999;
+	border-radius: 5px;
+	background-color: white;
+	padding: 40px 60px;
+}
+
+.line_container3 {
+	width: 100%;
+	height: 150px;
+	border: 1px solid #999999;
+	border-radius: 5px;
+	background-color: white;
+	padding: 40px 60px;
+}
+
+.file_container {
+	width: 100%;
+	height: 250px;
+	border: 1px solid #999999;
+	border-radius: 5px;
+	padding: 12px 60px;
+	background-color: white;
+}
+
+.file_container2 {
+	width: 100%;
+	height: 150px;
+	border: 1px solid #999999;
+	border-radius: 5px;
+	padding: 12px 30px;
+	background-color: white;
+}
+
+.file_container3 {
+	width: 100%;
+	height: 150px;
+	border: 1px solid #999999;
+	border-radius: 5px;
+	padding: 12px 60px;
+	background-color: white;
+}
+
+.myForm input {
+	width: 100%;
+	padding: 7px 5px;
+}
+
+.form-control2 {
+	display: block;
+	width: 100%;
+	padding: 7px 5px;
+	height: 400px;
+}
+
+.form-control1 {
+	width: 100%;
+	padding: 7px 5px;
+}
+
+.ap_pBox {
+	margin-bottom: 20px;
+	margin-top: 5px;
+}
+ 
+.img_container {
+	background: #BDBDBD;
+	width: 40px;
+	height: 35px;
+	float: left;
+	border-radius: 70%;
+	overflow: hidden;
+	margin: 0px 30px 10px 0px;
+}
+
+.img_container2 {
+	width: 40px;
+	height: 35px;
+	float: left;
+	border-radius: 70%;
+	overflow: hidden;
+	margin: 0px 30px 10px 0px;
+}
+
+.img_container3 {
+	float: left;
+	margin: 10px 30px 10px 0px;
+}
+
+.text_box3 {
+	float: left;
+	margin-right: 20px;
+}
+
+.text_box4 {
+	float: left;
+	margin-right: 40px;
+}
+
+#gian {
+	margin-right: 10px;
+	width: 30px;
+	height: 16px;
+}
+
+#vacation {
+	margin-left: 15px;
+	margin-right: 10px;
+	width: 30px;
+	height: 16px;
+}
+
+
+.leftBox {
+	width: 45%;
+	float: left;
+	display: block;
+	margin-bottom: 5px;
+	font-weight: bold;
+}
+
+.left_10 {
+	float: left;
+	width: 10%
+}
+
+.right_10 {
+	float: right;
+	width: 10%
+}
+
+.confirm {
+	display: flex;
+    justify-content: center;
+}
+
+
+/*write-css*/
+
+#draft1 {
+	margin-right: 10px;
+	width: 30px;
+	height: 16px;
+}
+
+#draft2 {
+	margin-left: 15px;
+	margin-right: 10px;
+	width: 30px;
+	height: 16px;
+}
+
+
+/* 모달 스타일 */
+.modal {
+	display: none; /* 모달 초기에는 숨김 상태로 설정 */
+	position: fixed; /* 모달을 고정된 위치에 표시 */
+	z-index: 1; /* 모달을 다른 요소들보다 위에 표시 */
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto; /* 스크롤이 필요한 경우 스크롤을 허용 */
+	background-color: rgba(0, 0, 0, 0.4); /* 모달 배경색과 투명도 설정 */
+}
+
+.modal-content {
+	background-color: #fefefe;
+	margin: 15% auto; /* 모달을 수직, 수평 가운데로 정렬 */
+	padding: 50px;
+	border: 1px solid #888;
+	width: 30%;
+}
+
+.close {
+	color: #aaa;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
+}
+
+.close:hover, .close:focus {
+	color: black;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.left-menu ul>li>a {
+	display: block;
+	padding: 10px 10px 10px 30px;
+	white-space: nowrap;
+	margin-top: 3px;
+}
+
+.left-menu {
+    background: white;
+    width: 15%;
+    border: 1px solid black;
+    float: left; 
+    position: fixed;
+    height: 100%;
+    z-index: 998;
+    left: 0;
+    margin-left: 15%;
+}
+
+.left-menu ul>li>a:first-child {
+	font-weight: bold;
+	padding: 20px 10px 10px 30px;
+}
+
+.left-menu ul>li>a:last-child {
+	padding: 10px 10px 20px 30px;
+}
+
+.icon {
+	margin-right: 10px;
+	color: grey;
+}
+
+.horizontal-group {
+	display: flex;
+	flex-direction: row;
+}
+
+.horizontal-group a {
+	margin-right: 10px;
+}
+
+.horizontal-group a:last-child {
+	margin-right: 0;
+}
+
+.box-wrapper {
+	display: flex;
+	width: 100%;
+}
+
+.borderBox {
+	border: 1px solid gray;
+	padding: 5px;
+	width: 50%;
+	text-align: center;
+	line-height: 30px;
+	color: #4048a8;
+	font-weight: bold;
+	box-shadow: 0 0 0 1px white;
+}
+
+.box:last-child {
+	margin-right: 0;
+}
+
+.row {
+	display: flex;
+	flex-wrap: wrap;
+	margin-right: -15px;
+	margin-left: -15px;
+}
+ 
+.myForm label{	font-weight: bold; }
+.myForm span{	font-weight: bold; }
+
+.form-select{ height: 23px;}
