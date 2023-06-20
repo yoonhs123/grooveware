@@ -12,7 +12,7 @@ function removeBox(button) {
 }
 
 function addBox() {
-  const container = document.getElementById('box-container');
+  const container = document.getElementById('sbox-container');
 
   const newBox = document.createElement('div');
   newBox.className = 'box';
@@ -55,45 +55,36 @@ function addBox() {
           </li>
           </ul>
     </div>
- <div class="right-contentbody">
-		
-			<div class="board">
-				<div class="title_container">
-				<table class="table" style="margin-bottom: 20px;">
-					<tr>
-						<td class="title" > <h3><span>|</span> 설문문항작성</h3> 
-						</td>
-					</tr>
-				</table>
-			 </div>
-			<div class= "survay-main" >
+ <div class="right-contentbody">	 
+			<div class= "survey-main" >
 			 <div class= "top-box">
-			<table class="table table-border table-list" >
-			
-				<tbody> 
-						<tr>
+			 
+				<table class = "SurveyTable">	
+					
+				       <tr>
 							<td class="sBox">
-							<div class="titleBox">
+							<div class="SurveyTitle">
 								시작안내 문구			
-							
-							</div>
-								<input type="text" class="inputBox">
-									<button type="button" class="submitButton">파일첨부</button>
-							 </td>		
-						</tr>
-						<tr>
+						  </div>
+							<input type="text" class="SurveyBox">
+							<button type="button" class="SurveyButton">파일첨부</button>
+						  </td>		
+					  </tr>
+						
+						
+					   <tr>
+		                 <td class="sBox">
+							<div class="SurvayTitle">
+								질문 		
+						    </div>
+							<input type="text" class="qBox">		
+						  </td>		
+			          </tr>
+			      
+			        
+			           <tr>
 							<td class="sBox">
-							<div class="titleBox">
-								질문
-							
-							</div>
-								<input type="text" class="qBox">
-				
-							 </td>		
-						</tr>
-						<tr>
-							<td class="sBox">
-							<div class="titleBox">
+							<div class="SurveyTitle">
 								설문 문항 타입
 							
 							</div>
@@ -117,38 +108,43 @@ function addBox() {
 								
 							 </td>		
 						</tr>
- 
- 						<tr>
+	
+	                     <tr>
 							<td class="sBox">
-							<div class="titleBox">
+							<div class="SurveyTitle">
 								보기
 							</div>
-							<div id="box-container">
-							  <div class="box">
+							<div id="sbox-container">
+							  <div class="scBox">
 							    <input type="checkbox" class="round-checkbox">
-							    <input type="text" class="box-input" placeholder="문항  입력">
+							    <input type="text" class="scBox-input" placeholder="문항  입력">
 							    <button class="remove-btn" onclick="removeBox(this)">x</button>
 							  </div>
 							</div>
 							
-							<button class = "submitButton" onclick="addBox()">문항 추가</button>
+							<button class = "SurveyButton" onclick="addBox()">문항 추가</button>
 														
 							</td>
 						</tr>
+	
+				</table>			
 					
-							
-				</tbody>
-						
-			</table>
-			</div>
-			</div>
-			<div class = "bottom-box"> 
-			 <div class="button-container">
+	      	</div>
+	      	
+	      	</div>
+	      	
+	      	<div class = "bottom-box"> 	
+	      	<div class="button-container">
              <div style="float: right;">
             <button class="btn blueBtn" type="button" onclick="#">등록</button>
-            <button class="btn blueBtn" type="button" onclick="#">취소</button>
-          </div>
-			</div>
+            <button class="btn blueBtn" type="button" onclick="#">취소</button>     	
+	      	</div>
+	      	
+	      	</div>
+	      	
+	      	
+	      	
+	      	
 		</div>
 		</div>
-		</div>
+		

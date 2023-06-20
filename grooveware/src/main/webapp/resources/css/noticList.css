@@ -1,15 +1,22 @@
 ﻿
 /* SURVAY */
 
-.survay-main {
-
+.survey-main {
+	
     display: flex;
     width: 100%;
     height: 100%;
-    background-color: #E7E7E7;
+    background-color: #FFFFFF;
     border-collapse: collapse;
     border-radius: 10px;
     padding: 20px;
+    flex-direction: column; 
+
+}
+
+.SurveyTitle{
+margin: 20px 0px 20px 0px; 
+font-weight: bold;
 
 }
 
@@ -22,6 +29,7 @@
 }
 
 .bottom-box {
+  flex-direction: column; 
   flex: 0.1;
   display: flex;
   justify-content: center;
@@ -29,18 +37,19 @@
   padding: 10px;
 }
 
-
-.sBox{    
-	text-align: start;
-    padding-left: 15px;
+.SurveyBox {
+ 
+ height: 400px;
+ width: 400px;
+	
 }
 
-.titleBox{margin: 20px 0px 20px 0px; font-weight: bold;}
-.inputBox {
-    height: 80px;
-    width: 100%;
+.SurveyButton {
+	
+  float: right; 
+  margin-top: 20px;
+  
 }
-.submitButton{float: right; margin-top: 20px;}
 
 .qBox {
     width: 100%;
@@ -48,6 +57,16 @@
     text-align: start;
     padding-left: 15px;
 }
+
+.sBox{    
+	text-align: start;
+    padding-left: 15px;
+}
+
+
+.submitButton{float: right; margin-top: 20px;}
+
+
 .select {
   height: 10px;
   width: 5px;
@@ -71,7 +90,9 @@
   background-color: gray;
 }
 
-.box {
+
+
+.scBox {
   display: flex;
   align-items: center;
   margin-bottom: 10px;
@@ -87,7 +108,7 @@
    width: 29px;
 }
 
-.box-input {
+.scBox-input {
    width: 100%; 
    height: 40px;
    text-align: center;
