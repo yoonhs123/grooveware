@@ -1,6 +1,8 @@
 package com.sp.grooveware.member;
 
 public class MemberDTO {
+	
+	private String emp_no;
 	private String emp_name;
 	private String emp_pwd;
 	private String emp_rrn;
@@ -10,6 +12,14 @@ public class MemberDTO {
 	private String emp_join_date;
 	
 	
+	
+	
+	public String getEmp_no() {
+		return emp_no;
+	}
+	public void setEmp_no(String emp_no) {
+		this.emp_no = emp_no;
+	}
 	public String getEmp_pwd() {
 		return emp_pwd;
 	}

@@ -21,19 +21,19 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value = "login", method = RequestMethod.POST)
-	public String loginSubmit(@RequestParam String userEmail,
-			@RequestParam String userPwd,
+	public String loginSubmit(@RequestParam String emp_no,
+			@RequestParam String emp_pwd,
 			HttpSession session,
 			Model model) {
 	
-		MemberDTO dto = service.loginMember(userEmail);
+		MemberDTO dto = service.loginMember(emp_no);
 		
 		
-		System.out.println(dto.getEmp_pwd());
-		if(dto == null || !userPwd.equals(dto.getEmp_pwd())) {
+		System.out.println(dto);
+		if(dto == null || !emp_pwd.equals(dto.getEmp_pwd())) {
 			model.addAttribute("message", "패스워드가 틀립니다.");
 			return ".loginLayout";
-		} else if(!userEmail.equals(dto.getEmp_email())) {
+		} else if(!emp_no.equals(dto.getEmp_no())) {
 			model.addAttribute("message", "해당 아이디가 존재하지 않습니다.");
 			return ".loginLayout";
 		}

@@ -7,17 +7,17 @@
 	function sendLogin() {
 		const f = document.loginForm;
 
-		let str = f.userEmail.value;
+		let str = f.emp_no.value;
 		if (!str) {
 			alert("이메일을 입력하세요. ");
-			f.userEmail.focus();
+			f.emp_no.focus();
 			return;
 		}
 
-		str = f.userPwd.value;
+		str = f.emp_pwd.value;
 		if (!str) {
 			alert("패스워드를 입력하세요. ");
-			f.userPwd.focus();
+			f.emp_pwd.focus();
 			return;
 		}
 
@@ -33,12 +33,12 @@
 							<h1>GrooveWare</h1>
 						</div>
 						<div class="row">
-							<label for="login-userId" >이메일</label> <input name="userEmail"
+							<label for="login-userId" >이메일</label> <input name="emp_no"
 								type="text" class="form-control" id="login-userId"
 								placeholder="이메일">
 						</div>
 						<div class="row">
-							<label for="login-password">비밀번호</label> <input name="userPwd"
+							<label for="login-password">비밀번호</label> <input name="emp_pwd"
 								type="password" class="form-control" id="login-password"
 								autocomplete="off" placeholder="패스워드">
 						</div>
