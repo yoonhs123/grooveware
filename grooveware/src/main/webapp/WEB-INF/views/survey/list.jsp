@@ -3,43 +3,40 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <script type="text/javascript">
+  function removeBox(button) {
+    const box = button.parentNode;
+    const container = box.parentNode;
+    container.removeChild(box);
+  }
 
+  function addBox() {
+    const container = document.getElementById('sbox-container');
 
-function removeBox(button) {
-  const box = button.parentNode;
-  const container = box.parentNode;
-  container.removeChild(box);
-}
+    const newBox = document.createElement('div');
+    newBox.className = 'scBox';
 
-function addBox() {
-  const container = document.getElementById('sbox-container');
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.className = 'round-checkbox';
 
-  const newBox = document.createElement('div');
-  newBox.className = 'box';
+    const boxInput = document.createElement('input');
+    boxInput.type = 'text';
+    boxInput.className = 'scBox-input';
+    boxInput.placeholder = '문항 입력';
 
-  const checkbox = document.createElement('input');
-  checkbox.type = 'checkbox';
-  checkbox.className = 'round-checkbox';
+    const removeBtn = document.createElement('button');
+    removeBtn.className = 'remove-btn';
+    removeBtn.innerText = 'x';
+    removeBtn.onclick = function () {
+      removeBox(this);
+    };
 
-  const boxInput = document.createElement('input');
-  boxInput.type = 'text';
-  boxInput.className = 'box-input';
-  boxInput.placeholder = '문항 입력';
+    newBox.appendChild(checkbox);
+    newBox.appendChild(boxInput);
+    newBox.appendChild(removeBtn);
 
-  const removeBtn = document.createElement('button');
-  removeBtn.className = 'remove-btn';
-  removeBtn.innerText = 'x';
-  removeBtn.onclick = function () {
-    removeBox(this);
-  };
-
-  newBox.appendChild(checkbox);
-  newBox.appendChild(boxInput);
-  newBox.appendChild(removeBtn);
-
-  container.appendChild(newBox);
-}
-
+    container.appendChild(newBox);
+  }
 </script>
 
 <div class="left-side-bar">
@@ -57,6 +54,12 @@ function addBox() {
     </div>
  <div class="right-contentbody">	 
 			<div class= "survey-main" >
+			<table class="table" style="margin-bottom: 20px;">
+					<tr>
+						<td class="title" > <h3><span>&nbsp;&nbsp;&nbsp;</span> 설문문항작성</h3> 
+						</td>
+					</tr>
+				</table>
 			 <div class= "top-box">
 			 
 				<table class = "SurveyTable">	
@@ -74,9 +77,10 @@ function addBox() {
 						
 					   <tr>
 		                 <td class="sBox">
-							<div class="SurvayTitle">
+							<div class="SurveyTitle">
 								질문 		
 						    </div>
+						    
 							<input type="text" class="qBox">		
 						  </td>		
 			          </tr>
@@ -136,8 +140,8 @@ function addBox() {
 	      	<div class = "bottom-box"> 	
 	      	<div class="button-container">
              <div style="float: right;">
-            <button class="btn blueBtn" type="button" onclick="#">등록</button>
-            <button class="btn blueBtn" type="button" onclick="#">취소</button>     	
+            <button class="blueBtn" type="button" onclick="#">등록</button>
+            <button class="blueBtn" type="button" onclick="#">취소</button>     	
 	      	</div>
 	      	
 	      	</div>
