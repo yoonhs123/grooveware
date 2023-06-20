@@ -13,14 +13,14 @@ public class ProjectController {
 	}
 	*/
 	
-	@RequestMapping("/project/blank")
-	public String blank() {
-		return ".project.blank";
-	}
-	
 	@RequestMapping("/project/main")
 	public String main() {
-		return "project/main";
+		return ".project.main";
+	}
+	
+	@RequestMapping("/project/pj_write")
+	public String blank() {
+		return ".project.pj_write";
 	}
 
 }

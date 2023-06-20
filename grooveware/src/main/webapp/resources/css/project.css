@@ -1,6 +1,8 @@
 @charset "UTF-8";
 
 
+
+
 .pj {
 	padding: 50px;
 	display: flex;
@@ -13,7 +15,7 @@
 }
 
 .no_pj_img{
-	
+	 width: 50px;
 }
 
 .no_pj_alert{
