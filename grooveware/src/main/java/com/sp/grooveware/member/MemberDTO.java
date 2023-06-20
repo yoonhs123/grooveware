@@ -1,146 +1,57 @@
 package com.sp.grooveware.member;
 
 public class MemberDTO {
-	private long memberIdx;
-	private int membership;
-	private String userId;
-	private String userName;
-	private String userPwd;
-	private String register_date;
-	private String modify_date;
-	private String last_login;
-	private String email;
-	private String email1;
-	private String email2;
-	private String tel;
-	private String tel1;
-	private String tel2;
-	private String tel3;
-	private String birth;
-	private String zip;
-	private String addr1;
-	private String addr2;
-	private int enabled;
+	private String emp_name;
+	private String emp_pwd;
+	private String emp_rrn;
+	private String emp_email;
+	private String emp_tel;
+	private String emp_address;
+	private String emp_join_date;
 	
-	public long getMemberIdx() {
-		return memberIdx;
+	
+	public String getEmp_pwd() {
+		return emp_pwd;
 	}
-	public void setMemberIdx(long memberIdx) {
-		this.memberIdx = memberIdx;
+	public void setEmp_pwd(String emp_pwd) {
+		this.emp_pwd = emp_pwd;
 	}
-	public int getMembership() {
-		return membership;
+	public String getEmp_name() {
+		return emp_name;
 	}
-	public void setMembership(int membership) {
-		this.membership = membership;
+	public void setEmp_name(String emp_name) {
+		this.emp_name = emp_name;
 	}
-	public String getUserId() {
-		return userId;
+	public String getEmp_rrn() {
+		return emp_rrn;
 	}
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setEmp_rrn(String emp_rrn) {
+		this.emp_rrn = emp_rrn;
 	}
-	public String getUserName() {
-		return userName;
+	public String getEmp_email() {
+		return emp_email;
 	}
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setEmp_email(String emp_email) {
+		this.emp_email = emp_email;
 	}
-	public String getUserPwd() {
-		return userPwd;
+	public String getEmp_tel() {
+		return emp_tel;
 	}
-	public void setUserPwd(String userPwd) {
-		this.userPwd = userPwd;
+	public void setEmp_tel(String emp_tel) {
+		this.emp_tel = emp_tel;
 	}
-	public String getRegister_date() {
-		return register_date;
+	public String getEmp_address() {
+		return emp_address;
 	}
-	public void setRegister_date(String register_date) {
-		this.register_date = register_date;
+	public void setEmp_address(String emp_address) {
+		this.emp_address = emp_address;
 	}
-	public String getModify_date() {
-		return modify_date;
+	public String getEmp_join_date() {
+		return emp_join_date;
 	}
-	public void setModify_date(String modify_date) {
-		this.modify_date = modify_date;
+	public void setEmp_join_date(String emp_join_date) {
+		this.emp_join_date = emp_join_date;
 	}
-	public String getLast_login() {
-		return last_login;
-	}
-	public void setLast_login(String last_login) {
-		this.last_login = last_login;
-	}
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
-	public String getEmail1() {
-		return email1;
-	}
-	public void setEmail1(String email1) {
-		this.email1 = email1;
-	}
-	public String getEmail2() {
-		return email2;
-	}
-	public void setEmail2(String email2) {
-		this.email2 = email2;
-	}
-	public String getTel() {
-		return tel;
-	}
-	public void setTel(String tel) {
-		this.tel = tel;
-	}
-	public String getTel1() {
-		return tel1;
-	}
-	public void setTel1(String tel1) {
-		this.tel1 = tel1;
-	}
-	public String getTel2() {
-		return tel2;
-	}
-	public void setTel2(String tel2) {
-		this.tel2 = tel2;
-	}
-	public String getTel3() {
-		return tel3;
-	}
-	public void setTel3(String tel3) {
-		this.tel3 = tel3;
-	}
-	public String getBirth() {
-		return birth;
-	}
-	public void setBirth(String birth) {
-		this.birth = birth;
-	}
-	public String getZip() {
-		return zip;
-	}
-	public void setZip(String zip) {
-		this.zip = zip;
-	}
-	public String getAddr1() {
-		return addr1;
-	}
-	public void setAddr1(String addr1) {
-		this.addr1 = addr1;
-	}
-	public String getAddr2() {
-		return addr2;
-	}
-	public void setAddr2(String addr2) {
-		this.addr2 = addr2;
-	}
-	public int getEnabled() {
-		return enabled;
-	}
-	public void setEnabled(int enabled) {
-		this.enabled = enabled;
-	}
+	
 }
 

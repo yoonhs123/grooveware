@@ -1,6 +1,6 @@
 package com.sp.grooveware.member;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Autowired; 
 import org.springframework.stereotype.Service;
 
 import com.sp.grooveware.common.dao.CommonDAO;
@@ -12,11 +12,11 @@ public class MemberServiceImpl implements MemberService {
 	private CommonDAO dao;
 	
 	@Override
-	public MemberDTO loginMember(String userId) {
+	public MemberDTO loginMember(String emp_email) {
 		MemberDTO dto = null;
 
 		try {
-			dto = dao.selectOne("member.loginMember", userId);
+			dto = dao.selectOne("member.loginMember", emp_email);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
