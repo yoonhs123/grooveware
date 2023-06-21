@@ -3,10 +3,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="member">
 	<select id="loginMember" parameterType="String" resultType="com.sp.grooveware.member.Member">
-		SELECT emp_no, emp_name, emp_pwd, emp_rrn, emp_email, emp_tel, emp_address, emp_join_date
-		FROM emp 
-		WHERE emp_no = #{emp_no}
+		
+		SELECT e.emp_no, emp_name, emp_pwd, dept_no
+		FROM emp e
+        JOIN emp_history eh ON e.emp_no = eh.emp_no
+		WHERE e.emp_no = #{emp_no}
+		
 	</select>
-
 	
 </mapper>

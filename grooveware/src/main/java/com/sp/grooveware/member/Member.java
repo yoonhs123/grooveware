@@ -2,29 +2,25 @@ package com.sp.grooveware.member;
 
 public class Member {
 	
-	private String emp_no;
+	private long emp_no;
 	private String emp_name;
 	private String emp_pwd;
-	private String emp_rrn;
-	private String emp_email;
-	private String emp_tel;
-	private String emp_address;
-	private String emp_join_date;
+	private long dept_no;
+	private String dept_name;
 	
-	
-	
-	
-	public String getEmp_no() {
-		return emp_no;
-	}
-	public void setEmp_no(String emp_no) {
-		this.emp_no = emp_no;
-	}
 	public String getEmp_pwd() {
 		return emp_pwd;
 	}
 	public void setEmp_pwd(String emp_pwd) {
 		this.emp_pwd = emp_pwd;
+	}
+	
+	
+	public long getEmp_no() {
+		return emp_no;
+	}
+	public void setEmp_no(long emp_no) {
+		this.emp_no = emp_no;
 	}
 	public String getEmp_name() {
 		return emp_name;
@@ -32,36 +28,23 @@ public class Member {
 	public void setEmp_name(String emp_name) {
 		this.emp_name = emp_name;
 	}
-	public String getEmp_rrn() {
-		return emp_rrn;
+	public long getDept_no() {
+		return dept_no;
 	}
-	public void setEmp_rrn(String emp_rrn) {
-		this.emp_rrn = emp_rrn;
+	public void setDept_no(long dept_no) {
+		this.dept_no = dept_no;
 	}
-	public String getEmp_email() {
-		return emp_email;
+	public String getDept_name() {
+		return dept_name;
 	}
-	public void setEmp_email(String emp_email) {
-		this.emp_email = emp_email;
+	public void setDept_name(String dept_name) {
+		this.dept_name = dept_name;
 	}
-	public String getEmp_tel() {
-		return emp_tel;
-	}
-	public void setEmp_tel(String emp_tel) {
-		this.emp_tel = emp_tel;
-	}
-	public String getEmp_address() {
-		return emp_address;
-	}
-	public void setEmp_address(String emp_address) {
-		this.emp_address = emp_address;
-	}
-	public String getEmp_join_date() {
-		return emp_join_date;
-	}
-	public void setEmp_join_date(String emp_join_date) {
-		this.emp_join_date = emp_join_date;
-	}
+	
+	
+	
+	
+	
 	
 }
 

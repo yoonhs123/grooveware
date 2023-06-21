@@ -29,21 +29,27 @@ public class MemberController {
 		Member dto = service.loginMember(emp_no);
 		
 		
-		System.out.println(dto);
 		if(dto == null || !emp_pwd.equals(dto.getEmp_pwd())) {
 			model.addAttribute("message", "패스워드가 틀립니다.");
 			return ".loginLayout";
-		} else if(!emp_no.equals(dto.getEmp_no())) {
+		} else if(!emp_no.equals(Long.toString(dto.getEmp_no()))) {
 			model.addAttribute("message", "해당 아이디가 존재하지 않습니다.");
 			return ".loginLayout";
 		}
 		
 		// 세션에 로그인 정보 저장
 		SessionInfo info = new SessionInfo();
-
+		info.setEmp_no(dto.getEmp_no());
+		
 		session.setMaxInactiveInterval(30 * 60); // 세션유지시간 30분, 기본:30분
 
 		session.setAttribute("member", info);
+		info.setEmp_no(dto.getEmp_no());
+		info.setEmp_name(dto.getEmp_name());
+		info.setDept_no(dto.getDept_no());
+		System.out.println(dto.getEmp_no());
+		System.out.println(dto.getDept_no());
+		System.out.println(dto.getEmp_name());
 		
 		return "redirect:/member/dashboard";
 	}
