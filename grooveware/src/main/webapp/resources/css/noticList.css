@@ -1,12 +1,14 @@
 ﻿
 /* 노티드 도넛 */
 
+
+
 .notic-list {
-	
-	width: 100%;
+	border: 2px solid gray;
+	wedth: 100%;
     height: 100%;
     background-color: #FFFFFF;
-    
+    padding: 20px;
 
 }
 

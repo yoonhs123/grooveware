@@ -39,9 +39,7 @@
 					
 					
 				<td align="right" width="100">
-					<button type="button" class="btn" onclick="location.href='${pageContext.request.contextPath}/admin/noticeManage/write';">글올리기</button>
-				</td>
-						
+					
 						
 						<td align="right">
 							<form name="searchForm" action="${pageContext.request.contextPath}/ " method="post">
