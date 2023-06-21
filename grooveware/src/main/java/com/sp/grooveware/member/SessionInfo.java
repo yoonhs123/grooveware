@@ -5,6 +5,7 @@ public class SessionInfo {
 	private long emp_no;
 	private String emp_name;
 	private long dept_no;
+	private String dept_name;
 	
 	public long getEmp_no() {
 		return emp_no;
@@ -24,5 +25,10 @@ public class SessionInfo {
 	public void setDept_no(long dept_no) {
 		this.dept_no = dept_no;
 	}
-	
+	public String getDept_name() {
+		return dept_name;
+	}
+	public void setDept_name(String dept_name) {
+		this.dept_name = dept_name;
+	}
 }

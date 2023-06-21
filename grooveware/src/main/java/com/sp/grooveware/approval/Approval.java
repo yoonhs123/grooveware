@@ -1,5 +1,9 @@
 package com.sp.grooveware.approval;
 
+import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
+
 public class Approval {
 	
 	private long doc_no;
@@ -13,7 +17,7 @@ public class Approval {
 	private String approval_finaldate;
 	private String submit_date;
 	private int important;
-	private int hide;
+	private int is_visible;
 	
 	
 	private int approval_status_id;
@@ -26,8 +30,9 @@ public class Approval {
 	private String draft_content;
 	private String save_filename;
 	private String original_filename;
+	private List<MultipartFile> selectFile;
 	
-	
+
 	private int holiday_id;
 	private String holiday_name;
 	
@@ -106,11 +111,12 @@ public class Approval {
 	public void setImportant(int important) {
 		this.important = important;
 	}
-	public int getHide() {
-		return hide;
+ 
+	public int getIs_visible() {
+		return is_visible;
 	}
-	public void setHide(int hide) {
-		this.hide = hide;
+	public void setIs_visible(int is_visible) {
+		this.is_visible = is_visible;
 	}
 	public int getApproval_status_id() {
 		return approval_status_id;
@@ -160,6 +166,14 @@ public class Approval {
 	public void setOriginal_filename(String original_filename) {
 		this.original_filename = original_filename;
 	}
+
+	public List<MultipartFile> getSelectFile() {
+		return selectFile;
+	}
+	public void setSelectFile(List<MultipartFile> selectFile) {
+		this.selectFile = selectFile;
+	}
+	
 	public int getHoliday_id() {
 		return holiday_id;
 	}

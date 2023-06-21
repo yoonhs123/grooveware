@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="approval">
+ 
+	<select id="seq" resultType="Long">
+		SELECT doc_seq.NEXTVAL FROM dual
+	</select>
+	
+	<!-- insert -->
+	<insert id="insertApproval1" parameterType="com.sp.grooveware.approval.Approval">
+		INSERT INTO doc (doc_no, emp_no, doc_status, urgent, doc_name, draft_date, draft_deadline, 
+						approval_step, approval_finaldate, submit_date, important, is_visible)
+		VALUES (#{doc_no}, #{emp_no}, #{doc_status, jdbcType=INTEGER}, DEFAULT, #{doc_name}, SYSDATE , #{draft_deadline, jdbcType=DATE}, 
+						#{approval_step, jdbcType=INTEGER}, #{approval_finaldate, jdbcType=DATE}, #{submit_date, jdbcType=DATE}, DEFAULT, DEFAULT);
+	</insert>
+	
+	<insert id="insertApproval2" parameterType="com.sp.grooveware.approval.Approval">
+		INSERT INTO draft (doc_no, draft_category, draft_content, save_filename, original_filename)
+		VALUES (#{doc_no}, #{draft_category, jdbcType=INTEGER}, #{draft_content, jdbcType=VARCHAR}, 
+				#{save_filename, jdbcType=VARCHAR}, #{original_filename, jdbcType=VARCHAR});
+	</insert>
+	
+</mapper>

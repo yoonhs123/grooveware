@@ -63,6 +63,45 @@
 .myForm .flexBox{display: flex; justify-content: space-between;}
 </style>
 <script type="text/javascript">
+function temporarySave() {
+    const f = document.myForm;
+	let str;
+	
+    str = f.subject.value.trim();
+    if(!str) {
+        alert("제목을 입력하세요. ");
+        f.subject.focus();
+        return;
+    }
+
+    str = f.draftDate.value.trim();
+    if(!str) {
+        alert("처리기한을 입력하세요. ");
+        f.draftDate.focus();
+        return;
+    }
+    str = f.content.value.trim();
+    if(!str) {
+        alert("내용을 입력하세요. ");
+        f.content.focus();
+        return;
+    }
+
+    let mode = "${mode}";
+    /*
+    if( (mode === "write") && (!f.selectFile.value) ) {
+        alert("이미지 파일을 추가 하세요. ");
+        f.selectFile.focus();
+        return;
+    }
+    */
+    
+    f.action = "${pageContext.request.contextPath}/approval/${mode}";
+    f.submit();
+}
+
+</script>
+<script type="text/javascript">
 	//모달 열기
 	function openModal() {
 		document.getElementById("myModal").style.display = "block";
@@ -147,8 +186,8 @@
 										</h2>
 									</td>
 									<td class="title">
-										<button type="button" class="btn" onclick=" ">임시저장</button>
-										<button type="button" class="btn" onclick=" ">예약</button>
+										<button type="button" class="btn">취소</button>
+										<button type="button" class="btn" onclick="temporarySave();">임시저장</button>
 										<button type="button" class="btn" onclick=" ">제출</button>
 									</td>
 								</tr>
@@ -218,8 +257,7 @@
 										<label>제목 </label>
 									</div>
 									<p class="ap_pBox">
-										<input type="text" name="" class="form-control1"
-											style="width: 100%;">
+										<input type="text" name="subject" class="form-control1" style="width: 100%;">
 									</p>
 								</div>
 
@@ -235,9 +273,7 @@
 									<div class="flexBox" >
 										<div class="leftBox" >
 											<p class="ap_pBox">
-											<input type="text" name="urgent" class="form-control1"
-												 
-												readonly="readonly" /> 
+											<input type="text" name="" class="form-control1" readonly="readonly" /> 
 											</p>
 										</div>
 										<div class="leftBox" >
@@ -261,7 +297,7 @@
 									</div>
 									<div class="flexBox ap_pBox">
 										<div class="leftBox"  >
-											<input type="date" name="urgent" class="form-control1"/> 
+											<input type="date" name="draftDate" class="form-control1"/> 
 										</div>
 										<div class="leftBox">
 											<select name="condition" class="form-select form-control1" style=" height: 33px;">
@@ -309,8 +345,7 @@
 							<div class="file_container2">
 								<div class="table table-border table-form">
 									<div>
-										<input type="file" name="selectFile" accept="image/*"
-											multiple="multiple" class="form-control1">
+										<input type="file" name="selectFile" multiple="multiple" class="form-control1">
 									</div>
 									<div>
 										<div>등록이미지</div>
@@ -331,9 +366,9 @@
  
 					<div class="board4 confirm">
 						<button type="button" class="btn2">취소</button>
-						<button type="button" class="btn2">임시저장</button>
-						<button type="button" class="btn2">예약</button>
+						<button type="button" class="btn2" onclick="temporarySave();">임시저장</button>
 						<button type="button" class="btn2">제출</button>
+						
 					</div>
 				</form>
 				</div>
@@ -392,7 +427,7 @@ function setDefaultFont() {
 					<tr>
 						<td align="right">
 							<input type="hidden" name="num" value="${dto.num}">
-							<input type="hidden" name="winnerNumber" value="${dto.winnerNumber}">
+							<input type="hidden" name="" value=" ">
 							<input type="hidden" name="page" value="${page}">
 							<button type="button" class="btn">추가</button>
 							<button type="button" class="btn">삭제</button>
