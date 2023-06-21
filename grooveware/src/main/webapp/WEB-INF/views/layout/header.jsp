@@ -28,7 +28,7 @@
          <li><a href="#">인사</a></li>
          <li><a href="#">업무관리</a></li>
          <li><a href="#">일정관리</a></li>
-         <li><a href="#">그루비룸</a></li>
+         <li><a href="${pageContext.request.contextPath}/club/list">그루비룸</a></li>
          <li><a href="#">공지사항</a></li>
          <li>
          	<a href="${pageContext.request.contextPath}/member/logout" title="로그아웃"><i class="fa-solid fa-arrow-right-from-bracket"></i></a>
