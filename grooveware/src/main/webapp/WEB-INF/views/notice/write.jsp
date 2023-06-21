@@ -3,7 +3,18 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
- %>
+ <script type="text/javascript">
+ 
+ 
+ function sendlist() {
+	  const f = document.memoForm;
+	  f.action = "${pageContext.request.contextPath}/notice/list";
+	  f.submit();
+	}
+ 
+ 
+ 
+ </script>
 
 
 
@@ -59,9 +70,9 @@
 		<table class="table">
 			<tr> 
 				<td align="center">
-					<button type="button" class="btn" onclick="sendOk();">${mode=="write"?"등록하기":"수정완료"}</button>
+					<button type="button" class="btn" onclick="sendlist();">${mode=="write"?"등록하기":"수정완료"}</button>
 					<button type="reset" class="btn">다시입력</button>
-					<button type="button" class="btn" onclick="location.href='${pageContext.request.contextPath}/memo/list.do';">${mode=="write"?"등록취소":"수정취소"}</button>
+					<button type="button" class="btn" onclick="sendlist();"> ${mode=="write"?"등록취소":"수정취소"}</button>
 					<c:if test="${mode=='update'}">
 						<input type="hidden" name="num" value="${dto.num}">
 						<input type="hidden" name="page" value="${page}">
