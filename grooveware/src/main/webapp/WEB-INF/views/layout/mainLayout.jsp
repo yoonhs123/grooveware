@@ -24,17 +24,18 @@
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/approval.css" type="text/css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css" type="text/css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member.css" type="text/css">
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/insaManageHolidayList.css" type="text/css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/holidaymanageList.css" type="text/css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/surveyList.css" type="text/css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/noticList.css" type="text/css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/reservation.css" type="text/css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/chat.css" type="text/css">
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/insaManageHolidayList.css" type="text/css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/community.css" type="text/css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/myInsa.css" type="text/css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/project.css" type="text/css">
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/insaWorkManageList.css" type="text/css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/workManageList.css" type="text/css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/workManageArticle.css" type="text/css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/dashboard.css" type="text/css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/archive.css" type="text/css">
 	
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/vendor/jquery/js/jquery.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/util-jquery.js"></script>

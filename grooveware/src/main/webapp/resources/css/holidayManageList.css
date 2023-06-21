@@ -1,0 +1,99 @@
+@charset "UTF-8";
+
+.board-holidayManage { 
+   margin: 20px auto; 
+   padding: 40px; 
+   width: 100%; 
+}
+
+.btn-holidayManage {
+   color: black;
+   border: 1px solid #999999;
+   padding: 5px 10px;
+   border-radius: 4px;
+   font-weight: 500;
+   cursor: pointer;
+   font-size: 14px;
+   line-height: 15px;
+   background-color: white;
+}
+
+
+.select-year {
+   color: black;
+   border: 1px solid #999999;
+   padding: 5px 10px;
+   border-radius: 4px;
+   font-weight: 500;
+   cursor: pointer;
+   font-size: 14px;
+   line-height: 23px;
+   background-color: white;
+   width: 130px;
+   float: left;
+   margin-bottom: 20px;
+}
+
+.insaManageHoliday {
+    width: 200px;
+    height: 23px;
+}
+
+.form-select{ height: 23px;}
+
+.title_container {
+   width: 100%;
+}
+
+.title-holidaylist {
+   width: 20%;
+   padding-bottom: 10px;
+}
+
+.work-year {
+   width: 60px;
+   height: 30px;
+   background-color: #4357C2;
+   color: white;
+   font-size: 15px;
+   border-radius: 5px;
+   padding: 3px 0px;
+   border-radius: 5px;
+   border-color: #F9FAFD;
+}
+
+.holidayManage {
+   padding-left : 30px;
+}
+
+.holidayManage-emp-no {
+   width: 10%;
+}
+
+.holidayManage-name {
+   width: 5%;
+}
+
+.holidayManage-pos {
+   width: 10%;
+}
+
+.holidayManage-startday {
+   width: 15%;
+}
+
+.holidayManage-range {
+   width: 20%;
+}
+
+.holidayManage-use {
+   width: 10%;
+}
+
+.holidayManage-no-use {
+   width: 10%;
+}
+
+.holidayManage-add {
+   width: 10%;
+}
