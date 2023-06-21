@@ -3,6 +3,64 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+<style>
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% 50%;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 30%;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.myForm .flexBox{display: flex; justify-content: space-between;}
+</style>
+
+<script type="text/javascript">
+	//모달 열기
+	function openModal() {
+		document.getElementById("myModal").style.display = "block";
+	}
+
+	// 모달 닫기
+	function closeModal() {
+		document.getElementById("myModal").style.display = "none";
+	}
+
+	// 사용자가 모달 외부를 클릭할 때 모달 닫기
+	window.onclick = function(event) {
+		var modal = document.getElementById("myModal");
+		if (event.target === modal) {
+			modal.style.display = "none";
+		}
+	};
+</script>
+
 <div class="left-side-bar">
          <ul>
             <li>
@@ -23,83 +81,26 @@
         </ul>
 </div>
 
-<div class="right-contentbody">
-	<div  class="right-contentbody2">
+		<div class="right-contentbody">
 				<form name="myForm" method="post" class="myForm">
 					<div class="board1">
 						<div class="title_container">
 							<table class="table" style="margin-bottom: 20px;">
 								<tr>
-									<td class="title2" width="12%">
+									<td class="title2" width="85%">
 										<h2>
-											<span>|</span> 기안서
+											<span>|</span> 프로젝트 생성
 										</h2>
 									</td>
 									<td class="title">
-										<button type="button" class="btn" onclick=" ">임시저장</button>
-										<button type="button" class="btn" onclick=" ">예약</button>
-										<button type="button" class="btn" onclick=" ">제출</button>
+										<span>생성자 : </span> 윤현상
 									</td>
 								</tr>
 							</table>
 						</div>
-						<div class="line_container">
-							<div class="table" style="margin-bottom: 15px;">
-								<div>
-									<div class="title" style="float: left; width: 50%;">
-										<span>결재라인</span>
-									</div>
-									<div class="title">
-										<span> 공유자</span>
-									</div>
-								</div>
-								<div style="width: 50%; float: left;">
-									<div class="img_container ">
-										<img class="" src="/test.jpg">
-									</div>
-									<div class="img_container3 ">
-										<i class="fa-solid fa-chevron-right"></i>
-									</div>
-									<div class="img_container ">
-										<img class="" src="test.jpg">
-									</div>
-									<div class="img_container3 ">
-										<i class="fa-solid fa-chevron-right"></i>
-									</div>
-									<div class=" img_container">
-										<img class="" src="test.jpg">
-									</div>
-									<!-- 모달을 띄울 추가 버튼 -->
-									<button type="button" class="btn" onclick="openModal() "
-										style="margin-top: 5px;">추가 버튼</button>
-								</div>
-
-								<div style="">
-									<div class="img_container">
-										<img class="" src="test.jpg">
-									</div>
-									<!-- 플러스 버튼 후 결제라인 설정 팝업 -->
-								</div>
-
-
-								<div style="width: 50%; float: left;">
-									<div class="text_box3">김민교</div>
-									<div class="text_box4">&nbsp;</div>
-									<div class="text_box3">남기현</div>
-									<div class="text_box4">&nbsp;</div>
-									<div class="text_box3">최고관리자</div>
-
-									<!-- 플러스 버튼 후 결제라인 설정 팝업 -->
-								</div>
-
-								<div>
-									<div class="text_box3" style="margin-bottom: 10px;">최민정</div>
-									<!-- 플러스 버튼 후 결제라인 설정 팝업 -->
-								</div>
-							</div>
-						</div>
+						
 					</div>
-					<div class="board3">
+					<div class="pj_write">
 						<div class="line_container2">
 							<div>
 								<div>
@@ -110,6 +111,7 @@
 										<input type="text" name="" class="form-control1"
 											style="width: 100%;">
 									</p>
+									<br><br>
 								</div>
 
 								<div>
@@ -254,8 +256,6 @@
 						<button type="button" class="btn2">제출</button>
 					</div>
 				</form>
-				</div>
-이건 프로젝트 생성 양식이다
 
 
 </div>

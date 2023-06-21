@@ -10,24 +10,40 @@
 	justify-content: center;
 	position: relative;
 	top:50px;
-	left:50px;
 	text-align : center;
 }
 
-.no_pj_img{
-	 width: 50px;
+.pj_main_img{
+	display: flex;
+  	justify-content: center;
+  	align-items: center;
 }
 
-.no_pj_alert{
-	font-size : 50px;
+.pj_main_alert{
+	font-size : 80px;
 	padding: 20px;
 }
 
-.no_pj_ment{
-	font-size : 30px;
+.pj_main_ment{
+	font-size : 20px;
 	padding: 10px;
 }
 
-.no_pj_button{
+.pj_main_btn{
 	padding: 50px;
 }
+
+.pj_main_btn button {
+  padding: 20px 40px; 
+  font-size: 24px; 
+  cursor: pointer;
+}
+
+.pj_write label {
+	font-weight: bold;
+	font-size: 20px;
+	padding-top: 100px;
+}
+
+
+
