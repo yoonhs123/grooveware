@@ -2,7 +2,7 @@
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
+ 
 <div class="left-side-bar">
       
         <ul>
@@ -25,7 +25,7 @@
             <li>
             <hr>
              <li>
-                <a href="#">주소록</a>
+                <a href="#">주소</a>
                 <a href="#">&nbsp;공용 주소록</a>
                 <a href="#">&nbsp;직원 주소록</a>
                 <a href="#">&nbsp;휴지통</a>
