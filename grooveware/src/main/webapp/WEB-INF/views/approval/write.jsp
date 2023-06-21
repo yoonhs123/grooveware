@@ -386,7 +386,7 @@ function setDefaultFont() {
 				<tbody>
 					<tr>
 						<td height="50%">
-						 <input type="text" name="keyword" id="keyword" class="form-control1" style="height: 150px;">
+						 <div style="height: 150px; border: 1px solid black;"></div>
 						</td>
 					</tr>
 					<tr>

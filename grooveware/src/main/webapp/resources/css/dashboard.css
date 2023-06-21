@@ -15,9 +15,7 @@
   }
  
 
- 
-
-.dContainer .item {
+  .dContainer > .item {
 	cursor: pointer;
 	border: 1px solid #787878;
 	height: 100%;
@@ -27,9 +25,9 @@
 	border-radius: 3px;
 	background-color: white;
 	word-wrap: break-word;
+ }
  
-}
-
+ 
 .img-area img {
 	display: block;
 	width: 100%;
