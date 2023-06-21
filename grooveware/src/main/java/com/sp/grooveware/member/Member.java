@@ -1,6 +1,6 @@
 package com.sp.grooveware.member;
 
-public class MemberDTO {
+public class Member {
 	
 	private String emp_no;
 	private String emp_name;

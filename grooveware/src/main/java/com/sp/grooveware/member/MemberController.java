@@ -26,7 +26,7 @@ public class MemberController {
 			HttpSession session,
 			Model model) {
 	
-		MemberDTO dto = service.loginMember(emp_no);
+		Member dto = service.loginMember(emp_no);
 		
 		
 		System.out.println(dto);

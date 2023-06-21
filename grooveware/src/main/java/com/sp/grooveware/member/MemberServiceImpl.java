@@ -12,8 +12,8 @@ public class MemberServiceImpl implements MemberService {
 	private CommonDAO dao;
 	
 	@Override
-	public MemberDTO loginMember(String emp_email) {
-		MemberDTO dto = null;
+	public Member loginMember(String emp_email) {
+		Member dto = null;
 
 		try {
 			dto = dao.selectOne("member.loginMember", emp_email);
