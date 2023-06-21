@@ -27,7 +27,7 @@
         </ul>
     </div>
 		<div class="right-contentbody">
-		<div class="board">
+		<div class="notic-list">
 	<div class="title">
 	    <h3><span>|</span> 공지사항</h3>
 	</div>
