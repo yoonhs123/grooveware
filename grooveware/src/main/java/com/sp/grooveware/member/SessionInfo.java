@@ -1,34 +1,28 @@
 package com.sp.grooveware.member;
 
-// 세션에 저장할 정보(아이디, 이름, 권한 등)
+// 세션에 저장할 정보(사원번호, 이름, 부서코드 등)
 public class SessionInfo {
-	private long memberIdx;
-	private String userId;
-	private String userName;
-	private int membership;
+	private long emp_no;
+	private String emp_name;
+	private long dept_no;
 	
-	public long getMemberIdx() {
-		return memberIdx;
+	public long getEmp_no() {
+		return emp_no;
 	}
-	public void setMemberIdx(long memberIdx) {
-		this.memberIdx = memberIdx;
+	public void setEmp_no(long emp_no) {
+		this.emp_no = emp_no;
 	}
-	public String getUserId() {
-		return userId;
+	public String getEmp_name() {
+		return emp_name;
 	}
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setEmp_name(String emp_name) {
+		this.emp_name = emp_name;
 	}
-	public String getUserName() {
-		return userName;
+	public long getDept_no() {
+		return dept_no;
 	}
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setDept_no(long dept_no) {
+		this.dept_no = dept_no;
 	}
-	public int getMembership() {
-		return membership;
-	}
-	public void setMembership(int membership) {
-		this.membership = membership;
-	}
+	
 }
