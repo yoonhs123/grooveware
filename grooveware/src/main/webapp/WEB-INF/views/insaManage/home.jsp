@@ -15,24 +15,20 @@
 </script>
 
 <div class="left-side-bar">
-        <ul>
-            <li>
-                <a href="#">인사관리</a>
-                <hr>
-                <a href="#">&nbsp;근태관리</a>
-                <a href="#">&nbsp;휴가관리</a>
-                <hr>
-	            <a href="#">&nbsp;인사설정</a>
-	            <hr>
-	            <a href="#">&nbsp;인사관리자</a>
-	            <a href="#">&nbsp;&nbsp;근태설정</a>
-	            <a href="#">&nbsp;&nbsp;휴가설정</a>
-	            <a href="#">&nbsp;&nbsp;그룹사/거래처관리</a>
-	            <a href="#">&nbsp;&nbsp;조직도</a>
-	            <a href="#">&nbsp;&nbsp;커뮤니티/교육센터 </a>
-                <hr>
-            <li>
-        </ul>
+    <ul>
+		<li>
+			<a href="#">나의 인사정보</a> 
+			<a href="#">&nbsp;인사정보</a> 
+			<a href="#">&nbsp;인사기록카드</a> 
+			<a href="#">&nbsp;내 출근 기록</a> 
+			<a href="#">&nbsp;내 휴가 기록</a></li>
+		<li class="insateam">
+			<a href="#">인사관리</a> 
+			<a href="#">&nbsp;근태관리</a>
+			<a href="#">&nbsp;휴가관리</a> 
+			<a href="#">&nbsp;휴가설정</a> 
+			<a href="#">&nbsp;조직도</a></li>
+	</ul>
     </div>
    <div class="right-contentbody">
    		<div class="board-insaManage-home">
@@ -51,6 +47,9 @@
 								<input type="text" name="keyword" value="" class="insaManageHome">
 								<button type="button" class="btn-insaManage-home" onclick="searchList();">검색</button>
 							</form>
+						</td>
+						<td class="emp-add" align="right">
+							<button type="button" class="btn-insaManage-add" onclick="location-href='#'">사원등록</button>
 						</td>
    					</tr>
    				</table>

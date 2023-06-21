@@ -1,0 +1,83 @@
+@charset "UTF-8";
+
+
+.btn-emp-list {
+	color: black;
+	border: 1px solid #999999;
+	padding: 5px 10px;
+	border-radius: 4px;
+	font-weight: 500;
+	cursor: pointer;
+	font-size: 14px;
+	line-height: 15px;
+	background-color: white;
+}
+
+.emp-list-search{
+    width: 200px;
+    height: 23px;
+}
+
+.emp-list-select{ 
+	height: 23px;
+}
+
+.title_container-emp-list {
+	width: 100%;
+}
+
+.emp-list {
+	padding-left : 30px;
+}
+
+.board-emp-list { 
+	margin: 20px auto; 
+	padding: 40px; 
+	width: 100%; 
+}
+
+.emp-list-1 {
+	margin-bottom: 20px;
+}
+
+.title-emp-list { 
+	font-size: 20px; 
+	font-weight: bold; 
+	padding: 13px 0; 
+}
+
+.emp-list-empNo {
+	width: 10%;
+}
+
+.emp-list-name {
+	width: 10%;
+}
+
+.emp-list-team {
+	width: 10%;
+}
+
+.emp-list-posi {
+	width: 10%;
+}
+
+.emp-list-work {
+	width: 10%;
+}
+
+.emp-list-diswork {
+	width: 10%;
+}
+
+.emp-list-late {
+	width: 10%;
+}
+
+.emp-list-leave {
+	width: 10%;
+}
+
+.emp-list-holiday {
+	width: 10%;
+}

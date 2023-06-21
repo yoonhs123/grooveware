@@ -1,0 +1,63 @@
+@charset "UTF-8";
+
+
+.border-radius {
+	border-radius: 5px;
+}
+
+.insa-info-table {
+	border-radius : 5px;
+	padding : 20px;
+	background: white;
+	margin-bottom: 30px;
+	width: 100%;
+}
+
+.insa-info-table tr {
+	height : 40px;
+	border : 1px solid black;
+}
+
+.insa-info-table tbody tr td {
+	width: 200px;
+}
+
+.my-insa {
+	border-bottom: 1px solid black;
+}
+
+.geuntae-info-table, .dpMove-info-table{
+	width: 100%;
+	margin-bottom : 30px;
+	border-radius : 5px; 
+	width : 100%;
+	border-collapse : collapse;
+	padding : 20px;
+	background: white;
+	height : 100px;
+}
+
+
+
+.geuntae-info-table tr, .dpMove-info-table tr{
+	text-align : center;
+	height : 30px;
+}
+
+
+
+.geuntae-info-table tr:first-child, .dpMove-info-table tr:first-child {
+	border-bottom : 1px solid black;
+}
+
+.title-name {
+	padding-bottom: 8px;
+}
+
+.main-text {
+	font-weight: bold;
+}
+
+.insateam {
+	display: none;	
+}
