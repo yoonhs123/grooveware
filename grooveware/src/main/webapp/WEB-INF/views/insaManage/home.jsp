@@ -49,7 +49,7 @@
 							</form>
 						</td>
 						<td class="emp-add" align="right">
-							<button type="button" class="btn-insaManage-add" onclick="location-href='#'">사원등록</button>
+							<button type="button" class="btn-insaManage-add" id="openModalBtn">사원등록</button>
 						</td>
    					</tr>
    				</table>
@@ -107,3 +107,27 @@
    			</div>
    		</div>
    </div>
+   
+<script>
+// 모달 열기
+   var openModalBtn = document.getElementById("openModalBtn");
+   var modal = document.getElementById("myModal-profile");
+   var closeBtn = document.getElementsByClassName("close-profile")[0];
+
+   openModalBtn.addEventListener("click", function() {
+     modal.style.display = "block";
+   });
+
+   // 모달 닫기
+   closeBtn.addEventListener("click", function() {
+     modal.style.display = "none";
+   });
+
+   // 외부 영역 클릭 시 모달 닫기
+   window.addEventListener("click", function(event) {
+     if (event.target == modal) {
+       modal.style.display = "none";
+     }
+   });
+
+</script>

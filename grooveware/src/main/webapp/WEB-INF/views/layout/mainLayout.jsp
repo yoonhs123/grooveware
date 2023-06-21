@@ -36,6 +36,7 @@
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/workManageArticle.css" type="text/css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/dashboard.css" type="text/css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/archive.css" type="text/css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/profile.css" type="text/css">
 	
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/vendor/jquery/js/jquery.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/util-jquery.js"></script>
