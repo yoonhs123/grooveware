@@ -56,7 +56,8 @@ public class ArchiveController {
 		map.put("condition", condition);
 		map.put("keyword", keyword);
 		
-		// dataCount = 
+		dataCount = service.dataCount(map);
+		
 		
 		return ".archive.list";
 	}

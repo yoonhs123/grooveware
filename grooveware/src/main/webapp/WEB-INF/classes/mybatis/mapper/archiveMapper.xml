@@ -8,11 +8,31 @@
 		VALUES(reference_folder_seq.NEXTVAL, #{emp_no}, #{foleder_name}, #{reference_room_id})
 	</insert>
 	
+	
+	
 	<!-- 파일 추가 -->
 	<insert id="insertFile" parameterType="com.sp.grooveware.archive.Archive">
 		INSERT INTO reference_file(FILE_NO, FOLDER_NO, SAVE_FILENAME, ORIGINAL_FILENAME, FILE_SIZE)
 		VALUES (reference_file_seq.NEXTVAL, 1, #{save_filename},
 			#{original_filename}, #{file_size})
 	</insert>
+	
+	<!-- 전사 자료실 데이터 개수 -->
+	<select id="dataCountAll" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*), 0)
+		FROM reference_folder
+		<where>
+			folder_no = 1 OR
+			<if test="keyword!=null and keyword != '' ">
+				<include refid="where-list"/>
+			</if>
+		</where>
+	</select>
+	
+	<sql id="where-list">
+		<if test="condition=='all' ">
+			( INSTR(original_filename, #{keyword}) &gt; 0)
+		</if>
+	</sql>
 	
 </mapper> 
