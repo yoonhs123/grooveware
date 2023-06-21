@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8" %>
+x`<%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -52,6 +52,7 @@
 								</select>
 								<input type="text" name="keyword" value="${keyword}" class="form-control">
 								<button type="button" class="btn" onclick="searchList();">검색</button>
+						        <button type="button" class="btn" onclick="write();">버튼</button>
 							</form>
 						</td>
 					</tr>
@@ -81,11 +82,11 @@
 							</td>					
 							<td>1</td>
 							<td>
-								<a href=" ">22년도 상반기 영업 매출의 보고</a>
+								<a href="${url} ">22년도 상반기 영업 매출의 보고</a>
 							</td>
-							<td>김자바</td>
+							<td>${dto.userName}</td>
 							<td>2023-06-01</td>
-							<td>14</td>
+							<td>${dto.hitCount}</td>
 							<td></td>
 							
 							<td></td>

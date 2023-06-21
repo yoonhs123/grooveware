@@ -3,6 +3,21 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+ <script type="text/javascript">
+ 
+ 
+ function sendlist() {
+	  const f = document.memoForm;
+	  f.action = "${pageContext.request.contextPath}/notice/list";
+	  f.submit();
+	}
+ 
+ 
+ 
+ </script>
+
+
+
 
 <div class="left-side-bar">
       
@@ -72,7 +87,7 @@
 				<button type="button" class="btn" onclick="deleteMemo();">삭제</button>
 			</td>
 			<td align="right">
-				<button type="button" class="btn" onclick="location.href='${pageContext.request.contextPath}/memo/list.do?page=${page}';">리스트</button>
+				<button type="button" class="btn" onclick="sendlist()">리스트</button>
 			</td>
 		</tr>
 	</table>
