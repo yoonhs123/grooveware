@@ -6,14 +6,37 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.sp.grooveware.common.FileManager;
 import com.sp.grooveware.common.dao.CommonDAO;
 
 @Service("Notice.NoticeService")
 public class NoticeServiceImpl implements NoticeService {
 
+	@Autowired
+	private FileManager fileManager;
 	
 	@Autowired
 	private CommonDAO dao;
+	
+	
+	@Override
+	public void insertNotice(Notice dto, String pathname) throws Exception {
+		
+		  try {
+			  
+		         String saveFilename = fileManager.doFileUpload(dto.getSelectFile(), pathname);
+		         if(saveFilename != null) {
+		            dto.setSave_filename(saveFilename);
+		            dto.setOriginal_filename(saveFilename);
+		         }
+
+		         dao.insertData("notice.insertNotice", dto);  // .앞에는 맵퍼의 namespace, .뒤에는 id
+		      } catch (Exception e) {
+		         e.printStackTrace();
+		         throw e;
+		      }
+		
+	}
 
 	@Override
 	public int dataCount(Map<String, Object> map) {

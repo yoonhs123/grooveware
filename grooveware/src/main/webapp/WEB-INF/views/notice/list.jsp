@@ -75,7 +75,7 @@ x`<%@ page contentType="text/html; charset=UTF-8" %>
 				</thead>
 				
 				<tbody> 
-					<c:forEach var="n" begin="1" end="9">
+					<c:forEach var="dto" begin="1" end="9">
 						<tr>
 							<td>
 								<input type="checkbox" name="" value=" ">
@@ -84,9 +84,9 @@ x`<%@ page contentType="text/html; charset=UTF-8" %>
 							<td>
 								<a href="${url} ">22년도 상반기 영업 매출의 보고</a>
 							</td>
-							<td>${dto.userName}</td>
-							<td>2023-06-01</td>
-							<td>${dto.hitCount}</td>
+							<td>1</td>
+							<td>1</td>
+							<td>1</td>
 							<td></td>
 							
 							<td></td>

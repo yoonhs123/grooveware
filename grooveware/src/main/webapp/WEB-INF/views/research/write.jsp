@@ -2,50 +2,18 @@
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 <script type="text/javascript">
-  function removeBox(button) {
-    const box = button.parentNode;
-    const container = box.parentNode;
-    container.removeChild(box);
-  }
-
-  function addBox() {
-    const container = document.getElementById('sbox-container');
-
-    const newBox = document.createElement('div');
-    newBox.className = 'scBox';
-
-    const checkbox = document.createElement('input');
-    checkbox.type = 'checkbox';
-    checkbox.className = 'round-checkbox';
-
-    const boxInput = document.createElement('input');
-    boxInput.type = 'text';
-    boxInput.className = 'scBox-input';
-    boxInput.placeholder = '문항 입력';
-
-    const removeBtn = document.createElement('button');
-    removeBtn.className = 'remove-btn';
-    removeBtn.innerText = 'x';
-    removeBtn.onclick = function () {
-      removeBox(this);
-    };
-
-    newBox.appendChild(checkbox);
-    newBox.appendChild(boxInput);
-    newBox.appendChild(removeBtn);
-
-    container.appendChild(newBox);
-  }
+ 
 </script>
 
 <div class="left-side-bar">
       
         <ul>
             <li>
-                 <a href="#">회의실</a>
-                <a href="#">&nbsp;회의실 예약</a>
-                <a href="#">&nbsp;회의실 관리</a>
+                 <a href="#">설문조사</a>
+                <a href="#">&nbsp;진행중인 설문조사</a>
+                <a href="#">&nbsp;종료된 설문조사</a>
             <li>
             
             <hr>

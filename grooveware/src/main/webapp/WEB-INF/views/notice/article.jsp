@@ -58,7 +58,7 @@
 			</tr>
 			<tr>
 				<td width="50%">
-					작성자 :  
+					작성자 :  ${dto. }
 				</td>
 			</tr>
 		</thead>

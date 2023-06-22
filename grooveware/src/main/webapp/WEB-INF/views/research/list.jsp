@@ -43,9 +43,9 @@
       
         <ul>
             <li>
-                 <a href="#">회의실</a>
-                <a href="#">&nbsp;회의실 예약</a>
-                <a href="#">&nbsp;회의실 관리</a>
+                 <a href="#">설문조사</a>
+                <a href="#">&nbsp;진행중인 설문조사</a>
+                <a href="#">&nbsp;종료된 설문조사</a>
             <li>
             
             <hr>

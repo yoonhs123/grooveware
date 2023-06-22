@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="notice">
+
+	<!-- parameterType 입력된 값 전달용  -->
+	<!-- resultType은 쿼리 실행 결과를 매핑 -->
+	
+<insert id="insertNotice" parameterType="com.sp.grooveware.notice.Notice">
+    INSERT INTO notice (NOTI_ID, NOTI_TITLE, NOTI_CONTENT, NOTI_REGDATE, NOTI_HITCOUNT, emp_no, dept_id)
+    VALUES (notice_seq.nextval,#{noti_title}, #{noti_title}, SYSDATE, 0, #{emp_no}, 11)
+    
+</insert>
+
+
+
+  
+</mapper>
