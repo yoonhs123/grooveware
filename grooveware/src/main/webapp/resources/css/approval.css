@@ -346,10 +346,11 @@
 .box-wrapper {
 	display: flex;
 	width: 100%;
+	
 }
 
 .borderBox {
-	border: 1px solid gray;
+	border: 1px solid #ced4da;
 	padding: 5px;
 	width: 50%;
 	text-align: center;

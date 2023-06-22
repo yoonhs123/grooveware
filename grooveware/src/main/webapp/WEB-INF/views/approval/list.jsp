@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
-<%@ page trimDirectiveWhitespaces="true" %>
+<%@ page trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
@@ -117,6 +117,10 @@ input[type=text]{
 								</select>
 								<input type="text" name="keyword" value="${keyword}" class="form-control">
 								<button type="button" class="btn" onclick="searchList();">검색</button>
+						<input type="hidden" name="condition" value="${condition}">
+						<input type="hidden" name="keyword" value="${keyword}">			
+						<input type="hidden" name="size" value="${size}">
+										
 							</form>
 						</td>
 					</tr>
@@ -140,26 +144,26 @@ input[type=text]{
 				</thead>
 				
 				<tbody> 
-					<c:forEach var="n" begin="1" end="9">
+					<c:forEach var="dto" items="${list}">
 						<tr>
 							<td>
-								<input type="checkbox" name="" value=" ">
+								<input type="checkbox" name="" value="">
 							</td>					
-							<td>2020-05-0A-00000142</td>
-							<td>기안서</td>
+							<td>${dto.doc_no}</td>
+							<td>${dto.draft_category == 0 ? '품의서' : '기안서'}</td>
 							<td>
-								<a href=" ">22년도 상반기 영업 매출의 보고</a>
+								<a href="${articleUrl}&num=${dto.doc_no}">${dto.draft_content}</a>
 							</td>
-							<td>김민교</td>
-							<td>2020-05-15(목) 11:30</td>
-							<td>승인대기</td>
+							<td>${sessionScope.member.emp_name}</td>
+							<td>${dto.draft_date}</td>
+							<td>${dto.doc_status}</td>
 						</tr>
 					</c:forEach>
 				</tbody>
 			</table>
 				</div>
 	
-			<div class="page-navigation" style="width: 900px; margin: 0 auto;">${dataCount == 0 ? "등록된 게시물이 없습니다." : paging} 1 2 3</div>
+			<div class="page-navigation" style="width: 900px; margin: 0 auto;">${dataCount == 0 ? "등록된 게시물이 없습니다." : paging}</div>
 	
 			</div>
 		</div>

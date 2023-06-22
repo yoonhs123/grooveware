@@ -6,6 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class Approval {
 	
+	// 전자문서
 	private long doc_no;
 	private long emp_no;
 	private int doc_status;
@@ -19,23 +20,29 @@ public class Approval {
 	private int important;
 	private int is_visible;
 	
-	
+	// 결재상세
 	private int approval_status_id;
 	private int approval_status;
 	private String approval_date;
 	private String reject_reason;
 	
 	
+	// 내부결재용 양식
 	private int draft_category;
 	private String draft_content;
+	
+	// 문서파일
+	private long file_num;
+
 	private String save_filename;
 	private String original_filename;
 	private List<MultipartFile> selectFile;
 	
-
+	// 휴가구분
 	private int holiday_id;
 	private String holiday_name;
 	
+	// 휴가신청 양식
 	private String annual_reason;
 	private int annual_type;
 	private int annual_count;
@@ -153,6 +160,13 @@ public class Approval {
 	}
 	public void setDraft_content(String draft_content) {
 		this.draft_content = draft_content;
+	}
+	
+	public long getFile_num() {
+		return file_num;
+	}
+	public void setFile_num(long file_num) {
+		this.file_num = file_num;
 	}
 	public String getSave_filename() {
 		return save_filename;
