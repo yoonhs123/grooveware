@@ -14,6 +14,25 @@ public class Project {
 	private String saveFilename;
 	private String originalFilename;
 	private MultipartFile selectFile;
+	
+	private String client_name;
+	
+	private long emp_no;
+	
+	
+	
+	public long getEmp_no() {
+		return emp_no;
+	}
+	public void setEmp_no(long emp_no) {
+		this.emp_no = emp_no;
+	}
+	public String getClient_name() {
+		return client_name;
+	}
+	public void setClient_name(String client_name) {
+		this.client_name = client_name;
+	}
 	public long getPj_no() {
 		return pj_no;
 	}

@@ -2,33 +2,77 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="project">
-	<update id="insertProject" parameterType='com.sp.grooveware.project.Project'>
+	<update id="insertProject" parameterType="com.sp.grooveware.project.Project">
 		insert all
 		into pj(pj_no, pj_name, pj_content, pj_creator, pj_start_date, pj_end_date)
 		 values (pj_seq.nextval, #{pj_name}, #{pj_content}, #{pj_creator}, #{pj_start_date, jdbcType=DATE}, #{pj_end_date, jdbcType=DATE})
 		into pj_file(pj_file_no, pj_no, save_filename, original_filename)
 		 values (pj_file_seq.nextval, pj_seq.currval, #{saveFilename, jdbcType=VARCHAR}, #{originalFilename, jdbcType=VARCHAR})
+		into cli(client_no, pj_no, client_name)
+		 values (cli_seq.nextval, pj_seq.currval, #{client_name})
 		select*from dual
 	</update>
+
+
+
 
 	<sql id="where-list">
 		<choose>
 			<when test="condition == 'all' ">
-			   ( INSTR(subject, #{keyword}) &gt; 0
-		          OR DBMS_LOB.INSTR(content, #{keyword}) &gt; 0 )
+			   ( INSTR(pj_name, #{keyword}) &gt; 0 )
 			</when>
-			<when test="condition == 'reg_date' ">
-			   ( TO_CHAR(reg_date, 'YYYYMMDD') = #{keyword}
-		          OR TO_CHAR(reg_date, 'YYYY-MM-DD') = #{keyword} )
+			<when test="condition == 'pmName' ">
+			   ( INSTR(pj_creator, #{keyword}) &gt; 0 )
 			</when>
-			<when test="condition == 'content'">
-			    DBMS_LOB.INSTR(content, #{keyword}) &gt; 0
+			<when test="condition == 'start_date' ">
+			   ( TO_CHAR(pj_start_date, 'YYYYMMDD') = #{keyword}
+		          OR TO_CHAR(pj_start_date, 'YYYY-MM-DD') = #{keyword} )
+			</when>
+			<when test="condition == 'end_date' ">
+			   ( TO_CHAR(pj_end_date, 'YYYYMMDD') = #{keyword}
+		          OR TO_CHAR(pj_end_date, 'YYYY-MM-DD') = #{keyword} )
+			</when>
+			<when test="condition == 'client' ">
+			   ( INSTR(client_name, #{keyword}) &gt; 0 )
 			</when>
 			<otherwise>
 			    INSTR(${condition}, #{keyword}) &gt; 0
 			</otherwise>
 		</choose>
 	</sql>
+	
+	<!-- 글 개수 -->
+	<select id="dataCount" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*), 0)
+		FROM pj a
+		JOIN emp b ON a.pj_no = b.emp_no
+		<where>
+			<if test="keyword!=null and keyword!='' ">
+				<include refid="where-list"/>
+			</if>
+		</where>   
+	</select>
+	
+	
+	<!-- 글 리스트 -->
+	<select id="listProject" parameterType="map" resultType="com.sp.grooveware.project.Project">
+		SELECT a.pj_no, pj_name, pj_creator, pj_start_date, pj_end_date
+		FROM pj a
+		JOIN pj_member d ON a.pj_no = d.pj_no
+		<where>
+			pj_member_no = #{emp_no}
+			<if test="keyword!=null and keyword!='' ">
+			  AND <include refid="where-list"/>
+			</if>
+		</where>   
+		ORDER BY pj_no DESC
+	</select>
+
+
+
+
+
+
 
 
 </mapper>

@@ -50,7 +50,37 @@ input[type=text]{
 
 </style>
 
+<c:url var="listUrl" value="/project/list">
+	<c:if test="${not empty keyword}">
+		<c:param name="condition" value="${condition}"/>
+		<c:param name="keyword" value="${keyword}"/>
+	</c:if>
+</c:url> 
 
+<script type="text/javascript">
+window.addEventListener("load", function(){
+	let page = ${page};
+	let pageSize = ${size};
+	let dataCount = ${dataCount};
+	let url = "${listUrl}"; 
+	
+	let total_page = pageCount(dataCount, pageSize);
+	let paging = pagingUrl(page, total_page, url);
+	
+	document.querySelector(".dataCount").innerHTML = dataCount+"개 ("
+			+page+"/"+total_page+"페이지)";
+
+	document.querySelector(".page-navigation").innerHTML = 
+		dataCount === 0 ? "등록된 게시물이 없습니다." : paging;
+});
+</script>
+
+<script type="text/javascript">
+function searchList() {
+	const f = document.searchForm;
+	f.submit();
+}
+</script>
 
 <div class="left-side-bar">
          <ul>
@@ -79,13 +109,13 @@ input[type=text]{
 						<td class="title" > <h3><span>|</span> 진행중인 프로젝트 </h3> 
 						</td>
 						<td align="right">
-							<form name="searchForm" action="${pageContext.request.contextPath}/ " method="post">
+							<form name="searchForm" action="${pageContext.request.contextPath}/project/list " method="post">
 								<select name="condition" class="form-select">
 									<option value="all"  ${condition == "all" ? "selected='selected'" : ""} >프로젝트 이름</option>
-									<option value="name"  ${condition == "name" ? "selected='selected'" : ""} >PM</option>
-									<option value="reg_date"  ${condition == "reg_date" ? "selected='selected'" : ""} >시작일</option>
-									<option value="subject"  ${condition == "subject" ? "selected='selected'" : ""} >종료일</option>
-									<option value="content"  ${condition == "content" ? "selected='selected'" : ""} >클라이언트</option>
+									<option value="pmName"  ${condition == "name" ? "selected='selected'" : ""} >PM</option>
+									<option value="start_date"  ${condition == "reg_date" ? "selected='selected'" : ""} >시작일</option>
+									<option value="end_date"  ${condition == "subject" ? "selected='selected'" : ""} >종료일</option>
+									<option value="client"  ${condition == "content" ? "selected='selected'" : ""} >클라이언트</option>
 								</select>
 								<input type="text" name="keyword" value="${keyword}" class="form-control">
 								<button type="button" class="btn" onclick="searchList();">검색</button>
@@ -98,6 +128,7 @@ input[type=text]{
 			<table class="table table-border table-list" >
 				<thead >
 					<tr>
+						<th>번호</th>
 						<th width="35%;"> 프로젝트 이름 </th>
 						<th> PM </th>
 						<th> 시작일 </th>
@@ -108,14 +139,29 @@ input[type=text]{
 				</thead>
 				
 				<tbody> 
-					<c:forEach var="n" begin="1" end="5">
+					<c:forEach var="dto" items="${list}" varStatus="status">
 						<tr>
-							<td><a href=" ">'A'쇼핑몰 웹서버 구축</a></td>
-							<td>윤현상</td>
-							<td>2023-01-01</td>
-							<td>2024-06-30</td>
-							<td>A마켓</td>
-							<td>파일</td>
+							<td>${dataCount - (page-1) * size - status.index}</td>
+							<td>
+								<c:url var="url" value="/project/article">
+									<c:param name="num" value="${dto.pj_no}"/>
+									<c:param name="page" value="${page}"/>
+									<c:if test="${not empty keyword}">
+										<c:param name="condition" value="${condition}"/>
+										<c:param name="keyword" value="${keyword}"/>
+									</c:if>									
+								</c:url>
+								<a href="${url}" class="text-reset">${dto.pj_name}</a>
+							</td>
+							<td>${dto.pj_creator}</td>
+							<td>${dto.pj_start_date}</td>
+							<td>${dto.pj_end_date}</td>
+							<td>${dto.client_name}</td>
+							<td>
+								<c:if test="${not empty dto.saveFilename}">
+									<a href="<c:url value='/project/download?num=${dto.pj_no}'/>" class="text-reset"><i class="bi bi-file-arrow-down"></i></a>
+								</c:if>
+							</td>
 						</tr>
 					</c:forEach>
 				</tbody>
@@ -179,7 +225,6 @@ input[type=text]{
 			</table>
 			</div>
 
-			<div class="page-navigation" style="width: 900px; margin: 0 auto;">${dataCount == 0 ? "등록된 게시물이 없습니다." : paging} 1 2 3</div>
 	
 			</div>	
    </div>

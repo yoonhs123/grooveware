@@ -43,13 +43,21 @@ public class ProjectServiceImpl implements ProjectService {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
 		return list;
 	}
 
 	@Override
 	public int dataCount(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = 0;
+		
+		try {
+			result = dao.selectOne("project.dataCount", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 
 	@Override

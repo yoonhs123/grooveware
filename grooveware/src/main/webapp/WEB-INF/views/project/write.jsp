@@ -255,7 +255,7 @@ function sendOk() {
 										<div class="leftBox">
 											<label>클라이언트 정보 </label>
 										</div>
-										<input type="text" name="" style="display: block; width: 100%; padding: 7px 5px; height: 400px;" />
+										<input type="text" name="client_name" style="display: block; width: 100%; padding: 7px 5px; height: 400px;" />
 							
 								</div>
 								
