@@ -3,8 +3,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="insaManage">
 	<insert id="insertEmp1" parameterType="com.sp.grooveware.insamanage.InsaManage">
-		INSERT INTO emp_reg(emp_name, emp_rrn, emp_email, emp_address, emp_join_date, emp_resign_date, emp_status)
-		VALUES (#{emp_name}, #{emp_rrn}, #{emp_email}, #{emp_address}, #{emp_join_date}, #{emp_resign_date, jdbcType=VARCHAR}, 0 )
+		INSERT INTO emp_reg(emp_name, emp_rrn, emp_email, emp_tel, emp_address, emp_join_date)
+		VALUES (#{emp_name}, #{emp_rrn}, #{emp_email}, #{emp_tel}, #{emp_address}, #{emp_join_date})
 	</insert>
 	
 	<insert id="insertPosDept" parameterType="com.sp.grooveware.insamanage.InsaManage">
@@ -17,8 +17,8 @@
 	
 	<update id="insertInsaManage" parameterType="com.sp.grooveware.insamanage.InsaManage">
 		INSERT ALL
-		INTO emp_reg(emp_name, emp_rrn, emp_email, emp_address, emp_join_date, emp_resign_date, emp_status)
-		VALUES (#{emp_name}, #{emp_rrn}, #{emp_email}, #{emp_address}, #{emp_join_date}, #{emp_resign_date, jdbcType=VARCHAR}, 0 )
+		INTO emp_reg(emp_name, emp_rrn, emp_email, emp_tel, emp_address, emp_join_date)
+		VALUES (#{emp_name}, #{emp_rrn}, #{emp_email}, #{emp_tel}, #{emp_address}, #{emp_join_date})
 		INTO emp_history(history_no, emp_no, pos_no, pos_startdate, pos_enddate,
 								dept_no, dept_startdate, dept_enddate)
 		VALUES (#{emp_history_seq.nextval}, #{emp_no}, 

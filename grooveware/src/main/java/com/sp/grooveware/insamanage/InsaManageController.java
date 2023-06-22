@@ -1,14 +1,13 @@
 package com.sp.grooveware.insamanage;
 
+import java.io.File;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
-import com.sp.grooveware.member.SessionInfo;
 
 @Controller("insaManage.insaManageController")
 @RequestMapping("/insaManage/*")
@@ -22,19 +21,19 @@ public class InsaManageController {
 	}
 	
 	@RequestMapping(value = "write", method = RequestMethod.GET)
-	public String profileForm(Model model, HttpSession session) throws Exception {
-		model.addAttribute("write");
-		
+	public String writeForm(HttpSession session) throws Exception {
+			
 		return ".insaManage.write";
 	}
 	
 	@RequestMapping(value= "write", method = RequestMethod.POST)
-	public String profileSubmit(InsaManage dto, HttpSession session) throws Exception {
-		SessionInfo info = (SessionInfo)session.getAttribute("member");
+	public String writeSubmit(InsaManage dto, HttpSession session) throws Exception {
 		
 		try {
-			dto.setDept_no(info.getDept_no());
-			service.insertEmp(dto);
+			String root = session.getServletContext().getRealPath("/");
+			String pathname = root + "upload" + File.separator+ "emp_picture";
+			
+			service.insertEmp(dto, pathname);
 		} catch (Exception e) {
 		}
 		

@@ -12,7 +12,7 @@ public class InsaManageServiceImpl implements InsaManageService  {
 	private CommonDAO dao;
 
 	@Override
-	public void insertEmp(InsaManage dto) throws Exception {
+	public void insertEmp(InsaManage dto, String pathname) throws Exception {
 		try {
 			dao.insertData("insertInsaManage", dto);
 		} catch (Exception e) {
