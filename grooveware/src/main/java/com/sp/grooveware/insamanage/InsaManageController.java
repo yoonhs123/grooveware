@@ -21,14 +21,14 @@ public class InsaManageController {
 		return ".insaManage.list";
 	}
 	
-	@RequestMapping(value = "profile", method = RequestMethod.GET)
+	@RequestMapping(value = "write", method = RequestMethod.GET)
 	public String profileForm(Model model, HttpSession session) throws Exception {
-		model.addAttribute("profile");
+		model.addAttribute("write");
 		
-		return ".insaManage.profile";
+		return ".insaManage.write";
 	}
 	
-	@RequestMapping(value= "profile", method = RequestMethod.POST)
+	@RequestMapping(value= "write", method = RequestMethod.POST)
 	public String profileSubmit(InsaManage dto, HttpSession session) throws Exception {
 		SessionInfo info = (SessionInfo)session.getAttribute("member");
 		
