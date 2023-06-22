@@ -14,7 +14,13 @@ public class InsaManageServiceImpl implements InsaManageService  {
 	@Override
 	public void insertEmp(InsaManage dto, String pathname) throws Exception {
 		try {
-			dao.insertData("insertInsaManage", dto);
+			Long seq = dao.selectOne("insaManage.seq");
+			
+			dto.setHistory_no(seq);
+			
+			dao.insertData("insaManage.insertEmp", dto);
+			dao.insertData("insaManage.insertHistory", dto);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;

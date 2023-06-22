@@ -15,6 +15,7 @@ public class InsaManage {
 	private Long emp_status;
 	private MultipartFile emp_picture;
 	
+	private Long history_no;
 	private int pos_no;
 	private String pos_startdate;
 	private String pos_enddate;
@@ -123,6 +124,12 @@ public class InsaManage {
 	}
 	public void setEmp_picture(MultipartFile emp_picture) {
 		this.emp_picture = emp_picture;
+	}
+	public Long getHistory_no() {
+		return history_no;
+	}
+	public void setHistory_no(Long history_no) {
+		this.history_no = history_no;
 	}
 	
 	

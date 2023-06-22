@@ -2,28 +2,35 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="insaManage">
-	<insert id="insertEmp1" parameterType="com.sp.grooveware.insamanage.InsaManage">
+	<select id="seq" resultType="Long">
+		SELECT emp_history_seq.NEXTVAL FROM dual
+	</select>
+	
+	
+	<insert id="insertEmp" parameterType="com.sp.grooveware.insamanage.InsaManage">
 		INSERT INTO emp_reg(emp_name, emp_rrn, emp_email, emp_tel, emp_address, emp_join_date)
-		VALUES (#{emp_name}, #{emp_rrn}, #{emp_email}, #{emp_tel}, #{emp_address}, #{emp_join_date})
+		VALUES (#{emp_name}, #{emp_rrn}, #{emp_emal}, 
+				#{emp_tel}, #{emp_address}, TO_DATE(#{emp_join_date}, 'YYYY-MM-DD'))
 	</insert>
 	
-	<insert id="insertPosDept" parameterType="com.sp.grooveware.insamanage.InsaManage">
-		INSERT INTO emp_history(history_no, emp_no, pos_no, pos_startdate, pos_enddate,
-								dept_no, dept_startdate, dept_enddate)
-		VALUES (#{emp_history_seq.nextval}, #{emp_no}, 
-				#{pos_no}, #{pos_startdate, jdbcType=VARCHAR}, #{pos_enddate, jdbcType=VARCHAR},
-				#{dept_no}, #{dept_startdate, jdbcType=VARCHAR}, #{dept_enddate, jdbcType=VARCHAR})
+	<insert id="insertHistory" parameterType="com.sp.grooveware.insamanage.InsaManage">
+		INSERT INTO emp_history(history_no, emp_no, pos_no, pos_startdate, dept_no, dept_startdate)
+		VALUES (#{history_no}, emp_seq.CURRVAL, #{pos_no}, 
+		TO_DATE(#{pos_startdate}, 'YYYY-MM-DD'), #{dept_no}, 
+		TO_DATE(#{dept_startdate}, 'YYYY-MM-DD'))
 	</insert>
 	
+	 
+	 <!--  
 	<update id="insertInsaManage" parameterType="com.sp.grooveware.insamanage.InsaManage">
 		INSERT ALL
 		INTO emp_reg(emp_name, emp_rrn, emp_email, emp_tel, emp_address, emp_join_date)
-		VALUES (#{emp_name}, #{emp_rrn}, #{emp_email}, #{emp_tel}, #{emp_address}, #{emp_join_date})
-		INTO emp_history(history_no, emp_no, pos_no, pos_startdate, pos_enddate,
-								dept_no, dept_startdate, dept_enddate)
-		VALUES (#{emp_history_seq.nextval}, #{emp_no}, 
-				#{pos_no}, #{pos_startdate, jdbcType=VARCHAR}, #{pos_enddate, jdbcType=VARCHAR},
-				#{dept_no}, #{dept_startdate, jdbcType=VARCHAR}, #{dept_enddate, jdbcType=VARCHAR})
+		VALUES (#{emp_name}, #{emp_rrn}, #{emp_email}, 
+				#{emp_tel}, #{emp_address}, #{emp_join_date})
+		INTO emp_history(history_no, emp_no, pos_no, pos_startdate, dept_no, dept_startdate)
+		VALUES (#{history_no}, emp_seq.CURRVAL , #{pos_no}, #{pos_startdate}, #{dept_no}, #{dept_startdate})
 		SELECT * FROM dual
 	</update>
+	-->
+	
 </mapper>
