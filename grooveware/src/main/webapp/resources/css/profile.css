@@ -11,11 +11,12 @@
 	height: 100%;
 	overflow: auto;
 	background-color: rgba(0, 0, 0, 0.5);
+	border-radius: 3px;
 }
 
 .modal-content-profile {
 	background-color: #fefefe;
-	margin: 10% auto;
+	margin: 8% auto;
 	padding: 20px;
 	border: 1px solid #888;
 	width: 60%;
