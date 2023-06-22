@@ -23,7 +23,7 @@
 
 	<context:component-scan base-package="com.sp.grooveware" />
 
- 	<!-- @Scheduled 애노테이션 -->
+ 	<!-- @Scheduled 활성화 애노테이션 -->
 	<task:annotation-driven/>
 
     <!-- 트랜잭션 처리 -->
