@@ -41,13 +41,13 @@
 			<tr>
 				<td>제&nbsp;&nbsp;&nbsp;&nbsp;목</td>
 				<td> 
-					<input type="text" class="form-control">
+					<input type="text" class="form-control" value="${dto.noti_title}">
 				</td>
 			</tr>
 			<tr  > 
 				<td valign="top">내&nbsp;&nbsp;&nbsp;&nbsp;용</td>
 				<td> 
-					<textarea name="content" class="form-control" style="height: 400px;">${dto.content}</textarea>
+					<textarea name="content" class="form-control" style="height: 400px;">${dto.noti_content}</textarea>
 				</td>
 			</tr>
 
