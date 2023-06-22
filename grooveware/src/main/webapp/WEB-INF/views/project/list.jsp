@@ -225,6 +225,7 @@ function searchList() {
 			</table>
 			</div>
 
+			<div class="page-navigation" style="width: 900px; margin: 0 auto;">${dataCount == 0 ? "등록된 게시물이 없습니다." : paging} 1 2 3</div>
 	
 			</div>	
    </div>
