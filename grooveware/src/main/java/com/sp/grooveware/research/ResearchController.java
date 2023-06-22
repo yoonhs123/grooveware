@@ -8,9 +8,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller("research.ResearchController")
+@RequestMapping("/research/*")
 public class ResearchController {
 	
-	@RequestMapping(value="/research", method=RequestMethod.GET)
+	@RequestMapping(value="list", method=RequestMethod.GET)
 	public String method() {
 		return ".research.list";
 	}
