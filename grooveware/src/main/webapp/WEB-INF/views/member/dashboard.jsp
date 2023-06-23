@@ -32,13 +32,13 @@
 				</div>
 				<div class="item">
 					<div class="desc-area commuteBox">
-						<span class="fontColor title" style="font-size: 18px;">공지사항</span>
+						<span class="fontColor title" style="font-size: 18px;">내 휴가통계</span>
 
 						<div style="margin-top: 30px;">
-							<c:forEach var="n" begin="1" end="4">
+							<c:forEach var="n" begin="1" end="3">
 								<div class="list-item">
-									<div class="fontColor">전직원 전자결재 작성요령(결재라인 포함)</div>
-									<div class="minibox">댓글 0 최고관리자 2023.06.05</div>
+									<div class="fontColor">연차휴가</div>
+									<div class="minibox">총 15일 사용 1일 잔여 14일</div>
 								</div>
 							</c:forEach>
 						</div>
@@ -46,7 +46,7 @@
 				</div>
 				<div class="item">
 					<div class="desc-area commuteBox">
-						<span class="fontColor title" style="font-size: 18px;">공지사항</span>
+						<span class="fontColor title" style="font-size: 18px;">전자결재</span>
 
 						<div style="margin-top: 30px;">
 							<c:forEach var="n" begin="1" end="4">
@@ -62,7 +62,7 @@
 				</div>
 				<div class="item">
 					<div class="desc-area commuteBox">
-						<span class="fontColor title" style="font-size: 18px;">공지사항</span>
+						<span class="fontColor title" style="font-size: 18px;">프로젝트 현황</span>
 
 						<div style="margin-top: 30px;">
 							<c:forEach var="n" begin="1" end="4">
@@ -79,7 +79,7 @@
 				</div>
 				<div class="item">
 					<div class="desc-area commuteBox">
-						<span class="fontColor title" style="font-size: 18px;">공지사항</span>
+						<span class="fontColor title" style="font-size: 18px;">전체 공지사항</span>
 
 						<div style="margin-top: 30px;">
 							<c:forEach var="n" begin="1" end="4">
@@ -93,7 +93,7 @@
 				</div>
 				<div class="item">
 					<div class="desc-area commuteBox">
-						<span class="fontColor title" style="font-size: 18px;">공지사항</span>
+						<span class="fontColor title" style="font-size: 18px;">부서 공지사항</span>
 
 						<div style="margin-top: 30px;">
 							<c:forEach var="n" begin="1" end="4">

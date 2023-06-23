@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="club">
+	<!-- 클럽 만들기 -->
+	<update id="insertClub" parameterType="com.sp.grooveware.club.Club">
+		INSERT ALL
+		
+		INTO club(club_id, club_name, club_content, club_startdate)
+		VALUES(club_seq.NEXTVAL, #{club_name}, #{club_content}, SYSDATE)
+		
+		INTO club_member(club_id, emp_no, member_authority, member_status, member_joindate)
+		VALUES(club_seq.CURRVAL, #{emp_no}, '0', '1', SYSDATE)
+	
+		SELECT * FROM DUAL
+	</update>
+	
+	<sql id="where-list">
+		<if test="condition=='club_name'">
+			(INSTR(club_name),#{keyword}) &gt; 0
+		</if>
+		<if test="condition=='emp_name'">
+			emp_name=#{keyword}
+		</if>
+	</sql>
+	
+	<!-- 클럽 전체 리스트 조회 -->
+	<select id="listClub" parameterType="map" resultType="com.sp.grooveware.club.Club">
+		SELECT c.club_id, c.club_name, NVL(memberCount,0) member_count, e.emp_name, 
+			   TO_CHAR (c.club_startdate, 'YYYY-MM-DD') club_startdate
+		FROM club c
+		LEFT OUTER JOIN (
+		    SELECT club_id, COUNT(*) memberCount
+		    FROM club_member
+		    GROUP BY club_id
+		) cmm ON c.club_id=cmm.club_id
+		JOIN club_member cm ON c.club_id=cm.club_id
+		JOIN emp e ON cm.emp_no=e.emp_no
+		WHERE member_authority='0'
+	</select>
+	
+	<!-- 클럽 전체 개수 -->
+	<select id="dataCountClub" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*),0)
+		FROM club c
+		JOIN club_member cm ON c.club_id=cm.club_id
+		<where>
+			<if test="keyword != null and keyword != '' ">
+				<include refid="where-list"/>
+			</if>
+		</where>
+	</select>
+	
+	<!-- 클럽별 회원 수 -->
+	<select id="clubMemberCount" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*), 0) 
+		FROM club_member cm
+		JOIN club c ON cm.club_id=c.club_id
+		WHERE c.club_id = #{club_id}
+	</select>
+	
+	<!-- 클럽 정보 수정 -->
+	<update id="updateClub" parameterType="com.sp.grooveware.club.Club">
+		UPDATE club SET club_name=#{club_name}, club_content=#{club_content}
+		WHERE club_id=#{club_id}
+	</update>
+	
+	<!-- 클럽 정보 삭제 -->
+
+	<!-- 클럽 정보 보기 -->
+	<select id="readClub" parameterType="Long" resultType="com.sp.grooveware.club.Club">
+		SELECT c.club_id, c.club_name, NVL(memberCount,0) memberCount, e.emp_name, TO_CHAR (c.club_startdate, 'YYYY-MM-DD') startdate, c.club_content
+		FROM club c
+		LEFT OUTER JOIN (
+		    SELECT club_id, COUNT(*) memberCount
+		    FROM club_member
+		    GROUP BY club_id
+		) cmm ON c.club_id=cmm.club_id
+		JOIN club_member cm ON c.club_id=cm.club_id
+		JOIN emp e ON cm.emp_no=e.emp_no
+		WHERE c.club_id = #{club_id}
+	</select>
+
+	<!-- 클럽 맴버 가입 : 일반맴버 -->
+	<insert id="joinClub" parameterType="com.sp.grooveware.club.Club">
+		INSERT INTO club_member(club_id, emp_no, member_authority, member_status, member_joindate)
+		VALUES(#{club_id}, #{emp_no}, '1', '1', SYSDATE)
+	</insert>
+	
+	<!-- 클럽 공지사항 게시글 작성 -->
+	
+	
+	<!-- 클럽 공지사항 리스트 조회 -->
+	
+	
+	<!-- 클럽 공지사항 게시글 개수 -->
+	
+	
+	<!-- 클럽 공지사항 게시글 수정 -->
+	
+	
+	<!-- 클럽 공지사항 게시글 삭제 -->
+	
+	
+	<!-- 클럽 공지사항 게시글 보기 -->
+	
+
+</mapper>
