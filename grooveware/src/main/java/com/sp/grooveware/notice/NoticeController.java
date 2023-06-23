@@ -69,7 +69,9 @@ public class NoticeController {
 
 		try {
 			dto.setEmp_no(info.getEmp_no());		
+			dto.setDept_no(info.getDept_no());
 			service.insertNotice(dto, "write");
+
 		} catch (Exception e) {
 
 		}

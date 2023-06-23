@@ -9,6 +9,7 @@ public class Notice {
 	private int not_id;
 	private long emp_no;
 	private int dept_id;
+	private long dept_no;
 	private String noti_title;
 	private String noti_content;
 	private String noti_regdate; 
@@ -57,6 +58,14 @@ public class Notice {
 
 	public void setDept_id(int dept_id) {
 		this.dept_id = dept_id;
+	}
+
+	public long getDept_no() {
+		return dept_no;
+	}
+
+	public void setDept_no(long dept_no) {
+		this.dept_no = dept_no;
 	}
 
 	public String getNoti_title() {
@@ -139,6 +148,8 @@ public class Notice {
 		this.gap = gap;
 	}
 
+	
+	
 	
 	
 }
