@@ -3,8 +3,8 @@ package com.sp.grooveware.insamanage;
 import org.springframework.web.multipart.MultipartFile;
 
 public class InsaManage {
-	private Long qualifer;
-	private Long emp_no;
+	private long qualifer;
+	private long emp_no;
 	private String emp_pwd;
 	private String emp_name;
 	private String emp_rrn;
@@ -13,21 +13,33 @@ public class InsaManage {
 	private String emp_address;
 	private String emp_join_date;
 	private String emp_resign_date;
-	private Long emp_status;
+	private long emp_status;
 	private MultipartFile emp_picture;
 	
-	private Long history_no;
-	private int pos_no;
+	private long history_no;
 	private String pos_startdate;
 	private String pos_enddate;
-	private Long dept_no;
 	private String dept_startdate;
 	private String dept_enddate;
 	
-	public Long getEmp_no() {
+	private long dept_no;
+	private String dept_name;
+	private int dept_status;
+	private long top_dept_no;
+	
+	private int pos_no;
+	private String pos_name;
+	
+	public long getQualifer() {
+		return qualifer;
+	}
+	public void setQualifer(long qualifer) {
+		this.qualifer = qualifer;
+	}
+	public long getEmp_no() {
 		return emp_no;
 	}
-	public void setEmp_no(Long emp_no) {
+	public void setEmp_no(long emp_no) {
 		this.emp_no = emp_no;
 	}
 	public String getEmp_pwd() {
@@ -78,17 +90,23 @@ public class InsaManage {
 	public void setEmp_resign_date(String emp_resign_date) {
 		this.emp_resign_date = emp_resign_date;
 	}
-	public Long getEmp_status() {
+	public long getEmp_status() {
 		return emp_status;
 	}
-	public void setEmp_status(Long emp_status) {
+	public void setEmp_status(long emp_status) {
 		this.emp_status = emp_status;
 	}
-	public int getPos_no() {
-		return pos_no;
+	public MultipartFile getEmp_picture() {
+		return emp_picture;
 	}
-	public void setPos_no(int pos_no) {
-		this.pos_no = pos_no;
+	public void setEmp_picture(MultipartFile emp_picture) {
+		this.emp_picture = emp_picture;
+	}
+	public long getHistory_no() {
+		return history_no;
+	}
+	public void setHistory_no(long history_no) {
+		this.history_no = history_no;
 	}
 	public String getPos_startdate() {
 		return pos_startdate;
@@ -102,12 +120,6 @@ public class InsaManage {
 	public void setPos_enddate(String pos_enddate) {
 		this.pos_enddate = pos_enddate;
 	}
-	public Long getDept_no() {
-		return dept_no;
-	}
-	public void setDept_no(Long dept_no) {
-		this.dept_no = dept_no;
-	}
 	public String getDept_startdate() {
 		return dept_startdate;
 	}
@@ -120,23 +132,41 @@ public class InsaManage {
 	public void setDept_enddate(String dept_enddate) {
 		this.dept_enddate = dept_enddate;
 	}
-	public MultipartFile getEmp_picture() {
-		return emp_picture;
+	public long getDept_no() {
+		return dept_no;
 	}
-	public void setEmp_picture(MultipartFile emp_picture) {
-		this.emp_picture = emp_picture;
+	public void setDept_no(long dept_no) {
+		this.dept_no = dept_no;
 	}
-	public Long getHistory_no() {
-		return history_no;
+	public String getDept_name() {
+		return dept_name;
 	}
-	public void setHistory_no(Long history_no) {
-		this.history_no = history_no;
+	public void setDept_name(String dept_name) {
+		this.dept_name = dept_name;
 	}
-	public Long getQualifer() {
-		return qualifer;
+	public int getDept_status() {
+		return dept_status;
 	}
-	public void setQualifer(Long qualifer) {
-		this.qualifer = qualifer;
+	public void setDept_status(int dept_status) {
+		this.dept_status = dept_status;
+	}
+	public long getTop_dept_no() {
+		return top_dept_no;
+	}
+	public void setTop_dept_no(long top_dept_no) {
+		this.top_dept_no = top_dept_no;
+	}
+	public int getPos_no() {
+		return pos_no;
+	}
+	public void setPos_no(int pos_no) {
+		this.pos_no = pos_no;
+	}
+	public String getPos_name() {
+		return pos_name;
+	}
+	public void setPos_name(String pos_name) {
+		this.pos_name = pos_name;
 	}
 	
 	

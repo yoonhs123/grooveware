@@ -1,6 +1,8 @@
 package com.sp.grooveware.insamanage;
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,9 +17,14 @@ public class InsaManageServiceImpl implements InsaManageService  {
 	public void insertEmp(InsaManage dto) throws Exception {
 		try {
 
-			Long seq = dao.selectOne("insaManage.seq");
+			long seq = dao.selectOne("insaManage.seq");
+			
+			String dept_name = dao.selectOne("insaManage.listDept");
+			String pos_name = dao.selectOne("insaManage.listPos");
 			
 			dto.setHistory_no(seq);
+			dto.setDept_name(dept_name);
+			dto.setPos_name(pos_name);
 			
 			dao.insertData("insaManage.insertEmp", dto);
 			dao.insertData("insaManage.insertHistory", dto);
@@ -27,6 +34,60 @@ public class InsaManageServiceImpl implements InsaManageService  {
 			throw e;
 		}
 	}
+
+	@Override
+	public InsaManage readDeptCategory(long dept_no) {
+		InsaManage dto = null;
+		
+		try {
+			dto = dao.selectOne("insaManage.readDeptCategory", dept_no);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return dto;
+	}
+
+	@Override
+	public List<InsaManage> listDeptCategory() {
+		List<InsaManage> list = null;
+		
+		try {
+			list = dao.selectList("insaManage.listDeptCategory");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+
+	@Override
+	public List<InsaManage> listDeptSubCategory(long top_dept_no) {
+		List<InsaManage> list = null;
+		
+		try {
+			list = dao.selectList("insaManage.listDeptSubCategory", top_dept_no);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+
+	@Override
+	public List<InsaManage> listPosCategory() {
+		List<InsaManage> list = null;
+		
+		try {
+			list = dao.selectList("insaManage.listPosCategory");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+
+
 
 	
 

@@ -23,6 +23,37 @@
 		TO_DATE(#{dept_startdate}, 'YYYY-MM-DD'))
 	</insert>
 	
+	
+	
+	<select id="readDeptCategory" parameterType="Long" resultType="com.sp.grooveware.insamanage.InsaManage">
+		SELECT  dept_no, dept_name, dept_status, top_dept_no 
+		FROM dept
+		WHERE dept_no = #{dept_no}
+	</select>
+	
+	<!-- 상위 부서 카테고리 -->
+	<select id="listDeptCategory" resultType="com.sp.grooveware.insamanage.InsaManage">
+		SELECT dept_no, dept_name, dept_status, top_dept_no 
+		FROM dept 
+		WHERE top_dept_no IS NULL
+		ORDER BY dept_no 
+	</select>
+
+	<!-- 하위 부서 카테고리 -->
+	<select id="listDeptSubCategory" parameterType="Long" resultType="com.sp.grooveware.insamanage.InsaManage">
+		SELECT dept_no, dept_name, dept_status, top_dept_no 
+		FROM dept
+		WHERE top_dept_no  = #{top_dept_no}
+		ORDER BY dept_no
+	</select>
+
+	<!-- 직위 -->	
+	<select id="listPosCategory" resultType="com.sp.grooveware.insamanage.InsaManage">
+		SELECT pos_no, pos_name 
+		FROM pos
+		ORDER BY pos_no
+	</select>
+	
 	 
 	 <!--  
 	<update id="insertInsaManage" parameterType="com.sp.grooveware.insamanage.InsaManage">

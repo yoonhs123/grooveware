@@ -35,14 +35,14 @@
 	         return;
 	     }
 	     
-	     /*
-	     str = f.address.value.trim();
+
+	     str = f.emp_address.value.trim();
 	     if(!str) {
 	         alert("주소을 입력하세요. ");
 	         f.address.focus();
 	         return;
 	     }
-	     */
+
 	     
 	     str = f.emp_join_date.value.trim();
 	     if(!str) {
@@ -115,8 +115,8 @@
         <input type="email" id="email"  name="emp_email" value="${dto.emp_email}">
         <br><br>
         
-        <label for="ssn">주민번호:</label>
-        <input type="text" id="ssn"  name="emp_rrn" value="${dto.emp_rrn}">
+        <label for="rrn">주민번호:</label>
+        <input type="text" id="rrn"  name="emp_rrn" value="${dto.emp_rrn}">
         <br><br>
 
         <label for="phone">핸드폰번호:</label>
@@ -124,7 +124,7 @@
         <br><br>
 
         <label for="address">주소:</label>
-        <input type="text" id="address"  name="emp_address" value="${dto.emp_address}">
+        <input type="text" id="address"  name="emp_address" value="${dto.emp_address}" style="width: 300px;">
         <br><br>
         
         
@@ -137,14 +137,34 @@
         <br><br>
 
         <label for="positionCode">직위코드:</label>
-        <input type="text" id="address"  name="pos_no" value="${dto.pos_no}">
+        <select id="address"  name="pos_no">
+        	<c:forEach var="vo" items="listPosCategory">
+        		<option value="${dto.pos_no}">${vo.pos_name}</option>
+        	</c:forEach>
+        </select>
         <br><br>
 
         <label for="positionStartDate">직위시작날짜:</label>
         <input type="date" id="positionStartDate"  name="pos_startdate" value="${dto.pos_startdate}">
         <br><br>
 
-        <label for="departmentCode">부서코드:</label>
+        <label for="departmentCode">부서</label>
+        <div>
+        	<select name="top_dept_no">
+        		<c:forEach var="vo" items="listDeptCategory">
+        			<option value="dto.top_dept_no" ${top_dept_no==vo.top_dept_no?"selected='selected'":""}>
+        				${vo.dept_name}
+        			</option>
+        		</c:forEach>
+        	</select>
+        	<select name="dept_no">
+        		<c:forEach var="vo" items="${listDeptSubCategory}">
+        			<option value="dto.dept_no" ${dto.dept_no==vo.dept_no?"selected='selected'":""}>
+        				${vo.dept_name}
+        			</option>
+        		</c:forEach>
+        	</select>
+        </div>
         <input type= "text" id="departmentCode"  name="dept_no" value="${dto.dept_no}">
         <br><br>
 
