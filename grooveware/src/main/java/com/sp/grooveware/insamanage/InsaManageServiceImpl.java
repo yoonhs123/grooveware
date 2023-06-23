@@ -12,8 +12,9 @@ public class InsaManageServiceImpl implements InsaManageService  {
 	private CommonDAO dao;
 
 	@Override
-	public void insertEmp(InsaManage dto, String pathname) throws Exception {
+	public void insertEmp(InsaManage dto) throws Exception {
 		try {
+
 			Long seq = dao.selectOne("insaManage.seq");
 			
 			dto.setHistory_no(seq);

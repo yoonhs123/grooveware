@@ -3,6 +3,7 @@ package com.sp.grooveware.insamanage;
 import org.springframework.web.multipart.MultipartFile;
 
 public class InsaManage {
+	private Long qualifer;
 	private Long emp_no;
 	private String emp_pwd;
 	private String emp_name;
@@ -130,6 +131,12 @@ public class InsaManage {
 	}
 	public void setHistory_no(Long history_no) {
 		this.history_no = history_no;
+	}
+	public Long getQualifer() {
+		return qualifer;
+	}
+	public void setQualifer(Long qualifer) {
+		this.qualifer = qualifer;
 	}
 	
 	

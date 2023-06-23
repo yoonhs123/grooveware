@@ -6,30 +6,29 @@
 <script type="text/javascript">
 	function sendOk() {
 	     const f = document.empForm;
-	 	let str;
-	 	
-	     str = f.name.value.trim();
+	 	 let str;
+	 	str = f.emp_name.value.trim();
 	     if(!str) {
 	         alert("이름을 입력하세요. ");
 	         f.name.focus();
 	         return;
 	     }
 
-	     str = f.email.value.trim();
+	     str = f.emp_email.value.trim();
 	     if(!str) {
 	         alert("이메일을 입력하세요. ");
 	         f.email.focus();
 	         return;
 	     }
 	     
-	     str = f.rrn.value.trim();
+	     str = f.emp_rrn.value.trim();
 	     if(!str) {
 	         alert("주민번호을 입력하세요. ");
 	         f.rrn.focus();
 	         return;
 	     }
 	     
-	     str = f.tel.value.trim();
+	     str = f.emp_tel.value.trim();
 	     if(!str) {
 	         alert("전화번호을 입력하세요. ");
 	         f.tel.focus();
@@ -45,35 +44,35 @@
 	     }
 	     */
 	     
-	     str = f.startDate.value.trim();
+	     str = f.emp_join_date.value.trim();
 	     if(!str) {
 	         alert("입사일을 입력하세요. ");
 	         f.startDate.focus();
 	         return;
 	     }
 	     
-	     str = f.positionCode.value.trim();
+	     str = f.pos_no.value.trim();
 	     if(!str) {
 	         alert("직위코드을 입력하세요. ");
 	         f.positionCode.focus();
 	         return;
 	     }
 	     
-	     str = f.positionStartDate.value.trim();
+	     str = f.pos_startdate.value.trim();
 	     if(!str) {
 	         alert("직위 시작일을 입력하세요. ");
 	         f.positionStartDate.focus();
 	         return;
 	     }
 	     
-	     str = f.departmentCode.value.trim();
+	     str = f.dept_no.value.trim();
 	     if(!str) {
 	         alert("부서코드을 입력하세요. ");
 	         f.departmentCode.focus();
 	         return;
 	     }
 	     
-	     str = f.departmentStartDate.value.trim();
+	     str = f.dept_startdate.value.trim();
 	     if(!str) {
 	         alert("부서발령일을 입력하세요. ");
 	         f.departmentStartDate.focus();
@@ -109,28 +108,28 @@
    		<br><br>
    		
    		<label for="name">이름:</label>
-        <input type="text" id="name" required name="name" value="${dto.emp_name}">
+        <input type="text" id="name"  name="emp_name" value="${dto.emp_name}">
         <br><br>
 
         <label for="email">이메일:</label>
-        <input type="email" id="email" required name="email" value="${dto.emp_email}">
+        <input type="email" id="email"  name="emp_email" value="${dto.emp_email}">
         <br><br>
         
         <label for="ssn">주민번호:</label>
-        <input type="text" id="ssn" required name="rrn" value="${dto.emp_rrn}">
+        <input type="text" id="ssn"  name="emp_rrn" value="${dto.emp_rrn}">
         <br><br>
 
         <label for="phone">핸드폰번호:</label>
-        <input type="text" id="phone" required name="tel" value="${dto.emp_tel}">
+        <input type="text" id="phone"  name="emp_tel" value="${dto.emp_tel}">
         <br><br>
 
         <label for="address">주소:</label>
-        <input type="text" id="address" required name="address" value="${dto.emp_address}">
+        <input type="text" id="address"  name="emp_address" value="${dto.emp_address}">
         <br><br>
         
         
         <label for="startDate">입사일:</label>
-        <input type="date" id="startDate" required name="startDate" value="${dto.emp_join_date}">
+        <input type="date" id="startDate"  name="emp_join_date" value="${dto.emp_join_date}">
         <br><br>
 
         <label for="photo">사진:</label>
@@ -138,23 +137,23 @@
         <br><br>
 
         <label for="positionCode">직위코드:</label>
-        <input type="text" id="address" required name="positionCode" value="${dto.pos_no}">
+        <input type="text" id="address"  name="pos_no" value="${dto.pos_no}">
         <br><br>
 
         <label for="positionStartDate">직위시작날짜:</label>
-        <input type="date" id="positionStartDate" required name="positionStartDate" value="${dto.pos_startdate}">
+        <input type="date" id="positionStartDate"  name="pos_startdate" value="${dto.pos_startdate}">
         <br><br>
 
         <label for="departmentCode">부서코드:</label>
-        <input type= "text" id="departmentCode" required name="departmentCode" value="${dto.dept_no}">
+        <input type= "text" id="departmentCode"  name="dept_no" value="${dto.dept_no}">
         <br><br>
 
         <label for="departmentStartDate">부서발령날짜:</label>
-        <input type="date" id="departmentStartDate" required name="departmentStartDate" value="${dto.dept_startdate}">
+        <input type="date" id="departmentStartDate"  name="dept_startdate" value="${dto.dept_startdate}">
         <br><br>
 
         <button type="button" onclick="sendOk()">등록하기</button>
         <button type="reset">다시입력</button>
-   		</form>
+   		</form>   		
    		</div>
    	</div>
