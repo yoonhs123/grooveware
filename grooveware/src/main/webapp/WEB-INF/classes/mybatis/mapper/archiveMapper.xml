@@ -12,19 +12,19 @@
 	
 	<!-- 파일 추가 -->
 	<insert id="insertFile" parameterType="com.sp.grooveware.archive.Archive">
-		INSERT INTO reference_file(FILE_NO, FOLDER_NO, SAVE_FILENAME, ORIGINAL_FILENAME, FILE_SIZE)
+		INSERT INTO reference_file(FILE_NO, FOLDER_NO, SAVE_FILENAME, ORIGINAL_FILENAME, FILE_SIZE, reg_date)
 		VALUES (reference_file_seq.NEXTVAL, 1, #{save_filename},
-			#{original_filename}, #{file_size})
+			#{original_filename}, #{file_size}, SYSDATE)
 	</insert>
 	
 	<!-- 전사 자료실 데이터 개수 -->
 	<select id="dataCountAll" parameterType="map" resultType="Integer">
 		SELECT NVL(COUNT(*), 0)
-		FROM reference_folder
+		FROM reference_file
 		<where>
-			folder_no = 1 OR
+			
 			<if test="keyword!=null and keyword != '' ">
-				<include refid="where-list"/>
+				OR <include refid="where-list"/>
 			</if>
 		</where>
 	</select>
@@ -34,5 +34,46 @@
 			( INSTR(original_filename, #{keyword}) &gt; 0)
 		</if>
 	</sql>
+	
+	<select id="listFileAll" parameterType="map" resultType="com.sp.grooveware.archive.Archive">
+		select file_no, original_filename, file_size, reg_date from reference_file
+		<where>
+			folder_no = 1 
+			<if test="keyword != null and keyword != '' ">
+				OR <include refid="where-list"/>
+			</if>
+		</where>
+		ORDER BY reg_date DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{size} ROWS ONLY
+	</select>
+	
+	<select id="readFile" parameterType="String" resultType="com.sp.grooveware.archive.Archive">
+	
+		SELECT save_filename, original_filename FROM reference_file WHERE file_no = #{file_no}
+	
+	</select>
+	
+	
+	<select id="listFolderAll" parameterType="map" resultType="com.sp.grooveware.archive.Archive">
+		SELECT DISTINCT folder_no, folder_name, root_folder
+		FROM (
+		  SELECT folder_no, folder_name, root_folder
+		  FROM reference_folder
+		  CONNECT BY PRIOR folder_no = root_folder
+		  START WITH folder_no = 1 OR root_folder = 1
+		) subquery
+		ORDER BY folder_no ASC
+	</select>	
+	
+	<!-- 파일 삭제 -->
+	<delete id="deleteFile" parameterType="map">
+		DELETE FROM reference_file
+		WHERE file_no IN 
+				<foreach item="file_no" index="index" collection="fileList"
+						open="(" separator="," close=")">
+					#{file_no}
+				</foreach>
+    </delete>
+	
 	
 </mapper> 

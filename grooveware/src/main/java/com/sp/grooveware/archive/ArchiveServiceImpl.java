@@ -1,6 +1,6 @@
 package com.sp.grooveware.archive;
 
-import java.util.List; 
+import java.util.List;   
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +23,9 @@ public class ArchiveServiceImpl implements ArchiveService {
 		int result = 0;
 		
 		try {
-			//result = dao.selectOne("")
+			result = dao.selectOne("archive.dataCountAll", map);
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		}
 		
 		return result;
@@ -33,8 +33,15 @@ public class ArchiveServiceImpl implements ArchiveService {
 
 	@Override
 	public List<Archive> listArchive(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Archive> list = null;
+
+		try {
+			list = dao.selectList("archive.listFileAll", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return list;
 	}
 
 	@Override
@@ -54,6 +61,42 @@ public class ArchiveServiceImpl implements ArchiveService {
 				throw e;
 			}
 		
+	}
+
+	@Override
+	public List<Archive> listFolder() {
+		List<Archive> list = null;
+
+		try {
+			list = dao.selectList("archive.listFolderAll");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return list;
+	}
+
+	@Override
+	public void deleteFile(Map<String, Object> map) throws Exception {
+		try {
+			dao.deleteData("archive.deleteFile", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+
+	@Override
+	public Archive readFile(String file_no) {
+		Archive dto = null;
+		
+		try {
+			dto = dao.selectOne("archive.readFile", file_no);
+		} catch (Exception e) {
+			
+		}
+		
+		return dto;
 	}
 
 }

@@ -6,14 +6,28 @@ public class Archive {
 	private long folder_no;
 	private String folder_name;
 	private int reference_room_id;
+	private String root_folder;
 	
 	private String file_no;
 	private String original_filename;
 	private String save_filename;
 	private MultipartFile selectFile;
 	private long file_size;
+	private String reg_date;
 	
 	
+	public String getReg_date() {
+		return reg_date;
+	}
+	public void setReg_date(String reg_date) {
+		this.reg_date = reg_date;
+	}
+	public String getRoot_folder() {
+		return root_folder;
+	}
+	public void setRoot_folder(String root_folder) {
+		this.root_folder = root_folder;
+	}
 	public long getFile_size() {
 		return file_size;
 	}
