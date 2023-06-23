@@ -12,8 +12,13 @@ public interface ApprovalService {
 	public int dataCount(Map<String, Object>map);
 	
 	public Approval readApproval(long doc_no);
-	public List<Approval> listFile(long doc_no);
 	
 	public void updateApproval(Approval dto, String pathname) throws Exception;
+	public void deleteApproval(long doc_no, String pathname) throws Exception;
 	
+	public void insertFile(Approval dto)throws Exception;
+	public List<Approval> listFile(long doc_no);
+	public Approval readFile(long file_no);
+	public void deleteFile(Map<String, Object>map)throws Exception;
+
 }

@@ -152,7 +152,7 @@ input[type=text]{
 							<td>${dto.doc_no}</td>
 							<td>${dto.draft_category == 0 ? '품의서' : '기안서'}</td>
 							<td>
-								<a href="${articleUrl}&num=${dto.doc_no}">${dto.draft_content}</a>
+								<a href="${articleUrl}&doc_no=${dto.doc_no}&size=${size}">${dto.draft_content}</a>
 							</td>
 							<td>${sessionScope.member.emp_name}</td>
 							<td>${dto.draft_date}</td>

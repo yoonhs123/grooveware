@@ -11,7 +11,7 @@
 	<insert id="insertApproval1" parameterType="com.sp.grooveware.approval.Approval">
 		INSERT INTO doc (doc_no, emp_no, doc_status, urgent, doc_name, draft_date, draft_deadline, 
 						approval_step, approval_finaldate, submit_date, important, is_visible)
-		VALUES (#{doc_no}, #{emp_no}, #{doc_status, jdbcType=INTEGER}, #{urgent}, #{doc_name, jdbcType=VARCHAR}, SYSDATE, #{draft_deadline, jdbcType=DATE}, 
+		VALUES (#{doc_no}, #{emp_no}, #{doc_status}, #{urgent}, #{doc_name, jdbcType=VARCHAR}, SYSDATE, #{draft_deadline, jdbcType=DATE}, 
 						#{approval_step, jdbcType=INTEGER}, #{approval_finaldate, jdbcType=DATE}, #{submit_date, jdbcType=DATE}, 0, 0)
 	</insert>
 	
@@ -21,7 +21,7 @@
 	</insert>
 	
 	<insert id="insertFile" parameterType="com.sp.grooveware.approval.Approval">
-		INSERT INTO draft_file (doc_no, file_num, save_filename, original_filename)
+		INSERT INTO draft_file (doc_no, file_no, save_filename, original_filename)
 		VALUES (#{doc_no}, draft_file_seq.NEXTVAL, #{save_filename, jdbcType=VARCHAR}, #{original_filename, jdbcType=VARCHAR})
 	</insert>
 	
@@ -64,11 +64,16 @@
 	<!-- 글 리스트 -->
 	<select id="listApproval"  parameterType="map" resultType="com.sp.grooveware.approval.Approval">
 	
-	SELECT d.*, dr.draft_category, dr.draft_content
+	SELECT d.doc_no, doc_name, TO_CHAR(draft_date, 'YYYY-MM-DD')draft_date, TO_CHAR(draft_deadline, 'YYYY-MM-DD')draft_deadline, approval_step, TO_CHAR(approval_finaldate, 'YYYY-MM-DD')approval_finaldate,
+      	 	TO_CHAR(submit_date, 'YYYY-MM-DD')submit_date, doc_status, urgent, important, is_visible, emp_no, 
+        	dr.draft_category, dr.draft_content
 	FROM doc d
 	LEFT OUTER JOIN draft dr ON d.doc_no = dr.doc_no
 		<where>
-			emp_no = #{emp_no}			
+			emp_no = #{emp_no} 
+			<!-- 
+				AND doc_status = #{doc_status}			
+			 -->
 			<if test="keyword != null and keyword != ''">
 				AND <include refid="where-list"/>
 			</if>
@@ -78,20 +83,33 @@
 	</select>
 	
 	<!-- 글보기 -->
-	<select id="readApproval"  parameterType="Long" resultType="com.sp.grooveware.approval.Approval">
-		SELECT d.doc_no, d.doc_name, d.draft_date, d.draft_deadline, d.approval_step, d.approval_finaldate,
+	<select id="readApproval" parameterType="Long" resultType="com.sp.grooveware.approval.Approval">
+		SELECT d.doc_no, d.doc_name, TO_CHAR(d.draft_date, 'YYYY-MM-DD') AS draft_date, TO_CHAR(d.draft_deadline, 'YYYY-MM-DD') AS draft_deadline, d.approval_step, d.approval_finaldate,
 		       d.submit_date, d.doc_status, d.urgent, d.important, d.is_visible, d.emp_no,
 		       dr.draft_category, dr.draft_content,
-		       df.file_num, df.save_filename, df.original_filename
+		       df.file_no, df.save_filename, df.original_filename
 		FROM doc d
 		LEFT JOIN draft dr ON d.doc_no = dr.doc_no
 		LEFT JOIN draft_file df ON d.doc_no = df.doc_no
-		WHERE d.doc_no = #{doc_no};
+		WHERE d.doc_no = #{doc_no}
 	</select>
+		
 
+	<!-- 수정 -->
+	<!-- 삭제 -->
 	
-
 	
+	<!-- 파일 리스트-->
+	<select id="listFile" parameterType="Long" resultType="com.sp.grooveware.approval.Approval">
+		SELECT file_no, doc_no, save_filename, original_filename
+		FROM draft_file
+		WHERE doc_no = #{doc_no}    
+	</select>	
 	
-	
+	<!-- 파일 읽기 -->
+	<select id="readFile" parameterType="Long" resultType="com.sp.grooveware.approval.Approval">
+		SELECT file_no, doc_no, save_filename, original_filename
+		FROM draft_file
+		WHERE file_no = #{file_no}    
+	</select>	
 </mapper>

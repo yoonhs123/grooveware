@@ -156,6 +156,7 @@
 .myForm input {
 	width: 100%;
 	padding: 7px 5px;
+	font-size: 15px;
 }
 
 .form-control2 {
@@ -175,6 +176,8 @@
 	margin-top: 5px;
 }
  
+ 
+ .ap_pBox > input{font-size: 15px;}
 .img_container {
 	background: #BDBDBD;
 	width: 40px;
@@ -182,7 +185,7 @@
 	float: left;
 	border-radius: 70%;
 	overflow: hidden;
-	margin: 0px 30px 10px 0px;
+	margin: 0px 40px 10px 0px;
 }
 
 .img_container2 {
@@ -350,7 +353,7 @@
 }
 
 .borderBox {
-	border: 1px solid #ced4da;
+	border: 1px solid #787878;
 	padding: 5px;
 	width: 50%;
 	text-align: center;

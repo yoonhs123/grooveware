@@ -1,5 +1,6 @@
 package com.sp.grooveware.approval;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -104,10 +105,58 @@ public class ApprovalServiceImpl implements ApprovalService {
 
 	@Override
 	public void updateApproval(Approval dto, String pathname) throws Exception {
-		// TODO Auto-generated method stub
+		try {
+			dao.updateData("approval.updateApproval", dto);
+			
+			if (! dto.getSelectFile().isEmpty()) {
+				for (MultipartFile mf : dto.getSelectFile()) {
+					String saveFilename = fileManager.doFileUpload(mf, pathname);
+					if (saveFilename == null) {
+						continue;
+					}
+
+					String originalFilename = mf.getOriginalFilename();
+
+					dto.setOriginal_filename(originalFilename);
+					dto.setSave_filename(saveFilename);
+
+					// insertFile(dto);
+					dao.insertData("noticeManage.insertFile", dto);
+				}
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
 		
 	}
 
+
+	@Override
+	public void deleteApproval(long doc_no, String pathname) throws Exception {
+		try {
+			
+			// 파일 지우기
+			List<Approval>listFile = listFile(doc_no);
+			if (listFile != null) {
+				for (Approval dto : listFile) {
+					fileManager.doFileDelete(dto.getSave_filename(), pathname);
+				}
+			}
+
+			// 파일 테이블 내용 지우기
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("field", "num");
+			map.put("doc_no", doc_no);
+			deleteFile(map);
+
+			dao.deleteData("noticeManage.deleteApproval", doc_no);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
 
 	@Override
 	public List<Approval> listFile(long doc_no) {
@@ -123,5 +172,40 @@ public class ApprovalServiceImpl implements ApprovalService {
 
 
 
+	@Override
+	public void insertFile(Approval dto) throws Exception {
+		try {
+			dao.insertData("approval.insertFile", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+
+
+	@Override
+	public Approval readFile(long file_no) {
+		Approval dto = null;
+		
+		try {
+			dto = dao.selectOne("approval.readFile", file_no);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return dto;
+	}
+
+
+	@Override
+	public void deleteFile(Map<String, Object> map) throws Exception {
+		try {
+			dao.deleteData("approval.deleteFile", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
 
 }

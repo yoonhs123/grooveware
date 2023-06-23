@@ -1,6 +1,7 @@
 package com.sp.grooveware.approval;
 
 import java.io.File;
+import java.io.PrintWriter;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.time.LocalDate;
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -113,8 +115,6 @@ public class approvalController {
 		model.addAttribute("condition", condition);
 		model.addAttribute("keyword", keyword);
 		
-
-		 
 		 
 		System.out.println("list : "  + list);
 		System.out.println("page : "  + current_page);
@@ -143,6 +143,7 @@ public class approvalController {
 		return ".approval.write";
 	}
 
+	
 	@RequestMapping(value = "write", method = RequestMethod.POST)
 	public String writeSubmit(Approval dto, HttpSession session ) throws Exception {
 
@@ -164,8 +165,8 @@ public class approvalController {
 	
 	
 
-	@RequestMapping(value = "article", method = RequestMethod.GET)
-	public String article(@RequestParam("doc_no") long doc_no,
+	@RequestMapping(value = "article")
+	public String article(@RequestParam long doc_no,
 			@RequestParam String page,
 			@RequestParam(defaultValue = "all") String condition,
 			@RequestParam(defaultValue = "") String keyword,
@@ -180,20 +181,55 @@ public class approvalController {
 		}
 
 		Approval dto = service.readApproval(doc_no);
+		
 		if (dto == null) {
 			return "redirect:/approval/list?" + query;
 		}
+		dto.getDraft_date();
+		
+		
+		List<Approval> listFile = service.listFile(doc_no);
+        
+		// 현재 날짜를 생성
+        LocalDate currentDate = LocalDate.now();
 
-		//List<Approval> listFile = service.listFile(doc_no);
-
+        // 모델에 현재 날짜를 전달
+        model.addAttribute("currentDate", currentDate);
 		model.addAttribute("dto", dto);
-		//model.addAttribute("listFile", listFile);
+		model.addAttribute("listFile", listFile);
 		model.addAttribute("page", page);
 		model.addAttribute("query", query);
 
 
 		return ".approval.article";
 	}	
+	
+	@RequestMapping(value = "download")
+	public void download(@RequestParam long fileNum,
+			HttpServletResponse resp,
+			HttpSession session) throws Exception {
+		String root = session.getServletContext().getRealPath("/");
+		String pathname = root + "uploads" + File.separator + "notice";
+
+		boolean b = false;
+
+		Approval dto = service.readFile(fileNum);
+		if (dto != null) {
+			String saveFilename = dto.getSave_filename();
+			String originalFilename = dto.getOriginal_filename();
+
+			b = fileManager.doFileDownload(saveFilename, originalFilename, pathname, resp);
+		}
+
+		if (! b) {
+			try {
+				resp.setContentType("text/html; charset=utf-8");
+				PrintWriter out = resp.getWriter();
+				out.println("<script>alert('파일 다운로드가 불가능 합니다 !!!');history.back();</script>");
+			} catch (Exception e) {
+			}
+		}
+	}
 	
 	
 	// 친구 리스트

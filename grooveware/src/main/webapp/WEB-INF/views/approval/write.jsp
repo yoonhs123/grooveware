@@ -100,7 +100,7 @@
 		 */
 
 		f.action = "${pageContext.request.contextPath}/approval/${mode}";
-		f.submit();
+		return true;
 	}
 </script>
 
@@ -323,9 +323,8 @@ $(function(){
 							</td>
 							<td class="title">
 								<button type="button" class="btn">취소</button>
-								<button type="button" class="btn"
-									onclick="submitContents(this.form);">임시저장</button>
-								<button type="button" class="btn" onclick=" ">제출</button>
+								<button type="button" class="btn" onclick="submitContents(this.form, 0);">임시저장</button>
+								<button type="button" class="btn" onclick="submitContents(this.form, 1);">제출</button>
 							</td>
 						</tr>
 					</table>
@@ -509,13 +508,13 @@ $(function(){
 			</div>
 
 			<div class="board4 confirm">
+				<input type="hidden" name="doc_status" value="${dto.doc_status }">
 				<button type="button" class="btn2"
 					onclick="location.href='${pageContext.request.contextPath}/approval/list';">취소</button>
-				<button type="button" class="btn2"
-					onclick="submitContents(this.form);">임시저장</button>
-				<button type="button" class="btn2">제출</button>
+				<button type="button" class="btn2" onclick="submitContents(this.form, 0);">임시저장</button>
+				<button type="button" class="btn2" onclick="submitContents(this.form, 1);">제출</button>
 			<c:if test="${mode=='update'}">
-				<input type="hidden" name="num" value="${dto.doc_no}">
+				<input type="hidden" name="doc_no" value="${dto.doc_no}">
 				<input type="hidden" name="page" value="${page}">
 			</c:if>
 			</div>
@@ -538,13 +537,15 @@ $(function(){
 				fCreator : "createSEditor2"
 			});
 
-	function submitContents(elClickedObj) {
+	function submitContents(elClickedObj, doc_status) {
 		oEditors.getById["ir1"].exec("UPDATE_CONTENTS_FIELD", []);
 		try {
 			if (!check()) {
 				return;
 			}
-
+			
+			elClickedObj.doc_status.value = doc_status;
+			
 			elClickedObj.submit();
 
 		} catch (e) {
@@ -581,7 +582,7 @@ $(function(){
 					</tr>
 					<tr>
 						<td align="right">
-							<input type="hidden" name="num" value="${dto.num}"> 
+							<input type="hidden" name="doc_no" value="${dto.doc_no}"> 
 							<input type="hidden" name="page" value="${page}">
 							<button type="button" class="btn">추가</button>
 							<button type="button" class="btn btnClose">닫기</button></td>
