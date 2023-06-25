@@ -29,6 +29,7 @@ public class InsaManage {
 	
 	private int pos_no;
 	private String pos_name;
+	private long top_pos_no;
 	
 	public long getQualifer() {
 		return qualifer;
@@ -167,6 +168,12 @@ public class InsaManage {
 	}
 	public void setPos_name(String pos_name) {
 		this.pos_name = pos_name;
+	}
+	public long getTop_pos_no() {
+		return top_pos_no;
+	}
+	public void setTop_pos_no(long top_pos_no) {
+		this.top_pos_no = top_pos_no;
 	}
 	
 	
