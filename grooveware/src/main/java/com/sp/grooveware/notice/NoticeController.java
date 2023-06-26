@@ -1,16 +1,21 @@
 package com.sp.grooveware.notice;
 
+import java.io.File;
 import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,9 +24,9 @@ import com.sp.grooveware.common.MyUtil;
 import com.sp.grooveware.member.SessionInfo;
 
 // 그룹웨어 
-
+// gubun 이 null 이면 전체 공지 
 @Controller("notice.noticeController")
-@RequestMapping("/notice/*")
+@RequestMapping("/notice/{gubun}/*")
 public class NoticeController {
 
 
@@ -29,25 +34,24 @@ public class NoticeController {
 	private NoticeService service;
 
 	@Autowired
+	@Qualifier("myUtilGeneral")
 	private MyUtil myUtil;
 	
-	
-	
 	@RequestMapping(value = "list")
-	public String list(@RequestParam(value = "page", defaultValue = "1") int current_page,
-	                   @RequestParam(defaultValue = "all") String condition,
-	                   @RequestParam(defaultValue = "") String keyword,
-	                   HttpSession session,
-	                   HttpServletRequest req,
-	                   Model model) throws Exception {
+	public String list(
+				@PathVariable String gubun,
+				@RequestParam(value = "page", defaultValue = "1") int current_page,
+	            @RequestParam(defaultValue = "all") String condition,
+	            @RequestParam(defaultValue = "") String keyword,
+	            HttpSession session,
+	            HttpServletRequest req,
+	            Model model) throws Exception {
 	   
 		SessionInfo info = (SessionInfo) session.getAttribute("member");
 		
 		int size = 10;
 		int total_page = 0;
 		int dataCount = 0;
-
-
 		
 		if (req.getMethod().equalsIgnoreCase("GET")) { // GET 방식인 경우
 			keyword = URLDecoder.decode(keyword, "utf-8");
@@ -55,9 +59,10 @@ public class NoticeController {
 		
 		// 전체 페이지 수
 		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("gubun", gubun);
+		map.put("dept_id", info.getDept_no());
 		map.put("condition", condition);
 		map.put("keyword", keyword);
-		map.put("emp_no", info.getEmp_no());
 
 		dataCount = service.dataCount(map);
 		if (dataCount != 0) {
@@ -79,6 +84,25 @@ public class NoticeController {
 		// 글 리스트
 		List<Notice> list = service.listNotice(map);
 		
+		// 페이징
+		String cp = req.getContextPath();
+		String query = "";
+		String listUrl = cp + "/notice/" + gubun + "/list";
+		String articleUrl = cp + "/notice/" + gubun + "/article?page=" + current_page;
+		if (keyword.length() != 0) {
+			query = "condition=" + condition + "&keyword=" + URLEncoder.encode(keyword, "utf-8");
+		}
+
+		if (query.length() != 0) {
+			listUrl += "?" + query;
+			articleUrl += "&" + query;
+		}
+
+		String paging = myUtil.paging(current_page, total_page, listUrl);
+		
+		model.addAttribute("gubun", gubun);
+		model.addAttribute("dept_name", info.getDept_name());
+		
 		model.addAttribute("list", list);
 		model.addAttribute("page", current_page);
 		model.addAttribute("dataCount", dataCount);
@@ -87,7 +111,9 @@ public class NoticeController {
 
 		model.addAttribute("condition", condition);
 		model.addAttribute("keyword", keyword);
-		
+
+		model.addAttribute("articleUrl", articleUrl);
+		model.addAttribute("paging", paging);
 		
 	    return ".notice.list";
 	 
@@ -95,11 +121,17 @@ public class NoticeController {
 
 	
 	@RequestMapping(value = "article", method = RequestMethod.GET)
-	public String articleForm(Model model, HttpSession session) throws Exception {
-	    model.addAttribute("mode", "article");
-	    
-	    
-	    
+	public String article(
+			@PathVariable String gubun,
+			Model model, HttpSession session) throws Exception {
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		
+		
+		
+		
+		model.addAttribute("gubun", gubun);
+		model.addAttribute("dept_name", info.getDept_name());
+		
 	    return ".notice.article";
 	}
 	
@@ -107,32 +139,42 @@ public class NoticeController {
 	
 
 	@RequestMapping(value = "write", method = RequestMethod.GET)
-	public String writeForm(Model model, HttpSession session) throws Exception {
-	    model.addAttribute("mode", "write");
-	    
-	    
+	public String writeForm(
+			@PathVariable String gubun,
+			Model model, HttpSession session) throws Exception {
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		
+		model.addAttribute("gubun", gubun);
+		model.addAttribute("dept_name", info.getDept_name());
+		model.addAttribute("mode", "write");
 	    
 	    return ".notice.write";
 	}
 	
-	
-	
 	@RequestMapping(value = "write", method = RequestMethod.POST)
-	public String Write2Form(Notice dto, HttpSession session) throws Exception {
+	public String writeSubmit(
+			@PathVariable String gubun,
+			Notice dto, HttpSession session) throws Exception {
 		
 		SessionInfo info = (SessionInfo) session.getAttribute("member");
 		
-
+		String root = session.getServletContext().getRealPath("/");
+		String pathname = root + "uploads" + File.separator + "notice";
 		try {
-			dto.setEmp_no(info.getEmp_no());		
-			dto.setDept_no(info.getDept_no());
-			service.insertNotice(dto, "write");
+			dto.setEmp_no(info.getEmp_no());
+			if(gubun.equals("dept")) {
+				dto.setDept_id(info.getDept_no());
+			}
+			
+			service.insertNotice(dto, pathname);
 
 		} catch (Exception e) {
 
 		}
 
 	    
-	    return "redirect:/notice/list";
+	    return "redirect:/notice/"+gubun+"/list";
 	}
+	
+	
 }

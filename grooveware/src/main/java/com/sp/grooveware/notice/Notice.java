@@ -2,55 +2,33 @@ package com.sp.grooveware.notice;
 
 import org.springframework.web.multipart.MultipartFile;
 
-// 그룹웨어
+// 그룹웨어_공지
+// dept_no : null 이면 전체 공지
+
 
 public class Notice {
 
-	private long num;
-	private int not_id;
+	private int noti_id;
 	private long emp_no;
-	private int dept_id;
-	private long dept_no;
+	private String emp_name;
+	private Long dept_id;
 	private String noti_title;
 	private String noti_content;
 	private String noti_regdate; 
 	private String noti_hitcount;
 	
-	
 	private String save_filename;
 	private String original_filename;
 	private MultipartFile selectFile;
 	
-	//파일의 크기
-	private long fileSize; 
-
-	// 해당 게시물에 첨부된 파일의 개수
-	private long fileCount;
-
-	// 스프링에서 파일 업로드용 객체 
-	// <input type="file" name="selectFile">와 같이 클라이언트로부터
-	// 전송된 파일을 받아오는 역할
-	
-	/*
-	private List<MultipartFile> selectFile; // <input type="file" name="selectFile"
-	*/
-	
 	private long gap;
 
-	public long getNum() {
-		return num;
+	public int getNoti_id() {
+		return noti_id;
 	}
 
-	public void setNum(long num) {
-		this.num = num;
-	}
-
-	public int getNot_id() {
-		return not_id;
-	}
-
-	public void setNot_id(int not_id) {
-		this.not_id = not_id;
+	public void setNoti_id(int noti_id) {
+		this.noti_id = noti_id;
 	}
 
 	public long getEmp_no() {
@@ -61,20 +39,20 @@ public class Notice {
 		this.emp_no = emp_no;
 	}
 
-	public int getDept_id() {
+	public String getEmp_name() {
+		return emp_name;
+	}
+
+	public void setEmp_name(String emp_name) {
+		this.emp_name = emp_name;
+	}
+
+	public Long getDept_id() {
 		return dept_id;
 	}
 
-	public void setDept_id(int dept_id) {
+	public void setDept_id(Long dept_id) {
 		this.dept_id = dept_id;
-	}
-
-	public long getDept_no() {
-		return dept_no;
-	}
-
-	public void setDept_no(long dept_no) {
-		this.dept_no = dept_no;
 	}
 
 	public String getNoti_title() {
@@ -133,22 +111,6 @@ public class Notice {
 		this.selectFile = selectFile;
 	}
 
-	public long getFileSize() {
-		return fileSize;
-	}
-
-	public void setFileSize(long fileSize) {
-		this.fileSize = fileSize;
-	}
-
-	public long getFileCount() {
-		return fileCount;
-	}
-
-	public void setFileCount(long fileCount) {
-		this.fileCount = fileCount;
-	}
-
 	public long getGap() {
 		return gap;
 	}
@@ -157,8 +119,5 @@ public class Notice {
 		this.gap = gap;
 	}
 
-	
-	
-	
-	
+
 }

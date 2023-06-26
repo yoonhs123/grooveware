@@ -17,34 +17,21 @@
  </script>
 
 
-
-
 <div class="left-side-bar">
       
         <ul>
             <li>
-                <a href="#">문서함</a>
-                <a href="#">&nbsp;내 문서</a>
-                <a href="#">&nbsp;부서 문서</a>
-                <a href="#">&nbsp;임시보관 문서</a>
-            <li>
-            
-            <hr>
-            
-            <li>
-                <a href="#">결재함</a>
-                <a href="#">&nbsp;대기</a>
-                <a href="#">&nbsp;진행중</a>
-                <a href="#">&nbsp;보류</a>
-                <a href="#">&nbsp;반려</a>
-                <a href="#">&nbsp;완료</a>
+                <a href="${pageContext.request.contextPath}/notice/all/list">회사 공지사항</a>
+                <a href="${pageContext.request.contextPath}/notice/dept/list">${dept_name} 공지사항</a>
             <li>
         </ul>
-    </div>
-		<div class="right-contentbody">
+       <hr>
+</div>
+    
+<div class="right-contentbody">
 		<div class="notic-list">
 	<div class="title">
-	    <h3><span>|</span> 공지사항</h3>
+	    <h3><span>|</span> ${gubun=="dept"? dept_name :"회사" } 공지사항</h3>
 	</div>
 	
 	<table class="table table-border table-article" style="
@@ -53,12 +40,12 @@
 		<thead>
 			<tr>
 				<td width="50%">
-					등록일 : ${dto.reg_date}
+					등록일 : ${dto}
 				</td>
 			</tr>
 			<tr>
 				<td width="50%">
-					작성자 :  ${dto. }
+					작성자 :  ${dto}
 				</td>
 			</tr>
 		</thead>
