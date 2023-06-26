@@ -57,29 +57,8 @@
 	<select id="listPosCategory" resultType="com.sp.grooveware.insamanage.InsaManage">
 		SELECT pos_no, pos_name, top_pos_no
 		FROM pos
-		WHERE top_pos_no IS NULL
 		ORDER BY pos_no
 	</select>
-	
-	<select id="listPosSubCategory" parameterType="Long" resultType="com.sp.grooveware.insamanage.InsaManage">
-		SELECT pos_no, pos_name, top_pos_no
-		FROM pos
-		WHERE top_pos_no = #{top_pos_no}
-		ORDER BY pos_no
-	</select>
-	
-	 
-	 <!--  
-	<update id="insertInsaManage" parameterType="com.sp.grooveware.insamanage.InsaManage">
-		INSERT ALL
-		INTO emp_reg(emp_name, emp_rrn, emp_email, emp_tel, emp_address, emp_join_date)
-		VALUES (#{emp_name}, #{emp_rrn}, #{emp_email}, 
-				#{emp_tel}, #{emp_address}, #{emp_join_date})
-		INTO emp_history(history_no, emp_no, pos_no, pos_startdate, dept_no, dept_startdate)
-		VALUES (#{history_no}, emp_seq.CURRVAL , #{pos_no}, #{pos_startdate}, #{dept_no}, #{dept_startdate})
-		SELECT * FROM dual
-	</update>
-	-->
 	
 	<!-- 회원 리스트 -->
 	<sql id="where-list">
@@ -104,7 +83,7 @@
 	</select>
 	
 
-	
+	<!-- 재직 중인 사원 리스트 -->
 	<select id="listinsaMember" parameterType="map" resultType="com.sp.grooveware.insamanage.InsaManage">
 		SELECT e.emp_no, e.emp_name, d.dept_name, p.pos_name,
 				TO_CHAR(e.emp_join_date, 'YYYY-MM-DD') emp_join_date,
@@ -123,9 +102,9 @@
 		OFFSET #{offset} ROWS FETCH FIRST #{size} ROWS ONLY
 	</select>
 	
-	
+	<!-- 인사관리 -->
 	<select id="readProfile" parameterType="String" resultType="com.sp.grooveware.insamanage.InsaManage">
-		SELECT e.emp_no, e.emp_email, e.emp_tel, e.emp_address, 
+		SELECT e.emp_no, e.emp_name, e.emp_email, e.emp_tel, e.emp_address, 
 				d.dept_name, p.pos_name,
 				TO_CHAR(e.emp_join_date, 'YYYY-MM-DD') emp_join_date
 		FROM emp e
@@ -134,8 +113,15 @@
 		JOIN pos p ON eh.pos_no = p.pos_no
 		WHERE e.emp_no = #{emp_no}
 	</select>
-	 
 	
+	<insert id="insertEmpHistory" parameterType="com.sp.grooveware.insamanage.InsaManage">
+		INSERT INTO emp_history(history_no, emp_no, pos_no, pos_startdate, dept_no, dept_startdate)
+		VALUES (#{history_no}, 
+		(SELECT emp_no FROM emp ORDER BY substr(emp_no,5,4) DESC FETCH FIRST 1 ROW ONLY), 
+		#{pos_no}, TO_DATE(#{pos_startdate}, 'YYYY-MM-DD'), #{dept_no}, 
+		TO_DATE(#{dept_startdate}, 'YYYY-MM-DD'))
+		WHERE emp_no = #{emp_no}
+	</insert>
 	
 	
 </mapper>

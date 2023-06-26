@@ -48,12 +48,8 @@ public class InsaManageServiceImpl implements InsaManageService  {
 
 			long seq = dao.selectOne("insaManage.seq");
 			
-			String dept_name = dao.selectOne("insaManage.listDeptCategory");
-			String pos_name = dao.selectOne("insaManage.listPosCategory");
 			
 			dto.setHistory_no(seq);
-			dto.setDept_name(dept_name);
-			dto.setPos_name(pos_name);
 			
 			dao.insertData("insaManage.insertEmp", dto);
 			dao.insertData("insaManage.insertHistory", dto);
@@ -121,6 +117,7 @@ public class InsaManageServiceImpl implements InsaManageService  {
 		List<InsaManage> list = null;
 		
 		try {
+			// 모든 직위
 			list = dao.selectList("insaManage.listPosCategory");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -128,6 +125,7 @@ public class InsaManageServiceImpl implements InsaManageService  {
 		return list;
 	}
 
+	
 	@Override
 	public List<InsaManage> listPosSubCategory(long top_pos_no) {
 		List<InsaManage> list = null;
@@ -153,6 +151,18 @@ public class InsaManageServiceImpl implements InsaManageService  {
 		}
 		
 		return dto;
+	}
+
+	@Override
+	public InsaManage readInsaCard(String emp_no) {
+		InsaManage dto = null;
+		
+		try {
+			// dto.
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return null;
 	}
 
 }

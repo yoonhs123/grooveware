@@ -16,10 +16,10 @@
 
 .modal-content-profile {
 	background-color: #fefefe;
-	margin: 8% auto;
-	padding: 20px;
+	margin: 2% 2%;
 	border: 1px solid #888;
-	width: 60%;
+	width: 100%;
+	height: fit-content;
 }
 
 .close-profile {

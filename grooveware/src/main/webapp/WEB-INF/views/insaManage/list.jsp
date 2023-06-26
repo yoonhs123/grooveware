@@ -46,22 +46,26 @@ function profile(emp_no) {
 		  autoOpen: false,
 		  modal: true,
 		  buttons: {
-		       " 수정 " : function() {
-		    	   updateOk(); 
-		       },
-		       " 삭제 " : function() {
-		    	   deleteOk(emp_no);
-			   },
 		       " 닫기 " : function() {
 		    	   $(this).dialog("close");
 		       }
 		  },
-		  height: 550,
-		  width: 800,
+		  height: 700,
+		  width: 900,
 		  title: "사원상세정보",
 		  close: function(event, ui) {
 		  }
 	});
+	
+	let url = "${pageContext.request.contextPath}/insaManage/profile";
+	let query = "emp_no="+emp_no;
+	
+	const fn = function(data){
+		$('#profile-dialog').html(data);
+		dlg.dialog("open");
+	};
+	ajaxFun(url, "post", query, "html", fn);
+}
 	/*
 	//모달 열기
 	function openModal() {
@@ -97,6 +101,7 @@ function profile(emp_no) {
 		<!-- <li class="insateam">  -->
 		<li>
 			<a href="#">인사관리</a> 
+			<a href="#">&nbsp;사원관리</a>
 			<a href="#">&nbsp;근태관리</a>
 			<a href="#">&nbsp;휴가관리</a> 
 			<a href="#">&nbsp;휴가설정</a> 
@@ -164,7 +169,7 @@ function profile(emp_no) {
 							        +
 							      </h3>
 							      <div class="dropdown-content">
-							      	<a href="#"><i class="bi bi-person-fill"></i> 인사관리</a>
+							      	<a onclick="profile('${dto.emp_no}');"><i class="bi bi-person-fill"></i>인사관리</a>
 							        <a href="#"><i class="bi bi-person-vcard"></i> 인사기록카드</a>
 							        <a href="#"><i class="bi bi-person-x-fill"></i> 퇴사</a>
 							      </div>

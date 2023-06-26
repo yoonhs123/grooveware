@@ -13,9 +13,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sp.grooveware.common.MyUtil;
 import com.sp.grooveware.member.SessionInfo;
@@ -98,7 +100,6 @@ public class InsaManageController {
 		return ".insaManage.list";
 	}
 	
-	/*
 	@GetMapping("listDeptSubCategory")
 	@ResponseBody
 	public Map<String, Object> listDeptSubCategory(
@@ -112,45 +113,25 @@ public class InsaManageController {
 		return model;
 	}
 	
-	@GetMapping("listPosSubCategory")
-	@ResponseBody
-	public Map<String, Object> listPosSubCategory (
-			@RequestParam long top_pos_no) throws Exception {
-		Map<String, Object> model = new HashMap<String, Object>();
-		
-		List<InsaManage> listPosSubCategory = service.listPosSubCategory(top_pos_no);
-		
-		model.put("listPosSubCategory", listPosSubCategory);
-		
-		return model;
-	}
-	*/
 	
 	@RequestMapping(value = "write", method = RequestMethod.GET)
 	public String writeForm(Model model) {
+
+		// 모든 직위
+		List<InsaManage> listPosCategory = service.listPosCategory();
+		// 상위 부서
 		List<InsaManage> listDeptCategory = service.listDeptCategory();
 		List<InsaManage> listDeptSubCategory = null;
-		List<InsaManage> listPosCategory = service.listPosCategory();
-		List<InsaManage> listPosSubCategory = null;
 		
 		long top_dept_no = 0;
 		if(listDeptCategory.size() != 0) {
 			top_dept_no = listDeptCategory.get(0).getDept_no();
 		}
-		
-		long top_pos_no = 0;
-		if(listPosCategory.size() != 0) {
-			top_pos_no = listPosCategory.get(0).getPos_no();
-		}
-		
 		listDeptSubCategory = service.listDeptSubCategory(top_dept_no);
-		listPosSubCategory = service.listPosSubCategory(top_pos_no);
-		
 		
 		model.addAttribute("listDeptCategory", listDeptCategory);
 		model.addAttribute("listDeptSubCategory", listDeptSubCategory);
 		model.addAttribute("listPosCategory", listPosCategory);
-		model.addAttribute("listPosSubCategory", listPosSubCategory);
 		
 		return ".insaManage.write";
 	}
@@ -173,6 +154,7 @@ public class InsaManageController {
 		return "redirect:/insaManage/list";
 	}
 	
+	// 회원상세 정보 : AJAX-Text 응답
 	@RequestMapping(value = "profile")
 	public String profileInsaMember(@RequestParam String emp_no, Model model) throws Exception {
 		
@@ -180,7 +162,26 @@ public class InsaManageController {
 		
 		model.addAttribute("dto", dto);
 		
-		return "insaManage/profile";
+		return "/insaManage/profile";
+	}
+	
+	@RequestMapping(value = "insaCard")
+	public String insaCardArticle(@RequestParam long emp_no,
+			@RequestParam String page,
+			@RequestParam(defaultValue = "all") String condition,
+			@RequestParam(defaultValue = "") String keyword,
+			Model model) throws Exception {
+		
+		keyword = URLDecoder.decode(keyword, "utf-8");
+		
+		String query = "page=" +page;
+		if(keyword.length() != 0) {
+			query += "&condition=" +condition+ "&keyword=" +URLEncoder.encode(keyword, "utf-8");
+		}
+		
+		// InsaManage dto = service.
+		
+		return ".insaManage.insaCard";
 	}
 	
 	/*

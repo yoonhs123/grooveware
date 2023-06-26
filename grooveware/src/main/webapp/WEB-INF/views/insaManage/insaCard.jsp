@@ -36,7 +36,7 @@
 				<td>??</td>
 			</tr>
 			<tr>
-				<td class="main-text">직책</td>
+				<td class="main-text">직위</td>
 				<td>??</td>
 				<td class="main-text">연차</td>
 				<td>???</td>

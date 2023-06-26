@@ -2,6 +2,10 @@ package com.sp.grooveware.insamanage;
 
 import org.springframework.web.multipart.MultipartFile;
 
+/**
+ * @author user
+ *
+ */
 public class InsaManage {
 	private long qualifer;
 	private long emp_no;
@@ -175,6 +179,4 @@ public class InsaManage {
 	public void setTop_pos_no(long top_pos_no) {
 		this.top_pos_no = top_pos_no;
 	}
-	
-	
 }
