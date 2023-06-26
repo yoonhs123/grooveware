@@ -25,7 +25,10 @@
 		VALUES (#{doc_no}, draft_file_seq.NEXTVAL, #{save_filename, jdbcType=VARCHAR}, #{original_filename, jdbcType=VARCHAR})
 	</insert>
 	
-	
+	<insert id="insertApproval3" parameterType="com.sp.grooveware.approval.Approval">
+		INSERT INTO approval (approval_status_id, doc_no, emp_no, approval_status, approval_date, reject_reason)
+		VALUES (0, #{doc_no}, #{emp_no}, #{approval_status, jdbcType=INTEGER },#{approval_date, jdbcType=DATE}, #{reject_reason, jdbcType=VARCHAR})
+	</insert>	
 	
 	<!-- 게시글 조건 -->
  	<sql id="where-list">

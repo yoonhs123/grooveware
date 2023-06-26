@@ -80,7 +80,6 @@ function deleteOk() {
 </c:if>
 </script>
 
-
 <div class="left-side-bar">
 
 	<ul>
@@ -285,7 +284,19 @@ function deleteOk() {
 					</div>
 				</div>
 			</div>
-
+			<div class="board1">
+				<div class="file_container">
+					<div class="title3">
+						<span> 코멘트</span>
+					</div>
+					<div class="">
+						<div class="table table-border table-form">
+							<input type="text" name ="reject_reason" style="padding: 15px; height: 150px; width: 100%; border: 1px solid gray; border-radius: 4px;">
+						</div>
+					</div>
+				</div>
+			</div>
+						
 			<div class="board4 confirm">
 			<c:choose>
 				<c:when test="${sessionScope.member.emp_no == dto.emp_no}">
@@ -302,7 +313,6 @@ function deleteOk() {
 				<button type="button" class="btn2">결재</button>
 				<button type="button" class="btn2">보류</button>
 				<button type="button" class="btn2">반려</button>
-				<button type="button" class="btn2">코멘트</button>
 
 				<c:if test="${mode=='update'}">
 					<input type="hidden" name="doc_no" value="${dto.doc_no}">

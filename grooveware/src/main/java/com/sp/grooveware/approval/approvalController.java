@@ -126,9 +126,6 @@ public class approvalController {
 		System.out.println("paging : "  + paging);
 		System.out.println("articleUrl : "  + articleUrl);
 		
-		
-		  
-		
 		return ".approval.list";
 	}
 	 
@@ -215,7 +212,6 @@ public class approvalController {
 		boolean b = false;
 
 		Approval dto = service.readFile(file_no);
-		System.out.println("dto : -----------" + dto);
 		
 		if (dto != null) {
 			String saveFilename = dto.getSave_filename();

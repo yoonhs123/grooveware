@@ -147,7 +147,7 @@
 			$("#myDialogModal").show();
 		});
 
-		// 대화상자 - 받는사람 검색 버튼
+		// 대화상자 - 사원 검색 버튼
 		$(".btnReceiverFind")
 				.click(
 						function() {
@@ -173,21 +173,21 @@
 			let s;
 			for (let i = 0; i < data.listMember.length; i++) {
 				let emp_name = data.listMember[i].emp_name;
+				let emp_no = data.listMember[i].emp_no;
 			console.log(data );
 
-				s = "<li><input type='checkbox' class='form-check-input' data-emp_name='"+emp_name+"' title='"+emp_name+"'><span>"+emp_name+"</span></li>";
+				s = "<li><input type='checkbox' class='form-check-input' data-emp_no='"+emp_no+"' title='"+emp_name+"'><span>"+emp_name+"</span></li>";
 				$(".dialog-receiver-list ul").append(s);
 			}
 		}
 
 		
-		// 대화상자-받는 사람 추가 버튼
+		// 대화상자-결재자 추가 버튼
 		$(".btnAdd").click(function() {
 			let len1 = $(".dialog-receiver-list ul input[type=checkbox]:checked").length;
-			let len2 = $("#forms-receiver-list input[name=receivers]").length;
+			let len2 = $("#forms-receiver-list input[name=emp_nos]").length;
 			console.log("len1="+len1);
 			console.log("len2="+len2);
-			
 			if (len1 === 0) {
 				alert("추가할 사람을 먼저 선택하세요.");
 				return false;
@@ -207,27 +207,32 @@
 
 			b = false;
 			$(".dialog-receiver-list ul input[type=checkbox]:checked").each(function() {
-				//emp_name = $(this).attr("data-emp_name");
+				emp_no = $(this).attr("data-emp_no");
 				emp_name = $(this).next("span").text();
 
-				$("#forms-receiver-list input[name=receivers]").each(function() {
-				if($(this).val() === emp_name) {
+				$("#forms-receiver-list input[name=emp_nos]").each(function() {
+				if($(this).val() === emp_no) {
 					b = true;
 					return false;
 				}
 			});
 			
-			if(! b) {
-				// 사번과 결재 단계 hidden 처리
-				s = "<div class='img_container'><img src='${pageContext.request.contextPath}/resources/images/bg.png'></div>"
-				s += "<input type='hidden' name='receivers' value='"+emp_name+"'>" 
-				$("#forms-receiver-list").append(s);
+				var count = 0; // 카운터 변수 초기화
 
-				s = "<div class='text_box3 receiver-user btn border px-1'>"+emp_name+"</div>";
-				$(".forms-receiver-name").append(s);
-				
-				
-			}
+				if (!b) {
+				  // 사번과 결재 단계 hidden 처리
+				  s = "<div class='img_container'><img src='${pageContext.request.contextPath}/resources/images/bg.png'></div>";
+				  if (count < 2) {
+				    s += "<div class='img_container3'> <i class='fa-solid fa-chevron-right'></i></div>";
+				    count++; // 카운터 변수 증가
+				    console.log(count);
+				  }
+				  s += "<input type='hidden' name='emp_nos' value='" + emp_no + "'>";
+				  $("#forms-receiver-list").append(s);
+
+				  s = "<div class='text_box3 receiver-user'>" + emp_name + "</div>";
+				  $(".forms-receiver-name").append(s);
+				}
 		});
 			$("#myDialogModal").hide();
 		});
@@ -236,13 +241,13 @@
 			$("#myDialogModal").hide();
 		});
 
-		$("body").on("click", ".bi-trash", function() {
-			let userId = $(this).attr("data-userId");
+		$("body").on("click", ".img_container", function() {
+			let emp_no = $(this).attr("data-emp_no");
 
 			$(this).parent().remove();
 			$("#forms-receiver-list input[name=receivers]").each(function() {
 				let receiver = $(this).val();
-				if (emp_name === receiver) {
+				if (emp_no === receiver) {
 					$(this).remove();
 					return false;
 				}
@@ -344,6 +349,7 @@
 						    </div>
 						</div>
 
+ 
 						<div style="width: 100%; float: left;">
 							<div class="forms-receiver-name">
 							

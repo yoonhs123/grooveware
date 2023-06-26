@@ -42,9 +42,20 @@ public class ApprovalServiceImpl implements ApprovalService {
 					dto.setOriginal_filename(originalFilename);
 					dto.setSave_filename(saveFilename);
 					
+					
 					dao.insertData("approval.insertFile", dto);
 				}
 			}
+			
+			if(dto.getDoc_status() == 1) {
+				for(long emp_no : dto.getEmp_nos()) {
+					dto.setEmp_no(emp_no);
+					//System.out.println(emp_no);
+					dao.insertData("approval.insertApproval3", dto);
+				}
+				
+			}
+			 
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
