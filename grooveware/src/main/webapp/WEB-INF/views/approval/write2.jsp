@@ -141,98 +141,105 @@
 
 	$(function() {
 		$(".btnReceiverDialog").click(function() {
+			$("#condition").val("userName");
 			$("#keyword").val("");
 			$(".dialog-receiver-list ul").empty();
 
-			$("#myDialogModal").show();
+			$("#myDialogModal").modal("show");
 		});
 
 		// 대화상자 - 받는사람 검색 버튼
 		$(".btnReceiverFind")
 				.click(
 						function() {
+							let condition = $("#condition").val();
 							let keyword = $("#keyword").val();
 							if (!keyword) {
 								$("#keyword").focus();
 								return false;
 							}
 
-							let url = "${pageContext.request.contextPath}/approval/listMember";
-							let query = "keyword=" + encodeURIComponent(keyword);
+							let url = "${pageContext.request.contextPath}/note/listFriend";
+							let query = "condition=" + condition + "&keyword="
+									+ encodeURIComponent(keyword);
 
 							const fn = function(data) {
 								$(".dialog-receiver-list ul").empty();
-								searchListMember(data);
-
+								searchListFriend(data);
 							};
 							ajaxFun(url, "get", query, "json", fn);
 						});
 
-		function searchListMember(data) {
-			console.log(data)
+		function searchListFriend(data) {
 			let s;
-			for (let i = 0; i < data.listMember.length; i++) {
-				let emp_name = data.listMember[i].emp_name;
-			console.log(data );
+			for (let i = 0; i < data.listFriend.length; i++) {
+				let userId = data.listFriend[i].userId;
+				let userName = data.listFriend[i].userName;
 
-				s = "<li><input type='checkbox' class='form-check-input' data-emp_name='"+emp_name+"' title='"+emp_name+"'><span>"+emp_name+"</span></li>";
+				s = "<li><input type='checkbox' class='form-check-input' data-userId='"+userId+"' title='"+userId+"'> <span>"
+						+ userName + "</span></li>";
 				$(".dialog-receiver-list ul").append(s);
 			}
 		}
 
-		
 		// 대화상자-받는 사람 추가 버튼
-		$(".btnAdd").click(function() {
-			let len1 = $(".dialog-receiver-list ul input[type=checkbox]:checked").length;
-			let len2 = $("#forms-receiver-list input[name=receivers]").length;
-			console.log("len1="+len1);
-			console.log("len2="+len2);
-			if (len1 === 0) {
-				alert("추가할 사람을 먼저 선택하세요.");
-				return false;
-			}			
-			
-			if (len1 >= 2) {
-				alert("결재자는 한 명만 선택하세요.");
-				return false;
-			}
+		$(".btnAdd")
+				.click(
+						function() {
+							let len1 = $(".dialog-receiver-list ul input[type=checkbox]:checked").length;
+							let len2 = $("#forms-receiver-list input[name=receivers]").length;
 
-			if (len1 + len2  >= 4) {
-				alert("받는사람은 최대 3명까지만 가능합니다.");
-				return false;
-			}
+							if (len1 === 0) {
+								alert("추가할 사람을 먼저 선택하세요.");
+								return false;
+							}
 
-			var b, emp_name, s;
+							if (len1 + len2 >= 5) {
+								alert("받는사람은 최대 5명까지만 가능합니다.");
+								return false;
+							}
 
-			b = false;
-			$(".dialog-receiver-list ul input[type=checkbox]:checked").each(function() {
-				//emp_name = $(this).attr("data-emp_name");
-				emp_name = $(this).next("span").text();
+							var b, userId, userName, s;
 
-				$("#forms-receiver-list input[name=receivers]").each(function() {
-				if($(this).val() === emp_name) {
-					b = true;
-					return false;
-				}
-			});
-			
-			if(! b) {
-				// 사번과 결재 단계 hidden 처리
-				s = "<div class='img_container'><img src='${pageContext.request.contextPath}/resources/images/bg.png'></div>"
-				s += "<input type='hidden' name='receivers' value='"+emp_name+"'>" 
-				$("#forms-receiver-list").append(s);
+							b = false;
+							$(
+									".dialog-receiver-list ul input[type=checkbox]:checked")
+									.each(
+											function() {
+												userId = $(this).attr(
+														"data-userId");
+												userName = $(this).next("span")
+														.text();
 
-				s = "<div class='text_box3 receiver-user btn border px-1'>"+emp_name+"</div>";
-				$(".forms-receiver-name").append(s);
-				
-				
-			}
-		});
-			$("#myDialogModal").hide();
-		});
+												$(
+														"#forms-receiver-list input[name=receivers]")
+														.each(
+																function() {
+																	if ($(this)
+																			.val() === userId) {
+																		b = true;
+																		return false;
+																	}
+																});
+
+												if (!b) {
+													s = "<span class='receiver-user btn border px-1'>"
+															+ userName
+															+ " <i class='bi bi-trash' data-userId='"+userId+"'></i></span>";
+													$(".forms-receiver-name")
+															.append(s);
+
+													s = "<input type='hidden' name='receivers' value='"+userId+"'>";
+													$("#forms-receiver-list")
+															.append(s);
+												}
+											});
+
+							$("#myDialogModal").modal("hide");
+						});
 
 		$(".btnClose").click(function() {
-			$("#myDialogModal").hide();
+			$("#myDialogModal").modal("hide");
 		});
 
 		$("body").on("click", ".bi-trash", function() {
@@ -241,7 +248,7 @@
 			$(this).parent().remove();
 			$("#forms-receiver-list input[name=receivers]").each(function() {
 				let receiver = $(this).val();
-				if (emp_name === receiver) {
+				if (userId === receiver) {
 					$(this).remove();
 					return false;
 				}
@@ -250,6 +257,26 @@
 		});
 
 	});
+</script>
+
+<script type="text/javascript">
+	//모달 열기
+	function openModal() {
+		document.getElementById("myModal").style.display = "block";
+	}
+
+	// 모달 닫기
+	function closeModal() {
+		document.getElementById("myModal").style.display = "none";
+	}
+
+	// 사용자가 모달 외부를 클릭할 때 모달 닫기
+	window.onclick = function(event) {
+		var modal = document.getElementById("myModal");
+		if (event.target === modal) {
+			modal.style.display = "none";
+		}
+	};
 </script>
 <div class="left-side-bar">
 
@@ -337,16 +364,35 @@
 
 						</div>
 						<div style="width: 100%; float: left;">
-						    <div id="forms-receiver-list">
-								<button type="button" class="btn btnReceiverDialog"
-									style="margin-top: 5px;">추가 버튼</button>
-						    </div>
+							<div class="img_container ">
+								<img class="" src="/test.jpg">
+							</div>
+							<div class="img_container3 ">
+								<i class="fa-solid fa-chevron-right"></i>
+							</div>
+							<div class="img_container ">
+								<img class="" src="test.jpg">
+							</div>
+							<div class="img_container3 ">
+								<i class="fa-solid fa-chevron-right"></i>
+							</div>
+							<div class=" img_container">
+								<img class="" src="test.jpg">
+							</div>
+							<!-- 모달을 띄울 추가 버튼 -->
+							<button type="button" class="btn "
+								style="margin-top: 5px;">추가 버튼</button>
 						</div>
 
+
 						<div style="width: 100%; float: left;">
-							<div class="forms-receiver-name">
-							
-							</div>
+							<div class="text_box3">김민교</div>
+							<div class="text_box4">&nbsp;</div>
+							<div class="text_box3">남기현</div>
+							<div class="text_box4">&nbsp;</div>
+							<div class="text_box3">최고관리자</div>
+
+							<!-- 플러스 버튼 후 결제라인 설정 팝업 -->
 						</div>
 
 					</div>
@@ -500,8 +546,6 @@
 					<input type="hidden" name="doc_no" value="${dto.doc_no}">
 					<input type="hidden" name="page" value="${page}">
 				</c:if>
-									<div id="forms-receiver-list"></div>
-				
 			</div>
 		</form>
 	</div>
@@ -546,7 +590,7 @@
 
 
 <!-- 모달 -->
-<div id="myDialogModal" class="modal">
+<div id="myModal" class="modal">
 	<div class="modal-content">
 		<form name="nameForm" method="post">
 			<div style="border-bottom: 1px solid #ced4da; padding-bottom: 10px;">
@@ -556,20 +600,21 @@
 				<h3 style="margin-bottom: 20px;">이름 검색</h3>
 				<input type="text" name="keyword" id="keyword"
 					placeholder="이름을 입력하세요" class="form-control" style="height: 26px;">
-				<button type="button" class="btn btnReceiverFind">검색</button>
+				<button type="submit" class="btn btnReceiverFind">검색</button>
 			</div>
 			<table class="table table-border table-form">
 				<tbody>
 					<tr>
 						<td height="50%">
-							<div style="height: 150px; border: 1px solid black; border-radius: 4px" class="dialog-receiver-list">
-								<ul></ul>
-							</div>
+							<div
+								style="height: 150px; border: 1px solid black; border-radius: 4px"></div>
 						</td>
 					</tr>
 					<tr>
-						<td align="right">
-							<button type="button" class="btn btnAdd">추가</button>
+						<td align="right"><input type="hidden" name="doc_no"
+							value="${dto.doc_no}"> <input type="hidden" name="page"
+							value="${page}">
+							<button type="button" class="btn">추가</button>
 							<button type="button" class="btn btnClose">닫기</button></td>
 					</tr>
 				</tbody>

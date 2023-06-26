@@ -103,7 +103,7 @@ input[type=text]{
 									<option value="reg_date"  ${condition == "reg_date" ? "selected='selected'" : ""} >임시문서</option>
 									<option value="subject"  ${condition == "subject" ? "selected='selected'" : ""} >중요문서</option>
 								</select> 
-							<button type="button" class="btn" onclick="" style="margin-right: 10px;">임시저장</button>
+							<button type="button" class="btn" onclick="" style="margin-right: 10px;">이동</button>
 							<button type="button" class="btn" onclick="">다운로드</button>
 						</td>
 						<td align="right">
@@ -152,11 +152,27 @@ input[type=text]{
 							<td>${dto.doc_no}</td>
 							<td>${dto.draft_category == 0 ? '품의서' : '기안서'}</td>
 							<td>
-								<a href="${articleUrl}&doc_no=${dto.doc_no}&size=${size}">${dto.draft_content}</a>
+								<a href="${articleUrl}&doc_no=${dto.doc_no}&size=${size}">${dto.doc_name}</a>
 							</td>
 							<td>${sessionScope.member.emp_name}</td>
 							<td>${dto.draft_date}</td>
-							<td>${dto.doc_status}</td>
+							<c:choose>
+								  <c:when test="${dto.doc_status == 0}">
+								    <td>임시</td>
+								  </c:when>
+								  <c:when test="${dto.doc_status == 1}">
+								    <td>발송완료</td>
+								  </c:when>
+								  <c:when test="${dto.doc_status == 2}">
+								    <td>결재진행</td>
+								  </c:when>
+								  <c:when test="${dto.doc_status == 3}">
+								    <td>결재완료</td>
+								  </c:when>
+								  <c:when test="${dto.doc_status == 4}">
+								    <td>반려문서</td>
+								  </c:when>
+							</c:choose>
 						</tr>
 					</c:forEach>
 				</tbody>

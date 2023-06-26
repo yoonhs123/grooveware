@@ -6,6 +6,20 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class Approval {
 	
+	private String emp_name;
+	
+	public String getEmp_name() {
+		return emp_name;
+	}
+	public void setEmp_name(String emp_name) {
+		this.emp_name = emp_name;
+	}
+	public long getFile_no() {
+		return file_no;
+	}
+	public void setFile_no(long file_no) {
+		this.file_no = file_no;
+	}
 	// 전자문서
 	private long doc_no;
 	private long emp_no;
@@ -32,7 +46,7 @@ public class Approval {
 	private String draft_content;
 	
 	// 문서파일
-	private long file_num;
+	private long file_no;
 
 	private String save_filename;
 	private String original_filename;
@@ -48,10 +62,7 @@ public class Approval {
 	private int annual_count;
 	private String annual_startdate;
 	private String annual_enddate;
-	
-	
-	
-	
+
 	public long getDoc_no() {
 		return doc_no;
 	}
@@ -118,7 +129,6 @@ public class Approval {
 	public void setImportant(int important) {
 		this.important = important;
 	}
- 
 	public int getIs_visible() {
 		return is_visible;
 	}
@@ -161,13 +171,6 @@ public class Approval {
 	public void setDraft_content(String draft_content) {
 		this.draft_content = draft_content;
 	}
-	
-	public long getFile_num() {
-		return file_num;
-	}
-	public void setFile_num(long file_num) {
-		this.file_num = file_num;
-	}
 	public String getSave_filename() {
 		return save_filename;
 	}
@@ -180,14 +183,12 @@ public class Approval {
 	public void setOriginal_filename(String original_filename) {
 		this.original_filename = original_filename;
 	}
-
 	public List<MultipartFile> getSelectFile() {
 		return selectFile;
 	}
 	public void setSelectFile(List<MultipartFile> selectFile) {
 		this.selectFile = selectFile;
 	}
-	
 	public int getHoliday_id() {
 		return holiday_id;
 	}
@@ -230,9 +231,6 @@ public class Approval {
 	public void setAnnual_enddate(String annual_enddate) {
 		this.annual_enddate = annual_enddate;
 	}
-	
-
-
 
 }
 

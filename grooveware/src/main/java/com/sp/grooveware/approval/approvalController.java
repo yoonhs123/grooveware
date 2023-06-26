@@ -51,6 +51,7 @@ public class approvalController {
 			HttpServletRequest req,
 			Model model) throws Exception {
 
+		// 개인 리스트를 보기 위해 세션에서 해당 멤버 가져오기
 		SessionInfo info = (SessionInfo)session.getAttribute("member");
  
 		
@@ -67,6 +68,7 @@ public class approvalController {
 		map.put("condition", condition);
 		map.put("keyword", keyword);
 		map.put("emp_no", info.getEmp_no());
+		
 		dataCount = service.dataCount(map);
 		if (dataCount != 0) {
 			total_page = myUtil.pageCount(dataCount, size);
@@ -90,7 +92,7 @@ public class approvalController {
 
 		String cp = req.getContextPath();
 		String query = "";
-		String listUrl = cp + "approval/list";
+		String listUrl = cp + "/approval/list";
 		String articleUrl = cp + "/approval/article?page=" + current_page;
 		if (keyword.length() != 0) {
 			query = "condition=" + condition + "&keyword=" + URLEncoder.encode(keyword, "utf-8");
@@ -185,7 +187,6 @@ public class approvalController {
 		if (dto == null) {
 			return "redirect:/approval/list?" + query;
 		}
-		dto.getDraft_date();
 		
 		
 		List<Approval> listFile = service.listFile(doc_no);
@@ -205,22 +206,23 @@ public class approvalController {
 	}	
 	
 	@RequestMapping(value = "download")
-	public void download(@RequestParam long fileNum,
+	public void download(@RequestParam long file_no,
 			HttpServletResponse resp,
 			HttpSession session) throws Exception {
 		String root = session.getServletContext().getRealPath("/");
-		String pathname = root + "uploads" + File.separator + "notice";
+		String pathname = root + "uploads" + File.separator + "approval";
 
 		boolean b = false;
 
-		Approval dto = service.readFile(fileNum);
+		Approval dto = service.readFile(file_no);
+		System.out.println("dto : -----------" + dto);
+		
 		if (dto != null) {
 			String saveFilename = dto.getSave_filename();
 			String originalFilename = dto.getOriginal_filename();
 
 			b = fileManager.doFileDownload(saveFilename, originalFilename, pathname, resp);
 		}
-
 		if (! b) {
 			try {
 				resp.setContentType("text/html; charset=utf-8");
@@ -230,9 +232,104 @@ public class approvalController {
 			}
 		}
 	}
+
+	@RequestMapping(value = "update", method = RequestMethod.GET)
+	public String updateForm(@RequestParam long doc_no,
+			@RequestParam String page,
+			HttpSession session,
+			Model model) throws Exception {
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+
+		Approval dto = service.readApproval(doc_no);
+		if (dto == null || !Long.valueOf(info.getEmp_no()).equals(dto.getEmp_no())) {
+		    return "redirect:/approval/list?page=" + page;
+		}
+		List<Approval> listFile = service.listFile(doc_no);
+
+		model.addAttribute("mode", "update");
+		model.addAttribute("page", page);
+		model.addAttribute("dto", dto);
+		model.addAttribute("listFile", listFile);
+
+		return ".approval.write";
+	}
+
+	@RequestMapping(value = "update", method = RequestMethod.POST)
+	public String updateSubmit(Approval dto,
+			@RequestParam String page,
+			HttpSession session) throws Exception {
+
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+
+		try {
+			String root = session.getServletContext().getRealPath("/");
+			String pathname = root + File.separator + "uploads" + File.separator + "approval";
+
+			dto.setEmp_no(info.getEmp_no());
+			service.updateApproval(dto, pathname);
+		} catch (Exception e) {
+		}
+
+		return "redirect:/approval/list?page=" + page;
+	}
+
+	
+
+	@RequestMapping(value = "delete")
+	public String delete(@RequestParam long doc_no,
+			@RequestParam String page,
+			@RequestParam(defaultValue = "all") String condition,
+			@RequestParam(defaultValue = "") String keyword,
+			HttpSession session) throws Exception {
+
+		keyword = URLDecoder.decode(keyword, "utf-8");
+		String query = "page=" + page;
+		if (keyword.length() != 0) {
+			query += "&condition=" + condition + "&keyword=" + URLEncoder.encode(keyword, "UTF-8");
+		}
+
+		try {
+			String root = session.getServletContext().getRealPath("/");
+			String pathname = root + "uploads" + File.separator + "approval";
+			service.deleteApproval(doc_no, pathname);
+		} catch (Exception e) {
+		}
+
+		return "redirect:/approval/list?" + query;
+	}
 	
 	
-	// 친구 리스트
+	
+	@RequestMapping(value = "deleteFile", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> deleteFile(@RequestParam long file_no, HttpSession session) throws Exception {
+
+		String root = session.getServletContext().getRealPath("/");
+		String pathname = root + "uploads" + File.separator + "approval";
+
+		Approval dto = service.readFile(file_no);
+		if (dto != null) {
+			fileManager.doFileDelete(dto.getSave_filename(), pathname);
+		}
+
+		String state = "false";
+		try {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("field", "file_no");
+			map.put("doc_no", file_no);
+			service.deleteFile(map);
+			state = "true";
+		} catch (Exception e) {
+		}
+
+		// 작업 결과를 json으로 전송
+		Map<String, Object> model = new HashMap<>();
+		model.put("state", state);
+		return model;
+	}	
+	
+	
+	// 멤버 리스트
 	@GetMapping(value = "listMember")
 	@ResponseBody
 	public Map<String, Object> listMember(
@@ -245,11 +342,12 @@ public class approvalController {
 
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("keyword", keyword);
-		map.put("emp_name", info.getEmp_name());
+		map.put("emp_no", info.getEmp_no());
 		List<Approval> list = service.listMember(map);
 
 		Map<String, Object> model = new HashMap<String, Object>();
 		model.put("listMember", list);
+		System.out.println("listMember" + list);
 		return model;
 	}
 	

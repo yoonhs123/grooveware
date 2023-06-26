@@ -106,7 +106,8 @@ public class ApprovalServiceImpl implements ApprovalService {
 	@Override
 	public void updateApproval(Approval dto, String pathname) throws Exception {
 		try {
-			dao.updateData("approval.updateApproval", dto);
+			dao.updateData("approval.updateApproval1", dto);
+			dao.updateData("approval.updateApproval2", dto);
 			
 			if (! dto.getSelectFile().isEmpty()) {
 				for (MultipartFile mf : dto.getSelectFile()) {
@@ -121,7 +122,7 @@ public class ApprovalServiceImpl implements ApprovalService {
 					dto.setSave_filename(saveFilename);
 
 					// insertFile(dto);
-					dao.insertData("noticeManage.insertFile", dto);
+					dao.insertData("approval.insertFile", dto);
 				}
 			}
 			
@@ -147,11 +148,12 @@ public class ApprovalServiceImpl implements ApprovalService {
 
 			// 파일 테이블 내용 지우기
 			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("field", "num");
+			map.put("field", "doc_no");
 			map.put("doc_no", doc_no);
 			deleteFile(map);
 
-			dao.deleteData("noticeManage.deleteApproval", doc_no);
+			dao.deleteData("approval.deleteApproval1", doc_no);
+			dao.deleteData("approval.deleteApproval2", doc_no);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
