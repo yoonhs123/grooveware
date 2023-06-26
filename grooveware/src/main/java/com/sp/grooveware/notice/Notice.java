@@ -6,6 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class Notice {
 
+	private long num;
 	private int not_id;
 	private long emp_no;
 	private int dept_id;
@@ -35,6 +36,14 @@ public class Notice {
 	*/
 	
 	private long gap;
+
+	public long getNum() {
+		return num;
+	}
+
+	public void setNum(long num) {
+		this.num = num;
+	}
 
 	public int getNot_id() {
 		return not_id;

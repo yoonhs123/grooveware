@@ -8,22 +8,11 @@ x`<%@ page contentType="text/html; charset=UTF-8" %>
       
         <ul>
             <li>
-                <a href="#">문서함</a>
-                <a href="#">&nbsp;내 문서</a>
-                <a href="#">&nbsp;부서 문서</a>
-                <a href="#">&nbsp;임시보관 문서</a>
+                <a href="${pageContext.request.contextPath}/notice/list">공지사항</a>
+                <a href="${pageContext.request.contextPath}/notice/list">&nbsp;전체 공지사항</a>
+                <a href="#">&nbsp;부서별 공지사항</a>
             <li>
-            
-            <hr>
-            
-            <li>
-                <a href="#">결재함</a>
-                <a href="#">&nbsp;대기</a>
-                <a href="#">&nbsp;진행중</a>
-                <a href="#">&nbsp;보류</a>
-                <a href="#">&nbsp;반려</a>
-                <a href="#">&nbsp;완료</a>
-            <li>
+       <hr>
         </ul>
     </div>
 		<div class="right-contentbody">
@@ -67,35 +56,34 @@ x`<%@ page contentType="text/html; charset=UTF-8" %>
 						</th> 
 						<th> 번호 </th>
 						<th width="60%;"> 제목 </th>
-						<th> 작성자 </th>						
-						<th> 작성일 </th>
+						<th> 작성자 </th>					
+						<th> 작성일 </th>	
 						<th> 조회수 </th>
 						<th> 첨부 </th>
 					</tr>
 				</thead>
 				
 				<tbody> 
-					<c:forEach var="dto" begin="1" end="9">
+					<c:forEach var="dto"  items="${list}" >
 						<tr>
 							<td>
 								<input type="checkbox" name="" value=" ">
 							</td>					
-							<td>1</td>
+							<td>${dto.noti_id}</td>
 							<td>
-								<a href="${url} ">22년도 상반기 영업 매출의 보고</a>
+								<a href="">${dto.noti_title}</a>
 							</td>
-							<td>1</td>
-							<td>1</td>
-							<td>1</td>
-							<td></td>
+							<td>${dto.emp_no}</td>
+							<td>${dto.noti_regdate}</td>
+							<td>${dto.noti_hitcount}</td>
+							<td>${dto.save_filename }</td>
 							
-							<td></td>
 						</tr>
 					</c:forEach>
 				</tbody>
 			</table>
 	
-			<div class="page-navigation" style="width: 900px; margin: 0 auto;">${dataCount == 0 ? "등록된 게시물이 없습니다." : paging} 1 2 3</div>
+			<div class="page-navigation" style="width: 900px; margin: 0 auto;">${dataCount == 0 ? "등록된 게시물이 없습니다." : paging}</div>
 	
 			</div>
 		</div>
