@@ -12,11 +12,11 @@ public class MemberServiceImpl implements MemberService {
 	private CommonDAO dao;
 	
 	@Override
-	public Member loginMember(String emp_email) {
+	public Member loginMember(String emp_no) {
 		Member dto = null;
 
 		try {
-			dto = dao.selectOne("member.loginMember", emp_email);
+			dto = dao.selectOne("member.loginMember", emp_no);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

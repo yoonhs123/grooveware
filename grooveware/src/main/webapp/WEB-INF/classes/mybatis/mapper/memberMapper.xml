@@ -4,9 +4,10 @@
 <mapper namespace="member">
 	<select id="loginMember" parameterType="String" resultType="com.sp.grooveware.member.Member">
 		
-		SELECT e.emp_no, emp_name, emp_pwd, dept_no
+		SELECT e.emp_no, emp_name, emp_pwd, dept_no, dept_name
 		FROM emp e
         JOIN emp_history eh ON e.emp_no = eh.emp_no
+        JOIN dept d ON e.dept_no = d.dept_no
 		WHERE e.emp_no = #{emp_no}
 		
 	</select>
