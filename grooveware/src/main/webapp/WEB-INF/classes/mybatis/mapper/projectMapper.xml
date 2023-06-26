@@ -10,15 +10,29 @@
 		 values (pj_file_seq.nextval, pj_seq.currval, #{saveFilename, jdbcType=VARCHAR}, #{originalFilename, jdbcType=VARCHAR})
 		into cli(client_no, pj_no, client_name)
 		 values (cli_seq.nextval, pj_seq.currval, #{client_name})
-	    into pj_member(pj_member_no, pj_no, pj_join_type, pj_member_join_date)
-         values (#{pj_member_no}, pj_seq.currval, #{pj_join_type}, SYSDATE)		
-		select*from dual
+		<foreach collection="emps" item="emp_no" index="index" separator=" " close="SELECT*FROM DUAL">
+	         into  pj_member(pj_member_no, pj_no, pj_join_type, pj_member_join_date)
+		 values
+	        (#{emp_no}, pj_seq.currval, 1, SYSDATE)
+	    </foreach>
 	</update>
-
-        
-
-
-	<sql id="where-list">
+	
+	
+	
+<!-- 	
+	<insert id="insertProject2" parameterType="com.sp.grooveware.project.Project">
+		insert into  pj_member(pj_member_no, pj_no, pj_join_type, pj_member_join_date)
+		 values
+		<foreach collection="emps" item="emp_no" separator=",">
+	        (#{emp_no}, pj_seq.currval, 1, SYSDATE)
+	    </foreach>
+	</insert>
+	
+ -->
+ 
+ 
+ 
+ 	<sql id="where-list">
 		<choose>
 			<when test="condition == 'pj_name' ">
 			   ( INSTR(pj_creator, #{keyword}) &gt; 0 )

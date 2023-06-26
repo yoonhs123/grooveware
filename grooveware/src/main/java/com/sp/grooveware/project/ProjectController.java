@@ -101,6 +101,7 @@ public class ProjectController {
 	@RequestMapping(value = "write", method = RequestMethod.POST)
 	public String writeSubmit(Project dto, HttpSession session) throws Exception {
 		SessionInfo info = (SessionInfo) session.getAttribute("member");
+	
 		try {
 			dto.setPj_creator(info.getEmp_no());
 			service.insertProject(dto, "write");

@@ -44,6 +44,92 @@
 	display: block;
 }
 
+
+<!-- -->
+  .modal-content {
+    border-radius: 10px;
+  }
+
+  .modal-header {
+    border-bottom: 1px solid #ced4da;
+    padding-bottom: 10px;
+  }
+
+  .modal-body {
+    padding: 20px;
+  }
+
+  .modal-title {
+    margin-bottom: 10px;
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  .btn_emp_find {
+    margin-top: 10px;
+  }
+
+  .emp-list {
+    height: 150px;
+    border: 1px solid black;
+    overflow-y: auto;
+    padding: 10px;
+  }
+
+  .emp-list ul {
+    padding: 0;
+    list-style: none;
+  }
+
+  .modal-footer {
+    justify-content: flex-end;
+    border-top: none;
+  }
+
+  /* Added styles for project members */
+  .title2 {
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .title2 span {
+    font-weight: bold;
+    font-size: 18px;
+  }
+
+  .line_container {
+    height: 250px;
+  }
+
+  .table {
+    margin-bottom: 15px;
+  }
+
+  .forms-emp-name {
+    margin-bottom: 10px;
+  }
+
+  .project-member {
+    display: inline-block;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    padding: 6px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    background-color: #f8f9fa;
+  }
+
+  .project-member img {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+    vertical-align: middle;
+  }
 </style>
 
 <script type="text/javascript">
@@ -212,14 +298,14 @@ $(function(){
 				s+=  "  </label>"
 				s += "</span>"
 				
-				$(".forms-emp-name").append(s);
+				$("#forms-emp-list").append(s);
 			}
 		});
 	
 		
-		s += "<span>" + " (" + pos_name + "_" + "</span>";
+/* 		s += "<span>" + " (" + pos_name + "_" + "</span>";
 		s += "<span>" + dept_name + ")" + "</span></li>";
-		
+ */		
 		
 		$("#myDialogModal").hide();
 	});

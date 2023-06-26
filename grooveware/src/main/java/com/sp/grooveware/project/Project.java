@@ -1,5 +1,7 @@
 package com.sp.grooveware.project;
 
+import java.util.List;
+
 import org.springframework.web.multipart.MultipartFile;
 
 public class Project {
@@ -22,11 +24,20 @@ public class Project {
 	private String pj_member_join_date;
 	
 	private long emp_no;
+	private List<Long> emps;
 	private String emp_name;
 	private String pos_name;
 	private String dept_name;
 	
 	
+	
+	
+	public List<Long> getEmps() {
+		return emps;
+	}
+	public void setEmps(List<Long> emps) {
+		this.emps = emps;
+	}
 	public long getPj_no() {
 		return pj_no;
 	}

@@ -18,15 +18,32 @@ public class ProjectServiceImpl implements ProjectService {
 	private FileManager fileManager;
 	
 	@Override
+	public List<Project> listEmp(Map<String, Object> map) {
+		List<Project> list = null;
+		
+		try {
+			list = dao.selectList("project.listEmp",map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+	
+	@Override
 	public void insertProject(Project dto, String pathname) throws Exception {
 		try {
-			String saveFilename = fileManager.doFileUpload(dto.getSelectFile(), pathname);
+			/*String saveFilename = fileManager.doFileUpload(dto.getSelectFile(), pathname);
 			if(saveFilename != null) {
 				dto.setSaveFilename(saveFilename);
 				dto.setOriginalFilename(dto.getSelectFile().getOriginalFilename());
+			*/
+			for (long emp_no : dto.getEmps()) {
+				dto.setEmp_no(emp_no);
+				dao.insertData("project.insertProject", dto);		// .앞에는 맵퍼의 namespace, .뒤에는 id
 			}
-
-			dao.insertData("project.insertProject", dto);		// .앞에는 맵퍼의 namespace, .뒤에는 id
+			
+	//		}
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
@@ -78,17 +95,6 @@ public class ProjectServiceImpl implements ProjectService {
 		
 	}
 
-	@Override
-	public List<Project> listEmp(Map<String, Object> map) {
-		List<Project> list = null;
-		
-		try {
-			list = dao.selectList("project.listEmp",map);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		return list;
-	}
+
 
 }
