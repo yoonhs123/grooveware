@@ -47,9 +47,7 @@ public class MemberController {
 		info.setEmp_no(dto.getEmp_no());
 		info.setEmp_name(dto.getEmp_name());
 		info.setDept_no(dto.getDept_no());
-		System.out.println(dto.getEmp_no());
-		System.out.println(dto.getDept_no());
-		System.out.println(dto.getEmp_name());
+		info.setDept_name(dto.getDept_name());
 		
 		return "redirect:/member/dashboard";
 	}
