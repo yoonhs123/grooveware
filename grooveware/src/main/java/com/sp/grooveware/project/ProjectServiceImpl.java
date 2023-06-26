@@ -78,4 +78,17 @@ public class ProjectServiceImpl implements ProjectService {
 		
 	}
 
+	@Override
+	public List<Project> listEmp(Map<String, Object> map) {
+		List<Project> list = null;
+		
+		try {
+			list = dao.selectList("project.listEmp",map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+
 }

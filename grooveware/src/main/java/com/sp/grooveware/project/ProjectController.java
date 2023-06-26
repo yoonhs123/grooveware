@@ -1,5 +1,6 @@
 package com.sp.grooveware.project;
 
+import java.lang.ProcessHandle.Info;
 import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.List;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sp.grooveware.common.FileManager;
 import com.sp.grooveware.common.MyUtil;
@@ -54,7 +56,7 @@ public class ProjectController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("condition", condition);
 		map.put("keyword", keyword);
-		map.put("emp_no", info.getEmp_no());
+		map.put("login_emp", info.getEmp_no());
 		
 		dataCount = service.dataCount(map);
 		if (dataCount != 0) {
@@ -107,6 +109,34 @@ public class ProjectController {
 		}
 		return "redirect:/project/list";
 	}
+	
+	
+	// 친구 리스트
+	@GetMapping(value = "listEmp")
+	@ResponseBody
+	public Map<String, Object> listEmp(
+			@RequestParam String condition,
+			@RequestParam String keyword,
+			HttpSession session) throws Exception {
+		
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+				
+		keyword = URLDecoder.decode(keyword, "UTF-8");
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("condition", condition);
+		map.put("keyword", keyword);
+		map.put("emp_no", info.getEmp_no());
+		List<Project> list = service.listEmp(map);
+		
+		Map<String, Object> model = new HashMap<String, Object>();
+		model.put("listEmp", list);
+		System.out.println("listEmp" + list);
+		return model;
+		
+		
+	}
+
 	
 	@GetMapping("article")
 	public String article() {

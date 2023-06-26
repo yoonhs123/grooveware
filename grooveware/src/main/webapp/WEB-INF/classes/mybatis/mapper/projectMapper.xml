@@ -10,29 +10,28 @@
 		 values (pj_file_seq.nextval, pj_seq.currval, #{saveFilename, jdbcType=VARCHAR}, #{originalFilename, jdbcType=VARCHAR})
 		into cli(client_no, pj_no, client_name)
 		 values (cli_seq.nextval, pj_seq.currval, #{client_name})
+	    into pj_member(pj_member_no, pj_no, pj_join_type, pj_member_join_date)
+         values (#{pj_member_no}, pj_seq.currval, #{pj_join_type}, SYSDATE)		
 		select*from dual
 	</update>
 
-
+        
 
 
 	<sql id="where-list">
 		<choose>
-			<when test="condition == 'all' ">
-			   ( INSTR(pj_name, #{keyword}) &gt; 0 )
-			</when>
-			<when test="condition == 'pmName' ">
+			<when test="condition == 'pj_name' ">
 			   ( INSTR(pj_creator, #{keyword}) &gt; 0 )
 			</when>
-			<when test="condition == 'start_date' ">
+			<when test="condition == 'pj_start_date' ">
 			   ( TO_CHAR(pj_start_date, 'YYYYMMDD') = #{keyword}
 		          OR TO_CHAR(pj_start_date, 'YYYY-MM-DD') = #{keyword} )
 			</when>
-			<when test="condition == 'end_date' ">
+			<when test="condition == 'pj_end_date' ">
 			   ( TO_CHAR(pj_end_date, 'YYYYMMDD') = #{keyword}
 		          OR TO_CHAR(pj_end_date, 'YYYY-MM-DD') = #{keyword} )
 			</when>
-			<when test="condition == 'client' ">
+			<when test="condition == 'client_name' ">
 			   ( INSTR(client_name, #{keyword}) &gt; 0 )
 			</when>
 			<otherwise>
@@ -60,7 +59,7 @@
 		FROM pj a
 		JOIN pj_member d ON a.pj_no = d.pj_no
 		<where>
-			pj_member_no = #{emp_no}
+			pj_member_no = #{login_emp}
 			<if test="keyword!=null and keyword!='' ">
 			  AND <include refid="where-list"/>
 			</if>
@@ -70,7 +69,24 @@
 
 
 
-
+	<!-- 친구 리스트 -->
+	<select id="listEmp" parameterType="map" resultType="com.sp.grooveware.project.Project">
+		SELECT a.emp_no, b.dept_name, c.emp_name, d.pos_name
+		FROM emp_history a
+		LEFT OUTER JOIN dept b ON a.dept_no = b.dept_no
+		LEFT OUTER JOIN emp c ON a.emp_no = c.emp_no
+		LEFT OUTER JOIN pos d ON a.pos_no = d.pos_no
+		<where>
+			<choose>
+				<when test="condition == 'emp_name' ">
+					( INSTR(c.${condition}, #{keyword}) &gt; 0 )
+				</when>
+				<when test="condition == 'emp_no' ">
+					( INSTR(a.${condition}, #{keyword}) &gt; 0 )
+				</when>
+			</choose>
+		</where>
+	</select>
 
 
 

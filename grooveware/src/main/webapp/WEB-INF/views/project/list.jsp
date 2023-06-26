@@ -87,7 +87,7 @@ function searchList() {
             <li>
                 <a href="#" class="current_pj_name">현재 진행중인 프로젝트</a>
                 <a href="#">&nbsp;메인으로</a>
-                <a href="#">&nbsp;새 프로젝트 생성</a>
+                <a href="${pageContext.request.contextPath}/project/write">&nbsp;새 프로젝트 생성</a>
             <li>
             <hr>
             <li>
@@ -111,11 +111,9 @@ function searchList() {
 						<td align="right">
 							<form name="searchForm" action="${pageContext.request.contextPath}/project/list " method="post">
 								<select name="condition" class="form-select">
-									<option value="all"  ${condition == "all" ? "selected='selected'" : ""} >프로젝트 이름</option>
-									<option value="pmName"  ${condition == "name" ? "selected='selected'" : ""} >PM</option>
-									<option value="start_date"  ${condition == "reg_date" ? "selected='selected'" : ""} >시작일</option>
-									<option value="end_date"  ${condition == "subject" ? "selected='selected'" : ""} >종료일</option>
-									<option value="client"  ${condition == "content" ? "selected='selected'" : ""} >클라이언트</option>
+									<option value="pj_name"  ${condition == "all" ? "selected='selected'" : ""} >프로젝트 이름</option>
+									<option value="pj_creator"  ${condition == "name" ? "selected='selected'" : ""} >PM</option>
+									<option value="client_name"  ${condition == "content" ? "selected='selected'" : ""} >클라이언트</option>
 								</select>
 								<input type="text" name="keyword" value="${keyword}" class="form-control">
 								<button type="button" class="btn" onclick="searchList();">검색</button>

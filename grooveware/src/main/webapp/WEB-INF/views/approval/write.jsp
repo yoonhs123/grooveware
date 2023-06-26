@@ -187,6 +187,7 @@
 			let len2 = $("#forms-receiver-list input[name=receivers]").length;
 			console.log("len1="+len1);
 			console.log("len2="+len2);
+			
 			if (len1 === 0) {
 				alert("추가할 사람을 먼저 선택하세요.");
 				return false;

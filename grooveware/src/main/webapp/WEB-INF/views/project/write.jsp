@@ -4,26 +4,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <style>
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgba(0, 0, 0, 0.5);
-}
-
-.modal-content {
-    background-color: #fefefe;
-    margin: 15% 50%;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 30%;
-}
-
 .close {
   color: #aaa;
   float: right;
@@ -46,33 +26,47 @@
 	padding-top : 20px;
 }
 
+
+.project-member {
+	display: inline-block;
+	width: 100px;
+	height: 100px;
+	border: 1px solid #333;
+	padding: 3px;
+}
+
+.project-member img {
+	display: block;
+	width: 50px;
+	height: 50px;
+}
+.project-member label {
+	display: block;
+}
+
 </style>
 
-
 <script type="text/javascript">
-	//모달 열기
-	function openModal() {
-		document.getElementById("myModal").style.display = "block";
+	<c:if test="${mode=='update'}">
+	function deleteFile(file_no) {
+		let url = "${pageContext.request.contextPath}/approval/deleteFile";
+		$.post(url, { file_no : file_no }, function(data) {
+			$("#f" + file_no).remove();
+		}, "json");
 	}
+	</c:if>
+</script>
 
-	// 모달 닫기
-	function closeModal() {
-		document.getElementById("myModal").style.display = "none";
-	}
 
-	// 사용자가 모달 외부를 클릭할 때 모달 닫기
-	window.onclick = function(event) {
-		var modal = document.getElementById("myModal");
-		if (event.target === modal) {
-			modal.style.display = "none";
-		}
-	};
-	
-	
-	
+<script type="text/javascript"> 
 function sendOk() {
 	const f = document.projectForm;
 	let str;
+
+	if($("#forms-emp-list input[name=emps]").length === 0) {
+		alert("프로젝트 참여멤버를 추가하세요. ");
+		return;
+	}
 	
     str = f.pj_name.value.trim();
     if(!str) {
@@ -90,19 +84,237 @@ function sendOk() {
 
     f.action = "${pageContext.request.contextPath}/project/${mode}";
     f.submit();
-}	
+    
+}    
+</script>
+
+<script type="text/javascript"> 
+$(function(){
+    $("button[role='tab']").on("click", function(e){
+		let tab = $(this).attr("data-tab");
+		if(tab === "send") {
+			return false;
+		}		
+		let url = "${pageContext.request.contextPath}/project/list";
+		location.href=url;
+    });
+});
+</script>
+
+<script type="text/javascript">
+function login() {
+	location.href="${pageContext.request.contextPath}/member/login";
+}
+
+function ajaxFun(url, method, query, dataType, fn){
+	$.ajax({
+		type:method,
+		url:url,
+		data:query,
+		dataType: dataType,
+		success: function(data){
+			fn(data);
+		},
+		beforeSend : function(jqXHR){
+			jqXHR.setRequestHeader("AJAX", true);
+		},
+		error : function(jqXHR){
+			if(jqXHR.status === 403){
+				location.href="${pageContext.request.contextPath}/member/login";
+				return false;
+			} else if(jqXHR.status === 400){
+				alert("요청 처리가 실패했습니다.");
+				return false;
+			}
+			console.log(jqXHR.responseText);
+		}
+	});
+}
+
+ 
+$(function(){
+	$(".btn_pj_add").click(function(){
+		$("#condition").val("emp_name");
+		$("#keyword").val("");
+		$(".dialog-emp-list ul").empty();
+		
+		$("#myDialogModal").show();
+	});
 	
+	// 대화상자 - 받는사람 검색 버튼
+	$(".btn_emp_find").click(function(){
+		let condition = $("#condition").val();
+		let keyword = $("#keyword").val();
+		if(!keyword) {
+			$("#keyword").focus();
+			return false;
+		}
+		
+		let url = "${pageContext.request.contextPath}/project/listEmp"; 
+		let query = "condition=" + condition + "&keyword=" + encodeURIComponent(keyword);
+		
+		const fn = function(data){
+			$(".dialog-emp-list ul").empty();
+			searchListEmp(data);
+		};
+		ajaxFun(url, "get", query, "json", fn);
+	});
+	
+	function searchListEmp(data) {
+		let s;
+		for(let i=0; i<data.listEmp.length; i++) {
+			let emp_no = data.listEmp[i].emp_no;
+			let emp_name = data.listEmp[i].emp_name;
+			let pos_name = data.listEmp[i].pos_name;
+			let dept_name = data.listEmp[i].dept_name;
+			
+			s = "<li><input type='checkbox' class='form-check-input' data-emp_no='" + emp_no + "' title='" + emp_no+ "'> <span>" + emp_name+ "</span>"
+			s += "<span>" + " (" + pos_name + "_" + "</span>";
+			s += "<span>" + dept_name + ")" + "</span></li>";
+			$(".dialog-emp-list ul").append(s);
+		}
+	}
+	
+	// 대화상자-받는 사람 추가 버튼
+	$(".btnAdd").click(function(){
+		let len1 = $(".dialog-emp-list ul input[type=checkbox]:checked").length;
+		let len2 = $("#forms-emp-list input[name=emps]").length;
+		console.log("len1="+len1);
+		console.log("len2="+len2);
+		
+		if(len1 === 0) {
+			alert("추가할 사람을 먼저 선택하세요.");
+			return false;			
+		}
+		
+		var b, emp_no, emp_name, pos_name, dept_name, s;
+
+		b = false;
+		$(".dialog-emp-list ul input[type=checkbox]:checked").each(function(){
+			emp_no = $(this).attr("data-emp_no");
+			emp_name = $(this).next("span").text();
+			pos_name = $(this).next("span").next("span").text();
+			dept_name = $(this).next("span").next("span").next("span").text();
+			
+			
+			$("#forms-emp-list input[name=emps]").each(function(){
+				if($(this).val() === emp_no) {
+					b = true;
+					return false;
+				}
+			});
+			
+			if(!b) {
+				s = "<span class='project-member'>";
+				s += "  <img src='${pageContext.request.contextPath}/resources/images/bg.png'>";
+				s += "    <label>" + emp_name + pos_name + dept_name;
+				s += "    <input type='hidden' name='emps' value='" + emp_no + "'>";
+				s+=  "  </label>"
+				s += "</span>"
+				
+				$(".forms-emp-name").append(s);
+			}
+		});
+	
+		
+		s += "<span>" + " (" + pos_name + "_" + "</span>";
+		s += "<span>" + dept_name + ")" + "</span></li>";
+		
+		
+		$("#myDialogModal").hide();
+	});
+	
+	$(".btnClose").click(function(){
+		$("#myDialogModal").hide();
+	});
+	
+	$("body").on("click", ".project-member", function(){
+		$(this).remove();
+		/*
+		let emp_no = $(this).attr("data-emp_no");
+		
+		$(this).parent().remove();
+		$("#forms-emp-list input[name=emps]").each(function(){
+			let emp = $(this).val();
+			if(emp_no === emp) {
+				$(this).remove();
+				return false;
+			}
+		});
+		*/
+	});
+});
+    
+
 	
 	
 	
 </script>
+
+
+
+		<!-- 모달 -->
+		<div id="myDialogModal" class="modal fade"  tabindex="-1" 
+		data-bs-backdrop="static" data-bs-keyboard="false"
+		aria-labelledby="myDialogModalLabel" aria-hidden="true">
+		  <div class="modal-content">
+		  	<div class="modal-header">
+				<div style="border-bottom: 1px solid #ced4da; padding-bottom: 10px;"></div>
+			    <span class="close">&times;</span>		<!-- 닫기버튼(x) -->
+			</div>
+			<div class="modal-body">
+			    <h3 style="margin-bottom: 10px;">이름 검색</h3>
+			  	<select name="condition" id="condition" class="form-select">
+					<option value="emp_name">사원이름</option>
+					<option value="emp_no">사번</option>
+				</select>
+			   <input type="text" name="keyword" id="keyword" placeholder="추가할 사원을 검색하세요" class="form-control" style="height: 26px;">
+		       <button type="button" class="btn btn_emp_find"> 검색 </button>		<!-- 검색버튼 -->
+									
+				<table class="table table-border table-form">
+					<tbody>
+						<tr>
+							<td height="50%">
+							 <div style="height: 150px; border: 1px solid black;">
+							 	<div class="border p-1 dialog-emp-list">
+							 		<ul></ul>
+							 	</div>
+							 </div>
+							</td>
+						</tr>
+						<tr>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary btnAdd">추가</button>
+				<button type="button" class="btn btn-secondary btnClose">닫기</button>
+			</div>
+			
+		  </div>
+		</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <div class="left-side-bar">
          <ul>
             <li>
                 <a href="#" class="current_pj_name">현재 진행중인 프로젝트</a>
                 <a href="#">&nbsp;메인으로</a>
-                <a href="#">&nbsp;새 프로젝트 생성</a>
+                <a href="${pageContext.request.contextPath}/project/write">&nbsp;새 프로젝트 생성</a>
             <li>
             <hr>
             <li>
@@ -151,81 +363,29 @@ function sendOk() {
 
 								<div>
 								
-								<table class="table" style="margin-bottom: 20px;">
-								<tr>
-									<td class="title2" width="90%">
-										<label>구성멤버</label> 
-									</td>
-									<td class="title">
-										<!-- 모달을 띄울 추가 버튼 -->
-										<button type="button" class="btn" onclick="openModal()" style="margin-top: 5px;">추가</button>
-									</td>
-								</tr>
-								</table>
-								
-								
-								
-								
-													
+									<div class="title2" style= width:90%>
+										<span>구성멤버</span>
+										<button type="button" class="btn btn_pj_add" style="margin-top: 5px;">추가</button>
+									</div>	
 									
 									
 									
-									<div class="flexBox" >
-										<div class="line_container">
-											<div class="table" style="margin-bottom: 15px;">
-												<div>
-													<div class="title" style="float: left; width: 50%;">
-														<span>결재라인</span>
-													</div>
-													<div class="title">
-														<span> 공유자</span>
-													</div>
+									<div class="line_container" style=" height:250px;">
+										<div class="table" style="margin-bottom: 15px;">
+					
+											<div style="width: 100%; float: left;">
+												<div class="forms-emp-name">
+														<!-- 여기에 멤버 추가리스트 뜸 -->							
 												</div>
-												<div style="width: 50%; float: left;">
-													<div class="img_container ">
-														<img class="" src="/test.jpg">
-													</div>
-													<div class="img_container3 ">
-														<i class="fa-solid fa-chevron-right"></i>
-													</div>
-													<div class="img_container ">
-														<img class="" src="test.jpg">
-													</div>
-													<div class="img_container3 ">
-														<i class="fa-solid fa-chevron-right"></i>
-													</div>
-													<div class=" img_container">
-														<img class="" src="test.jpg">
-													</div>
-
-												</div>
-				
-												<div style="">
-													<div class="img_container">
-														<img class="" src="test.jpg">
-													</div>
-													<!-- 플러스 버튼 후 결제라인 설정 팝업 -->
-												</div>
-				
-				
-												<div style="width: 50%; float: left;">
-													<div class="text_box3">김민교</div>
-													<div class="text_box4">&nbsp;</div>
-													<div class="text_box3">남기현</div>
-													<div class="text_box4">&nbsp;</div>
-													<div class="text_box3">최고관리자</div>
-				
-													<!-- 플러스 버튼 후 결제라인 설정 팝업 -->
-												</div>
-				
-												<div>
-													<div class="text_box3" style="margin-bottom: 10px;">최민정</div>
-													<!-- 플러스 버튼 후 결제라인 설정 팝업 -->
+												<div id="forms-emp-list">
+														<!-- 사진 -->
 												</div>
 											</div>
+					
 										</div>
-										
-									</div>									
+									</div>	
+	
+															
 									 <br><br><br><br>
 									<div class="flexBox">
 										<div class="leftBox"  >
@@ -294,59 +454,10 @@ function sendOk() {
 
 					<div class="board5">
 						<button type="button" class="btn2" onclick="sendOk();">생성</button>
-						<button type="button" class="btn2" style= "justify-content : flex-end">취소</button>
+						<button type="button" class="btn2" style= "justify-content : flex-end" onclick="location.href='${pageContext.request.contextPath}/project/list';">취소</button>
+						<div id="form-emp-list"></div>
 					</div>
 				</form>
 
 
 </div>
-
-
-
-		<!-- 모달 -->
-		<div id="myModal" class="modal">
-		  <div class="modal-content">
-			<form name="nameForm" method="post">
-			<div style="border-bottom: 1px solid #ced4da; padding-bottom: 10px;">
-			    <span class="close">&times;</span>
-			    <h3 style="margin-bottom: 10px;">이름 검색</h3>
-			   <input type="text" id="nameInput" placeholder="이름을 입력하세요" class="form-control" style="height: 26px;">
-		      <button type="submit" class="btn">검색</button>
-			</div>					
-			<table class="table table-border table-form">
-				<tbody>
-					<tr>
-						<td height="50%">
-						 <div style="height: 150px; border: 1px solid black;"></div>
-						</td>
-					</tr>
-					<tr>
-						<td align="right">
-							<input type="hidden" name="num" value="${dto.num}">
-							<input type="hidden" name="winnerNumber" value="${dto.winnerNumber}">
-							<input type="hidden" name="page" value="${page}">
-							<button type="button" class="btn">추가</button>
-							<button type="button" class="btn">삭제</button>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</form>
-		  </div>
-		</div>
-		
-		
-<script type="text/javascript">
-function submitContents(elClickedObj) {
-	 oEditors.getById["ir1"].exec("UPDATE_CONTENTS_FIELD", []);
-	 try {
-		if(! check()) {
-			return;
-		}
-		
-		elClickedObj.submit();
-		
-	} catch(e) {
-	}
-}
-</script>

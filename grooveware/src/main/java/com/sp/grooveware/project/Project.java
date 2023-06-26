@@ -17,22 +17,16 @@ public class Project {
 	
 	private String client_name;
 	
+	private long pj_member_no;
+	private int pj_join_type;
+	private String pj_member_join_date;
+	
 	private long emp_no;
+	private String emp_name;
+	private String pos_name;
+	private String dept_name;
 	
 	
-	
-	public long getEmp_no() {
-		return emp_no;
-	}
-	public void setEmp_no(long emp_no) {
-		this.emp_no = emp_no;
-	}
-	public String getClient_name() {
-		return client_name;
-	}
-	public void setClient_name(String client_name) {
-		this.client_name = client_name;
-	}
 	public long getPj_no() {
 		return pj_no;
 	}
@@ -93,6 +87,57 @@ public class Project {
 	public void setSelectFile(MultipartFile selectFile) {
 		this.selectFile = selectFile;
 	}
+	public String getClient_name() {
+		return client_name;
+	}
+	public void setClient_name(String client_name) {
+		this.client_name = client_name;
+	}
+	public long getPj_member_no() {
+		return pj_member_no;
+	}
+	public void setPj_member_no(long pj_member_no) {
+		this.pj_member_no = pj_member_no;
+	}
+	public int getPj_join_type() {
+		return pj_join_type;
+	}
+	public void setPj_join_type(int pj_join_type) {
+		this.pj_join_type = pj_join_type;
+	}
+	public String getPj_member_join_date() {
+		return pj_member_join_date;
+	}
+	public void setPj_member_join_date(String pj_member_join_date) {
+		this.pj_member_join_date = pj_member_join_date;
+	}
+	public long getEmp_no() {
+		return emp_no;
+	}
+	public void setEmp_no(long emp_no) {
+		this.emp_no = emp_no;
+	}
+	public String getEmp_name() {
+		return emp_name;
+	}
+	public void setEmp_name(String emp_name) {
+		this.emp_name = emp_name;
+	}
+	public String getPos_name() {
+		return pos_name;
+	}
+	public void setPos_name(String pos_name) {
+		this.pos_name = pos_name;
+	}
+	public String getDept_name() {
+		return dept_name;
+	}
+	public void setDept_name(String dept_name) {
+		this.dept_name = dept_name;
+	}
+	
+	
+	
 	
 	
 	
