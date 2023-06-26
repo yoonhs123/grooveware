@@ -10,15 +10,15 @@
      	<sql id="where-list">
 		<choose>
 			<when test="condition == 'all' ">
-			   (INSTR(subject, #{keyword}) &gt; 0
-		          OR DBMS_LOB.INSTR(content, #{keyword}) &gt; 0 )
+			   (INSTR(noti_title, #{keyword}) &gt; 0
+		          OR INSTR(noti_content, #{keyword}) &gt; 0 )
 			</when>
-			<when test="condition == 'reg_date' ">
+			<when test="condition == 'noti_regdate' ">
 			   (TO_CHAR(reg_date, 'YYYYMMDD') = #{keyword}
-		          OR TO_CHAR(reg_date, 'YYYY-MM-DD') = #{keyword} )
+		          OR TO_CHAR(noti_regdate, 'YYYY-MM-DD') = #{keyword} )
 			</when>
-			<when test="condition == 'content'">
-			    DBMS_LOB.INSTR(content, #{keyword}) &gt; 0
+			<when test="condition == 'noti_content'">
+			    INSTR(noti_content, #{keyword}) &gt; 0
 			</when>
 			<otherwise>
 			    INSTR(${condition}, #{keyword}) &gt; 0
@@ -29,36 +29,73 @@
 	
 	<!--  insert -->	
 	<insert id="insertNotice" parameterType="com.sp.grooveware.notice.Notice">      
-	    INSERT INTO notice (NOTI_ID, NOTI_TITLE, NOTI_CONTENT, NOTI_REGDATE, NOTI_HITCOUNT, emp_no, dept_id)
-	    VALUES (
+	     INSERT INTO notice (NOTI_ID, NOTI_TITLE, NOTI_CONTENT, NOTI_REGDATE, NOTI_HITCOUNT, emp_no, dept_id,
+                       SAVE_FILENAME, ORIGINAL_FILENAME)
+         VALUES (
 	        notice_seq.nextval,
 	        #{noti_title},
 	        #{noti_content},
 	        SYSDATE,
 	        0,
 	        #{emp_no},
-	        (SELECT DEPT_NO FROM dept WHERE DEPT_NO = #{dept_no})
-	    )
+	        #{dept_id, jdbcType=BIGINT},
+	        #{save_filename, jdbcType=VARCHAR},
+	        #{original_filename, jdbcType=VARCHAR}
+    	)
 	</insert>
 	
-	<!--  글 개수 -->
+	<!-- 데이터개수  -->
+	<select id="dataCount" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*), 0)
+		FROM notice n
+		JOIN emp e ON n.emp_no=e.emp_no
+		<where>
+			<if test="gubun=='all' ">
+				n.dept_id IS NULL
+			</if>
+			<if test="gubun=='dept' ">
+				n.dept_id = #{dept_id}
+			</if>			
+			<if test="keyword != null and keyword!=''  ">
+				AND <include refid="where-list"/>
+			</if>
+		</where>
+	</select>	
    
 
-        <!-- 공지 글 리스트 -->
+    <!-- 공지 글 리스트 -->
     <select id="listNotice" parameterType="map" resultType="com.sp.grooveware.notice.Notice">
-	   SELECT noti_id, noti_title, TO_CHAR(noti_regdate, 'YYYY-MM-DD') noti_regdate,
-       noti_hitcount, NVL(save_filename, 0) as save_filename, NVL(original_filename, 0) as original_filename
-       FROM notice;
+	   SELECT noti_id, noti_title, emp_name, TO_CHAR(noti_regdate, 'YYYY-MM-DD') noti_regdate,
+       noti_hitcount, NVL(save_filename, 0) as save_filename
+       FROM notice n
+       JOIN emp e ON n.emp_no=e.emp_no
+       <where>
+ 			<if test="gubun=='all' ">
+				n.dept_id IS NULL
+			</if>      
+ 			<if test="gubun=='dept' ">
+				n.dept_id = #{dept_id}
+			</if>      
+			<if test="keyword != null and keyword != ''">
+				AND <include refid="where-list"/>
+			</if>
+		</where>
+		ORDER BY noti_id DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{size} ROWS ONLY	
     </select>
+    
+    
     <!--  글보기 -->
     <select id="readNotice" parameterType="Long" resultType="com.sp.grooveware.notice.Notice">
-   
+      SELECT noti_id, 
 	
 	
 	</select>
     
    
     <!--  글수정 -->
+   
+    
    
     <!--  글삭제 -->
     
