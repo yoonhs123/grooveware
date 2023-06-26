@@ -38,12 +38,14 @@ public class ProjectServiceImpl implements ProjectService {
 				dto.setSaveFilename(saveFilename);
 				dto.setOriginalFilename(dto.getSelectFile().getOriginalFilename());
 			*/
-			for (long emp_no : dto.getEmps()) {
-				dto.setEmp_no(emp_no);
-				dao.insertData("project.insertProject", dto);		// .앞에는 맵퍼의 namespace, .뒤에는 id
-			}
+//			for (long emp_no : dto.getEmps()) {
+//				dto.setEmp_no(emp_no);
+//				dao.insertData("project.insertProject", dto);		// .앞에는 맵퍼의 namespace, .뒤에는 id
+//			}
 			
 	//		}
+			
+			dao.insertData("project.insertProject", dto);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
