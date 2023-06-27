@@ -1,7 +1,7 @@
 package com.sp.grooveware.project;
 
-import java.lang.ProcessHandle.Info;
 import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -140,7 +140,33 @@ public class ProjectController {
 
 	
 	@GetMapping("article")
-	public String article() {
+	public String article(@RequestParam long num,
+			@RequestParam String page,
+			@RequestParam(defaultValue = "all") String condition,
+			@RequestParam(defaultValue = "") String keyword,
+			HttpSession session,
+			Model model) throws Exception {
+		
+		keyword = URLDecoder.decode(keyword, "utf-8");
+		
+		String query = "page=" + page;
+		if (keyword.length() != 0) {
+			query += "&condition=" + condition + 
+					"&keyword=" + URLEncoder.encode(keyword, "UTF-8"); 
+		}
+		
+		// 해당 레코드 가져오기
+		Project dto = service.readProject(num);
+		if(dto == null) {
+			return "redirect:/project/list?" + query;
+		}
+		
+		model.addAttribute("dto", dto);
+		model.addAttribute("page", page);
+		model.addAttribute("query", query);
+		
+		
+		
 		return ".project.article";
 	}
 	

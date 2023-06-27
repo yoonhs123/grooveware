@@ -106,17 +106,20 @@ function searchList() {
 				<div class="title_container">
 				<table class="table" style="margin-bottom: 20px;">
 					<tr>
-						<td class="title" > <h3><span>|</span> 진행중인 프로젝트 </h3> 
+						<td class="title" > <h3><span>|</span> 진행중인 프로젝트 </h3> <div class="col-auto me-auto dataCount"></div>
 						</td>
 						<td align="right">
-							<form name="searchForm" action="${pageContext.request.contextPath}/project/list " method="post">
+							<form name="searchForm" action="${pageContext.request.contextPath}/" method="post">
 								<select name="condition" class="form-select">
-									<option value="pj_name"  ${condition == "all" ? "selected='selected'" : ""} >프로젝트 이름</option>
-									<option value="pj_creator"  ${condition == "name" ? "selected='selected'" : ""} >PM</option>
-									<option value="client_name"  ${condition == "content" ? "selected='selected'" : ""} >클라이언트</option>
+									<option value="pj_name"  ${condition == "pj_name" ? "selected='selected'" : ""} >프로젝트 이름</option>
+									<option value="pj_creator"  ${condition == "pj_creator" ? "selected='selected'" : ""} >PM</option>
+									<option value="client_name"  ${condition == "client_name" ? "selected='selected'" : ""} >클라이언트</option>
 								</select>
 								<input type="text" name="keyword" value="${keyword}" class="form-control">
 								<button type="button" class="btn" onclick="searchList();">검색</button>
+									<input type="hidden" name="condition" value="${condition}">
+									<input type="hidden" name="keyword" value="${keyword}">			
+									<input type="hidden" name="size" value="${size}">
 							</form>
 						</td>
 					</tr>
@@ -166,7 +169,7 @@ function searchList() {
 			</table>
 			</div>
 			
-			<div class="page-navigation" style="width: 900px; margin: 0 auto;">${dataCount == 0 ? "등록된 게시물이 없습니다." : paging} 1 2 3</div>
+			<div class="page-navigation" style="width: 900px; margin: 0 auto;">${dataCount == 0 ? "등록된 게시물이 없습니다." : paging}</div>
 	
 			</div>
 

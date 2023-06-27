@@ -18,7 +18,25 @@ public class ProjectServiceImpl implements ProjectService {
 	private FileManager fileManager;
 	
 	@Override
-	public List<Project> listEmp(Map<String, Object> map) {
+	public void insertProject(Project dto, String pathname) throws Exception {
+		try {
+			String saveFilename = fileManager.doFileUpload(dto.getSelectFile(), pathname);
+			if(saveFilename != null) {
+				dto.setSaveFilename(saveFilename);
+				dto.setOriginalFilename(dto.getSelectFile().getOriginalFilename());
+			}
+			
+			dao.insertData("project.insertProject", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		
+	}
+
+	
+	@Override
+	public List<Project> listEmp(Map<String, Object> map) {	// 프로젝트 멤버 추가
 		List<Project> list = null;
 		
 		try {
@@ -30,29 +48,6 @@ public class ProjectServiceImpl implements ProjectService {
 		return list;
 	}
 	
-	@Override
-	public void insertProject(Project dto, String pathname) throws Exception {
-		try {
-			/*String saveFilename = fileManager.doFileUpload(dto.getSelectFile(), pathname);
-			if(saveFilename != null) {
-				dto.setSaveFilename(saveFilename);
-				dto.setOriginalFilename(dto.getSelectFile().getOriginalFilename());
-			*/
-//			for (long emp_no : dto.getEmps()) {
-//				dto.setEmp_no(emp_no);
-//				dao.insertData("project.insertProject", dto);		// .앞에는 맵퍼의 namespace, .뒤에는 id
-//			}
-			
-	//		}
-			
-			dao.insertData("project.insertProject", dto);
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw e;
-		}
-		
-	}
-
 	@Override
 	public List<Project> listProject(Map<String, Object> map) {
 		List<Project> list = null;
@@ -80,9 +75,17 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 
 	@Override
-	public Project readProject(long pj_no) {	// 프로젝트 가져오기
-		// TODO Auto-generated method stub
-		return null;
+	public Project readProject(long num) {	// 프로젝트 가져오기
+		Project dto = null;
+		
+		// 게시물 가져오기
+		try {
+			dto = dao.selectOne("project.readBoard", num);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return dto;
 	}
 
 	@Override

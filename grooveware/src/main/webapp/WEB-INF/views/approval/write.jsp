@@ -194,7 +194,7 @@ li {}
 				let dept_name = data.listMember[i].dept_name;
 			console.log(data );
 
-				s = "<li><input type='checkbox' class='form-check-input' data-emp_no='"+emp_no+"' title='"+emp_name+"'><span>"+emp_name+"</span></li>";
+				s = "<li><input type='checkbox' class='form-check-input' data-emp_no='"+emp_no+"' title='"+emp_no+"'><span>"+emp_name+"</span>";
 				s += "<span>" + " (" + pos_name + "_" + "</span>";
 				s += "<span>" + dept_name + ")" + "</span></li>";
 				$(".dialog-receiver-list ul").append(s);
@@ -361,7 +361,7 @@ li {}
 						</tr>
 					</table>
 				</div>
-				<div class="line_container">
+				<div class="line_container" style="height:250px;"> 
 					<div class="table" style="margin-bottom: 15px;">
 						<div>
 							<div class="title" style="float: left; width: 100%;">
