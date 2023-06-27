@@ -25,7 +25,9 @@ x`<%@ page contentType="text/html; charset=UTF-8" %>
 					</tr>
 				</table>
 				
+				<div class="notice-list">
 				<table class="table">
+			
 					<tr>	
 						<td align="right">
 							<form name="searchForm" action="${pageContext.request.contextPath}/notice/${gubun}/list" method="post">
@@ -77,6 +79,7 @@ x`<%@ page contentType="text/html; charset=UTF-8" %>
 			<div class="page-navigation" style="width: 900px; margin: 0 auto;">${dataCount == 0 ? "등록된 게시물이 없습니다." : paging}</div>
 	
 			</div>
+		</div>
 		</div>
 
 </body>

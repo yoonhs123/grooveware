@@ -4,16 +4,11 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
  <script type="text/javascript">
- 
- 
- function sendlist() {
-	  const f = document.memoForm;
-	  f.action = "${pageContext.request.contextPath}/notice/list";
-	  f.submit();
-	}
- 
- 
- 
+
+   function deleteMemo(){
+	   
+   }
+   
  </script>
 
 
@@ -29,7 +24,7 @@
 </div>
     
 <div class="right-contentbody">
-		<div class="notic-list">
+		<div class="notice-list">
 	<div class="title">
 	    <h3><span>|</span> ${gubun=="dept"? dept_name :"회사" } 공지사항</h3>
 	</div>
@@ -40,12 +35,12 @@
 		<thead>
 			<tr>
 				<td width="50%">
-					등록일 : ${dto}
+					등록일 : ${dto.noti_regdate}
 				</td>
 			</tr>
 			<tr>
 				<td width="50%">
-					작성자 :  ${dto}
+					작성자 : ${dto.emp_name}
 				</td>
 			</tr>
 		</thead>
@@ -53,33 +48,32 @@
 		<tbody>
 			<tr>
 				<td colspan="2" valign="top" height="400">
-					${dto.content}
+					${dto.noti_content}
 				</td>
 			</tr>
 			<tr>
 				<td colspan="2">
-					첨부 : 
-					<c:if test="${not empty dto.saveFilename }">
-						<a href="${pageContext.request.contextPath}/memo/download.do?num=${dto.num}">${dto.originalFilename}</a>
+					첨부 : ${dto.save_filename}
+					<c:if test="${dto.save_filename}">
+						<a href="${pageContext.request.contextPath}/notice${gubun}/download.do?num=${dto.noti_id}">${dto.save_filename}</a>
 					</c:if>
 				</td>
-			</tr>
+			</tr>	
 		</tbody>
 	</table>
 	
 	<table class="table">
 		<tr>
 			<td width="50%">
-				<button type="button" class="btn" onclick="location.href='${pageContext.request.contextPath}/memo/update.do?num=${dto.num}&page=${page}';">수정</button>
+				<button type="button" class="btn" onclick="location.href='${pageContext.request.contextPath}/notice/${gubun}/update.do?noti_id=${dto.noti_id}&page=${page}';">수정</button>
 				<button type="button" class="btn" onclick="deleteMemo();">삭제</button>
 			</td>
 			<td align="right">
-				<button type="button" class="btn" onclick="sendlist()">리스트</button>
+				<button type="button" class="btn" onclick="location.href='${pageContext.request.contextPath}/notice/${gubun}/lists';">리스트</button>
 			</td>
 		</tr>
 	</table>
 </div>
-		</div>
-
+</div>
 </body>
 </html>

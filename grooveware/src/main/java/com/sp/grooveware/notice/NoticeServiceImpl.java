@@ -78,11 +78,11 @@ public class NoticeServiceImpl implements NoticeService {
 	}
 
 	@Override
-	public Notice readNotice(long num) {
+	public Notice readNotice(long noti_id) {
 		Notice dto = null;
 
 		try {
-			dto = dao.selectOne("notice.readNotice", num);
+			dto = dao.selectOne("notice.readNotice", noti_id);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -91,9 +91,9 @@ public class NoticeServiceImpl implements NoticeService {
 	}
 
 	@Override
-	public void updateHitCount(long num) throws Exception {
+	public void updateHitCount(long noti_id) throws Exception {
 		try {
-			dao.updateData("notice.updateHitCount", num);
+			dao.updateData("notice.updateHitCount", noti_id);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
@@ -126,30 +126,5 @@ public class NoticeServiceImpl implements NoticeService {
 		return dto;
 	}
 
-	@Override
-	public List<Notice> listFile(long num) {
-		List<Notice> listFile = null;
-
-		try {
-			listFile = dao.selectList("notice.listFile", num);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return listFile;
-	}
-
-	@Override
-	public Notice readFile(long fileNum) {
-		Notice dto = null;
-
-		try {
-			dto = dao.selectOne("notice.readFile", fileNum);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return dto;
-	}
 
 }

@@ -14,15 +14,7 @@
             <li>
             
             <hr>
-            
-            <li>
-                <a href="#">결재함</a>
-                <a href="#">&nbsp;대기</a>
-                <a href="#">&nbsp;진행중</a>
-                <a href="#">&nbsp;보류</a>
-                <a href="#">&nbsp;반려</a>
-                <a href="#">&nbsp;완료</a>
-            <li>
+        
             <hr>
              <li>
                 <a href="#">주소</a>

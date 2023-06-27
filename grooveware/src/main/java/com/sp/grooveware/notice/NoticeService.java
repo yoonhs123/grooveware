@@ -19,18 +19,13 @@ public interface NoticeService {
 	public List<Notice> listNoticeTop();
 	
 	// 조회수 
-	public void updateHitCount(long num) throws Exception;
+	public void updateHitCount(long noti_id) throws Exception;
 	
 	// article
-	public Notice readNotice(long num);
+	public Notice readNotice(long noti_id);
 	
 	// 이전글, 다음글
 	public Notice preReadNotice(Map<String, Object> map);
 	public Notice nextReadNotice(Map<String, Object> map);
-	
-	
-	
-	public List<Notice> listFile(long num);
-	public Notice readFile(long fileNum); 
 
 }

@@ -8,7 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class Notice {
 
-	private int noti_id;
+	private long noti_id;
 	private long emp_no;
 	private String emp_name;
 	private Long dept_id;
@@ -23,11 +23,11 @@ public class Notice {
 	
 	private long gap;
 
-	public int getNoti_id() {
+	public long getNoti_id() {
 		return noti_id;
 	}
 
-	public void setNoti_id(int noti_id) {
+	public void setNoti_id(long noti_id) {
 		this.noti_id = noti_id;
 	}
 

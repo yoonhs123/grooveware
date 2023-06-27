@@ -31,7 +31,7 @@
 </div>
 
   <div class="right-contentbody">
-  <div class="notic-list">
+  <div class="notice-list">
 	<div class="title">
 	    <h3><span>|</span> ${gubun=="dept"? dept_name :"회사" } 공지사항</h3>
 	</div>

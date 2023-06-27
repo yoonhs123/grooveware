@@ -9,7 +9,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -120,22 +119,48 @@ public class NoticeController {
 	}
 
 	
-	@RequestMapping(value = "article", method = RequestMethod.GET)
-	public String article(
-			@PathVariable String gubun,
-			Model model, HttpSession session) throws Exception {
-		SessionInfo info = (SessionInfo) session.getAttribute("member");
-		
-		
-		
-		
-		model.addAttribute("gubun", gubun);
-		model.addAttribute("dept_name", info.getDept_name());
-		
-	    return ".notice.article";
-	}
+		@RequestMapping(value = "article", method = RequestMethod.GET)
+		public String article(			
+			@PathVariable String gubun, // url 경로에 gubun 변수넣음 ㅇ
+		    @RequestParam long noti_id,
+		    @RequestParam String page,
+		    @RequestParam(defaultValue = "all") String condition,
+		    @RequestParam(defaultValue = "") String keyword,
+		    Model model, HttpSession session) throws Exception {
 	
+		    SessionInfo info = (SessionInfo) session.getAttribute("member");
+		    keyword = URLDecoder.decode(keyword, "utf-8");
 	
+		    String query = "page=" + page;
+		    if (keyword.length() != 0) {
+		        query += "&condition=" + condition +
+		                "&keyword=" + URLEncoder.encode(keyword, "UTF-8");
+		    }
+	
+		    Notice dto = service.readNotice(noti_id);
+		    
+		   //   service.updateHitCount(noti_id);
+	
+		    if (dto == null) {
+		        return "redirect:/notice/" + gubun + "/list?" + query;
+		    }
+	
+		    
+//		    Map<String, Object> map = new HashMap<String, Object>();
+//		    map.put("condition", condition);
+//		    map.put("keyword", keyword);
+//		    map.put("noti_id", noti_id); 
+//		    map.put("emp_no", info.getEmp_no());
+	
+		    model.addAttribute("dto",dto);
+		    model.addAttribute("page", page);
+			model.addAttribute("query", query);
+			
+			model.addAttribute("gubun", gubun);
+			model.addAttribute("dept_name", info.getDept_name());
+		   
+		    return ".notice.article";
+		}
 	
 
 	@RequestMapping(value = "write", method = RequestMethod.GET)

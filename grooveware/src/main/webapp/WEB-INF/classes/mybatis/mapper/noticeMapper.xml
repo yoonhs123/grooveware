@@ -87,9 +87,11 @@
     
     <!--  글보기 -->
     <select id="readNotice" parameterType="Long" resultType="com.sp.grooveware.notice.Notice">
-      SELECT noti_id, 
-	
-	
+      SELECT noti_id, noti_title, noti_regdate, n.emp_no , e.emp_name, n.noti_content,
+         original_filename, save_filename
+      FROM notice n
+      JOIN emp e ON n.emp_no = e.emp_no
+      WHERE noti_id = #{noti_id}
 	</select>
     
    
@@ -98,6 +100,9 @@
     
    
     <!--  글삭제 -->
+    <delete id="deleteNotice" parameterType="Long">
+  
+    </delete>
     
     
   
