@@ -30,6 +30,7 @@ public class ApprovalServiceImpl implements ApprovalService {
 			dao.insertData("approval.insertApproval1", dto);
 			dao.insertData("approval.insertApproval2", dto);
 			
+
 			if (! dto.getSelectFile().isEmpty()) {
 				for (MultipartFile mf : dto.getSelectFile()) {
 					String saveFilename = fileManager.doFileUpload(mf, pathname);
@@ -46,16 +47,13 @@ public class ApprovalServiceImpl implements ApprovalService {
 					dao.insertData("approval.insertFile", dto);
 				}
 			}
-			
-			if(dto.getDoc_status() == 1) {
-				for(long emp_no : dto.getEmp_nos()) {
-					dto.setEmp_no(emp_no);
-					//System.out.println(emp_no);
-					dao.insertData("approval.insertApproval3", dto);
-				}
-				
+
+			for(long emp_no : dto.getEmp_nos()) {
+				dto.setEmp_no(emp_no);
+				dao.insertData("approval.insertApproval3", dto);
 			}
-			 
+			
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;

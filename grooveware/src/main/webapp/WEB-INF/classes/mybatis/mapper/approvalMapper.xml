@@ -26,8 +26,8 @@
 	</insert>
 	
 	<insert id="insertApproval3" parameterType="com.sp.grooveware.approval.Approval">
-		INSERT INTO approval (approval_status_id, doc_no, emp_no, approval_status, approval_date, reject_reason)
-		VALUES (0, #{doc_no}, #{emp_no}, #{approval_status, jdbcType=INTEGER },#{approval_date, jdbcType=DATE}, #{reject_reason, jdbcType=VARCHAR})
+		INSERT INTO approval (doc_no, emp_no, approval_status_id, approval_status, approval_date, reject_reason)
+		VALUES (#{doc_no}, #{emp_no}, 0, #{approval_status, jdbcType=INTEGER },#{approval_date, jdbcType=DATE}, #{reject_reason, jdbcType=VARCHAR})
 	</insert>	
 	
 	<!-- 게시글 조건 -->
@@ -153,13 +153,16 @@
 
 	<!-- 멤버 리스트 -->
 	<select id="listMember" parameterType="map" resultType="com.sp.grooveware.approval.Approval">
-		SELECT emp_name, emp_no
-		FROM emp
+		SELECT a.emp_no, b.dept_name, c.emp_name, d.pos_name
+		FROM emp_history a
+		LEFT OUTER JOIN dept b ON a.dept_no = b.dept_no
+		LEFT OUTER JOIN emp c ON a.emp_no = c.emp_no
+		LEFT OUTER JOIN pos d ON a.pos_no = d.pos_no
 		<where>
-			emp_no != #{emp_no}
+			a.emp_no != #{emp_no}
 			AND 
 			<if test="keyword!=null and keyword!='' ">
-				INSTR(emp_name, #{keyword}) &gt; 0
+				(INSTR(c.emp_name, #{keyword}) &gt; 0)
 			</if>
 		</where>
 	</select>

@@ -7,6 +7,9 @@ import org.springframework.web.multipart.MultipartFile;
 public class Approval {
 	
 	private String emp_name;
+	private String dept_name;
+	private String pos_name;
+	
 	
 	private long doc_no;
 	private long emp_no;
@@ -50,7 +53,7 @@ public class Approval {
 	private String annual_startdate;
 	private String annual_enddate;
 
-	// 결제권자
+	// 결재권자
 	List<Long> emp_nos;
 
 	public String getEmp_name() {
@@ -59,6 +62,22 @@ public class Approval {
 
 	public void setEmp_name(String emp_name) {
 		this.emp_name = emp_name;
+	}
+
+	public String getDept_name() {
+		return dept_name;
+	}
+
+	public void setDept_name(String dept_name) {
+		this.dept_name = dept_name;
+	}
+
+	public String getPos_name() {
+		return pos_name;
+	}
+
+	public void setPos_name(String pos_name) {
+		this.pos_name = pos_name;
 	}
 
 	public long getDoc_no() {
@@ -301,6 +320,7 @@ public class Approval {
 		this.emp_nos = emp_nos;
 	}
 
+	 
 	
 }
 

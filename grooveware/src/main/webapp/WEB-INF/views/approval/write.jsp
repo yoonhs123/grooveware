@@ -64,6 +64,24 @@
 	display: flex;
 	justify-content: space-between;
 }
+
+
+.approval-member {
+	display: inline-block;
+	width: 100px;
+	height: 100px;
+	padding: 3px;
+}
+
+.approval-member label {
+	display: block;
+		width: 50px;
+	height: 50px;
+}
+.approval-member img {
+	display: block;
+}
+li {}
 </style>
 
 
@@ -148,25 +166,23 @@
 		});
 
 		// 대화상자 - 사원 검색 버튼
-		$(".btnReceiverFind")
-				.click(
-						function() {
-							let keyword = $("#keyword").val();
-							if (!keyword) {
-								$("#keyword").focus();
-								return false;
-							}
+		$(".btnReceiverFind").click(function() {
+			let keyword = $("#keyword").val();
+			if (!keyword) {
+				$("#keyword").focus();
+					return false;
+			}
 
-							let url = "${pageContext.request.contextPath}/approval/listMember";
-							let query = "keyword=" + encodeURIComponent(keyword);
+			let url = "${pageContext.request.contextPath}/approval/listMember";
+			let query = "keyword=" + encodeURIComponent(keyword);
 
-							const fn = function(data) {
-								$(".dialog-receiver-list ul").empty();
-								searchListMember(data);
+			const fn = function(data) {
+			$(".dialog-receiver-list ul").empty();
+			searchListMember(data);
 
-							};
-							ajaxFun(url, "get", query, "json", fn);
-						});
+		};
+			ajaxFun(url, "get", query, "json", fn);
+		});
 
 		function searchListMember(data) {
 			console.log(data)
@@ -174,9 +190,13 @@
 			for (let i = 0; i < data.listMember.length; i++) {
 				let emp_name = data.listMember[i].emp_name;
 				let emp_no = data.listMember[i].emp_no;
+				let pos_name = data.listMember[i].pos_name;
+				let dept_name = data.listMember[i].dept_name;
 			console.log(data );
 
 				s = "<li><input type='checkbox' class='form-check-input' data-emp_no='"+emp_no+"' title='"+emp_name+"'><span>"+emp_name+"</span></li>";
+				s += "<span>" + " (" + pos_name + "_" + "</span>";
+				s += "<span>" + dept_name + ")" + "</span></li>";
 				$(".dialog-receiver-list ul").append(s);
 			}
 		}
@@ -203,13 +223,15 @@
 				return false;
 			}
 
-			var b, emp_name, s;
+			var b,  emp_no, emp_name, pos_name, dept_name, s;
 
 			b = false;
 			$(".dialog-receiver-list ul input[type=checkbox]:checked").each(function() {
 				emp_no = $(this).attr("data-emp_no");
 				emp_name = $(this).next("span").text();
-
+				pos_name = $(this).next("span").next("span").text();
+				dept_name = $(this).next("span").next("span").next("span").text();
+				
 				$("#forms-receiver-list input[name=emp_nos]").each(function() {
 				if($(this).val() === emp_no) {
 					b = true;
@@ -217,23 +239,24 @@
 				}
 			});
 			
-				var count = 0; // 카운터 변수 초기화
-
 				if (!b) {
 				  // 사번과 결재 단계 hidden 처리
-				  s = "<div class='img_container'><img src='${pageContext.request.contextPath}/resources/images/bg.png'></div>";
-				  if (count < 2) {
-				    s += "<div class='img_container3'> <i class='fa-solid fa-chevron-right'></i></div>";
-				    count++; // 카운터 변수 증가
-				    console.log(count);
-				  }
-				  s += "<input type='hidden' name='emp_nos' value='" + emp_no + "'>";
+				  s = "<span class='approval-member'>";
+				    s += "<div class='img_container'><img src='${pageContext.request.contextPath}/resources/images/bg.png'></div>";
+				    s += "<i class='fa-solid fa-chevron-right'></i>";
+					s += "<label>" + emp_name + pos_name + dept_name;
+					s += "<input type='hidden' name='emp_nos' value='" + emp_no + "'>";
+					s +=  "</label>"
+					s += "</span>"
+
 				  $("#forms-receiver-list").append(s);
 
-				  s = "<div class='text_box3 receiver-user'>" + emp_name + "</div>";
-				  $(".forms-receiver-name").append(s);
+				 // s = "<div class='text_box3 receiver-user'>" + emp_name + "</div>";
+				  //$(".forms-receiver-name").append(s);
 				}
 		});
+
+			
 			$("#myDialogModal").hide();
 		});
 
@@ -241,7 +264,10 @@
 			$("#myDialogModal").hide();
 		});
 
-		$("body").on("click", ".img_container", function() {
+		$("body").on("click", ".approval-member", function() {
+			$(this).remove();
+
+			/*
 			let emp_no = $(this).attr("data-emp_no");
 
 			$(this).parent().remove();
@@ -252,6 +278,7 @@
 					return false;
 				}
 			});
+			*/
 
 		});
 
@@ -344,8 +371,11 @@
 						</div>
 						<div style="width: 100%; float: left;">
 						    <div id="forms-receiver-list">
+						    <div style="width: 10%">
+						    
 								<button type="button" class="btn btnReceiverDialog"
 									style="margin-top: 5px;">추가 버튼</button>
+						    </div>
 						    </div>
 						</div>
 
@@ -507,7 +537,7 @@
 					<input type="hidden" name="doc_no" value="${dto.doc_no}">
 					<input type="hidden" name="page" value="${page}">
 				</c:if>
-									<div id="forms-receiver-list"></div>
+					<input type="hidden" name="approval_status_id," value="${page}">
 				
 			</div>
 		</form>
