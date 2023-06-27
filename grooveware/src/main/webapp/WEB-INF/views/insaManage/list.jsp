@@ -86,6 +86,19 @@ function profile(emp_no) {
 	};
 	*/
 
+$(function() {
+	$(".btnUpdateStatus").click(function(){
+		var emp_no = $(this).attr("data-emp_no");
+		var emp_status = $(this).attr("data-emp_status");
+		
+		if(confirm("선택한 계정 상태를 변경하시겠습니까 ?")){
+			
+		}
+		
+		location.href = '${pageContext.request.contextPath}/insaManage/updateEmpStatus?emp_no=' +emp_no+ '&emp_status=' +emp_status;
+		
+	});
+});
 	
 </script>
 
@@ -146,7 +159,8 @@ function profile(emp_no) {
    						<th width="15%"> 부서 </th>
    						<th width="10%"> 직위 </th>
    						<th width="15%"> 입사일 </th>
-   						<th width="15%"> 퇴사일 </th>
+   						<th width="15%"> 퇴사(휴직)일 </th>
+   						<th width="5%">상태</th>
    						<th width="15%"> 관리 </th>
    					</tr>
    					</thead>
@@ -162,6 +176,9 @@ function profile(emp_no) {
    							<td> ${dto.emp_join_date} </td>
    							<td> ${dto.emp_resign_date} </td>
    							<td>
+   								${dto.emp_status==0 ? "재직" : (dto.emp_status==1 ? "휴직" : "퇴사")}
+   							</td>
+   							<td>
 							  <div class="more">
 							    <div class="more-menu">
 							      <h3 class="dropdown-menu">
@@ -172,7 +189,19 @@ function profile(emp_no) {
 							      	<a onclick="location.href='${pageContext.request.contextPath}/insaManage/write?emp_no=${dto.emp_no}&page=${page}&size=${size}';">수정</a>
 							      	<a onclick="profile('${dto.emp_no}');"><i class="bi bi-person-fill"></i>인사관리</a>
 							        <a onclick="location.href='${pageContext.request.contextPath}/insaManage/insaCard?emp_no=${dto.emp_no}&page=${page}&size=${size}';"><i class="bi bi-person-vcard"></i> 인사기록카드</a>
-							        <a href="#"><i class="bi bi-person-x-fill"></i> 퇴사</a>
+							        
+							        <c:if test="${dto.emp_status==0}">
+							        	<form class="statusForm" action="updateEmpStatus" method="post">
+							        		<button style="margin: 5px" type="button" class="btn btnUpdateStatus" data-emp_status="1" data-emp_no="${dto.emp_no}"><i class="bi bi-person-x-fill"></i> 휴직 </button>
+							        		<button style="margin: 5px" type="button" class="btn btnUpdateStatus" data-emp_status="2" data-emp_no="${dto.emp_no}"><i class="bi bi-person-x-fill"></i> 퇴사 </button>
+							        	</form>
+							        	
+							        </c:if>
+							        <c:if test="${dto.emp_status==1}">
+							        	<button style="margin: 5px" type="button" class="btn btnUpdateStatus" data-emp_status="0" data-emp_no="${dto.emp_no}"><i class="bi bi-person-x-fill"></i> 재직 </button>
+							        	<button style="margin: 5px" type="button" class="btn btnUpdateStatus" data-emp_status="2" data-emp_no="${dto.emp_no}"><i class="bi bi-person-x-fill"></i> 퇴사 </button>
+							        </c:if>
+							        
 							      </div>
 							    </div>
 							  </div>

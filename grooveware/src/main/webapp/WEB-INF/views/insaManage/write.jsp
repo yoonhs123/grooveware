@@ -71,11 +71,13 @@
 	 		return false;
 		 }
 		     
+
 	     if(! f.dept_no.value) {
 		 	alert("부서를 선택하세요.");
 		 	f.dept_no.focus();
 			return false;
 		 }
+
 	
 	     str = f.dept_startdate.value.trim();
 	     if(!str) {

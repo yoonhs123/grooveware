@@ -34,4 +34,8 @@ public interface InsaManageService {
 	public int getAnnualLeave(String emp_no);
 	// 사원 기록 카드
 	public InsaManage readInsaCard(String emp_no);
+	
+	
+	// 사원 상태 변경
+	public void updateEmpStatus(Map<String, Object> map) throws Exception;
 }

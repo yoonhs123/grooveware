@@ -84,6 +84,7 @@
 	
 
 	<!-- 재직 중인 사원 리스트 -->
+	<!-- 
 	<select id="listinsaMember" parameterType="map" resultType="com.sp.grooveware.insamanage.InsaManage">
 		SELECT e.emp_no, e.emp_name, d.dept_name, p.pos_name,
 				TO_CHAR(e.emp_join_date, 'YYYY-MM-DD') emp_join_date,
@@ -97,14 +98,33 @@
 				<include refid="where-list"/>
 			</if>
 			AND e.emp_status = 0
-			<!-- 
-			AND eh.pos_enddate = null
-    		AND eh.dept_enddate = null
-    		 -->
 		</where>
 		ORDER BY emp_join_date DESC
 		OFFSET #{offset} ROWS FETCH FIRST #{size} ROWS ONLY
 	</select>
+	-->
+	<select id="listinsaMember" parameterType="map" resultType="com.sp.grooveware.insamanage.InsaManage">
+		SELECT emp_no, emp_name, dept_name, pos_name, emp_join_date, emp_resign_date, emp_status
+			FROM (
+			  SELECT e.emp_no, e.emp_name, d.dept_name, p.pos_name, 
+			         TO_CHAR(e.emp_join_date, 'YYYY-MM-DD') emp_join_date,
+			         TO_CHAR(e.emp_resign_date, 'YYYY-MM-DD') emp_resign_date, e.emp_status,
+			         ROW_NUMBER() OVER (PARTITION BY e.emp_no ORDER BY eh.pos_startdate DESC, eh.dept_startdate DESC) AS rank
+			  FROM emp e
+			  JOIN emp_history eh ON e.emp_no = eh.emp_no
+			  JOIN dept d ON eh.dept_no = d.dept_no
+			  JOIN pos p ON eh.pos_no = p.pos_no
+			) t WHERE rank = 1
+		<where>
+			<if test="keyword!=null and keyword!='' ">
+				<include refid="where-list"/>
+			</if>
+		</where>
+		ORDER BY emp_status, emp_join_date DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{size} ROWS ONLY
+	</select>
+
+
 	
 	<!-- 인사관리 -->
 	<select id="readProfile" parameterType="String" resultType="com.sp.grooveware.insamanage.InsaManage">
@@ -130,6 +150,17 @@
 		#{pos_no}, TO_CHAR(#{pos_startdate}, 'YYYY-MM-DD'), #{dept_no}, 
 		TO_CHAR(#{dept_startdate}, 'YYYY-MM-DD'))
 	</insert>
+	
+	<update id="updateEmpStatus" parameterType="map">
+		<choose>
+			<when test="emp_status == 1">
+				UPDATE emp set emp_status = #{emp_status}, emp_resign_date = SYSDATE WHERE emp_no = #{emp_no}
+			</when>
+			<when test="emp_status == 0">
+				UPDATE emp set emp_status = #{emp_status}, emp_resign_date = NULL WHERE emp_no = #{emp_no}
+			</when>
+		</choose>
+	</update>
 	
 	
 </mapper>

@@ -187,15 +187,50 @@ public class InsaManageController {
 		return ".insaManage.insaCard";
 	}
 	
+
+	@RequestMapping(value = "updateEmpStatus")
+	public String updateEmpStatus(@RequestParam long emp_no, @RequestParam long emp_status) throws Exception {
+		try {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("emp_no", emp_no);
+			map.put("emp_status", emp_status);
+			
+			service.updateEmpStatus(map);
+			
+			return "redirect:/insaManage/list";
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "redirect:/insaManage/list";
+		}
+	}
+
+	
 	/*
-	@RequestMapping(value="updateInsaProfile", method = RequestMethod.POST)
+	@RequestMapping(value = "updateEmpStatus")
 	@ResponseBody
-	public Map<String, Object> updateInsaProfile(InsaManage dto) throws Exception  {
+	public Map<String, Object> updateEmpStatus(InsaManage dto) throws Exception {
+		String emp_status = "true";
 		
+		try {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("emp_no", dto.getEmp_no());
+			if(dto.getEmp_status() == 0) {
+				map.put("emp_status", 1);
+			} else if (dto.getEmp_status() == 1) {
+				map.put("emp_status", 0);
+			}
+			service.updateEmpStatus(map);
+		} catch (Exception e) {
+			emp_status = "false";
+		}
 		
+		Map<String, Object> model = new HashMap<String, Object>();
+		model.put("emp_status", emp_status);
 		return model;
 	}
 	*/
+	
 	
 	
 	

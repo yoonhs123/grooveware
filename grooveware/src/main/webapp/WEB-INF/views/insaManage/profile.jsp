@@ -64,6 +64,7 @@
 					
 				</table>
 				
+				
 				<form id="detailEmpStatusForm" name="detailEmpStatusForm">
 				<table class="profile-content1-table">
 					<tr>
@@ -82,6 +83,7 @@
 					</tr>
 				</table>
 				</form>
+				
 			</div>
 		</div>
 		

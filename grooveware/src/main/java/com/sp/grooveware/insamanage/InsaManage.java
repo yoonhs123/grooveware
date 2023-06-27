@@ -18,7 +18,9 @@ public class InsaManage {
 	private String emp_join_date;
 	private String emp_resign_date;
 	private long emp_status;
-	private MultipartFile emp_picture;
+	private String emp_picture;
+	
+	private MultipartFile selectFile;
 	
 	// 연차
 	private int annual_leave;
@@ -37,6 +39,7 @@ public class InsaManage {
 	private int pos_no;
 	private String pos_name;
 	private long top_pos_no;
+	
 	
 	public long getQualifer() {
 		return qualifer;
@@ -104,11 +107,23 @@ public class InsaManage {
 	public void setEmp_status(long emp_status) {
 		this.emp_status = emp_status;
 	}
-	public MultipartFile getEmp_picture() {
+	public String getEmp_picture() {
 		return emp_picture;
 	}
-	public void setEmp_picture(MultipartFile emp_picture) {
+	public void setEmp_picture(String emp_picture) {
 		this.emp_picture = emp_picture;
+	}
+	public MultipartFile getSelectFile() {
+		return selectFile;
+	}
+	public void setSelectFile(MultipartFile selectFile) {
+		this.selectFile = selectFile;
+	}
+	public int getAnnual_leave() {
+		return annual_leave;
+	}
+	public void setAnnual_leave(int annual_leave) {
+		this.annual_leave = annual_leave;
 	}
 	public long getHistory_no() {
 		return history_no;
@@ -182,12 +197,7 @@ public class InsaManage {
 	public void setTop_pos_no(long top_pos_no) {
 		this.top_pos_no = top_pos_no;
 	}
-	public int getAnnual_leave() {
-		return annual_leave;
-	}
-	public void setAnnual_leave(int annual_leave) {
-		this.annual_leave = annual_leave;
-	}
+	
 	
 	
 }
