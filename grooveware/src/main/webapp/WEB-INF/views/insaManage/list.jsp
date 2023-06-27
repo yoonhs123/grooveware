@@ -85,7 +85,7 @@ function profile(emp_no) {
 		}
 	};
 	*/
-	
+
 	
 </script>
 
@@ -169,8 +169,9 @@ function profile(emp_no) {
 							        +
 							      </h3>
 							      <div class="dropdown-content">
+							      	<a onclick="location.href='${pageContext.request.contextPath}/insaManage/write?emp_no=${dto.emp_no}&page=${page}&size=${size}';">수정</a>
 							      	<a onclick="profile('${dto.emp_no}');"><i class="bi bi-person-fill"></i>인사관리</a>
-							        <a href="#"><i class="bi bi-person-vcard"></i> 인사기록카드</a>
+							        <a onclick="location.href='${pageContext.request.contextPath}/insaManage/insaCard?emp_no=${dto.emp_no}&page=${page}&size=${size}';"><i class="bi bi-person-vcard"></i> 인사기록카드</a>
 							        <a href="#"><i class="bi bi-person-x-fill"></i> 퇴사</a>
 							      </div>
 							    </div>

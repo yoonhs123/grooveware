@@ -24,24 +24,21 @@
 </div>
 
 <div class="right-contentbody">
-
 	<table class="insa-info-table">
 		<tbody>
 			<tr>
 				<td class="main-text">사원번호</td>
-				<td>??</td>
+				<td>${dto.emp_no}</td>
 				<td class="main-text">사원명</td>
-				<td>??</td>
+				<td>${dto.emp_name}</td>
 				<td class="main-text">부서</td>
-				<td>??</td>
+				<td>${dto.dept_name}</td>
 			</tr>
 			<tr>
 				<td class="main-text">직위</td>
-				<td>??</td>
+				<td>${dto.pos_name}</td>
 				<td class="main-text">연차</td>
-				<td>???</td>
-				<td class="main-text">컬럼</td>
-				<td>??</td>
+				<td>${dto.annual_leave}</td>
 			</tr>
 		</tbody>
 	</table>
@@ -70,8 +67,8 @@
 	<table class="dpMove-info-table">
 		<tr class="my-insa">
 			<td>발령일자</td>
-			<td>소속회사</td>
-			<td>발령분류</td>
+			<td>발령부서</td>
+			<td>직위</td>
 			<td>변경사항</td>
 		</tr>
 		<tr>
@@ -148,9 +145,3 @@
 	</table>
 	</div>
 </div>
-
-<script>
-	$(function(){
-		
-	});
-</script>

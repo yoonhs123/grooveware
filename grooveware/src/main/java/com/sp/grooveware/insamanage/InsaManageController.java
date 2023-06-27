@@ -166,7 +166,7 @@ public class InsaManageController {
 	}
 	
 	@RequestMapping(value = "insaCard")
-	public String insaCardArticle(@RequestParam long emp_no,
+	public String insaCardArticle(@RequestParam String emp_no,
 			@RequestParam String page,
 			@RequestParam(defaultValue = "all") String condition,
 			@RequestParam(defaultValue = "") String keyword,
@@ -179,7 +179,10 @@ public class InsaManageController {
 			query += "&condition=" +condition+ "&keyword=" +URLEncoder.encode(keyword, "utf-8");
 		}
 		
-		// InsaManage dto = service.
+		InsaManage dto = service.readInsaCard(emp_no);
+		
+		model.addAttribute("dto", dto);
+		model.addAttribute("query", query);
 		
 		return ".insaManage.insaCard";
 	}

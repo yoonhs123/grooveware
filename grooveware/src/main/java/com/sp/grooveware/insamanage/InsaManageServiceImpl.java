@@ -152,17 +152,36 @@ public class InsaManageServiceImpl implements InsaManageService  {
 		
 		return dto;
 	}
+	
+	@Override
+	public int getAnnualLeave(String emp_no) {
+		int annualLeave = 0;
+		
+		try {
+			annualLeave = dao.selectOne("insaManage.readAnnualLeave", emp_no);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return annualLeave;
+	}
+	
 
 	@Override
 	public InsaManage readInsaCard(String emp_no) {
 		InsaManage dto = null;
 		
 		try {
-			// dto.
+			dto = dao.selectOne("insaManage.readProfile", emp_no);
+			
+			int annualLeave = dao.selectOne("insaManage.readAnnualLeave", emp_no);
+			dto.setAnnual_leave(annualLeave);
+			
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		}
-		return null;
+		return dto;
 	}
+
 
 }

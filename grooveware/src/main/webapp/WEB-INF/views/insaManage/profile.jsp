@@ -63,6 +63,24 @@
 					</tr>
 					
 				</table>
+				
+				<form id="detailEmpStatusForm" name="detailEmpStatusForm">
+				<table class="profile-content1-table">
+					<tr>
+						<td>사원 상태</td>
+						<td>
+							<select class="form-select" name="emp_status" id="emp_status" onchange="selectEmpStatusChange()">
+								<option value="">사원 상태</option>
+								<c:if test="${dto.emp_status!=0}">
+									<option value="${dto.emp_status==0}">휴면해제</option>
+								</c:if>
+								<c:if test="${dto.emp_status==0}"></c:if>
+								<option value="${dto.emp_status==1}">휴직</option>
+								<option value="${dto.emp_status==2}">퇴사</option>
+							</select>
+						</td>
+					</tr>
+				</table>
 				</form>
 			</div>
 		</div>

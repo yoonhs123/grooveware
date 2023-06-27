@@ -20,6 +20,9 @@ public class InsaManage {
 	private long emp_status;
 	private MultipartFile emp_picture;
 	
+	// 연차
+	private int annual_leave;
+	
 	private long history_no;
 	private String pos_startdate;
 	private String pos_enddate;
@@ -179,4 +182,12 @@ public class InsaManage {
 	public void setTop_pos_no(long top_pos_no) {
 		this.top_pos_no = top_pos_no;
 	}
+	public int getAnnual_leave() {
+		return annual_leave;
+	}
+	public void setAnnual_leave(int annual_leave) {
+		this.annual_leave = annual_leave;
+	}
+	
+	
 }

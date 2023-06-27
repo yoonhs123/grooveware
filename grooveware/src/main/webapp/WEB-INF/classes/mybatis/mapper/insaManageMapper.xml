@@ -97,6 +97,10 @@
 				<include refid="where-list"/>
 			</if>
 			AND e.emp_status = 0
+			<!-- 
+			AND eh.pos_enddate = null
+    		AND eh.dept_enddate = null
+    		 -->
 		</where>
 		ORDER BY emp_join_date DESC
 		OFFSET #{offset} ROWS FETCH FIRST #{size} ROWS ONLY
@@ -114,13 +118,17 @@
 		WHERE e.emp_no = #{emp_no}
 	</select>
 	
+	<select id="readAnnualLeave" parameterType="String" resultType="Integer">
+		SELECT TRUNC(MONTHS_BETWEEN(TRUNC(SYSDATE), TRUNC(e.emp_join_date)) / 12) AS annual_leave
+		FROM emp e
+		WHERE e.emp_no = #{emp_no}
+	</select>
+	
 	<insert id="insertEmpHistory" parameterType="com.sp.grooveware.insamanage.InsaManage">
 		INSERT INTO emp_history(history_no, emp_no, pos_no, pos_startdate, dept_no, dept_startdate)
-		VALUES (#{history_no}, 
-		(SELECT emp_no FROM emp ORDER BY substr(emp_no,5,4) DESC FETCH FIRST 1 ROW ONLY), 
-		#{pos_no}, TO_DATE(#{pos_startdate}, 'YYYY-MM-DD'), #{dept_no}, 
-		TO_DATE(#{dept_startdate}, 'YYYY-MM-DD'))
-		WHERE emp_no = #{emp_no}
+		VALUES (#{history_no}, #{emp_no}, 
+		#{pos_no}, TO_CHAR(#{pos_startdate}, 'YYYY-MM-DD'), #{dept_no}, 
+		TO_CHAR(#{dept_startdate}, 'YYYY-MM-DD'))
 	</insert>
 	
 	

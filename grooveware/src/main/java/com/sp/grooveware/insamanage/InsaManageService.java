@@ -29,6 +29,9 @@ public interface InsaManageService {
 	// 사원 인사정보
 	public InsaManage readProfile(String emp_no);
 	
+	
+	// 사원 연차
+	public int getAnnualLeave(String emp_no);
 	// 사원 기록 카드
 	public InsaManage readInsaCard(String emp_no);
 }
