@@ -1,4 +1,18 @@
 ﻿
+.address-button{
+	margin: bottom 10px;
+	
+}
+
+.address-main {
+	
+	border: 1px solid #999999
+	wedth: 100%;
+    height: 100%;
+    background-color: #FFFFFF;
+    padding: 20px;
+	
+}
 
 .btn {
 	color: black;

@@ -96,12 +96,19 @@
     
    
     <!--  글수정 -->
-   
-    
+   <update id="updateNotice"  parameterType="com.sp.grooveware.notice.Notice">
+    UPDATE notice
+    SET noti_title=#{noti_title}, 
+    noti_content=#{noti_content},
+    save_filename=#{save_filename, jdbcType=VARCHAR},
+    original_filename=#{original_filename, jdbcType=VARCHAR} 
+    WHERE noti_id=#{noti_id}
+   </update>
    
     <!--  글삭제 -->
     <delete id="deleteNotice" parameterType="Long">
-  
+      DELETE from notice 
+      WHERE noti_id= #{noti_id}
     </delete>
     
     

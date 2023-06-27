@@ -4,11 +4,16 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
  <script type="text/javascript">
+ <c:if test="${sessionScope.member.emp_no == dto.emp_no}">
+ function deleteNotice() {
+ 	let query = "noti_id=${dto.noti_id}&${query}";
+ 	let url = "${pageContext.request.contextPath}/notice/delete?" + query;
 
-   function deleteMemo(){
-	   
-   }
-   
+ 	if(confirm(" 삭제 하시겠습니까 ? ")) {
+ 		location.href = url;
+ 	}
+ }
+ </c:if>
  </script>
 
 
@@ -65,11 +70,11 @@
 	<table class="table">
 		<tr>
 			<td width="50%">
-				<button type="button" class="btn" onclick="location.href='${pageContext.request.contextPath}/notice/${gubun}/update.do?noti_id=${dto.noti_id}&page=${page}';">수정</button>
-				<button type="button" class="btn" onclick="deleteMemo();">삭제</button>
+				<button type="button" class="btn" onclick="javascript:location.href='${pageContext.request.contextPath}/notice/${gubun}/update.do?noti_id=${dto.noti_id}&page=${page}';">수정</button>
+				<button type="button" class="btn" onclick="deleteNotice();">삭제</button>
 			</td>
 			<td align="right">
-				<button type="button" class="btn" onclick="location.href='${pageContext.request.contextPath}/notice/${gubun}/lists';">리스트</button>
+				<button type="button" class="btn" onclick="location.href='${pageContext.request.contextPath}/notice/${gubun}/list';">리스트</button>
 			</td>
 		</tr>
 	</table>

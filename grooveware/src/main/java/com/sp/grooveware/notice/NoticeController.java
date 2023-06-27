@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -121,7 +122,7 @@ public class NoticeController {
 	
 		@RequestMapping(value = "article", method = RequestMethod.GET)
 		public String article(			
-			@PathVariable String gubun, // url 경로에 gubun 변수넣음 ㅇ
+			@PathVariable String gubun, // url 경로에 gubun 변수넣음 
 		    @RequestParam long noti_id,
 		    @RequestParam String page,
 		    @RequestParam(defaultValue = "all") String condition,
@@ -146,12 +147,7 @@ public class NoticeController {
 		    }
 	
 		    
-//		    Map<String, Object> map = new HashMap<String, Object>();
-//		    map.put("condition", condition);
-//		    map.put("keyword", keyword);
-//		    map.put("noti_id", noti_id); 
-//		    map.put("emp_no", info.getEmp_no());
-	
+
 		    model.addAttribute("dto",dto);
 		    model.addAttribute("page", page);
 			model.addAttribute("query", query);
@@ -200,6 +196,53 @@ public class NoticeController {
 	    
 	    return "redirect:/notice/"+gubun+"/list";
 	}
+	
+	
+	
+	@PostMapping("update")
+	public String updateSubmit(
+			@PathVariable String gubun,
+			@RequestParam String page,
+			Notice dto,
+			HttpSession session) throws Exception {
+
+		String root = session.getServletContext().getRealPath("/");
+		String pathname = root + "uploads" + File.separator + "notice";
+
+		try {
+			service.updateNotice(dto, pathname);
+		} catch (Exception e) {
+		}
+
+	    return "redirect:/notice/"+gubun+"/list";
+	}
+	
+	
+
+	@RequestMapping(value = "delete")
+	public String delete(
+			@PathVariable String gubun,
+			@RequestParam long noti_id,
+			@RequestParam String page,
+			@RequestParam(defaultValue = "all") String condition,
+			@RequestParam(defaultValue = "") String keyword,
+			HttpSession session) throws Exception {
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+
+		keyword = URLDecoder.decode(keyword, "utf-8");
+		String query = "page=" + page;
+		if (keyword.length() != 0) {
+			query += "&condition=" + condition + "&keyword=" + URLEncoder.encode(keyword, "UTF-8");
+		}
+
+		String root = session.getServletContext().getRealPath("/");
+		String pathname = root + "uploads" + File.separator + "notice";
+
+		service.deleteNotice(noti_id, pathname, info.getEmp_no());
+
+		return "redirect:/notice/"+gubun+"/list?" + query;
+	}
+
 	
 	
 }

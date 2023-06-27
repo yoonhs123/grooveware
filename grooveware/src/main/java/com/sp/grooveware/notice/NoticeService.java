@@ -28,4 +28,12 @@ public interface NoticeService {
 	public Notice preReadNotice(Map<String, Object> map);
 	public Notice nextReadNotice(Map<String, Object> map);
 
+	// 업데이트 
+	public void updateNotice(Notice dto, String pathname ) throws Exception;
+	
+	// 삭제
+	public void deleteNotice(long noti_id, String pathname , long emp_no) throws Exception;
+	
+	
+	
 }

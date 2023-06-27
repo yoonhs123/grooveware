@@ -126,5 +126,45 @@ public class NoticeServiceImpl implements NoticeService {
 		return dto;
 	}
 
+	
+	
+	@Override
+	public void updateNotice(Notice dto, String pathname) throws Exception {
+		
+		try {
+			String saveFilename = fileManager.doFileUpload(dto.getSelectFile(), pathname);
+			if (saveFilename != null) {
+				if (dto.getSave_filename() != null && dto.getSave_filename().length() != 0) {
+					fileManager.doFileDelete(dto.getSave_filename(), pathname);
+				}
+
+				dto.setSave_filename(saveFilename);
+				dto.setOriginal_filename(dto.getSelectFile().getOriginalFilename());
+			}
+
+			dao.updateData("notice.updateNotice", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+
+	
+	@Override
+	public void deleteNotice(long noti_id, String pathname, long emp_no) throws Exception {
+	    try {
+	        Notice dto = readNotice(noti_id);
+	        if (dto == null || !(dto.getNoti_id() == (noti_id))) {
+	            return;
+	        }
+
+	        fileManager.doFileDelete(dto.getSave_filename(), pathname);
+
+	        dao.deleteData("notice.deleteNotice", noti_id);
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        throw e;
+	    }
+	}
 
 }

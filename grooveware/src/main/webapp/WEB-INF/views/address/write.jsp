@@ -18,12 +18,13 @@
         </ul>
     </div>
   <div class="right-contentbody">
+   <div class= address-main>
   <div class="board">
     <div class="title_container">
       <table class="table" style="margin-bottom: 20px;">
         <tr>
           <td class="title">
-            <h3><span>|</span> 공용 주소록</h3>
+            <h3><span>|</span> 직원 주소록</h3>
           </td>
           <td align="right">
             <form name="searchForm" action="${pageContext.request.contextPath}/" method="post">
@@ -42,18 +43,9 @@
         </tr>
       </table>
 
-      <div class="address-button">
-        <input type="checkbox" name="checkboxName" id="checkboxId">
-        <label for="checkboxId"></label>
-        <button type="button" class="btn" onclick="email();">전체</button>
-        <button type="button" class="btn" onclick="email();">이메일</button>
-        <button type="button" class="btn" onclick="email();">이동</button>
-        <button type="button" class="btn" onclick="email();">중요</button>
-        <button type="button" class="btn" onclick="email();">파일</button>
-        <button type="button" class="btn" onclick="remove();">삭제</button>
-      </div>
+     
     </div>
-
+   </div>
    <table class="table table-border table-list">
    
   <thead>
@@ -96,3 +88,4 @@
 	
 	</div>
 	</div>
+	
