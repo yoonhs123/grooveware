@@ -125,7 +125,9 @@
 							    <button class="remove-btn" onclick="removeBox(this)">x</button>
 							  </div>
 							</div>
+							
 							<button class = "SurveyButton" onclick="addBox()">문항 추가</button>
+														
 							</td>
 						</tr>
 	

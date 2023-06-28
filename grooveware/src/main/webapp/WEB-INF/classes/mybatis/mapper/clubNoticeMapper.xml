@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="clubNotice">
+	<!-- 클럽 공지사항 게시글 작성 -->
+	<insert id="insertClubNotice" parameterType="com.sp.grooveware.club.notice.ClubNotice">
+		INSERT INTO club_notice (club_noti_no, club_id, emp_no, club_noti_title, club_noti_content, club_noti_regdate, 
+								club_noti_hitcount, save_filename, original_filename)
+		VALUES (CLUB_NOTICE_SEQ.NEXTVAL, #{club_id}, #{emp_no}, #{club_noti_title}, #{club_noti_content}, SYSDATE,
+				 0, #{save_filename, jdbcType=VARCHAR}, #{original_filename, jdbcType=VARCHAR})
+	</insert>
+	
+	<sql id="where-list">
+		<choose>
+			<when test="condition == 'all' ">
+			   ( INSTR(club_noti_title, #{keyword}) &gt; 0
+		          OR DBMS_LOB.INSTR(club_noti_content, #{keyword}) &gt; 0 )
+			</when>
+			<when test="condition == 'reg_date' ">
+			   ( TO_CHAR(club_noti_regdate, 'YYYYMMDD') = #{keyword}
+		          OR TO_CHAR(club_noti_regdate, 'YYYY-MM-DD') = #{keyword} )
+			</when>
+			<when test="condition == 'content'">
+			    DBMS_LOB.INSTR(club_noti_content, #{keyword}) &gt; 0
+			</when>
+			<otherwise>
+			    INSTR(${condition}, #{keyword}) &gt; 0
+			</otherwise>
+		</choose>
+	</sql>
+	
+	<!-- 클럽 공지사항 리스트 조회 : 제목, 작성자, 작성일, 조회수, 첨부파일-->
+	<select id="listClubNotice" parameterType="map" resultType="com.sp.grooveware.club.notice.ClubNotice">
+		SELECT c.club_id, c.club_name, cn.club_noti_no, e.emp_name, cn.club_id, cn.club_noti_title, TO_CHAR (cn.club_noti_regdate, 'YYYY-MM-DD') club_noti_regdate, cn.club_noti_hitcount, cn.save_filename
+		FROM club_notice cn
+		JOIN club c ON cn.club_id=c.club_id
+		JOIN emp e ON cn.emp_no=e.emp_no
+		WHERE cn.club_id=#{club_id}
+		<where>
+			<if test="keyword != null and keyword != ''">
+				AND <include refid="where-list"/>
+			</if>
+		</where>
+		ORDER BY club_noti_no DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{size} ROWS ONLY
+	</select>
+	
+	<!-- 클럽 공지사항 게시글 개수 -->
+	<select id="dataCountClubList" parameterType="map" resultType="Integer"> 
+		SELECT NVL(COUNT(*),0)
+		FROM club_notice cn
+		JOIN club c ON cn.club_id=c.club_id
+		WHERE cn.club_id=#{club_id}
+		<where>
+			<if test="keyword!=null and keyword!='' ">
+				AND <include refid="where-list"/>
+			</if>
+		</where>  
+	</select>
+	
+	<!-- 클럽 공지사항 게시글 수정 -->
+	<update id="updateClubNotice" parameterType="com.sp.grooveware.club.notice.ClubNotice">
+	
+	</update>
+	
+	<!-- 클럽 공지사항 게시글 삭제 -->
+	<delete id="deleteClubNotice" parameterType="com.sp.grooveware.club.notice.ClubNotice">
+		DELETE FROM club_notice WHERE club_noti_no = #{club_noti_no}
+	</delete>
+	
+	
+	<!-- 클럽 공지사항 게시글 보기 -->
+	<select id="readClubNotice" parameterType="Long" resultType="com.sp.grooveware.club.notice.ClubNotice"> 
+		SELECT cn.club_noti_no, e.emp_name, cn.club_id, cn.club_noti_title, TO_CHAR (cn.club_noti_regdate, 'YYYY-MM-DD') startdate, 
+			   cn.club_noti_hitcount, cn.club_noti_content, cn.save_filename
+		FROM club_notice cn
+		JOIN emp e ON cn.emp_no=e.emp_no
+		WHERE cn.club_noti_no=#{club_noti_no}
+	</select>
+	
+	<!-- 조회수 증가 -->
+	<update id="updateHitCount" parameterType="Long">
+		UPDATE club_notice SET club_noti_hitcount=club_noti_hitcount+1 WHERE club_noti_no = #{club_noti_no}
+	</update>
+	
+	<!-- 이전글 -->
+	<select id="preReadBoard" parameterType="map" resultType="com.sp.grooveware.club.notice.ClubNotice">
+		SELECT cn.club_noti_no, cn.club_noti_title
+		FROM club_notice cn
+		JOIN emp e ON cn.emp_no=e.emp_no
+		<where>
+			<if test="keyword != null and keyword != '' ">
+				<include refid="where-list"/>
+			</if>
+			AND (club_noti_no &gt; #{club_noti_no})
+		</where>
+		ORDER BY club_noti_no ASC
+		FETCH FIRST 1 ROWS ONLY
+	</select>
+	
+	<!-- 다음글 -->
+	<select id="nextReadBoard" parameterType="map" resultType="com.sp.grooveware.club.notice.ClubNotice">
+		SELECT cn.club_noti_no, cn.club_noti_title
+		FROM club_notice cn
+		JOIN emp e ON cn.emp_no=e.emp_no
+		<where>
+			<if test="keyword != null and keyword != '' ">
+				<include refid="where-list"/>
+			</if>
+			AND (club_noti_no &lt; #{club_noti_no})
+		</where>
+		ORDER BY club_noti_no ASC
+		FETCH FIRST 1 ROWS ONLY
+	</select>
+
+</mapper>

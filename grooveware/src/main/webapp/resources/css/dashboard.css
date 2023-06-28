@@ -4,27 +4,63 @@
 .dContainer{  
   width : 100%;
   height: 100%;
-  margin: 2.4% auto;
   display: grid;
   grid-template-rows : repeat(2, 1fr);
-  grid-template-columns :  repeat(3, 30%);
-  grid-gap: 40px;
+  grid-template-columns :  repeat(3, 28%);
+  grid-gap: 50px;
   align-items: center;
   justify-content: center;
-  
+  margin-bottom: 50px;
   }
  
-
-  .dContainer > .item {
+.dContainer > .item {
 	cursor: pointer;
-	border: 1px solid #787878;
+	border: 1px solid #d3d3d3;
 	height: 100%;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-	border-radius: 3px;
+	border-radius: 5px;
 	background-color: white;
 	word-wrap: break-word;
+	box-shadow: 0 3px 3px rgba(0,0,0,0.2);
+}
+ 
+.dContainer > .item1 {
+	cursor: pointer;
+	border: 1px solid #d3d3d3;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	border-radius: 5px;
+	background-color: white;
+	word-wrap: break-word;
+  	box-shadow: 0 3px 3px rgba(0,0,0,0.2);
+}
+.dContainer > .item2 {
+	cursor: pointer;
+	border: 1px solid #d3d3d3;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	border-radius: 5px;
+	background-color: white;
+	word-wrap: break-word;
+  	box-shadow: 0 3px 3px rgba(0,0,0,0.2);
+}
+ 
+.box-profile{
+ 	flex: 1;
+ 	width : 35%;
+ 	padding : 20px;
+ 	border-bottom: 1px solid gray;
+ }
+ 
+.box-profile > .profile-picture{
+ 	border: 1px solid #d3d3d3;
+ 	height : 80%;
  }
  
  
@@ -34,15 +70,18 @@
 	height: auto;
 }
 
-.item>.desc-area {
+
+.item1>.desc-area {
 	margin: 20px;
 }
 
-.item>.desc-area>.title {
-	font-size: 15px;
+
+.item>.desc-area>.title-di {
+	font-size: 19px;
 	height: 45px;
 	font-weight: 700;
-	margin-left: 10px;
+	padding : 12px 0;
+	margin-bottom: 10px;
 }
 
 .item>.desc-area>.date {
@@ -53,14 +92,19 @@
 	color: #4048a8;
 }
 
-.commuteBox {
-	height: 60%;
+.subfontColor {
+	color: #4048a8;
+	font-size: 17px;
+	font-weight: 600;
 }
 
-.commuteBox2 {
+.commuteBox {
+	display : flex;
 	height: 40%;
-	background-color: #4048a8;
-	color: white;
+}
+
+.title-di{
+	
 }
 
 .textRight {
@@ -68,10 +112,6 @@
 	float: right;
 }
 
-.commuteCon {
-	margin: 40px auto;
-	width: 200px;
-}
 
 .center {
 	text-align: center;

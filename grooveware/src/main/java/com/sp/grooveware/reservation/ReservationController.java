@@ -10,14 +10,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.sp.grooveware.common.MyUtil;
 
-@Controller("reservation.reservationController")
+@Controller("reservation.ReservationController")
 @RequestMapping("/reservation/*")
 public class ReservationController {
 	@Autowired
 	private ReservationService service;
-	
-	@Autowired
-	private MyUtil myUtil;
 	
 	@RequestMapping(value="main", method=RequestMethod.GET)
 	public String main() {

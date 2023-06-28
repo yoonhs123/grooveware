@@ -15,26 +15,49 @@ public class ReservationServiceImpl implements ReservationService{
 	
 	@Override
 	public void insertReservation(Reservation dto) throws Exception {
-		// TODO Auto-generated method stub
-		
+		// 예약
+		try {
+			dao.insertData("", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
 	}
 
 	@Override
 	public List<Reservation> listMonth(Map<String, Object> map) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Reservation readReservation(long num) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void deleteReservation(Map<String, Object> map) throws Exception {
-		// TODO Auto-generated method stub
+		// 예약 현황 조회
+		List<Reservation> list = null;
 		
+		try {
+			list = dao.selectList("", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	@Override
+	public Reservation readReservation(long meroom_res_no) throws Exception {
+		// 예약 보기
+		Reservation dto = null;
+		try {
+			dto = dao.selectOne("", meroom_res_no);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dto;
+	}
+
+	@Override
+	public void deleteReservation(long meroom_res_no) throws Exception {
+		// 예약 취소
+		try {
+			dao.deleteData("", meroom_res_no);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
 	}
 
 }

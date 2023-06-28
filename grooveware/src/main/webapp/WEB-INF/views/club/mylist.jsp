@@ -51,81 +51,9 @@ img {
     height: 90px;
 }
 
-.read,
-.joinClub {
-    border: none;
-    padding: 5px 10px;
-    color: #2f4f4f;
-    font-weight: bold;
-}
-
-.read {
-    background-color: #03A9F4;
-}
-
-.joinClub {
-    background-color: #E91E63;
-}
-
-.form-select,
-.keywordform-control,
-.btn {
-  height: 30px;
-  padding: 5px 30px 5px 10px;
-  border-radius: 5px;
-  outline: 0 none;
-}
-
-.form-select{
-  width: 130px;
-}
-
-.keywordform-control{
-  width: 200px;
-}
-
-.btn{
-  width: 70px;
-}
-
-.form-select option {
-  
-}
-
 </style>
 
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/paginate.js"></script>
-
-<c:url var="listUrl" value="/club/list">
-	<c:if test="${not empty keyword}">
-		<c:param name="condition" value="${condition}"/>
-		<c:param name="keyword" value="${keyword}"/>
-	</c:if>	
-</c:url>
-
-<script type="text/javascript">
-window.addEventListener("load", function(){
-	let page = ${page};
-	let pageSize = ${size};
-	let dataCount = ${dataCount};
-	let url = "${listUrl}"; 
-	
-	let total_page = pageCount(dataCount, pageSize);
-	let paging = pagingUrl(page, total_page, url);
-	
-	// document.querySelector(".dataCount").innerHTML = dataCount+"개 ("+page+"/"+total_page+"페이지)";
-
-	document.querySelector(".page-navigation").innerHTML = 
-		dataCount === 0 ? "등록된 게시물이 없습니다." : paging;
-});
-</script>
-
-<script type="text/javascript">
-function searchList() {
-	const f = document.searchForm;
-	f.submit();
-}
-</script>
 
 <script type="text/javascript">
 function ajaxFun(url, method, query, dataType, fn){
@@ -175,32 +103,6 @@ function read(club_id){
 	ajaxFun(url, "get", query, "html", fn);
 }
 
-// 가입
-	// ajax json으로 가져오기(true랑 false)
-$(function(){
-	$(".joinClub").click(function(){
-		
-		if(! confirm('커뮤니티에 가입하시겠습니까 ? ')) {
-			return false;
-		}
-		
-		const f = document.clubJoinForm;
-		
-		let club_id = $(this).attr("data-club_id");
-		f.club_id.value = club_id;
-		
-		f.action = "${pageContext.request.contextPath}/club/join";
-		f.submit();
-	});
-});
-
-// 클럽 들어가기
-$(function(){
-	$(".enterClub").click(function(){
-		let club_id = $(this).attr("data-club_id");
-		location.href = "${pageContext.request.contextPath}/club/"+club_id+"/notice/list";
-	});
-});
 
 </script>
 
@@ -227,13 +129,10 @@ $(function(){
 			<div class="title_container">
 			<table class="table1" style="margin-bottom: 5px;">
 				<tr>
-					<td class="title" > <h2><span>|</span> 사내 커뮤니티</h2> 
-					</td>
+					<td class="title" > <h2><span>|</span> 내 커뮤니티</h2></td>
 				</tr>
-			</table>
-			<table class="table1" style="margin-bottom: 5px;">
 				<tr>
-					<td>
+					<td align="right">
 						<form name="searchForm" action="${pageContext.request.contextPath}/club/list " method="post">
 							<select name="condition" class="form-select">
 								<option value="all"  ${condition == "all" ? "selected='selected'" : ""} >커뮤니티</option>
@@ -243,16 +142,9 @@ $(function(){
 							<button type="button" class="btn" onclick="searchList();">검색</button>
 						</form>
 					</td>
-					<td align="right">
-						<div>
-							<button type="button" onclick="location.href='${pageContext.request.contextPath}/club/write';" 
-							style="background-color: #eeeeee; border:none; font-size:13px; padding:5px 10px; border-radius: 7px;">커뮤니티 만들기</button>
-						</div>
-					</td>
 				</tr>
 			</table>
 		 </div>
-		 
 	<table class="table2">
         <thead>
             <tr>
@@ -271,7 +163,9 @@ $(function(){
         	<c:forEach var="dto" items="${list}" varStatus="status">
             <tr>
                 <td><img src="https://i.postimg.cc/yYYd1HV1/katara.jpg" alt="img"> </td>
-                <td> ${dto.club_name} </td>		
+                <td>
+					${dto.club_name}
+				</td>		
                 <td> ${dto.member_count} </td>
                 <td> ${dto.emp_name} </td>
                 <td> ${dto.club_startdate} </td>
@@ -279,8 +173,6 @@ $(function(){
                     <button type="button" class="read" style="background-color: #eeeeee; border:none; font-size:13px; padding:5px 10px; border-radius: 7px;"
 							onclick="read('${dto.club_id}')">소개</button></td>
                 <td>    
-                    <button type="button" class="joinClub" style="background-color: #eeeeee; border:none; font-size:13px; padding:5px 10px; border-radius: 7px;"
-						data-club_id="${dto.club_id}">가입</button>
 					<button type="button" class="enterClub" style="background-color: #eeeeee; border:none; font-size:13px; padding:5px 10px; border-radius: 7px;"
 						data-club_id="${dto.club_id}">입장</button>
                 </td>
@@ -291,12 +183,8 @@ $(function(){
 
 	<div class="page-navigation" style="width: 900px; margin: 0 auto;"></div>
 	
-    </div>
+	</div>
 </div>
 
-<form name="clubJoinForm" method="post">
-	<input type="hidden" name="club_id"> 
-</form>
-
 <div id="clubModal" style="display: none;"></div>
-    
+		

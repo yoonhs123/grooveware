@@ -49,7 +49,7 @@ public class MemberController {
 		info.setDept_no(dto.getDept_no());
 		info.setDept_name(dto.getDept_name());
 		
-		return "redirect:/member/dashboard";
+		return "redirect:/dashboard/main";
 	}
 	
 	@RequestMapping(value = "logout")
@@ -62,13 +62,6 @@ public class MemberController {
 
 		return "redirect:/";
 	}
-	
-	@RequestMapping(value="dashboard", method=RequestMethod.GET)
-	public String dashBoardForm() {
-		return ".member.dashboard";
-	}
-	
-	
 	
 		
 }

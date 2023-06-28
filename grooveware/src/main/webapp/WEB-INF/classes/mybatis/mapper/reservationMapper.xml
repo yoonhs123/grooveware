@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="reservation">
+	<!-- 회의실 등록 -->
+	<insert id="insertMeetingroom">
+		INSERT INTO meetingroom (meroom_id, meroom_name, meroom_info, meroom_status) 
+		VALUES(MEETINGROOM_SEQ.NEXTVAL, #{meroom_name}, #{meroom_info}, 0)
+	</insert>
+	
+	<!-- 회의실 정보 수정 -->
+	<update id="updateMeetingroom">
+		UPDATE meetingroom SET meroom_info=#{meroom_info}
+		WHERE meroom_id=#{meroom_id}
+	</update>
+
+	<!-- 회의실 사용상태 변경(사용불가) -->
+	<update id="updateMrStatus">
+		UPDATE meetingroom SET meroom_status=1 
+		WHERE meroom_id=#{meroom_id}
+	</update>
+
+	<!-- 회의실 예약하기 -->
+	<insert id="insertMrRes">
+		INSERT INTO meetingroom_reservation (meroom_res_no, meroom_id, emp_no, meroom_resdate, res_starttime, res_enddate, res_content) 
+		VALUES(MEETINGROOM_RESERVATION_SEQ.NEXTVAL, 1, '20050007', TO_DATE('2023-06-26', 'YYYY-MM-DD'), 
+           	   TO_DATE('2023-06-26 09:00', 'YYYY-MM-DD HH24:MI'), TO_DATE('2023-06-26 10:00', 'YYYY-MM-DD HH24:MI'), '주간 회의')
+	</insert>
+
+	<!-- 회의실 예약 취소 -->
+	<delete id="deleteMrRes">
+		DELETE FROM meetingroom_reservation 
+		WHERE meroom_res_no=#{meroom_res_no}
+	</delete>
+
+	<!-- 회의실 예약보기(예약번호별) : 회의실 번호, 회의실 이름, 회의실 정보, 예약 번호, 예약자, 예약 날짜, 예약 시작 시간, 예약 종료시간, 예약 내용 -->
+	<select id="articleRes">
+		SELECT m.meroom_id, m.meroom_name, m.meroom_info, mr.meroom_res_no, e.emp_name, mr.meroom_resdate, mr.res_starttime, mr.res_enddate, mr.res_content
+		FROM meetingroom_reservation mr
+		JOIN meetingroom m ON m.meroom_id=mr.meroom_id
+		JOIN emp e ON mr.emp_no=e.emp_no
+		WHERE meroom_res_no=#{meroom_res_no}
+	</select>
+	
+	<!-- 회의실 예약 현황 리스트(사원별) -->
+	<select id="articleEmpNo">
+		SELECT m.meroom_id, m.meroom_name, m.meroom_info, mr.meroom_res_no, e.emp_name, mr.meroom_resdate, mr.res_starttime, mr.res_enddate, mr.res_content
+		FROM meetingroom_reservation mr
+		JOIN meetingroom m ON m.meroom_id=mr.meroom_id
+		JOIN emp e ON mr.emp_no=e.emp_no
+		WHERE e.emp_no=#{emp_no}
+	</select>
+	
+	<!-- 회의실 예약 현황 리스트(회의실별) -->
+	<select id="articleMr">
+		SELECT m.meroom_id, m.meroom_name, m.meroom_info, mr.meroom_res_no, e.emp_name, mr.meroom_resdate, mr.res_starttime, mr.res_enddate, mr.res_content
+		FROM meetingroom_reservation mr
+		JOIN meetingroom m ON m.meroom_id=mr.meroom_id
+		JOIN emp e ON mr.emp_no=e.emp_no
+		WHERE m.meroom_id=#{meroom_id}
+	</select>
+	
+	<!-- 회의실 예약 현황 리스트(예약날짜별) -->
+	<select id="articleDate">
+		SELECT m.meroom_id, m.meroom_name, m.meroom_info, mr.meroom_res_no, e.emp_name, mr.meroom_resdate, mr.res_starttime, mr.res_enddate, mr.res_content
+		FROM meetingroom_reservation mr
+		JOIN meetingroom m ON m.meroom_id=mr.meroom_id
+		JOIN emp e ON mr.emp_no=e.emp_no
+		WHERE mr.meroom_resdate=#{meroom_resdate}
+	</select>
+
+</mapper>

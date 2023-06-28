@@ -37,6 +37,35 @@
 		JOIN club_member cm ON c.club_id=cm.club_id
 		JOIN emp e ON cm.emp_no=e.emp_no
 		WHERE member_authority='0'
+		<where>
+			<if test="keyword != null and keyword != '' ">
+				AND <include refid="where-list"/>
+			</if>
+		</where>
+		ORDER BY club_id DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{size} ROWS ONLY
+	</select>
+	
+	<!-- 내가 가입한 클럽 전체 리스트 조회 -->
+	<select id="listmyClub" parameterType="map" resultType="com.sp.grooveware.club.Club">
+		SELECT c.club_id, c.club_name, NVL(memberCount,0) member_count, e.emp_name, 
+			   TO_CHAR (c.club_startdate, 'YYYY-MM-DD') club_startdate
+		FROM club c
+		LEFT OUTER JOIN (
+		    SELECT club_id, COUNT(*) memberCount
+		    FROM club_member
+		    GROUP BY club_id
+		) cmm ON c.club_id=cmm.club_id
+		JOIN club_member cm ON c.club_id=cm.club_id
+		JOIN emp e ON cm.emp_no=e.emp_no
+		WHERE cm.emp_no=#{emp_no}
+		<where>
+			<if test="keyword != null and keyword != '' ">
+				AND <include refid="where-list"/>
+			</if>
+		</where>
+		ORDER BY club_id DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{size} ROWS ONLY
 	</select>
 	
 	<!-- 클럽 전체 개수 -->
@@ -87,22 +116,4 @@
 		VALUES(#{club_id}, #{emp_no}, '1', '1', SYSDATE)
 	</insert>
 	
-	<!-- 클럽 공지사항 게시글 작성 -->
-	
-	
-	<!-- 클럽 공지사항 리스트 조회 -->
-	
-	
-	<!-- 클럽 공지사항 게시글 개수 -->
-	
-	
-	<!-- 클럽 공지사항 게시글 수정 -->
-	
-	
-	<!-- 클럽 공지사항 게시글 삭제 -->
-	
-	
-	<!-- 클럽 공지사항 게시글 보기 -->
-	
-
 </mapper>

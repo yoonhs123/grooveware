@@ -35,6 +35,18 @@ public class ClubServiceImpl implements ClubService{
 		}
 		return list;
 	}
+	
+	@Override
+	public List<Club> listmyClub(Map<String, Object> map) {
+		// 내가 가입한 클럽 리스트
+		List<Club> mylist = null;
+		try {
+			mylist = dao.selectList("club.listmyClub", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return mylist;
+	}
 
 	@Override
 	public int dataCountClub(Map<String, Object> map) {
@@ -92,42 +104,6 @@ public class ClubServiceImpl implements ClubService{
 			e.printStackTrace();
 			throw e;
 		}
-	}
-
-	@Override
-	public void insertClubNotice(ClubNotice dto, String pathname) throws Exception {
-		// 공지사항 글쓰기(운영자일 때만)
-		
-	}
-
-	@Override
-	public List<ClubNotice> listClubNotice(Map<String, Object> map) {
-		// 클럽 공지사항 리스트(입장했을 때 첫화면)
-		return null;
-	}
-
-	@Override
-	public void dataCountClubNotice(Map<String, Object> map) {
-		// 공지사항 게시글 개수
-		
-	}
-
-	@Override
-	public void updateClubNotice(ClubNotice dto, String pathname) throws Exception {
-		// 공지사항 수정
-		
-	}
-
-	@Override
-	public void deleteClubNotice(ClubNotice dto, String pathname, String userId) throws Exception {
-		// 공지사항 삭제
-		
-	}
-
-	@Override
-	public Club readClubNotice(long club_noti_no) {
-		// 공지사항 게시글 보기
-		return null;
 	}
 
 }

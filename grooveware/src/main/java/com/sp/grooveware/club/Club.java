@@ -1,5 +1,7 @@
 package com.sp.grooveware.club;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class Club {
 	private long club_id;
 	private int approve_status;
@@ -7,6 +9,9 @@ public class Club {
 	private int club_status;
 	private String club_content;
 	private String club_startdate;
+	private String club_picture;
+	
+	private MultipartFile selectFile;
 	
 	private long emp_no;
 	private String emp_name;
@@ -87,7 +92,17 @@ public class Club {
 	public void setEmp_name(String emp_name) {
 		this.emp_name = emp_name;
 	}
-
-	
+	public String getClub_picture() {
+		return club_picture;
+	}
+	public void setClub_picture(String club_picture) {
+		this.club_picture = club_picture;
+	}
+	public MultipartFile getSelectFile() {
+		return selectFile;
+	}
+	public void setSelectFile(MultipartFile selectFile) {
+		this.selectFile = selectFile;
+	}
 	
 }
