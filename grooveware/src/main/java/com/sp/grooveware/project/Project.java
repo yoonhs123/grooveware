@@ -11,17 +11,20 @@ public class Project {
 	private long pj_creator;
 	private String pj_start_date;
 	private String pj_end_date;
-	private String pj_status;
+	private int pj_status;
 	
 	private String saveFilename;
 	private String originalFilename;
 	private MultipartFile selectFile;
+	
 	
 	private String client_name;
 	
 	private long pj_member_no;
 	private int pj_join_type;
 	private String pj_member_join_date;
+	
+	private int category;	
 	
 	private long emp_no;
 	private List<Long> emps;
@@ -31,12 +34,11 @@ public class Project {
 	
 	
 	
-	
-	public List<Long> getEmps() {
-		return emps;
+	public String getDept_name() {
+		return dept_name;
 	}
-	public void setEmps(List<Long> emps) {
-		this.emps = emps;
+	public void setDept_name(String dept_name) {
+		this.dept_name = dept_name;
 	}
 	public long getPj_no() {
 		return pj_no;
@@ -74,10 +76,10 @@ public class Project {
 	public void setPj_end_date(String pj_end_date) {
 		this.pj_end_date = pj_end_date;
 	}
-	public String getPj_status() {
+	public int getPj_status() {
 		return pj_status;
 	}
-	public void setPj_status(String pj_status) {
+	public void setPj_status(int pj_status) {
 		this.pj_status = pj_status;
 	}
 	public String getSaveFilename() {
@@ -122,11 +124,23 @@ public class Project {
 	public void setPj_member_join_date(String pj_member_join_date) {
 		this.pj_member_join_date = pj_member_join_date;
 	}
+	public int getCategory() {
+		return category;
+	}
+	public void setCategory(int category) {
+		this.category = category;
+	}
 	public long getEmp_no() {
 		return emp_no;
 	}
 	public void setEmp_no(long emp_no) {
 		this.emp_no = emp_no;
+	}
+	public List<Long> getEmps() {
+		return emps;
+	}
+	public void setEmps(List<Long> emps) {
+		this.emps = emps;
 	}
 	public String getEmp_name() {
 		return emp_name;
@@ -140,15 +154,12 @@ public class Project {
 	public void setPos_name(String pos_name) {
 		this.pos_name = pos_name;
 	}
-	public String getDept_name() {
-		return dept_name;
-	}
-	public void setDept_name(String dept_name) {
-		this.dept_name = dept_name;
-	}
+	
+
 	
 	
 	
+
 	
 	
 	

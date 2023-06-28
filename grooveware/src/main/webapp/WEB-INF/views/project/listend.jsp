@@ -5,7 +5,6 @@
 
 <style type="text/css">
  
- 
 /* table */
 .table { width: 100%; border-spacing: 0; border-collapse: collapse; }
 .table th, .table td { padding-top: 10px; padding-bottom: 10px; }
@@ -84,10 +83,10 @@ function searchList() {
 				<div class="title_container">
 				<table class="table" style="margin-bottom: 20px;">
 					<tr>
-						<td class="title" > <h3><span>|</span> 진행중인 프로젝트 </h3> 
+						<td class="title" > <h3><span>|</span> 완료된 프로젝트 </h3> 
 						</td>
 						<td align="right">
-							<form name="searchForm" action="${pageContext.request.contextPath}/project/list" method="post">
+							<form name="searchForm" action="${pageContext.request.contextPath}/project/listend" method="post">
 								<select name="condition" class="form-select">
 									<option value="pj_name"  ${condition == "pj_name" ? "selected='selected'" : ""} >프로젝트 이름</option>
 									<option value="pj_creator"  ${condition == "pj_creator" ? "selected='selected'" : ""} >PM</option>
@@ -116,7 +115,6 @@ function searchList() {
 						<th> 시작일 </th>
 						<th> 종료일 </th>
 						<th> 클라이언트 </th>
-						<th> 파일 </th>
 					</tr>
 				</thead>
 				
@@ -131,11 +129,6 @@ function searchList() {
 							<td>${dto.pj_start_date}</td>
 							<td>${dto.pj_end_date}</td>
 							<td>${dto.client_name}</td>
-							<td>
-								<c:if test="${not empty dto.saveFilename}">
-									<a href="<c:url value='/project/download?pj_no=${dto.pj_no}'/>" class="text-reset"><img src='${pageContext.request.contextPath}/resources/images/bg.png'></a>
-								</c:if>
-							</td>
 						</tr>
 					</c:forEach>
 				</tbody>

@@ -398,9 +398,8 @@ $(function(){
 <div class="left-side-bar">
          <ul>
             <li>
-                <a href="#" class="current_pj_name">현재 진행중인 프로젝트</a>
-                <a href="#">&nbsp;메인으로</a>
-                <a href="${pageContext.request.contextPath}/project/write">&nbsp;새 프로젝트 생성</a>
+                <a href="${pageContext.request.contextPath}/project/list">&nbsp;진행중인 프로젝트</a>
+                <a href="${pageContext.request.contextPath}/project/listend">&nbsp;완료된 프로젝트</a>
             <li>
             <hr>
             <li>
@@ -516,20 +515,23 @@ $(function(){
 										<div class="file_container2">
 											<div class="table table-border table-form">
 												<div>
-													<input type="file" name="selectFile" accept="image/*"
-														multiple="multiple" class="form-control1">
+													<input type="file" name="selectFile" class="form-control">
 												</div>
-												<div>
-													<div>
-														<div class="img-box">
-															<c:forEach var="vo" items="${listFile}">
-																<img
-																	src="${pageContext.request.contextPath}/ / /${vo.imageFilename}"
-																	onclick="deleteFile('${vo.fileNum}');">
-															</c:forEach>
-														</div>
-													</div>
-												</div>
+												
+												<c:if test="${mode=='update'}">
+													<tr>
+														<td class="table-light col-sm-2" scope="row">첨부된파일</td>
+														<td> 
+															<p class="form-control-plaintext">
+																<c:if test="${not empty dto.saveFilename}">
+																	<a href="javascript:deleteFile('${dto.num}');"><i class="bi bi-trash"></i></a>
+																	${dto.originalFilename}
+																</c:if>
+																&nbsp;
+															</p>
+														</td>
+													</tr>
+												</c:if>
 											</div>
 										</div>
 							</div>

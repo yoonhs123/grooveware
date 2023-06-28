@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.sp.grooveware.common.FileManager;
 import com.sp.grooveware.common.dao.CommonDAO;
@@ -20,13 +21,15 @@ public class ProjectServiceImpl implements ProjectService {
 	@Override
 	public void insertProject(Project dto, String pathname) throws Exception {
 		try {
+
 			String saveFilename = fileManager.doFileUpload(dto.getSelectFile(), pathname);
-			if(saveFilename != null) {
+			if (saveFilename != null) {
 				dto.setSaveFilename(saveFilename);
 				dto.setOriginalFilename(dto.getSelectFile().getOriginalFilename());
 			}
 			
 			dao.insertData("project.insertProject", dto);
+		
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
@@ -99,6 +102,14 @@ public class ProjectServiceImpl implements ProjectService {
 		// TODO Auto-generated method stub
 		
 	}
+
+
+
+
+
+
+
+
 
 
 

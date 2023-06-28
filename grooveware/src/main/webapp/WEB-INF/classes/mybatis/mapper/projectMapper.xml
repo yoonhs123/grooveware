@@ -31,10 +31,12 @@
  -->
  
  
- 
  	<sql id="where-list">
 		<choose>
 			<when test="condition == 'pj_name' ">
+			   ( INSTR(pj_name, #{keyword}) &gt; 0 )
+			</when>
+			<when test="condition == 'pj_creator' ">
 			   ( INSTR(pj_creator, #{keyword}) &gt; 0 )
 			</when>
 			<when test="condition == 'pj_start_date' ">
@@ -56,29 +58,34 @@
 	
 	<!-- 글 개수 -->
 	<select id="dataCount" parameterType="map" resultType="Integer">
-		SELECT NVL(COUNT(*), 0)
-		FROM pj a
-		JOIN emp b ON a.pj_no = b.emp_no
+		SELECT NVL( count(distinct a.pj_no), 0)
+		FROM pj a 
+		JOIN pj_member b ON a.pj_no = b.pj_no  
 		<where>
+			b.pj_member_no = #{login_emp} AND pj_status = #{category}
 			<if test="keyword!=null and keyword!='' ">
-				<include refid="where-list"/>
+				AND <include refid="where-list"/>
 			</if>
 		</where>   
 	</select>
-	
+
+
 	
 	<!-- 글 리스트 -->
 	<select id="listProject" parameterType="map" resultType="com.sp.grooveware.project.Project">
-		SELECT a.pj_no, pj_name, pj_creator, pj_start_date, pj_end_date
-		FROM pj a
-		JOIN pj_member d ON a.pj_no = d.pj_no
+		SELECT a.pj_no, pj_name, pj_creator, pj_start_date, pj_end_date, client_name, save_filename
+		FROM pj a 
+		JOIN cli b ON a.pj_no = b.pj_no
+		JOIN pj_member c ON a.pj_no = c.pj_no
+		JOIN pj_file d ON a.pj_no = d.pj_no
 		<where>
-			pj_member_no = #{login_emp}
+			pj_member_no = #{login_emp} AND pj_status = #{category}
 			<if test="keyword!=null and keyword!='' ">
 			  AND <include refid="where-list"/>
 			</if>
 		</where>   
-		ORDER BY pj_no DESC
+		ORDER BY a.pj_no DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{size} ROWS ONLY
 	</select>
 
 
