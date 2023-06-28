@@ -36,6 +36,7 @@ li, ul {
 
 .main-body{
    width : 100%;
+   padding-top: 55px;
    position: relative;
 }
 
