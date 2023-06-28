@@ -4,10 +4,16 @@
 <mapper namespace="member">
 	<select id="loginMember" parameterType="String" resultType="com.sp.grooveware.member.Member">
 		
-		SELECT e.emp_no, emp_name, emp_pwd, eh.dept_no, dept_name
+		SELECT e.emp_no, e.emp_name, e.emp_pwd, eh.dept_no, d.dept_name
 		FROM emp e
-        JOIN emp_history eh ON e.emp_no = eh.emp_no
-        JOIN dept d ON eh.dept_no = d.dept_no
+		JOIN (
+		    SELECT *
+		    FROM emp_history
+		    WHERE emp_no = #{emp_no}
+		    ORDER BY dept_startdate DESC
+		    FETCH FIRST 1 ROW ONLY
+		) eh ON e.emp_no = eh.emp_no
+		JOIN dept d ON eh.dept_no = d.dept_no
 		WHERE e.emp_no = #{emp_no}
 		
 	</select>
