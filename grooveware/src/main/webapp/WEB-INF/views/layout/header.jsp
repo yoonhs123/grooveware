@@ -25,7 +25,7 @@
          <li style="width: 230px; color: white; font-weight: bold; font-size : 18px;"> GROOVE WARE </li>
          
          <li><a href="${pageContext.request.contextPath}/approval/list">전자결재</a></li>
-         <li><a href="#">인사</a></li>
+         <li><a href="${pageContext.request.contextPath}/myInsa/insaCard">인사</a></li>
          <li><a href="${pageContext.request.contextPath}/project/list">프로젝트</a></li>
          <li><a href="#">일정관리</a></li> 
          <li><a href="${pageContext.request.contextPath}/club/list">그루비룸</a></li>
