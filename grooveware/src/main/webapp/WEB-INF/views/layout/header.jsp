@@ -32,9 +32,9 @@
          <li><a href="${pageContext.request.contextPath}/notice/all/list">공지사항</a></li>
          <li><a href="${pageContext.request.contextPath}/archive/1">자료실</a></li>
          <li>
-            <a href="${pageContext.request.contextPath}/member/logout" title="로그아웃"><i class="fa-solid fa-arrow-right-from-bracket"></i></a>
-            &nbsp;&nbsp;
          	<a href="${pageContext.request.contextPath}/member/logout" title="로그아웃"><i class="fa-solid fa-arrow-right-from-bracket"></i></a>
+             &nbsp;&nbsp;
+            <a href="${pageContext.request.contextPath}/chat/chat" title="메신저"><i class="fa-brands fa-facebook-messenger"></i></a>
          </li>
       </ul>
 </header>
