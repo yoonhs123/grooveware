@@ -20,5 +20,18 @@
 		FROM emp e
 		WHERE e.emp_no = #{emp_no}
 	</select>
+	
+	<!-- 인사관리 -->
+	<select id="readProfile2" parameterType="long" resultType="com.sp.grooveware.myInsa.MyInsa">
+		SELECT e.emp_no, e.emp_name, e.emp_email, e.emp_tel, e.emp_address, 
+				d.dept_name, p.pos_name,
+				SUBSTR(emp_rrn, 1, 6) emp_rrn,
+				TO_CHAR(e.emp_join_date, 'YYYY-MM-DD') emp_join_date, emp_picture
+		FROM emp e
+		JOIN emp_history eh ON e.emp_no = eh.emp_no
+		JOIN dept d ON eh.dept_no = d.dept_no
+		JOIN pos p ON eh.pos_no = p.pos_no
+		WHERE e.emp_no = #{emp_no}
+	</select>
 
 </mapper>

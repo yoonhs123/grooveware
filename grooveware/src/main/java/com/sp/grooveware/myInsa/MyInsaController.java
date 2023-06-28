@@ -29,4 +29,19 @@ public class MyInsaController {
 		
 		return ".myInsa.insaCard";
 	}
+	
+	@RequestMapping("profile")
+	public String articleProfile(
+			HttpSession session,
+			Model model) throws Exception {
+		
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		
+		MyInsa dto = myInsaService.readProfile(info.getEmp_no());
+		
+		model.addAttribute("dto", dto);
+		
+		return ".myInsa.profile";
+	}
+	
 }

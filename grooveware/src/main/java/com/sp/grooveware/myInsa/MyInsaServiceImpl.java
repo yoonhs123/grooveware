@@ -41,5 +41,19 @@ public class MyInsaServiceImpl implements MyInsaService {
 		
 		return dto;
 	}
+
+	@Override
+	public MyInsa readProfile(long emp_no) {
+		MyInsa dto  = null;
+		
+		try {
+			dto = dao.selectOne("myInsa.readProfile2", emp_no);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return dto;
+	}
 	
 }
