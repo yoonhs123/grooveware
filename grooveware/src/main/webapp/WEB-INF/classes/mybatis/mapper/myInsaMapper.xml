@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="myInsa">
+	
+	<!-- 인사관리 -->
+	<select id="readProfile" parameterType="long" resultType="com.sp.grooveware.myInsa.MyInsa">
+		SELECT e.emp_no, e.emp_name, e.emp_email, e.emp_tel, e.emp_address, 
+				d.dept_name, p.pos_name,
+				TO_CHAR(e.emp_join_date, 'YYYY-MM-DD') emp_join_date
+		FROM emp e
+		JOIN emp_history eh ON e.emp_no = eh.emp_no
+		JOIN dept d ON eh.dept_no = d.dept_no
+		JOIN pos p ON eh.pos_no = p.pos_no
+		WHERE e.emp_no = #{emp_no}
+	</select>
+	
+	<select id="readAnnualLeave" parameterType="long" resultType="Integer">
+		SELECT TRUNC((MONTHS_BETWEEN(TRUNC(SYSDATE), TRUNC(e.emp_join_date)) / 12 ) + 1) AS annual_leave
+		FROM emp e
+		WHERE e.emp_no = #{emp_no}
+	</select>
+
+</mapper>

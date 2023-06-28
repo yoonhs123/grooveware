@@ -151,7 +151,7 @@
 	</select>
 	
 	<select id="readAnnualLeave" parameterType="String" resultType="Integer">
-		SELECT TRUNC(MONTHS_BETWEEN(TRUNC(SYSDATE), TRUNC(e.emp_join_date)) / 12) AS annual_leave
+		SELECT TRUNC((MONTHS_BETWEEN(TRUNC(SYSDATE), TRUNC(e.emp_join_date)) / 12 ) + 1) AS annual_leave
 		FROM emp e
 		WHERE e.emp_no = #{emp_no}
 	</select>

@@ -34,9 +34,8 @@ public class InsaManageController {
 	
 	@RequestMapping(value= "list", method = RequestMethod.GET)
 	public String insaMemberManage(@RequestParam(value= "page", defaultValue= "1") int current_page, 
-			@RequestParam(defaultValue = "emp_no") String condition,
+			@RequestParam(defaultValue = "all") String condition,
 			@RequestParam(defaultValue = "") String keyword,
-			@RequestParam(defaultValue = "") String enabled,
 			HttpServletRequest req,
 			HttpSession session,
 			Model model) throws Exception {
@@ -68,7 +67,7 @@ public class InsaManageController {
 		}
 		
 		int offset = (current_page - 1) * size;
-		if(offset <0) offset = 0;
+		if(offset < 0) offset = 0;
 		
 		map.put("offset", offset);
 		map.put("size", size);

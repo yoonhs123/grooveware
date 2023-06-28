@@ -23,7 +23,7 @@
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/approval.css" type="text/css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css" type="text/css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/member.css" type="text/css">
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/holidaymanageList.css" type="text/css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/holidayManageList.css" type="text/css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/surveyList.css" type="text/css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/noticList.css" type="text/css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/reservation.css" type="text/css">
