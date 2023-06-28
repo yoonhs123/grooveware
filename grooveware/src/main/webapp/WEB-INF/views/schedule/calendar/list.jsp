@@ -10,7 +10,7 @@
 
 <div class="left-side-bar">
       
-        <ul>
+        <ul> 
             
             <li>
                 <a href="${pageContext.request.contextPath}/archive/list">캘린더</a>
