@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.sp.grooveware.common.FileManager;
 import com.sp.grooveware.common.dao.CommonDAO;
 
 @Service("insamanage.insaManageService")
@@ -14,6 +15,8 @@ public class InsaManageServiceImpl implements InsaManageService  {
 	@Autowired
 	private CommonDAO dao;
 
+	@Autowired
+	private FileManager fileManager;
 	
 	@Override
 	public int dataCount(Map<String, Object> map) {
@@ -43,16 +46,21 @@ public class InsaManageServiceImpl implements InsaManageService  {
 	
 	
 	@Override
-	public void insertEmp(InsaManage dto) throws Exception {
+	public void insertEmp(InsaManage dto, String pathname) throws Exception {
+		
 		try {
 
 			long seq = dao.selectOne("insaManage.seq");
+			String savaFilename = fileManager.doFileUpload(dto.getSelectFile(), pathname);
 			
-			
-			dto.setHistory_no(seq);
-			
-			dao.insertData("insaManage.insertEmp", dto);
-			dao.insertData("insaManage.insertHistory", dto);
+			if(savaFilename != null) {
+				dto.setEmp_picture(savaFilename);
+				
+				dto.setHistory_no(seq);
+				
+				dao.insertData("insaManage.insertEmp", dto);
+				dao.insertData("insaManage.insertHistory", dto);
+			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -10,9 +10,9 @@
 	
 	
 	<insert id="insertEmp" parameterType="com.sp.grooveware.insamanage.InsaManage">
-		INSERT INTO emp_reg(emp_name, emp_rrn, emp_email, emp_tel, emp_address, emp_join_date)
+		INSERT INTO emp_reg(emp_name, emp_rrn, emp_email, emp_tel, emp_address, emp_join_date, emp_picture)
 		VALUES (#{emp_name}, #{emp_rrn}, #{emp_email}, 
-				#{emp_tel}, #{emp_address}, TO_DATE(#{emp_join_date}, 'YYYY-MM-DD'))
+				#{emp_tel}, #{emp_address}, TO_DATE(#{emp_join_date}, 'YYYY-MM-DD'), #{emp_picture})
 	</insert>
 	
 	<insert id="insertHistory" parameterType="com.sp.grooveware.insamanage.InsaManage">
@@ -32,6 +32,8 @@
 	</select>
 	
 	<!-- 상위 부서 카테고리 -->
+	<!-- 하위 부서 카테고리 -->
+	<!-- 
 	<select id="listDeptCategory" resultType="com.sp.grooveware.insamanage.InsaManage">
 		SELECT dept_no, dept_name, dept_status, top_dept_no 
 		FROM dept 
@@ -39,14 +41,20 @@
 		ORDER BY dept_no 
 	</select>
 
-	<!-- 하위 부서 카테고리 -->
 	<select id="listDeptSubCategory" parameterType="Long" resultType="com.sp.grooveware.insamanage.InsaManage">
 		SELECT dept_no, dept_name, dept_status, top_dept_no 
 		FROM dept
 		WHERE top_dept_no  = #{top_dept_no}
 		ORDER BY dept_no
 	</select>
-
+	 -->
+	 
+	 <select id="listDeptCategory" resultType="com.sp.grooveware.insamanage.InsaManage">
+		SELECT dept_no, dept_name, top_dept_no
+		FROM dept
+		ORDER BY dept_no
+	</select>
+	 
 	<!-- 직위 -->	
 	<select id="readPosCategory" parameterType="Long" resultType="com.sp.grooveware.insamanage.InsaManage">
 		SELECT pos_no, pos_name, top_pos_no
@@ -142,7 +150,7 @@
 	<select id="readProfile" parameterType="String" resultType="com.sp.grooveware.insamanage.InsaManage">
 		SELECT e.emp_no, e.emp_name, e.emp_email, e.emp_tel, e.emp_address, 
 				d.dept_name, p.pos_name,
-				TO_CHAR(e.emp_join_date, 'YYYY-MM-DD') emp_join_date
+				TO_CHAR(e.emp_join_date, 'YYYY-MM-DD') emp_join_date, emp_picture
 		FROM emp e
 		JOIN emp_history eh ON e.emp_no = eh.emp_no
 		JOIN dept d ON eh.dept_no = d.dept_no

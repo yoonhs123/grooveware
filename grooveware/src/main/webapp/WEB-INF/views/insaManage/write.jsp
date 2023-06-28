@@ -65,12 +65,13 @@
 	         return;
 	     }
 	     
+	     /*
 	     if(! f.top_dept_no.value) {
 	 		alert("부서를 선택하세요.");
 	 		f.top_dept_no.focus();
 	 		return false;
 		 }
-		     
+		    */
 
 	     if(! f.dept_no.value) {
 		 	alert("부서를 선택하세요.");
@@ -119,6 +120,7 @@ function ajaxFun(url, method, query, dataType, fn) {
 	});
 }
 
+/*
 $(function(){
 	$("form select[name=top_dept_no]").change(function(){
 		let top_dept_no = $(this).val();
@@ -145,7 +147,7 @@ $(function(){
 		
 	});
 });
-
+*/
 </script>
 
 <div class="left-side-bar">
@@ -169,7 +171,7 @@ $(function(){
 		<div>
 		<h2>사원 정보 입력</h2>
 		
-   		<form name="empForm" method="post">
+   		<form name="empForm" method="post" enctype="multipart/form-data">
    		<br><br>
    		
    		<label for="name">이름:</label>
@@ -198,15 +200,15 @@ $(function(){
         <br><br>
 
         <label for="photo">사진:</label>
-        <input type="file" id="photo" accept="image/*" value="${dto.emp_picture}">
+        <input type="file" id="photo" name="selectFile" accept="image/*" value="${dto.emp_picture}">
         <br><br>
 
-        <label for="positionCode">직위코드:</label>
+        <label for="positionCode">직위:</label>
         <div>
         	<select name="pos_no">
         		<option value="">:: 직위 선택 ::</option>
         		<c:forEach var="vo" items="${listPosCategory}">
-        			<option value="${vo.pos_no}" ${top_pos_no == vo.pos_no ? "selected = 'selected' " : ""}>
+        			<option value="${vo.pos_no}" ${dto.top_pos_no == vo.pos_no ? "selected = 'selected' " : ""}>
         				${vo.pos_name}
         			</option>
         		</c:forEach>
@@ -218,6 +220,7 @@ $(function(){
         <input type="date" id="positionStartDate"  name="pos_startdate" value="${dto.pos_startdate}">
         <br><br>
 
+		<!-- 
         <label for="departmentCode">부서</label>
         <div>
         	<select name="top_dept_no">
@@ -239,13 +242,31 @@ $(function(){
         	</select>
         </div>
         <br><br>
-
+		 -->
+		 
+		 
+        <label for="departmentCode">부서:</label>
+        <div>
+        	<select name="dept_no">
+        		<option value="">:: 부서 선택 ::</option>
+        		<c:forEach var="vo" items="${listDeptCategory}">
+        			<option value="${vo.dept_no}" ${dto.top_dept_no == vo.dept_no ? "selected = 'selected' " : ""}>
+        				${vo.dept_name}
+        			</option>
+        		</c:forEach>
+        	</select>
+        </div>
+        <br><br>
+		 
+		 
+		 
         <label for="departmentStartDate">부서발령날짜:</label>
         <input type="date" id="departmentStartDate"  name="dept_startdate" value="${dto.dept_startdate}">
         <br><br>
 
-        <button type="button" onclick="sendOk()">등록하기</button>
+        <button type="button" onclick="sendOk();">등록하기</button>
         <button type="reset">다시입력</button>
+        <input type="hidden" name="imageFilename" value="${dto.emp_picture}">
    		</form>   		
    		</div>
    	</div>

@@ -1,5 +1,6 @@
 package com.sp.grooveware.insamanage;
 
+import java.io.File;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.HashMap;
@@ -13,11 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sp.grooveware.common.MyUtil;
 import com.sp.grooveware.member.SessionInfo;
@@ -99,6 +98,7 @@ public class InsaManageController {
 		return ".insaManage.list";
 	}
 	
+	/*
 	@GetMapping("listDeptSubCategory")
 	@ResponseBody
 	public Map<String, Object> listDeptSubCategory(
@@ -111,42 +111,47 @@ public class InsaManageController {
 		
 		return model;
 	}
-	
+	*/
 	
 	@RequestMapping(value = "write", method = RequestMethod.GET)
 	public String writeForm(Model model) {
-
+		
+		
 		// 모든 직위
 		List<InsaManage> listPosCategory = service.listPosCategory();
 		// 상위 부서
 		List<InsaManage> listDeptCategory = service.listDeptCategory();
-		List<InsaManage> listDeptSubCategory = null;
+		// List<InsaManage> listDeptSubCategory = null;
 		
+		/*
 		long top_dept_no = 0;
 		if(listDeptCategory.size() != 0) {
 			top_dept_no = listDeptCategory.get(0).getDept_no();
 		}
 		listDeptSubCategory = service.listDeptSubCategory(top_dept_no);
+		*/
 		
 		model.addAttribute("listDeptCategory", listDeptCategory);
-		model.addAttribute("listDeptSubCategory", listDeptSubCategory);
+		// model.addAttribute("listDeptSubCategory", listDeptSubCategory);
 		model.addAttribute("listPosCategory", listPosCategory);
 		
 		return ".insaManage.write";
 	}
 	
 	@RequestMapping(value= "write", method = RequestMethod.POST)
-	public String writeSubmit(InsaManage dto, 
-			HttpSession session,
-			Model model) throws Exception {
+	public String writeSubmit(InsaManage dto, HttpSession session) throws Exception {
+		
+		String root = session.getServletContext().getRealPath("/");
+		String path = root + "uploads" + File.separator+ "insaManage";
 		
 		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		
 		try {
-			// String root = session.getServletContext().getRealPath("/");
-			// String pathname = root + "upload" + File.separator+ "emp_picture";
+			
 			dto.setQualifer(info.getEmp_no());
 			
-			service.insertEmp(dto);
+			service.insertEmp(dto, path);
+			
 		} catch (Exception e) {
 		}
 		

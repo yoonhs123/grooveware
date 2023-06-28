@@ -24,7 +24,7 @@
 					<td>
 					<div class="profile-ficture border-radius" >
 						<div style="width: 100px; height: 80px; border: 1px solid red;">
-						
+							<img src="${pageContext.request.contextPath}/uploads/insaManage/${dto.emp_picture}"> 
 						</div> 
 					</div>
 					</td>

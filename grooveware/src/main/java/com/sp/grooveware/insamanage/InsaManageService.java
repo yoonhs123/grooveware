@@ -10,7 +10,7 @@ public interface InsaManageService {
 	public List<InsaManage> listinsaMember(Map<String, Object> map);
 	
 	// 사원 등록
-	public void insertEmp(InsaManage dto) throws Exception;
+	public void insertEmp(InsaManage dto, String pathname) throws Exception;
 	
 	// 부서
 	public InsaManage readDeptCategory(long dept_no);
