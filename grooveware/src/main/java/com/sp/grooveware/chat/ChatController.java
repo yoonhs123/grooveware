@@ -6,10 +6,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 
 @Controller("chat.chatController")
-public class chatController {
+@RequestMapping("/chat/*")
+public class ChatController {
 
 	@RequestMapping(value="chat", method=RequestMethod.GET)
 	public String method() {
-		return ".chat.list";
+		return ".chat.chat";
 	}
 }
