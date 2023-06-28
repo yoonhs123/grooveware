@@ -30,7 +30,7 @@
          <li><a href="#">일정관리</a></li>
          <li><a href="${pageContext.request.contextPath}/club/list">그루비룸</a></li>
          <li><a href="${pageContext.request.contextPath}/notice/all/list">공지사항</a></li>
-         <li><a href="${pageContext.request.contextPath}/archive/list">자료실</a></li>
+         <li><a href="${pageContext.request.contextPath}/archive/1">자료실</a></li>
          <li>
          	<a href="${pageContext.request.contextPath}/member/logout" title="로그아웃"><i class="fa-solid fa-arrow-right-from-bracket"></i></a>
          </li>
