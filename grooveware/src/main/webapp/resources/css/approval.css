@@ -185,7 +185,7 @@
 	float: left;
 	border-radius: 70%;
 	overflow: hidden;
-	margin: 0px 40px 10px 0px;
+	margin: 0px 70px 10px 0px;
 }
 
 .img_container2 {
@@ -200,6 +200,15 @@
 .img_container3 {
 	float: left;
 	margin: 10px 30px 10px 0px;
+}
+.img_container4 {
+	background: #BDBDBD;
+	width: 40px;
+	height: 35px;
+	float: left;
+	border-radius: 70%;
+	overflow: hidden;
+	margin: 0px 40px 10px 0px;
 }
 
 .text_box3 {

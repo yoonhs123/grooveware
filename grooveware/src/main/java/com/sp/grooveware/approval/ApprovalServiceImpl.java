@@ -27,8 +27,8 @@ public class ApprovalServiceImpl implements ApprovalService {
 			long seq = dao.selectOne("approval.seq");
 			dto.setDoc_no(seq);
 			
-			dao.insertData("approval.insertApproval1", dto);
-			dao.insertData("approval.insertApproval2", dto);
+			dao.insertData("approval.insertDoc", dto);
+			dao.insertData("approval.insertDraft", dto);
 			
 
 			if (! dto.getSelectFile().isEmpty()) {
@@ -44,15 +44,18 @@ public class ApprovalServiceImpl implements ApprovalService {
 					dto.setSave_filename(saveFilename);
 					
 					
-					dao.insertData("approval.insertFile", dto);
+					dao.insertData("approval.insertDraftFile", dto);
 				}
 			}
 
-			for(long emp_no : dto.getEmp_nos()) {
-				dto.setEmp_no(emp_no);
-				dao.insertData("approval.insertApproval3", dto);
+			if(dto.getDoc_status()==1) {
+				int n = 0;
+				for(long emp_no : dto.getEmp_nos()) {
+					dto.setEmp_no(emp_no);
+					dto.setApproval_status_id(n++);
+					dao.insertData("approval.insertApproval", dto);
+				}
 			}
-			
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -75,11 +78,11 @@ public class ApprovalServiceImpl implements ApprovalService {
 	}
 
 	@Override
-	public List<Approval> listApproval(Map<String, Object> map) {
+	public List<Approval> listDoc(Map<String, Object> map) {
 		List<Approval> list = null;
 		
 		try {
-			list = dao.selectList("approval.listApproval", map);
+			list = dao.selectList("approval.listDoc", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -115,8 +118,8 @@ public class ApprovalServiceImpl implements ApprovalService {
 	@Override
 	public void updateApproval(Approval dto, String pathname) throws Exception {
 		try {
-			dao.updateData("approval.updateApproval1", dto);
-			dao.updateData("approval.updateApproval2", dto);
+			dao.updateData("approval.updateDoc", dto);
+			dao.updateData("approval.updateDraft", dto);
 			
 			if (! dto.getSelectFile().isEmpty()) {
 				for (MultipartFile mf : dto.getSelectFile()) {
@@ -131,7 +134,7 @@ public class ApprovalServiceImpl implements ApprovalService {
 					dto.setSave_filename(saveFilename);
 
 					// insertFile(dto);
-					dao.insertData("approval.insertFile", dto);
+					dao.insertData("approval.insertDraftFile", dto);
 				}
 			}
 			
@@ -161,8 +164,9 @@ public class ApprovalServiceImpl implements ApprovalService {
 			map.put("doc_no", doc_no);
 			deleteFile(map);
 
-			dao.deleteData("approval.deleteApproval1", doc_no);
-			dao.deleteData("approval.deleteApproval2", doc_no);
+			dao.deleteData("approval.deleteDraft", doc_no);
+			dao.deleteData("approval.deleteApproval", doc_no);
+			dao.deleteData("approval.deleteDoc", doc_no);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
@@ -186,7 +190,7 @@ public class ApprovalServiceImpl implements ApprovalService {
 	@Override
 	public void insertFile(Approval dto) throws Exception {
 		try {
-			dao.insertData("approval.insertFile", dto);
+			dao.insertData("approval.insertDraftFile", dto);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
@@ -217,6 +221,32 @@ public class ApprovalServiceImpl implements ApprovalService {
 			e.printStackTrace();
 			throw e;
 		}
+	}
+
+
+	@Override
+	public List<Approval> listApproval(long doc_no) {
+		List<Approval> listApproval = null;
+		try {
+			listApproval = dao.selectList("approval.listApproval", doc_no);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return listApproval;
+	}
+
+
+	@Override
+	public List<Approval> standByApproval(Map<String, Object> map) {
+		List<Approval> standByApproval = null;
+
+		try {
+			standByApproval = dao.selectList("approval.standByApproval", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return standByApproval;
 	}
 
 }

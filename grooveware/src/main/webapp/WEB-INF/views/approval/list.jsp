@@ -69,10 +69,10 @@ input[type=text]{
 			</li>        
         
             <li>
-                <a href="#">문서함</a>
-                <a href="#">&nbsp;내 문서</a>
+                <a href="">문서함</a>
+                <a href="${pageContext.request.contextPath}/approval/list?doc_status=1">&nbsp;내 문서</a>
                 <a href="#">&nbsp;부서 문서</a>
-                <a href="#">&nbsp;임시보관 문서</a>
+                <a href="${pageContext.request.contextPath}/approval/list?doc_status=0">&nbsp;임시보관 문서</a>
                 <a href="#">&nbsp;중요 문서</a>
             <li>
             
@@ -80,7 +80,7 @@ input[type=text]{
             
             <li>
                 <a href="#">결재함</a>
-                <a href="#">&nbsp;대기</a>
+                <a href="${pageContext.request.contextPath}/approval/listAp">&nbsp;대기</a>
                 <a href="#">&nbsp;진행중</a>
                 <a href="#">&nbsp;보류</a>
                 <a href="#">&nbsp;반려</a>
@@ -94,7 +94,17 @@ input[type=text]{
 				<div class="title_container">
 				<table class="table" style="margin-bottom: 20px;">
 					<tr>
-						<td class="title" > <h3><span>|</span> 내문서</h3> 
+						<td class="title" > 
+							<h3><span>|</span> 
+								<c:choose>
+								  <c:when test="${doc_status == 0}">
+								    임시보관
+								  </c:when>
+								  <c:when test="${doc_status == 1}">
+								    내문서
+								  </c:when>
+								</c:choose>
+							</h3> 
 						</td>
 						<td class="title" >
 								<select name="condition" class="form-select"> 
@@ -117,10 +127,9 @@ input[type=text]{
 								</select>
 								<input type="text" name="keyword" value="${keyword}" class="form-control">
 								<button type="button" class="btn" onclick="searchList();">검색</button>
-						<input type="hidden" name="condition" value="${condition}">
-						<input type="hidden" name="keyword" value="${keyword}">			
-						<input type="hidden" name="size" value="${size}">
-										
+								<input type="hidden" name="condition" value="${condition}">
+								<input type="hidden" name="keyword" value="${keyword}">			
+								<input type="hidden" name="size" value="${size}">
 							</form>
 						</td>
 					</tr>

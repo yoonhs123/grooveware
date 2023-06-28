@@ -71,6 +71,7 @@
 	width: 100px;
 	height: 100px;
 	padding: 3px;
+	float: left;
 }
 
 .approval-member label {
@@ -81,10 +82,15 @@
 .approval-member img {
 	display: block;
 }
-li {}
 </style>
 
 
+<script type="text/javascript">
+function searchList() {
+	const f = document.searchForm;
+	f.submit();
+}
+</script>
 <script type="text/javascript">
 	<c:if test="${mode=='update'}">
 	function deleteFile(file_no) {
@@ -194,8 +200,7 @@ li {}
 				let dept_name = data.listMember[i].dept_name;
 			console.log(data );
 
-				s = "<li><input type='checkbox' class='form-check-input' data-emp_no='"+emp_no+"' title='"+emp_no+"'><span>"+emp_name+"</span>";
-				s += "<span>" + " (" + pos_name + "_" + "</span>";
+				s = "<li style='padding: 5px 0px 3px 10px' ><input type='checkbox' style='margin-right: 5px;' class='form-check-input' data-emp_no='"+emp_no+"' title='"+emp_no+"'><span>"+emp_name+ " " +pos_name+"<span>" + " (" + "</span>";
 				s += "<span>" + dept_name + ")" + "</span></li>";
 				$(".dialog-receiver-list ul").append(s);
 			}
@@ -219,7 +224,7 @@ li {}
 			}
 
 			if (len1 + len2  >= 4) {
-				alert("받는사람은 최대 3명까지만 가능합니다.");
+				alert("결재자는 최대 3명까지만 가능합니다.");
 				return false;
 			}
 
@@ -234,25 +239,24 @@ li {}
 				
 				$("#forms-receiver-list input[name=emp_nos]").each(function() {
 				if($(this).val() === emp_no) {
+					alert("이미 등록된 결재자입니다.");
 					b = true;
 					return false;
 				}
 			});
 			
 				if (!b) {
-				  // 사번과 결재 단계 hidden 처리
-				  s = "<span class='approval-member'>";
-				    s += "<div class='img_container'><img src='${pageContext.request.contextPath}/resources/images/bg.png'></div>";
+				  // 사번/결재 단계 hidden 처리
+				  s = "<span class='approval-member' style ='margin-right: 30px;'>";
+				    s += "<div class='img_container4'><img src='${pageContext.request.contextPath}/resources/images/bg.png' style='width: 100%; height: 100%;'></div>";
 				    s += "<i class='fa-solid fa-chevron-right'></i>";
-					s += "<label>" + emp_name + pos_name + dept_name;
+					s += "<label style='width: 100%;'><span style=' font-weight: normal; word-break: keep-all;'>"+emp_name+"</span>"
 					s += "<input type='hidden' name='emp_nos' value='" + emp_no + "'>";
 					s +=  "</label>"
 					s += "</span>"
 
 				  $("#forms-receiver-list").append(s);
 
-				 // s = "<div class='text_box3 receiver-user'>" + emp_name + "</div>";
-				  //$(".forms-receiver-name").append(s);
 				}
 		});
 
@@ -298,9 +302,13 @@ li {}
 			</div>
 		</li>
 
-		<li><a href="#">문서함</a> <a href="#">&nbsp;내 문서</a> <a href="#">&nbsp;부서
-				문서</a> <a href="#">&nbsp;임시보관 문서</a> <a href="#">&nbsp;중요 문서</a>
-		<li>
+            <li>
+                <a href="">문서함</a>
+                <a href="${pageContext.request.contextPath}/approval/list?doc_status=1">&nbsp;내 문서</a>
+                <a href="#">&nbsp;부서 문서</a>
+                <a href="${pageContext.request.contextPath}/approval/list?doc_status=0">&nbsp;임시보관 문서</a>
+                <a href="#">&nbsp;중요 문서</a>
+            <li>
 
 			<hr>
 		<li><a href="#">결재함</a> <a href="#">&nbsp;대기</a> <a href="#">&nbsp;진행중</a>
@@ -313,9 +321,9 @@ li {}
 
 	<ul>
 		<li><a href="#">즐겨찾기</a> <a
-			href="${pageContext.request.contextPath}/pro/approval/write.jsp"><i
+			href="${pageContext.request.contextPath}/approval/write"><i
 				class="fa-regular fa-file-lines icon"></i>기안서</a> <a
-			href="${pageContext.request.contextPath}/pro/approval/write.jsp"><i
+			href="${pageContext.request.contextPath}/approval/write"><i
 				class="fa-regular fa-file-lines icon"></i>연차휴가</a>
 		<li>
 
@@ -345,7 +353,7 @@ li {}
 				<div class="title_container">
 					<table class="table" style="margin-bottom: 20px;">
 						<tr>
-							<td class="title2" width="12%">
+							<td class="title2" width="15%">
 								<h2>
 									<span>|</span> 기안서
 								</h2>
@@ -361,7 +369,7 @@ li {}
 						</tr>
 					</table>
 				</div>
-				<div class="line_container" style="height:250px;"> 
+				<div class="line_container" style="height:200px;"> 
 					<div class="table" style="margin-bottom: 15px;">
 						<div>
 							<div class="title" style="float: left; width: 100%;">
@@ -371,19 +379,10 @@ li {}
 						</div>
 						<div style="width: 100%; float: left;">
 						    <div id="forms-receiver-list">
-						    <div style="width: 10%">
+								<button type="button" class=" btn btnReceiverDialog"
+									style="margin-top: 5px;">추가</button>
 						    
-								<button type="button" class="btn btnReceiverDialog"
-									style="margin-top: 5px;">추가 버튼</button>
 						    </div>
-						    </div>
-						</div>
-
- 
-						<div style="width: 100%; float: left;">
-							<div class="forms-receiver-name">
-							
-							</div>
 						</div>
 
 					</div>

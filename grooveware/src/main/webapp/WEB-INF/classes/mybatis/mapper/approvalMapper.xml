@@ -8,26 +8,26 @@
 	</select>
 	
 	<!-- 전자 결재/문서 양식 insert -->
-	<insert id="insertApproval1" parameterType="com.sp.grooveware.approval.Approval">
+	<insert id="insertDoc" parameterType="com.sp.grooveware.approval.Approval">
 		INSERT INTO doc (doc_no, emp_no, doc_status, urgent, doc_name, draft_date, draft_deadline, 
 						approval_step, approval_finaldate, submit_date, important, is_visible)
 		VALUES (#{doc_no}, #{emp_no}, #{doc_status}, #{urgent}, #{doc_name, jdbcType=VARCHAR}, #{draft_date, jdbcType=DATE}, #{draft_deadline, jdbcType=DATE}, 
 						#{approval_step, jdbcType=INTEGER}, #{approval_finaldate, jdbcType=DATE}, #{submit_date, jdbcType=DATE}, 0, 0)
 	</insert>
 	
-	<insert id="insertApproval2" parameterType="com.sp.grooveware.approval.Approval">
+	<insert id="insertDraft" parameterType="com.sp.grooveware.approval.Approval">
 		INSERT INTO draft (doc_no, draft_category, draft_content)
 		VALUES (#{doc_no}, #{draft_category, jdbcType=INTEGER}, #{draft_content, jdbcType=VARCHAR})
 	</insert>
 	
-	<insert id="insertFile" parameterType="com.sp.grooveware.approval.Approval">
+	<insert id="insertDraftFile" parameterType="com.sp.grooveware.approval.Approval">
 		INSERT INTO draft_file (doc_no, file_no, save_filename, original_filename)
 		VALUES (#{doc_no}, draft_file_seq.NEXTVAL, #{save_filename, jdbcType=VARCHAR}, #{original_filename, jdbcType=VARCHAR})
 	</insert>
 	
-	<insert id="insertApproval3" parameterType="com.sp.grooveware.approval.Approval">
+	<insert id="insertApproval" parameterType="com.sp.grooveware.approval.Approval">
 		INSERT INTO approval (doc_no, emp_no, approval_status_id, approval_status, approval_date, reject_reason)
-		VALUES (#{doc_no}, #{emp_no}, 0, #{approval_status, jdbcType=INTEGER },#{approval_date, jdbcType=DATE}, #{reject_reason, jdbcType=VARCHAR})
+		VALUES (#{doc_no}, #{emp_no}, #{approval_status_id}, #{approval_status, jdbcType=INTEGER },#{approval_date, jdbcType=DATE}, #{reject_reason, jdbcType=VARCHAR})
 	</insert>	
 	
 	<!-- 게시글 조건 -->
@@ -57,6 +57,8 @@
 		FROM doc d
 		LEFT OUTER JOIN draft dr ON dr.doc_no= d.doc_no
 		<where>
+				emp_no = #{emp_no} 
+				AND doc_status = #{doc_status}
 			<if test="keyword!=null and keyword!='' ">
 				<include refid="where-list"/>
 			</if>
@@ -64,8 +66,8 @@
 	</select>
 	
 	
-	<!-- 글 리스트 -->
-	<select id="listApproval"  parameterType="map" resultType="com.sp.grooveware.approval.Approval">
+	<!-- doc, draft 테이블 리스트 -->
+	<select id="listDoc"  parameterType="map" resultType="com.sp.grooveware.approval.Approval">
 	
 	SELECT d.doc_no, doc_name, TO_CHAR(draft_date, 'YYYY-MM-DD')draft_date, TO_CHAR(draft_deadline, 'YYYY-MM-DD')draft_deadline, approval_step, TO_CHAR(approval_finaldate, 'YYYY-MM-DD')approval_finaldate,
       	 	TO_CHAR(submit_date, 'YYYY-MM-DD')submit_date, doc_status, urgent, important, is_visible, emp_no, 
@@ -74,9 +76,7 @@
 	LEFT OUTER JOIN draft dr ON d.doc_no = dr.doc_no
 		<where>
 			emp_no = #{emp_no} 
-			<!-- 
 				AND doc_status = #{doc_status}			
-			 -->
 			<if test="keyword != null and keyword != ''">
 				AND <include refid="where-list"/>
 			</if>
@@ -84,6 +84,7 @@
 	ORDER BY d.doc_no DESC
 	OFFSET #{offset} ROWS FETCH FIRST #{size} ROWS ONLY	
 	</select>
+	
 	
 	<!-- 글보기 -->
 	<select id="readApproval" parameterType="Long" resultType="com.sp.grooveware.approval.Approval">
@@ -97,7 +98,7 @@
 		
 
 	<!-- 수정 -->
-	<update id="updateApproval1" parameterType="com.sp.grooveware.approval.Approval">
+	<update id="updateDoc" parameterType="com.sp.grooveware.approval.Approval">
 	    UPDATE doc
 	    SET doc_status = #{doc_status}, 
 	        urgent = #{urgent}, 
@@ -111,7 +112,7 @@
 	        is_visible = #{is_visible}
 	    WHERE doc_no = #{doc_no}
 	</update>
-	<update id="updateApproval2" parameterType="com.sp.grooveware.approval.Approval">
+	<update id="updateDraft" parameterType="com.sp.grooveware.approval.Approval">
 	    UPDATE draft
 	    SET draft_category=#{draft_category, jdbcType=INTEGER}, draft_content=#{draft_content, jdbcType=VARCHAR}
 	    WHERE doc_no = #{doc_no}
@@ -119,17 +120,51 @@
 	
 	
 	<!-- 삭제 -->
-	<delete id="deleteApproval1" parameterType="Long">
+	<delete id="deleteDraft" parameterType="Long">
 		DELETE FROM draft WHERE doc_no = #{doc_no}
 	</delete>
 	
-	<delete id="deleteApproval2" parameterType="Long">
+	<delete id="deleteDoc" parameterType="Long">
 		DELETE FROM doc WHERE doc_no = #{doc_no}
 	</delete>
 	
 	
 	
+	<!-- approval 테이블 리스트 -->
+	<select id="listApproval" parameterType="Long" resultType="com.sp.grooveware.approval.Approval">
+		SELECT a.doc_no, a.emp_no, a.approval_status_id, a.approval_status, a.approval_date, a.reject_reason,
+			b.emp_no, c.dept_name, d.emp_name, e.pos_name
+			FROM approval a
+			LEFT OUTER JOIN emp_history b ON a.emp_no = b.emp_no
+			LEFT OUTER JOIN dept c ON b.dept_no = c.dept_no
+			LEFT OUTER JOIN emp d ON b.emp_no = d.emp_no
+			LEFT OUTER JOIN pos e ON b.pos_no = e.pos_no
+		WHERE doc_no = #{doc_no}  
+	</select>	
 	
+	
+	<!-- approval 수정 -->
+	<update id="updateApproval" parameterType="com.sp.grooveware.approval.Approval">
+		 UPDATE  approval 
+		 SET emp_no, approval_status_id, approval_status, approval_date, reject_reason 
+		 WHERE doc_no = #{doc_no}  AND emp_no = #{emp_no} 
+	</update>
+		
+	<!-- approval 삭제 -->	
+	<delete id="deleteApproval" parameterType="long">
+		DELETE approval where doc_no = #{doc_no}  
+	</delete>
+	
+	
+	<!-- 대기 문서 리스트  -->
+	<select id="standByApproval"  parameterType="map" resultType="com.sp.grooveware.approval.Approval">
+	  SELECT doc_no, emp_no, approval_status_id, approval_status, approval_date, reject_reason
+	  FROM approval
+	  WHERE emp_no = #{emp_no} AND approval_status = #{approval_status}
+	  ORDER BY doc_no		
+	</select>
+	
+ 
 	<!-- 파일 리스트-->
 	<select id="listFile" parameterType="Long" resultType="com.sp.grooveware.approval.Approval">
 		SELECT file_no, doc_no, save_filename, original_filename

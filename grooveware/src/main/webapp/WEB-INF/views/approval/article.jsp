@@ -94,9 +94,13 @@ function deleteOk() {
 			</div>
 		</li>
 
-		<li><a href="#">문서함</a> <a href="#">&nbsp;내 문서</a> <a href="#">&nbsp;부서
-				문서</a> <a href="#">&nbsp;임시보관 문서</a> <a href="#">&nbsp;중요 문서</a>
-		<li>
+            <li>
+                <a href="">문서함</a>
+                <a href="${pageContext.request.contextPath}/approval/list?doc_status=1">&nbsp;내 문서</a>
+                <a href="#">&nbsp;부서 문서</a>
+                <a href="${pageContext.request.contextPath}/approval/list?doc_status=0">&nbsp;임시보관 문서</a>
+                <a href="#">&nbsp;중요 문서</a>
+            <li>
 
 			<hr>
 		<li><a href="#">결재함</a> <a href="#">&nbsp;대기</a> <a href="#">&nbsp;진행중</a>
@@ -114,7 +118,7 @@ function deleteOk() {
 				<div class="title_container">
 					<table class="table" style="margin-bottom: 20px;">
 						<tr>
-							<td class="title2" width="12%">
+							<td class="title2" width="15%">
 								<h2>
 									<span>|</span> 기안서
 								</h2>
@@ -130,7 +134,7 @@ function deleteOk() {
 									</c:otherwise>
 								</c:choose>
 								<button type="button" class="btn" onclick="deleteOk(); ">삭제</button>
-								<button type="button" class="btn" onclick="location.href='${pageContext.request.contextPath}/approval/list?${query}';">목록</button>
+								<button type="button" class="btn" onclick="location.href='${pageContext.request.contextPath}/approval/list?doc_status=${doc_status}&${query}';">목록</button>
 								<button type="button" class="btn" onclick=" ">결재</button>
 								<button type="button" class="btn" onclick=" ">보류</button>
 								<button type="button" class="btn" onclick=" ">반려</button>
@@ -138,7 +142,7 @@ function deleteOk() {
 						</tr>
 					</table>
 				</div>
-				<div class="line_container">
+				<div class="line_container" style="height:180px;">
 					<div class="table" style="margin-bottom: 15px;">
 						<div>
 							<div class="title" style="float: left; width: 100%;">
@@ -146,33 +150,32 @@ function deleteOk() {
 							</div>
 
 						</div>
-						<div style="width: 100%; float: left;">
+						<div style="width: 100%; float: left; padding-left: 20px;">
+
+						
 							<div class="img_container ">
-								<img class="" src="/test.jpg">
+								<img class="" src="${pageContext.request.contextPath}/resources/images/bg.png">
 							</div>
 							<div class="img_container3 ">
 								<i class="fa-solid fa-chevron-right"></i>
 							</div>
 							<div class="img_container ">
-								<img class="" src="test.jpg">
+								<img class="" src="${pageContext.request.contextPath}/resources/images/bg.png"">
 							</div>
 							<div class="img_container3 ">
 								<i class="fa-solid fa-chevron-right"></i>
 							</div>
 							<div class=" img_container">
-								<img class="" src="test.jpg">
+								<img class="" src="${pageContext.request.contextPath}/resources/images/bg.png"">
 							</div>
 						</div>
-
-
+						
 						<div style="width: 100%; float: left;">
-							<div class="text_box3">김민교</div>
+							<c:forEach var="vo" items="${listApproval}">
+							<div class="text_box3">${vo.emp_name }<span style="font-weight: normal;">&nbsp;${vo.pos_name }</span><div>${vo.dept_name }</div></div>
+							</c:forEach>
 							<div class="text_box4">&nbsp;</div>
-							<div class="text_box3">남기현</div>
-							<div class="text_box4">&nbsp;</div>
-							<div class="text_box3">최고관리자</div>
 
-							<!-- 플러스 버튼 후 결제라인 설정 팝업 -->
 						</div>
 
 					</div>
@@ -309,7 +312,7 @@ function deleteOk() {
 			</c:choose>			
 				<button type="button" class="btn2" onclick="deleteOk(); ">삭제</button>
 				<button type="button" class="btn2"
-					onclick="location.href='${pageContext.request.contextPath}/approval/list?${query}';">목록</button>
+					onclick="location.href='${pageContext.request.contextPath}/approval/list?doc_status=${doc_status}&${query}';">목록</button>
 				<button type="button" class="btn2">결재</button>
 				<button type="button" class="btn2">보류</button>
 				<button type="button" class="btn2">반려</button>

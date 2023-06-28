@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.PrintWriter;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
-import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,10 +42,11 @@ public class approvalController {
 	private MyUtil myUtil;
 		
  
-	@RequestMapping(value = "list")
+	@RequestMapping(value = "list", method = RequestMethod.GET)
 	public String list(@RequestParam(value = "page", defaultValue = "1") int current_page,
 			@RequestParam(defaultValue = "all") String condition,
 			@RequestParam(defaultValue = "") String keyword,
+			@RequestParam(defaultValue = "1") int doc_status, 
 			HttpSession session,
 			HttpServletRequest req,
 			Model model) throws Exception {
@@ -63,11 +63,13 @@ public class approvalController {
 			keyword = URLDecoder.decode(keyword, "utf-8");
 		}
 
+		
 		// 전체 페이지 수
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("condition", condition);
 		map.put("keyword", keyword);
 		map.put("emp_no", info.getEmp_no());
+		map.put("doc_status", doc_status);
 		
 		dataCount = service.dataCount(map);
 		if (dataCount != 0) {
@@ -87,24 +89,23 @@ public class approvalController {
 		map.put("size", size);
 
 		// 글 리스트
-		List<Approval> list = service.listApproval(map);
-
-
+		List<Approval> list = service.listDoc(map);
+		
 		String cp = req.getContextPath();
 		String query = "";
-		String listUrl = cp + "/approval/list";
-		String articleUrl = cp + "/approval/article?page=" + current_page;
+		String listUrl = cp + "/approval/list?doc_status=" + doc_status;
+		String articleUrl = cp + "/approval/article?doc_status=" + doc_status + "&page=" + current_page;
+
 		if (keyword.length() != 0) {
 			query = "condition=" + condition + "&keyword=" + URLEncoder.encode(keyword, "utf-8");
 		}
 
 		if (query.length() != 0) {
-			listUrl = cp + "/approval/list?" + query;
+			listUrl = cp + "/approval/list?doc_satus=" + doc_status + "&" + query;
 			articleUrl = cp + "/approval/article?page=" + current_page + "&" + query;
 		}
 
 		String paging = myUtil.paging(current_page, total_page, listUrl);
-
 		
 		model.addAttribute("list", list);
 		model.addAttribute("page", current_page);
@@ -113,30 +114,52 @@ public class approvalController {
 		model.addAttribute("total_page", total_page);
 		model.addAttribute("paging", paging);
 		model.addAttribute("articleUrl", articleUrl);
+		model.addAttribute("doc_status", doc_status);
 
 		model.addAttribute("condition", condition);
 		model.addAttribute("keyword", keyword);
-		
-		 
-		System.out.println("list : "  + list);
-		System.out.println("page : "  + current_page);
-		System.out.println("dataCount : "  + dataCount);
-		System.out.println("size : "  + size);
-		System.out.println("total_page : "  + total_page);
-		System.out.println("paging : "  + paging);
-		System.out.println("articleUrl : "  + articleUrl);
 		
 		return ".approval.list";
 	}
 	 
 	
+	
+	@RequestMapping(value = "listAp", method = RequestMethod.GET)
+	public String listAp(  
+			@RequestParam(defaultValue = "all") String condition,
+			@RequestParam(defaultValue = "") String keyword,
+			HttpSession session,
+			HttpServletRequest req,
+			Model model) throws Exception {
+
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+
+		if (req.getMethod().equalsIgnoreCase("GET")) { 
+			keyword = URLDecoder.decode(keyword, "utf-8");
+		}
+		
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("emp_no", info.getEmp_no());
+		map.put("approval_status", 0);
+		map.put("condition", condition);
+		map.put("keyword", keyword);
+		
+		// 글 리스트
+		List<Approval> list = service.standByApproval(map);
+
+		model.addAttribute("list", list);
+		model.addAttribute("condition", condition);
+		model.addAttribute("keyword", keyword);
+		
+		System.out.println("list: " + list);
+		
+		return ".approval.list";
+	}
+	
+ 
 	@RequestMapping(value = "write", method = RequestMethod.GET)
 	public String writeForm(HttpSession session, Model model) throws Exception {
-        // 현재 날짜를 생성
-        LocalDate currentDate = LocalDate.now();
-
-        // 모델에 현재 날짜를 전달
-        model.addAttribute("currentDate", currentDate);
 		model.addAttribute("mode", "write");
 
 		return ".approval.write";
@@ -147,10 +170,15 @@ public class approvalController {
 	public String writeSubmit(Approval dto, HttpSession session ) throws Exception {
 
 		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		int doc_status = dto.getDoc_status();
+		
 		try {
 			String root = session.getServletContext().getRealPath("/");
 			String pathname = root + "uploads" + File.separator + "approval";
 
+			
+			dto.setDoc_status(doc_status);
+			
 			dto.setEmp_no(info.getEmp_no());
 			
 			service.insertApproval(dto, pathname);
@@ -159,7 +187,7 @@ public class approvalController {
 		}
 
 
-		return "redirect:/approval/list";
+		return "redirect:/approval/list?doc_satus=" + doc_status;
 	}
 	
 	
@@ -172,8 +200,11 @@ public class approvalController {
 			@RequestParam int size,
 			Model model) throws Exception {
 
+		
 		keyword = URLDecoder.decode(keyword, "utf-8");
-
+		
+		
+		
 		String query = "page=" + page + "&size=" + size;
 		if (keyword.length() != 0) {
 			query += "&condition=" + condition + "&keyword=" + URLEncoder.encode(keyword, "UTF-8");
@@ -185,15 +216,13 @@ public class approvalController {
 			return "redirect:/approval/list?" + query;
 		}
 		
-		
+		List<Approval> listApproval = service.listApproval(doc_no);
+	
 		List<Approval> listFile = service.listFile(doc_no);
         
-		// 현재 날짜를 생성
-        LocalDate currentDate = LocalDate.now();
 
-        // 모델에 현재 날짜를 전달
-        model.addAttribute("currentDate", currentDate);
 		model.addAttribute("dto", dto);
+		model.addAttribute("listApproval", listApproval);
 		model.addAttribute("listFile", listFile);
 		model.addAttribute("page", page);
 		model.addAttribute("query", query);
