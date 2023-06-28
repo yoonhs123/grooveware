@@ -8,9 +8,8 @@
 <div class="left-side-bar">
        <ul>
             <li>
-                 <a href="#">회의실</a>
-                <a href="#">&nbsp;회의실 리스트</a>
-                <a href="#">&nbsp;회의실 관리</a>
+                <a href="#">자원 예약</a>
+                <a href="#">&nbsp;회의실 예약</a>
             <li>
             
             <hr>
