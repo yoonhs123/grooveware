@@ -7,7 +7,7 @@
  <c:if test="${sessionScope.member.emp_no == dto.emp_no}">
  function deleteNotice() {
  	let query = "noti_id=${dto.noti_id}&${query}";
- 	let url = "${pageContext.request.contextPath}/notice/delete?" + query;
+ 	let url = "${pageContext.request.contextPath}/notice/${gubun}/delete?" + query;
 
  	if(confirm(" 삭제 하시겠습니까 ? ")) {
  		location.href = url;
@@ -21,7 +21,7 @@
       
         <ul>
             <li>
-                <a href="${pageContext.request.contextPath}/notice/all/list">회사 공지사항</a>
+                <a href="${pageContext.request.contextPath}/notice/all/list">사내 공지사항</a>
                 <a href="${pageContext.request.contextPath}/notice/dept/list">${dept_name} 공지사항</a>
             <li>
         </ul>
@@ -35,8 +35,7 @@
 	</div>
 	
 	<table class="table table-border table-article" style="
-    margin-top: 20px;
-">
+    margin-top: 20px; ">
 		<thead>
 			<tr>
 				<td width="50%">
@@ -60,7 +59,7 @@
 				<td colspan="2">
 					첨부 : ${dto.save_filename}
 					<c:if test="${dto.save_filename}">
-						<a href="${pageContext.request.contextPath}/notice${gubun}/download.do?num=${dto.noti_id}">${dto.save_filename}</a>
+						<a href="${pageContext.request.contextPath}/notice/${gubun}/download.do?num=${dto.noti_id}">${dto.save_filename}</a>
 					</c:if>
 				</td>
 			</tr>	
@@ -70,11 +69,11 @@
 	<table class="table">
 		<tr>
 			<td width="50%">
-				<button type="button" class="btn" onclick="javascript:location.href='${pageContext.request.contextPath}/notice/${gubun}/update.do?noti_id=${dto.noti_id}&page=${page}';">수정</button>
-				<button type="button" class="btn" onclick="deleteNotice();">삭제</button>
+				<button type="button" class="btn-notice" onclick="javascript:location.href='${pageContext.request.contextPath}/notice/${gubun}/update?noti_id=${dto.noti_id}&page=${page}';">수정</button>
+				<button type="button" class="btn-notice" onclick="deleteNotice();">삭제</button>
 			</td>
 			<td align="right">
-				<button type="button" class="btn" onclick="location.href='${pageContext.request.contextPath}/notice/${gubun}/list';">리스트</button>
+				<button type="button" class="btn-notice" onclick="location.href='${pageContext.request.contextPath}/notice/${gubun}/list';">목록으로</button>
 			</td>
 		</tr>
 	</table>

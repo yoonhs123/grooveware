@@ -154,11 +154,13 @@ public class NoticeServiceImpl implements NoticeService {
 	public void deleteNotice(long noti_id, String pathname, long emp_no) throws Exception {
 	    try {
 	        Notice dto = readNotice(noti_id);
-	        if (dto == null || !(dto.getNoti_id() == (noti_id))) {
+	        if (dto == null ) {
 	            return;
 	        }
 
-	        fileManager.doFileDelete(dto.getSave_filename(), pathname);
+	        if(dto.getSave_filename() != null) {
+	        	fileManager.doFileDelete(dto.getSave_filename(), pathname);
+	        }
 
 	        dao.deleteData("notice.deleteNotice", noti_id);
 	    } catch (Exception e) {

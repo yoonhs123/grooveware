@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -140,7 +141,7 @@ public class NoticeController {
 	
 		    Notice dto = service.readNotice(noti_id);
 		    
-		   //   service.updateHitCount(noti_id);
+		    service.updateHitCount(noti_id);
 	
 		    if (dto == null) {
 		        return "redirect:/notice/" + gubun + "/list?" + query;
@@ -196,6 +197,31 @@ public class NoticeController {
 	    
 	    return "redirect:/notice/"+gubun+"/list";
 	}
+	
+	@GetMapping("update")
+	public String updateForm(
+			@PathVariable String gubun,
+			@RequestParam long noti_id,
+			@RequestParam String page,
+			HttpSession session,
+			Model model) throws Exception {
+		
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		
+		Notice dto = service.readNotice(noti_id);
+		if(dto == null) {
+			 return "redirect:/notice/"+gubun+"/list" + page;
+		}
+		
+		model.addAttribute("mode", "update");
+		model.addAttribute("dto", dto);
+		model.addAttribute("page", page);
+		model.addAttribute("gubun", gubun);
+		model.addAttribute("dept_name", info.getDept_name());
+		
+		return ".notice.write";
+	}
+	
 	
 	
 	

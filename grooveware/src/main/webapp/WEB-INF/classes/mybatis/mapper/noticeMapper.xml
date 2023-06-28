@@ -94,6 +94,13 @@
       WHERE noti_id = #{noti_id}
 	</select>
     
+    <!--  조회수 -->
+    <update id="updateHitCount" parameterType="long">
+      UPDATE notice SET noti_hitcount = noti_hitcount+1
+      WHERE noti_id=#{noti_id}
+    
+    </update>
+    
    
     <!--  글수정 -->
    <update id="updateNotice"  parameterType="com.sp.grooveware.notice.Notice">

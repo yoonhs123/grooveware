@@ -65,11 +65,11 @@
 		<table class="table">
 			<tr> 
 				<td align="center">
-					<button type="button" class="btn" onclick="sendNotice();">${mode=="write"?"등록하기":"수정완료"}</button>
-					<button type="reset" class="btn">다시입력</button>
-					<button type="button" class="btn" onclick="location.href='${pageContext.request.contextPath}/notice/${gubun}/list';"> ${mode=="write"?"등록취소":"수정취소"}</button>
+					<button type="button" class="btn-notice" onclick="sendNotice();">${mode=="write"?"등록하기":"수정완료"}</button>
+					<button type="reset" class="btn-notice">다시입력</button>
+					<button type="button" class="btn-notice" onclick="location.href='${pageContext.request.contextPath}/notice/${gubun}/list';"> ${mode=="write"?"등록취소":"수정취소"}</button>
 					<c:if test="${mode=='update'}">
-						<input type="hidden" name="num" value="${dto.num}">
+						<input type="hidden" name="noti_id" value="${dto.noti_id}">
 						<input type="hidden" name="page" value="${page}">
 						<input type="hidden" name="save_filename" value="${dto.save_filename}">
 						<input type="hidden" name="original_filename" value="${dto.original_filename}">

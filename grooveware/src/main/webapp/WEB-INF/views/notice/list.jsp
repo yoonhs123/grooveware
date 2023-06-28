@@ -1,9 +1,31 @@
-x`<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+<script type="text/javascript">
+window.addEventListener("load", function(){
+	let page = ${page};
+	let pageSize = ${size};
+	let dataCount = ${dataCount};
+	let url = "${listUrl}";
 
+	let total_page = pageCount(dataCount, pageSize);
+	let paging = pagingUrl(page, total_page, url);
+
+	document.querySelector(".dataCount").innerHTML = dataCount + "개 (" + page + "/" + total_page + " 페이지)";
+	document.querySelector(".page-navigation").innerHTML = dataCount == 0 ? "등록된 게시물이 없습니다." : paging;
+}, false);
+
+function searchList() {
+	const f = document.searchForm;
+	f.submit();
+}
+  
+  
+function   
+ 
+</script>
 <div class="left-side-bar">
       
         <ul>
@@ -39,8 +61,8 @@ x`<%@ page contentType="text/html; charset=UTF-8" %>
 									<option value="content"  ${condition == "content" ? "selected='selected'" : ""} >내용</option>
 								</select>
 								<input type="text" name="keyword" value="${keyword}" class="form-control">
-								<button type="button" class="btn" onclick="searchList();">검색</button>
-						    	<button type="button" class="btn" onclick="location.href='${pageContext.request.contextPath}/notice/${gubun}/write';">등록하기</button>
+								<button type="button" class="btn-notice" onclick="searchList();">검색</button>
+						    	<button type="button" class="btn-notice" onclick="location.href='${pageContext.request.contextPath}/notice/${gubun}/write';">등록하기</button>
 							</form>
 						</td>
 					</tr>
@@ -69,7 +91,7 @@ x`<%@ page contentType="text/html; charset=UTF-8" %>
 							<td>${dto.emp_name}</td>
 							<td>${dto.noti_regdate}</td>
 							<td>${dto.noti_hitcount}</td>
-							<td>${dto.save_filename }</td>
+							<td>${dto.original_filename}</td>
 							
 						</tr>
 					</c:forEach>
