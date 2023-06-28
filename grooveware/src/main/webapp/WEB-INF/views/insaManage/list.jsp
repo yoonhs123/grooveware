@@ -5,6 +5,13 @@
 
 
 <script type="text/javascript">
+// 검색
+function searchList() {
+	const f = document.searchForm;
+	f.submit();
+}
+
+
 // 더보기 클릭 시
  $(document).ready(function() {
 	    $(".dropdown-menu").on('click', function() {
@@ -134,15 +141,16 @@ $(function() {
    							${dataCount}개(${page}/${total_page} 페이지)
    						</td>
    						<td align="right">
-   							<form name="searchForm" action="${pageContext.request.contextPath}/ " method="post">
+   							<form name="searchForm" action="${pageContext.request.contextPath}/insaManage/list" method="post">
 								<select name="condition" class="form-select">
-									<option value="name"  ${condition == "name" ? "selected='selected'" : ""} > 이름 </option>
-									<option value="m_id"  ${condition == "m_id" ? "selected='selected'" : ""} > 사원번호 </option>
-									<option value="dept"  ${condition == "dept" ? "selected='selected'" : ""} > 부서 </option>
-									<option value="position"  ${condition == "position" ? "selected='selected'" : 	""} > 직위 </option>
+									<option value="all"  ${condition == "all" ? "selected='selected'" : ""} > 전체 </option>
+									<option value="emp_no"  ${condition == "emp_no" ? "selected='selected'" : ""} > 사원번호 </option>
+									<option value="emp_name"  ${condition == "emp_name" ? "selected='selected'" : ""} > 사원이름 </option>
+									<option value="dept_name"  ${condition == "dept_name" ? "selected='selected'" : 	""} > 부서 </option>
+									<option value="pos_name"  ${condition == "pos_name" ? "selected='selected'" : 	""} > 직위 </option>
 								</select>
-								<input type="text" name="keyword" value="" class="insaManageHome">
-								<button type="button" class="btn-insaManage-home" onclick="searchList();">검색</button>
+								<input type="text" name="keyword" value="${keyword}" class="insaManageHome">
+								<button type="button" class="btn-insaManage-home" onclick="searchList()">검색</button>
 							</form>
 						</td>
 						<td class="emp-add" align="right">
@@ -191,11 +199,8 @@ $(function() {
 							        <a onclick="location.href='${pageContext.request.contextPath}/insaManage/insaCard?emp_no=${dto.emp_no}&page=${page}&size=${size}';"><i class="bi bi-person-vcard"></i> 인사기록카드</a>
 							        
 							        <c:if test="${dto.emp_status==0}">
-							        	<form class="statusForm" action="updateEmpStatus" method="post">
-							        		<button style="margin: 5px" type="button" class="btn btnUpdateStatus" data-emp_status="1" data-emp_no="${dto.emp_no}"><i class="bi bi-person-x-fill"></i> 휴직 </button>
-							        		<button style="margin: 5px" type="button" class="btn btnUpdateStatus" data-emp_status="2" data-emp_no="${dto.emp_no}"><i class="bi bi-person-x-fill"></i> 퇴사 </button>
-							        	</form>
-							        	
+							        	<button style="margin: 5px" type="button" class="btn btnUpdateStatus" data-emp_status="1" data-emp_no="${dto.emp_no}"><i class="bi bi-person-x-fill"></i> 휴직 </button>
+							        	<button style="margin: 5px" type="button" class="btn btnUpdateStatus" data-emp_status="2" data-emp_no="${dto.emp_no}"><i class="bi bi-person-x-fill"></i> 퇴사 </button>
 							        </c:if>
 							        <c:if test="${dto.emp_status==1}">
 							        	<button style="margin: 5px" type="button" class="btn btnUpdateStatus" data-emp_status="0" data-emp_no="${dto.emp_no}"><i class="bi bi-person-x-fill"></i> 재직 </button>

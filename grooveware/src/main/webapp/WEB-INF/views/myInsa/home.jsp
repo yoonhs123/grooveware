@@ -3,12 +3,20 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+<style>
+.profile-name {
+	width : 10%;
+	height : 50px;
+	padding-top: 10px;
+	text-align: center;
+}
+</style>
 
 <div class="left-side-bar">
 	<ul>
 		<li>
-			<a href="#">나의 인사정보</a> 
-			<a href="#">&nbsp;인사정보</a> 
+			<a href="${pageContext.request.contextPath}/myInsa/home">나의 인사정보</a> 
+			<a href="${pageContext.request.contextPath}/myInsa/home">&nbsp;인사정보</a> 
 			<a href="#">&nbsp;인사기록카드</a> 
 			<a href="#">&nbsp;내 출근 기록</a> 
 			<a href="#">&nbsp;내 휴가 기록</a></li>
@@ -24,128 +32,69 @@
 </div>
 
 <div class="right-contentbody">
-
-	<table class="insa-info-table">
-		<tbody>
-			<tr>
-				<td class="main-text">사원번호</td>
-				<td>??</td>
-				<td class="main-text">사원명</td>
-				<td>??</td>
-				<td class="main-text">부서</td>
-				<td>??</td>
-			</tr>
-			<tr>
-				<td class="main-text">직책</td>
-				<td>??</td>
-				<td class="main-text">연차</td>
-				<td>???</td>
-				<td class="main-text">컬럼</td>
-				<td>??</td>
-			</tr>
-		</tbody>
-	</table>
-
-	<div class="title-name">| 근태관리</div>
-	<table class="geuntae-info-table">
-		<tr class="my-insa">
-			<th style="width: 16.6%;">연도</th>
-			<th style="width: 16.6%;">정상출근</th>
-			<th style="width: 16.6%;">연차휴가</th>
-			<th style="width: 16.6%;">지각</th>
-			<th style="width: 16.6%;">결근</th>
-			<th style="width: 16.6%;">조퇴</th>
-		</tr>
-		<tr>
-			<td>?</td>
-			<td>?</td>
-			<td>?</td>
-			<td>?</td>
-			<td>?</td>
-			<td>?</td>
-		</tr>
-	</table>
-
-	<div class="title-name">| 인사발령</div>
-	<table class="dpMove-info-table">
-		<tr class="my-insa">
-			<td>발령일자</td>
-			<td>소속회사</td>
-			<td>발령분류</td>
-			<td>변경사항</td>
-		</tr>
-		<tr>
-			<td>?</td>
-			<td>?</td>
-			<td>?</td>
-			<td>?</td>
-		</tr>
-	</table>
-
-	<div class="insateam">
-	<div class="title-name">
-		| 인사발령(관리자)
-		<button>추가</button>
-	</div>
-	<table class="dpMove-info-table">
-		<tr class="my-insa">
-			<td>발령일자</td>
-			<td>소속회사</td>
-			<td>발령분류</td>
-			<td>변경사항</td>
-			<td>수정/삭제</td>
-		</tr>
-		<tr>
-			<td>?</td>
-			<td>?</td>
-			<td>?</td>
-			<td>?</td>
-			<td><button>수정</button>&nbsp;
-				<button>삭제</button></td>
-		</tr>
-	</table>
-	</div>
-
-	<div class="title-name">| 상벌관리</div>
-	<table class="dpMove-info-table">
-		<tr class="my-insa">
-			<td>발령일자</td>
-			<td>소속회사</td>
-			<td>발령분류</td>
-			<td>변경사항</td>
-		</tr>
-		<tr>
-			<td>?</td>
-			<td>?</td>
-			<td>?</td>
-			<td>?</td>
-		</tr>
-	</table>
-
-	<div class="insateam">
-	<div class="title-name">
-		| 상벌관리(관리자)
-		<button>추가</button>
-	</div>
-	<table class="dpMove-info-table">
-		<tr class="my-insa">
-			<td>상벌일자</td>
-			<td>상벌구분</td>
-			<td>상벌명</td>
-			<td>상벌내용</td>
-			<td>상벌권자</td>
-			<td>수정/삭제</td>
-		</tr>
-		<tr>
-			<td>?</td>
-			<td>?</td>
-			<td>?</td>
-			<td>?</td>
-			<td>?</td>
-			<td><button>수정</button>&nbsp;
-				<button>삭제</button></td>
-		</tr>
-	</table>
+	<div>
+		<div class="profile-content1 border-radius"
+			style="width: 100%; height: 100%; display: flex;">
+			<div style="width: 15%; height: 100%; border: 1px solid red; margin: 5px;" class="picture">
+				<!-- 이미지 내용 -->
+			</div>
+			<div style="display: flex; flex-direction: column;">
+				<div>${dto.emp_no}</div>
+				<div>이름</div>
+				<div>${dto.emp_name}</div>
+				<div>
+					${dto.emp_name}
+				</div>
+				<div>
+					주소
+				</div>
+				<div>
+					${dto.emp_address}
+				</div>
+				<div>
+					전화번호
+				</div>
+				<div>
+					${dto.emp_tel}
+				</div>
+				<div>
+					생년월일
+				</div>
+				<div>
+					909090
+				</div>
+				<div>
+					부서
+				</div>
+				<div>
+					${dto.dept_name}
+				</div>
+				<div>
+					이메일
+				</div>
+				<div>
+					${dto.emp_email}
+				</div>
+				<div>
+					직급
+				</div>
+				<div>
+					${dto.pos_name}
+				</div>
+				<div>
+					입사일
+				</div>
+				<div>
+					${dto.emp_join_date} 입사 
+				</div>
+				<div>
+					사원상태
+				</div>
+				<div>
+					${dto.emp_status==0?"재직":(dto.emp_status==1?"휴직":"퇴사")} 
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
 

@@ -5,12 +5,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller("insa.insaController")
+@RequestMapping("/myInsa/*")
 public class InsaContoller {
 	
-	@RequestMapping(value = "/myInsa", method=RequestMethod.GET)
+	@RequestMapping(value = "home", method=RequestMethod.GET)
 	public String method() {
 		return ".myInsa.home";
 	}
-	
-	
 }
+	

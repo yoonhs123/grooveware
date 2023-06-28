@@ -62,13 +62,25 @@
 	
 	<!-- 회원 리스트 -->
 	<sql id="where-list">
-		<choose>
-			<when test="condition=='emp_no'">
-				INSTR(emp.user_no, #{keyword}) &gt;= 1
+		<choose>		
+			<when test="condition == 'all'">
+				( INSTR(emp_no, #{keyword}) &gt; = 0
+					OR INSTR(emp_name, #{keyword}) &gt; = 0
+					OR INSTR(dept_name, #{keyword}) &gt; = 0
+					OR INSTR(pos_name, #{keyword}) &gt; = 0 )
 			</when>
-			<otherwise>
-				INSTR(${condition}, #{keyword}) &gt;= 1
-			</otherwise>
+			<when test="condition == 'emp_no'">
+				INSTR(emp_no, #{keyword}) &gt; = 0
+			</when>
+			<when test="condition == 'emp_name'">
+				INSTR(emp_name, #{keyword}) &gt; = 0
+			</when>
+			<when test="condition == 'dept_name' ">
+				INSTR(dept_name, #{keyword}) &gt; = 0
+			</when>
+			<when test="condition == 'pos_name' ">
+				INSTR(pos_name, #{keyword}) &gt; = 0
+			</when>
 		</choose>
 	</sql>
 	
@@ -154,13 +166,18 @@
 	<update id="updateEmpStatus" parameterType="map">
 		<choose>
 			<when test="emp_status == 1">
-				UPDATE emp set emp_status = #{emp_status}, emp_resign_date = SYSDATE WHERE emp_no = #{emp_no}
+				UPDATE emp SET emp_status = #{emp_status}, emp_resign_date = SYSDATE WHERE emp_no = #{emp_no}
 			</when>
 			<when test="emp_status == 0">
-				UPDATE emp set emp_status = #{emp_status}, emp_resign_date = NULL WHERE emp_no = #{emp_no}
+				UPDATE emp SET emp_status = #{emp_status}, emp_resign_date = NULL WHERE emp_no = #{emp_no}
 			</when>
 		</choose>
 	</update>
 	
+	<!-- 
+	<update id="updateEmpPosDept" parameterType="map">
+		UPDATE emp_history SET 
+	</update>
+	 -->
 	
 </mapper>

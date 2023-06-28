@@ -3,6 +3,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+<script type="text/javascript">
+/*
+$(function() {
+	$(".deptMoveBtn").click(function() {
+		const p = $(this).parent().find("")
+	});
+});
+*/
+
+</script>
 
 <div class="left-side-bar">
 	<ul>
@@ -27,18 +37,23 @@
 	<table class="insa-info-table">
 		<tbody>
 			<tr>
-				<td class="main-text">사원번호</td>
-				<td>${dto.emp_no}</td>
-				<td class="main-text">사원명</td>
-				<td>${dto.emp_name}</td>
-				<td class="main-text">부서</td>
-				<td>${dto.dept_name}</td>
+				<td class="main-text" style="width: 10%">사원번호 </td>
+				<td style="width: 40%">${dto.emp_no}</td>
+				<td class="main-text" style="width: 10%">사원명 </td>
+				<td style="width: 40%">${dto.emp_name}</td>
 			</tr>
 			<tr>
-				<td class="main-text">직위</td>
+				<td class="main-text">부서 </td>
+				<td>${dto.dept_name}</td>
+				<td class="main-text">직위 </td>
 				<td>${dto.pos_name}</td>
-				<td class="main-text">연차</td>
-				<td>${dto.annual_leave}</td>
+			</tr>
+			<tr>
+				<td class="main-text">연차 </td>
+				<td>
+					<span class="work-year">${dto.annual_leave} 년차</span>
+					[ ${dto.emp_join_date} 입사 ] 
+				</td>
 			</tr>
 		</tbody>
 	</table>
@@ -63,45 +78,29 @@
 		</tr>
 	</table>
 
-	<div class="title-name">| 인사발령</div>
+	<div class="title-name">| 내 부서 연혁</div>
 	<table class="dpMove-info-table">
 		<tr class="my-insa">
-			<td>발령일자</td>
-			<td>발령부서</td>
-			<td>직위</td>
-			<td>변경사항</td>
+			<th>부서 재직 기간</th>
+			<th>부서 이름</th>
 		</tr>
 		<tr>
 			<td>?</td>
 			<td>?</td>
-			<td>?</td>
-			<td>?</td>
 		</tr>
 	</table>
-
-	<div class="insateam">
-	<div class="title-name">
-		| 인사발령(관리자)
-		<button>추가</button>
-	</div>
+	
+	<div class="title-name">| 내 직위 연혁</div>
 	<table class="dpMove-info-table">
 		<tr class="my-insa">
-			<td>발령일자</td>
-			<td>소속회사</td>
-			<td>발령분류</td>
-			<td>변경사항</td>
-			<td>수정/삭제</td>
+			<th>직위 재직 기간</th>
+			<th>직위 이름</th>
 		</tr>
 		<tr>
 			<td>?</td>
 			<td>?</td>
-			<td>?</td>
-			<td>?</td>
-			<td><button>수정</button>&nbsp;
-				<button>삭제</button></td>
 		</tr>
 	</table>
-	</div>
 
 	<div class="title-name">| 상벌관리</div>
 	<table class="dpMove-info-table">

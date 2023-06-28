@@ -23,7 +23,7 @@
 				<tr>
 					<td>
 					<div class="profile-ficture border-radius" >
-						<div style="width: 100px; height: 130px; border: 1px solid red;">
+						<div style="width: 100px; height: 80px; border: 1px solid red;">
 						
 						</div> 
 					</div>
@@ -49,7 +49,7 @@
 					</tr>
 					<tr>
 						<td>입사일</td>
-						<td>${dto.emp_join_date}</td>
+						<td>${dto.emp_join_date} 입사 </td>
 						<td>사원상태</td>
 						<td>
 							${dto.emp_status==0?"재직":(dto.emp_status==1?"휴직":"퇴사")}
@@ -65,6 +65,7 @@
 				</table>
 				
 				
+				<!-- 
 				<form id="detailEmpStatusForm" name="detailEmpStatusForm">
 				<table class="profile-content1-table">
 					<tr>
@@ -83,7 +84,7 @@
 					</tr>
 				</table>
 				</form>
-				
+				-->
 			</div>
 		</div>
 		

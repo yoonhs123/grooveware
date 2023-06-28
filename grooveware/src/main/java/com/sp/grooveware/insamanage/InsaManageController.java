@@ -204,34 +204,12 @@ public class InsaManageController {
 			return "redirect:/insaManage/list";
 		}
 	}
-
 	
-	/*
-	@RequestMapping(value = "updateEmpStatus")
-	@ResponseBody
-	public Map<String, Object> updateEmpStatus(InsaManage dto) throws Exception {
-		String emp_status = "true";
+	@RequestMapping(value = "update")
+	public String updateForm() throws Exception {
 		
-		try {
-			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("emp_no", dto.getEmp_no());
-			if(dto.getEmp_status() == 0) {
-				map.put("emp_status", 1);
-			} else if (dto.getEmp_status() == 1) {
-				map.put("emp_status", 0);
-			}
-			service.updateEmpStatus(map);
-		} catch (Exception e) {
-			emp_status = "false";
-		}
 		
-		Map<String, Object> model = new HashMap<String, Object>();
-		model.put("emp_status", emp_status);
-		return model;
+		return ".insaManage.write";
 	}
-	*/
-	
-	
-	
 	
 }
