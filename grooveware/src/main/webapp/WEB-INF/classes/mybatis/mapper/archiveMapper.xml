@@ -4,17 +4,16 @@
 <mapper namespace="archive">
 	<!-- 폴더 추가 -->
 	<insert id="insertFolder" parameterType="com.sp.grooveware.archive.Archive">
-		INSERT INTO reference_folder(FOLDER_NO, EMP_NO, FOLDER_NAME, REFERENCE_ROOM_ID)
-		VALUES(reference_folder_seq.NEXTVAL, #{emp_no}, #{foleder_name}, #{reference_room_id})
+		INSERT INTO reference_folder(FOLDER_NO, EMP_NO, FOLDER_NAME, ROOT_folder, reg_date)
+		VALUES(reference_folder_seq.NEXTVAL, #{emp_no}, #{folder_name}, #{root_folder}, SYSDATE)
 	</insert>
-	
 	
 	
 	<!-- 파일 추가 -->
 	<insert id="insertFile" parameterType="com.sp.grooveware.archive.Archive">
-		INSERT INTO reference_file(FILE_NO, FOLDER_NO, SAVE_FILENAME, ORIGINAL_FILENAME, FILE_SIZE, reg_date)
-		VALUES (reference_file_seq.NEXTVAL, 1, #{save_filename},
-			#{original_filename}, #{file_size}, SYSDATE)
+		INSERT INTO reference_file(FILE_NO, FOLDER_NO, SAVE_FILENAME, ORIGINAL_FILENAME, FILE_SIZE, reg_date, emp_no)
+		VALUES (reference_file_seq.NEXTVAL, #{root_folder}, #{save_filename},
+			#{original_filename}, #{file_size}, SYSDATE, #{emp_no})
 	</insert>
 	
 	<!-- 전사 자료실 데이터 개수 -->
@@ -63,17 +62,121 @@
 		  START WITH folder_no = 1 OR root_folder = 1
 		) subquery
 		ORDER BY folder_no ASC
-	</select>	
+	</select>
 	
 	<!-- 파일 삭제 -->
-	<delete id="deleteFile" parameterType="map">
+	<delete id="deleteFiles" parameterType="java.util.List">
 		DELETE FROM reference_file
 		WHERE file_no IN 
-				<foreach item="file_no" index="index" collection="fileList"
-						open="(" separator="," close=")">
+				<foreach collection="list" item="file_no" index="index"
+					open="(" separator="," close=")">
 					#{file_no}
+				</foreach> 
+    </delete>
+    
+	<!-- 폴더 삭제 -->
+	<delete id="deleteFolder" parameterType="java.util.List">
+		DELETE FROM reference_folder
+		WHERE folder_no IN 
+				<foreach collection="list" item="folder_no" index="index"
+					open="(" separator="," close=")">
+					#{folder_no}
+				</foreach> 
+    </delete>
+	<!-- 폴더에 속한 하위파일 삭제 -->
+	<delete id="deletesubFiles" parameterType="java.util.List">
+		DELETE FROM reference_file
+		WHERE folder_no IN 
+				<foreach collection="list" item="folder_no" index="index"
+					open="(" separator="," close=")">
+					#{folder_no}
 				</foreach>
     </delete>
+    
+    <select id="getFilesByFolderId" parameterType="long" resultType="com.sp.grooveware.archive.Archive">
+        SELECT file_no, original_filename, file_size, reg_date
+        FROM reference_file
+        WHERE folder_no = #{folder_no, jdbcType=BIGINT}
+    </select>
+    
+    <select id="getAllFolders" resultType="com.sp.grooveware.archive.Archive">
+        SELECT folder_no, folder_name, root_folder
+        FROM reference_folder
+    </select>
+    
+    <select id="getTopLevelFolders" resultType="com.sp.grooveware.archive.Archive">
+	    SELECT *
+	    FROM reference_folder
+	    WHERE folder_no = 1
+	</select>
+	
+	<select id="getSubFiles" parameterType="long" resultType="com.sp.grooveware.archive.Archive">
+	    SELECT *
+	    FROM reference_file
+        WHERE folder_no = #{folder_no, jdbcType=BIGINT}
+        ORDER BY reg_date DESC
+	</select>
+	
+	<select id="getSubFolders" parameterType="long" resultType="com.sp.grooveware.archive.Archive">
+	    SELECT *
+	    FROM reference_folder
+	    WHERE root_folder = #{folder_no, jdbcType=BIGINT}
+	</select>
+	
+	<select id="getPrivateSubFolders" parameterType="map" resultType="com.sp.grooveware.archive.Archive">
+	    SELECT *
+	    FROM reference_folder
+	    WHERE root_folder = #{folder_no} AND emp_no = #{emp_no}
+	</select>
+	
+	<select id="getPrivateSubFiles" parameterType="map" resultType="com.sp.grooveware.archive.Archive">
+	    SELECT rf.*
+		FROM reference_file rf
+		JOIN reference_folder fldr ON rf.folder_no = fldr.folder_no
+		WHERE rf.emp_no = #{emp_no}
+		  AND rf.folder_no = #{folder_no}
+		ORDER BY rf.reg_date DESC
+	</select>
+	
+	
+	
+		
+	
+	<select id="getAllSubfile" parameterType="Long" resultType="java.lang.String">
+		SELECT rf.save_filename
+		FROM reference_file rf
+		WHERE rf.folder_no IN (
+		  SELECT f.folder_no
+		  FROM reference_folder f
+		  START WITH f.root_folder = #{folder_no}
+		  CONNECT BY PRIOR f.folder_no = f.root_folder
+		)
+		OR rf.folder_no = #{folder_no}
+	</select>
+	
+	<select id="getAllFileName" parameterType="java.util.List" resultType="java.lang.String">
+		select save_filename from reference_file 
+		WHERE file_no IN 
+			<foreach collection="list" item="file_no" index="index"
+					open="(" separator="," close=")">
+					#{file_no}
+			</foreach> 
+	</select>
+	
+	<!-- 최상위 폴더 번호 가져오기 -->
+	<select id="getTopLevelFolderNum" parameterType="long" resultType="long">
+		SELECT folder_no
+		FROM (
+		  SELECT folder_no
+		  FROM reference_folder
+		  START WITH folder_no = #{folder_no}
+		  CONNECT BY PRIOR root_folder = folder_no
+		  ORDER BY LEVEL DESC
+		)
+		WHERE ROWNUM = 1
+	</select>
+    
+    
 	
 	
 </mapper> 

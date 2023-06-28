@@ -10,6 +10,7 @@ import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Calendar;
+import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -398,6 +399,17 @@ public class FileManager {
 		if (file.exists()) {
 			file.delete();
 		}
+	}
+	
+	public void doFileDelete(List<String> filenames, String pathname) {
+		for (String filename : filenames) {
+	        String fullpathname = pathname + File.separator + filename;
+	        
+	        File file = new File(fullpathname);
+	        if (file.exists()) {
+	            file.delete();
+	        }
+	    }
 	}
 
 	/**
