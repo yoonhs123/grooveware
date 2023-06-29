@@ -2,10 +2,8 @@
 <%@ page trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+﻿
 
-<style>
- 
-</style>
 <script type="text/javascript">
 
 function ajaxFun(url, method, query, dataType, fn){
@@ -129,7 +127,7 @@ $(function(){
 					<br>
 					<div>
 					<span>총 휴가일수</span>
-					<span style="display: inline-block; text-align:right;">15일</span>
+					<div style="display: inline-block;" align="right">15일</div>
 					</div>
 					<div>
 					<span>사용일수</span>

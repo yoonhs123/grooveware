@@ -1,5 +1,8 @@
 
 @charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+
+
 *, *::after, *::before {
     box-sizing: border-box;
 }
@@ -7,10 +10,10 @@
 * {
     padding: 0;
     margin: 0;
+    font-family: 'Noto Sans KR', sans-serif;
 }
 
 body {
-   font-family:"Malgun Gothic", "맑은 고딕", NanumGothic, 나눔고딕, 돋움, sans-serif;
    font-size: 16px;
    color: #222222;
    background : #f8f9fa;
@@ -66,6 +69,8 @@ li, ul {
     color: white;
     text-decoration: none;
     line-height: 16px;
+    letter-spacing: 2px;
+    font-size: 17px;
 }
 
 
@@ -94,9 +99,8 @@ a {
 
 .left-side-bar ul > li > a {
     display: block;
-    padding: 10px 10px 10px 30px;
+    padding: 15px 10px 10px 30px;
     white-space: nowrap;
-    margin-top : 3px;
 }
 
 
@@ -115,7 +119,7 @@ a {
 }
 
 .right-contentbody {
-	width : 85%;
+   width : 85%;
    position: absolute;
    left : 15%;
    padding : 4% 8%;

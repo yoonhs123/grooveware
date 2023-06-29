@@ -5,7 +5,17 @@
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/boot-board.css" type="text/css"> 
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+
+
 <style type="text/css">
+
+ *{
+ 	font-family: 'Noto Sans KR', sans-serif;
+ }
+ 
 
 .table1 {
     width: 100%;
@@ -211,8 +221,6 @@ $(function(){
              <a href="${pageContext.request.contextPath}/club/list">&nbsp;전체 커뮤니티</a>
              <a href="${pageContext.request.contextPath}/club/mylist">&nbsp;가입 커뮤니티</a>
          <li>
-         
-         <hr>
          
          <li>
              <a href="#">설문조사</a>
