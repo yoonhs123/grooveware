@@ -90,7 +90,7 @@ $(function(){
 				<img alt="" src="">
 			</div>
 			<div class="box-profile">
-				<span> 정유진 </span>
+				<span> 정유진1 </span>
 				<br>
 				<span> 인사팀 </span> | <span> 사원 </span>
 			</div>
