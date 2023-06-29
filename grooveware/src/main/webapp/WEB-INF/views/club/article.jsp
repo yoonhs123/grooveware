@@ -6,16 +6,20 @@
 
 <div class="left-side-bar">
 
-	<ul>
-		<li><a href="#">문서함</a> <a href="#">&nbsp;내 문서</a> <a href="#">&nbsp;부서
-				문서</a> <a href="#">&nbsp;임시보관 문서</a>
-		<li>
-
-			<hr>
-		<li><a href="#">결재함</a> <a href="#">&nbsp;대기</a> <a href="#">&nbsp;진행중</a>
-			<a href="#">&nbsp;보류</a> <a href="#">&nbsp;반려</a> <a href="#">&nbsp;완료</a>
-		<li>
-	</ul>
+     <ul>
+         <li>
+             <a href="${pageContext.request.contextPath}/club/list">커뮤니티</a>
+             <a href="${pageContext.request.contextPath}/club/list">&nbsp;전체 커뮤니티</a>
+             <a href="${pageContext.request.contextPath}/club/mylist">&nbsp;가입 커뮤니티</a>
+         <li>
+         
+         <li>
+             <a href="#">설문조사</a>
+             <a href="#">&nbsp;설문리스트</a>
+             <a href="#">&nbsp;진행중인 설문</a>
+             <a href="#">&nbsp;마감된 설문</a>
+         <li>
+     </ul>
 </div>
 <div class="right-contentbody" >
 

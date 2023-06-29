@@ -3,22 +3,20 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-
-<!--  회의실 상세  -->
-
 <div class="left-side-bar">
       
-        <ul>
+        <ul> 
             <li>
-                 <a href="#">회의실</a>
-                <a href="#">&nbsp;회의실 리스트</a>
-                <a href="#">&nbsp;회의실 관리</a>
-            <li>
+                <a href="${pageContext.request.contextPath}/archive/list">캘린더</a>
+            </li>
             
-            <hr>
-          </li>
-          </ul>
-    </div>
+            <li>
+                <a href="${pageContext.request.contextPath}/reservation/main">자원 예약</a>
+                <a href="${pageContext.request.contextPath}/reservation/main">&nbsp;회의실 예약</a>
+            <li>
+        </ul>
+</div>
+
   <div class="right-contentbody">
   <div class="board">
   

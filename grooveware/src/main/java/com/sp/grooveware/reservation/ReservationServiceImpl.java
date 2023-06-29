@@ -17,7 +17,7 @@ public class ReservationServiceImpl implements ReservationService{
 	public void insertReservation(Reservation dto) throws Exception {
 		// 예약
 		try {
-			dao.insertData("", dto);
+			dao.insertData("reservation.insertMrRes", dto);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
@@ -42,7 +42,7 @@ public class ReservationServiceImpl implements ReservationService{
 		// 예약 보기
 		Reservation dto = null;
 		try {
-			dto = dao.selectOne("", meroom_res_no);
+			dto = dao.selectOne("reservation.articleRes", meroom_res_no);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -53,7 +53,7 @@ public class ReservationServiceImpl implements ReservationService{
 	public void deleteReservation(long meroom_res_no) throws Exception {
 		// 예약 취소
 		try {
-			dao.deleteData("", meroom_res_no);
+			dao.deleteData("reservation.deleteMrRes", meroom_res_no);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;

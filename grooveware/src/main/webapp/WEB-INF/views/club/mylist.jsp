@@ -114,8 +114,6 @@ function read(club_id){
              <a href="${pageContext.request.contextPath}/club/mylist">&nbsp;가입 커뮤니티</a>
          <li>
          
-         <hr>
-         
          <li>
              <a href="#">설문조사</a>
              <a href="#">&nbsp;설문리스트</a>

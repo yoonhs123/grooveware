@@ -22,19 +22,21 @@
 <header> 
       <ul class="main-menu">
          
-         <li style="width: 230px; color: white; font-weight: bold; font-size : 18px;"> GROOVE WARE </li>
+         <li style="width: 230px; font-weight: 600;">
+         <a href="${pageContext.request.contextPath}/dashboard/main">GROOVE WARE</a>
+         </li>
          
          <li><a href="${pageContext.request.contextPath}/approval/list">전자결재</a></li>
-         <li><a href="${pageContext.request.contextPath}/myInsa/insaCard">인사</a></li>
+         <li><a href="${pageContext.request.contextPath}/myInsa/insaCard">인사정보</a></li>
          <li><a href="${pageContext.request.contextPath}/project/list">프로젝트</a></li>
          <li><a href="${pageContext.request.contextPath}/schedule/calendar/list">일정관리</a></li> 
          <li><a href="${pageContext.request.contextPath}/club/list">그루비룸</a></li>
          <li><a href="${pageContext.request.contextPath}/notice/all/list">공지사항</a></li>
          <li><a href="${pageContext.request.contextPath}/archive/1">자료실</a></li>
          <li>
-         	<a href="${pageContext.request.contextPath}/member/logout" title="로그아웃"><i class="fa-solid fa-arrow-right-from-bracket"></i></a>
-             &nbsp;&nbsp;
             <a href="${pageContext.request.contextPath}/chat/chat" title="메신저"><i class="fa-brands fa-facebook-messenger"></i></a>
+             &nbsp;&nbsp;&nbsp;&nbsp;
+         	<a href="${pageContext.request.contextPath}/member/logout" title="로그아웃"><i class="fa-solid fa-arrow-right-from-bracket"></i></a>
          </li>
       </ul>
 </header>

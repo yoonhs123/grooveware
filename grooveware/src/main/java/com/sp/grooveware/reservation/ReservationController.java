@@ -18,17 +18,24 @@ public class ReservationController {
 	
 	@RequestMapping(value="main", method=RequestMethod.GET)
 	public String main() {
-		return ".reservation.main";
+		return ".schedule.reservation.main";
 		
 	}
 	
+	@RequestMapping(value="resform", method=RequestMethod.GET)
+	public String resForm() {
+		return ".schedule.reservation.resform";
+		
+	}
 	
+	/*
 	@RequestMapping(value = "write", method = RequestMethod.GET)
 	public String writeForm(HttpSession session, Model model) throws Exception {
 		model.addAttribute("mode", "write");
 		
-		return ".reservation.write";
+		return ".schedule.reservation.main";
 	}
+	*/
 	
 
 

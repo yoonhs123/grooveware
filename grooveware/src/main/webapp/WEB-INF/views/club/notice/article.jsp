@@ -11,19 +11,16 @@
          <li>
              <a href="${pageContext.request.contextPath}/club/list">커뮤니티</a>
              <a href="${pageContext.request.contextPath}/club/list">&nbsp;전체 커뮤니티</a>
-             <a href="${pageContext.request.contextPath}/club/list2">&nbsp;가입 커뮤니티</a>
+             <a href="${pageContext.request.contextPath}/club/mylist">&nbsp;가입 커뮤니티</a>
          <li>
-         
-         <hr>
-         
+      
          <li>
              <a href="#">설문조사</a>
              <a href="#">&nbsp;설문리스트</a>
              <a href="#">&nbsp;진행중인 설문</a>
              <a href="#">&nbsp;마감된 설문</a>
          <li>
-     </ul>
-</div>
+     </ul></div>
 <div class="right-contentbody" >
 	<div class="board">
 		<div class="title">

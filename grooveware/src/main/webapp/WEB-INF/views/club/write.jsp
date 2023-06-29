@@ -9,11 +9,9 @@
      <ul>
          <li>
              <a href="${pageContext.request.contextPath}/club/list">커뮤니티</a>
-          <a href="${pageContext.request.contextPath}/club/list">&nbsp;전체 커뮤니티</a>
-          <a href="${pageContext.request.contextPath}/club/mylist">&nbsp;가입 커뮤니티</a>
+             <a href="${pageContext.request.contextPath}/club/list">&nbsp;전체 커뮤니티</a>
+             <a href="${pageContext.request.contextPath}/club/mylist">&nbsp;가입 커뮤니티</a>
          <li>
-         
-         <hr>
          
          <li>
              <a href="#">설문조사</a>
