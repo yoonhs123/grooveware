@@ -12,6 +12,30 @@ $(function() {
 });
 */
 
+$(function(){
+    $(".licenseAddBtn").click(function(){
+        $(".licenseRemoveBtn").show();
+        const p = $(this).parent().parent().find("div:first-child  :first").clone().wrapAll("<div>").parent().html();
+        $(p).find("input").each(function(){
+        	$(this).val("");
+        });
+
+        $(this).parent().parent().find("div:first").append(p);
+    });
+    
+    $("body").on("click", ".licenseRemoveBtn", function(){
+        if($(this).closest("div").find("p").length<=1) {
+            return;
+        }
+        
+        $(this).parent().remove();
+        
+        if($(".licenseRemoveBtn").closest("div").find("p").length<=1) {
+            $(".licenseRemoveBtn").hide();
+        }
+    });
+});
+
 </script>
 
 <div class="left-side-bar">
@@ -92,13 +116,21 @@ $(function() {
 		</tr>
 	</table>
 	
-	<div class="title-name">| 내 직위 연혁</div>
+	<div class="title-name">| 내 인사 연혁</div>
 	<table class="dpMove-info-table">
 		<tr class="my-insa">
-			<th>직위 재직 기간</th>
 			<th>직위 이름</th>
+			<th>직위 시작 일</th>
+			<th>직위 종료 일</th>
+			<th>부서 이름</th>
+			<th>부서 시작 일</th>
+			<th>부서 종료 일</th>
 		</tr>
 		<tr>
+			<td>?</td>
+			<td>?</td>
+			<td>?</td>
+			<td>?</td>
 			<td>?</td>
 			<td>?</td>
 		</tr>

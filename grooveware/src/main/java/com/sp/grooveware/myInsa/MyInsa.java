@@ -1,5 +1,7 @@
 package com.sp.grooveware.myInsa;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class MyInsa {
 	private long emp_no;
 	private long emp_pwd;
@@ -16,6 +18,8 @@ public class MyInsa {
 	private String emp_addr1;
 	private String emp_addr2;
 	
+	private MultipartFile selectFile;
+	
 	// 연차
 	private int annual_leave;
 
@@ -24,6 +28,7 @@ public class MyInsa {
 	
 	private int pos_no;
 	private String pos_name;
+	
 	
 	
 	public long getEmp_no() {
@@ -140,5 +145,11 @@ public class MyInsa {
 	}
 	public void setEmp_addr2(String emp_addr2) {
 		this.emp_addr2 = emp_addr2;
+	}
+	public MultipartFile getSelectFile() {
+		return selectFile;
+	}
+	public void setSelectFile(MultipartFile selectFile) {
+		this.selectFile = selectFile;
 	}
 }
