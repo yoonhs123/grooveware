@@ -166,64 +166,111 @@ $(function(){
 </div>
    <div class="right-contentbody">
 		<div>
-		<h2>사원 정보 입력</h2>
+		<h2 style="padding-left: 50px;"> | 사원 정보 입력</h2>
 		
    		<form name="empForm" method="post" enctype="multipart/form-data">
    		<br><br>
    		
-   		<label for="name">이름:</label>
-        <input type="text" id="name"  name="emp_name" value="${dto.emp_name}">
-        <br><br>
-
-        <label for="email">이메일:</label>
-        <input type="email" id="email"  name="emp_email" value="${dto.emp_email}">
-        <br><br>
-        
-        <label for="rrn">주민번호:</label>
-        <input type="text" id="rrn"  name="emp_rrn" value="${dto.emp_rrn}">
-        <br><br>
-
-        <label for="phone">핸드폰번호:</label>
-        <input type="text" id="phone"  name="emp_tel" value="${dto.emp_tel}">
-        <br><br>
-
-        <label for="zip">우편번호:</label>
-        <div>
-        <input type="text" id="emp_zip"  name="emp_zip" placeholder="우편번호" value="${dto.emp_zip}" disabled="disabled" readonly="readonly" style="width: 200px; height : 30px; margin-bottom:5px;">
-        <button class="btn" type="button" onclick="daumPostcode();" style="margin-left: 3px;">우편번호검색</button>
-        </div>
-        <label for="addr">주소:</label>
-        <div>
-        <input type="text" id="emp_addr1" name="emp_addr1" placeholder="기본 주소" value="${dto.emp_addr1}" readonly="readonly">
-        <input type="text" id="emp_addr2" name="emp_addr2" placeholder="상세 주소" value="${dto.emp_addr2}" readonly="readonly">
-        </div>
-        <br><br>
-        
-        
-        <label for="startDate">입사일:</label>
-        <input type="date" id="startDate"  name="emp_join_date" value="${dto.emp_join_date}">
-        <br><br>
-
-        <label for="photo">사진:</label>
-        <input type="file" id="photo" name="selectFile" accept="image/*" value="${dto.emp_picture}">
-        <br><br>
-
-        <label for="positionCode">직위:</label>
-        <div>
-        	<select name="pos_no">
-        		<option value="">:: 직위 선택 ::</option>
-        		<c:forEach var="vo" items="${listPosCategory}">
-        			<option value="${vo.pos_no}" ${dto.top_pos_no == vo.pos_no ? "selected = 'selected' " : ""}>
-        				${vo.pos_name}
-        			</option>
-        		</c:forEach>
-        	</select>
-        </div>
-        <br><br>
-
-        <label for="positionStartDate">직위시작날짜:</label>
-        <input type="date" id="positionStartDate"  name="pos_startdate" value="${dto.pos_startdate}">
-        <br><br>
+   		<div class="profile-content1 border-radius">
+			<table class="profile-content1-table">
+				<tr>
+					<th><label for="name">이름</label></th>
+					<td>
+						<input type="text" id="name"  name="emp_name" value="${dto.emp_name}" placeholder="이름을 입력하세요." style="width: 200px; height : 30px;">
+					</td>
+				</tr>
+				<tr>
+					<th><label for="email">이메일</label></th>
+					<td>
+						<input type="email" id="email"  name="emp_email" value="${dto.emp_email}" placeholder="이메일을 입력하세요.('@'포함)" style="width: 400px; height : 30px;">
+					</td>
+				</tr>
+				<tr>
+					<th>주민등록번호</th>
+					<td>
+						<input type="text" id="rrn"  name="emp_rrn" value="${dto.emp_rrn}" placeholder="주민번호를 입력하세요.('-'포함)" style="width: 400px; height : 30px;">
+					</td>
+				</tr>
+				<tr>
+					<th>핸드폰 번호</th>
+					<td>
+						<input type="text" id="phone"  name="emp_tel" value="${dto.emp_tel}" placeholder="번호를 입력하세요.('-'포함)" style="width: 300px; height : 30px;"> 
+					</td>
+				</tr>
+				<tr>
+					<th>주소</th>
+					<td>
+						<label for="zip">우편번호</label>
+				        <div>
+				        <input type="text" id="emp_zip"  name="emp_zip" placeholder="우편번호" value="${dto.emp_zip}" disabled="disabled" readonly="readonly" style="width: 200px; height : 30px; margin-bottom:5px;">
+				        <button class="btn" type="button" onclick="daumPostcode();" style="margin-left: 3px;">우편번호검색</button>
+				        </div>
+				        <label for="addr">주소</label>
+				        <div>
+				        <input type="text" id="emp_addr1" name="emp_addr1" placeholder="기본 주소" value="${dto.emp_addr1}" readonly="readonly" style="width: 300px; height : 30px;">
+				        <input type="text" id="emp_addr2" name="emp_addr2" placeholder="상세 주소" value="${dto.emp_addr2}" style="width: 200px; height : 30px;">
+				        </div>
+					</td>
+				</tr>
+				<tr>
+					<th><label for="photo">사진</label></th>
+					<td>
+						<input type="file" id="photo" name="selectFile" accept="image/*" value="${dto.emp_picture}" style="width: 200px; height : 30px;">
+					</td>
+				</tr>
+				<tr>
+					<th><label for="startDate">입사일</label></th>
+					<td>
+						<input type="date" id="startDate"  name="emp_join_date" value="${dto.emp_join_date}" placeholder="입사일을 입력하세요." style="width: 200px; height : 30px;">
+					</td>
+				</tr>
+				<tr>
+					<th><label for="positionCode">직위</label></th>
+					<td>
+						<select name="pos_no" style="width: 200px; height : 30px;">
+			        		<option value="">:: 직위 선택 ::</option>
+			        		<c:forEach var="vo" items="${listPosCategory}">
+			        			<option value="${vo.pos_no}" ${dto.top_pos_no == vo.pos_no ? "selected = 'selected' " : ""}>
+			        				${vo.pos_name}
+			        			</option>
+			        		</c:forEach>
+			        	</select>
+					</td>
+				</tr>
+				<tr>
+					<th><label for="positionStartDate">직위시작일</label></th>
+					<td>
+						<input type="date" id="positionStartDate"  name="pos_startdate" value="${dto.pos_startdate}" style="width: 200px; height : 30px;">
+					</td>
+				</tr>
+				<tr>
+					<th><label for="departmentCode">부서</label></th>
+					<td>
+						<select name="dept_no" style="width: 200px; height : 30px;">
+			        		<option value="">:: 부서 선택 ::</option>
+			        		<c:forEach var="vo" items="${listDeptCategory}">
+			        			<option value="${vo.dept_no}" ${dto.top_dept_no == vo.dept_no ? "selected = 'selected' " : ""}>
+			        				${vo.dept_name}
+			        			</option>
+			        		</c:forEach>
+			        	</select>
+					</td>
+				</tr>
+				<tr>
+					<th><label for="departmentStartDate">부서발령일</label></th>
+					<td>
+						<input type="date" id="departmentStartDate"  name="dept_startdate" value="${dto.dept_startdate}" style="width: 200px; height : 30px;">
+					</td>
+				</tr>
+				<tr>
+					<th></th>
+					<td align="right">
+						<button type="button" onclick="sendOk();" class="btn">등록하기</button>
+	        			<button type="reset" class="btn">다시입력</button>
+        			</td>
+				</tr>
+			</table>
+		</div>
 
 		<!-- 
         <label for="departmentCode">부서</label>
@@ -248,35 +295,11 @@ $(function(){
         </div>
         <br><br>
 		 -->
-		 
-		 
-        <label for="departmentCode">부서:</label>
-        <div>
-        	<select name="dept_no">
-        		<option value="">:: 부서 선택 ::</option>
-        		<c:forEach var="vo" items="${listDeptCategory}">
-        			<option value="${vo.dept_no}" ${dto.top_dept_no == vo.dept_no ? "selected = 'selected' " : ""}>
-        				${vo.dept_name}
-        			</option>
-        		</c:forEach>
-        	</select>
-        </div>
-        <br><br>
-		 
-		 
-		 
-        <label for="departmentStartDate">부서발령날짜:</label>
-        <input type="date" id="departmentStartDate"  name="dept_startdate" value="${dto.dept_startdate}">
-        <br><br>
-
-        <button type="button" onclick="sendOk();">등록하기</button>
-        <button type="reset">다시입력</button>
-        <input type="hidden" name="imageFilename" value="${dto.emp_picture}">
    		</form>   		
    		</div>
    	</div>
    	
-   	
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script>
 function daumPostcode() {
     new daum.Postcode({

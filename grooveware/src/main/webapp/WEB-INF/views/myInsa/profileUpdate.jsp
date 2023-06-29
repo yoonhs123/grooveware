@@ -124,6 +124,7 @@
 	</div>
 </div>
 
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script>
 function daumPostcode() {
     new daum.Postcode({
