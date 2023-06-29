@@ -10,9 +10,12 @@
 	
 	
 	<insert id="insertEmp" parameterType="com.sp.grooveware.insamanage.InsaManage">
-		INSERT INTO emp_reg(emp_name, emp_rrn, emp_email, emp_tel, emp_address, emp_join_date, emp_picture)
+		INSERT INTO emp_reg(emp_name, emp_rrn, emp_email, emp_tel, 
+				emp_join_date, emp_picture, emp_zip, emp_addr1, emp_addr2)
 		VALUES (#{emp_name}, #{emp_rrn}, #{emp_email}, 
-				#{emp_tel}, #{emp_address}, TO_DATE(#{emp_join_date}, 'YYYY-MM-DD'), #{emp_picture})
+				#{emp_tel}, 
+				TO_DATE(#{emp_join_date}, 'YYYY-MM-DD'), #{emp_picture},
+				#{emp_zip}, #{emp_addr1}, #{emp_addr2})
 	</insert>
 	
 	<insert id="insertHistory" parameterType="com.sp.grooveware.insamanage.InsaManage">
@@ -147,18 +150,26 @@
 
 	
 	<!-- 인사관리 -->
-	<select id="readProfile" parameterType="String" resultType="com.sp.grooveware.insamanage.InsaManage">
-		SELECT e.emp_no, e.emp_name, e.emp_email, e.emp_tel, e.emp_address, 
+	<select id="readProfile" parameterType="long" resultType="com.sp.grooveware.insamanage.InsaManage">
+		SELECT e.emp_no, e.emp_name, e.emp_email, e.emp_tel, 
 				d.dept_name, p.pos_name,
-				TO_CHAR(e.emp_join_date, 'YYYY-MM-DD') emp_join_date, emp_picture
+				SUBSTR(emp_rrn, 1, 6) emp_rrn,
+				TO_CHAR(e.emp_join_date, 'YYYY-MM-DD') emp_join_date, emp_picture,
+				emp_zip, emp_addr1, emp_addr2
 		FROM emp e
-		JOIN emp_history eh ON e.emp_no = eh.emp_no
+		JOIN (
+		    SELECT *
+		    FROM emp_history
+		    WHERE emp_no = #{emp_no}
+		    ORDER BY dept_startdate DESC
+		    FETCH FIRST 1 ROW ONLY
+		) eh ON e.emp_no = eh.emp_no
 		JOIN dept d ON eh.dept_no = d.dept_no
 		JOIN pos p ON eh.pos_no = p.pos_no
 		WHERE e.emp_no = #{emp_no}
 	</select>
 	
-	<select id="readAnnualLeave" parameterType="String" resultType="Integer">
+	<select id="readAnnualLeave" parameterType="long" resultType="Integer">
 		SELECT TRUNC((MONTHS_BETWEEN(TRUNC(SYSDATE), TRUNC(e.emp_join_date)) / 12 ) + 1) AS annual_leave
 		FROM emp e
 		WHERE e.emp_no = #{emp_no}

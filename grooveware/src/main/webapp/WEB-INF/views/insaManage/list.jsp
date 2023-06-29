@@ -112,23 +112,23 @@ $(function() {
 <div class="left-side-bar">
     <ul>
 		<li>
-			<a href="#">나의 인사정보</a> 
-			<a href="#">&nbsp;인사정보</a> 
-			<a href="#">&nbsp;인사기록카드</a> 
+			<a href="${pageContext.request.contextPath}/myInsa/profile">나의 인사정보</a> 
+			<a href="${pageContext.request.contextPath}/myInsa/profile">&nbsp;인사정보</a> 
+			<a href="${pageContext.request.contextPath}/myInsa/insaCard">&nbsp;인사기록카드</a> 
 			<a href="#">&nbsp;내 출근 기록</a> 
 			<a href="#">&nbsp;내 휴가 기록</a>
 		</li>
 		<!-- <li class="insateam">  -->
 		<li>
-			<a href="#">인사관리</a> 
-			<a href="#">&nbsp;사원관리</a>
+			<a href="${pageContext.request.contextPath}/insaManage/list">인사관리</a> 
+			<a href="${pageContext.request.contextPath}/insaManage/list">&nbsp;사원관리</a>
 			<a href="#">&nbsp;근태관리</a>
 			<a href="#">&nbsp;휴가관리</a> 
 			<a href="#">&nbsp;휴가설정</a> 
 			<a href="#">&nbsp;조직도</a>
 		</li>
 	</ul>
-    </div>
+</div>
    <div class="right-contentbody">
    		<div class="board-insaManage-home">
    			<div class="title_container">

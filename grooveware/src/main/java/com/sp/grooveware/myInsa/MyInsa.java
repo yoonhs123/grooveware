@@ -12,6 +12,9 @@ public class MyInsa {
 	private String emp_resign_date;
 	private long emp_status;
 	private String emp_picture;
+	private String emp_zip;
+	private String emp_addr1;
+	private String emp_addr2;
 	
 	// 연차
 	private int annual_leave;
@@ -118,5 +121,24 @@ public class MyInsa {
 	}
 	public void setPos_name(String pos_name) {
 		this.pos_name = pos_name;
+	}
+	
+	public String getEmp_zip() {
+		return emp_zip;
+	}
+	public void setEmp_zip(String emp_zip) {
+		this.emp_zip = emp_zip;
+	}
+	public String getEmp_addr1() {
+		return emp_addr1;
+	}
+	public void setEmp_addr1(String emp_addr1) {
+		this.emp_addr1 = emp_addr1;
+	}
+	public String getEmp_addr2() {
+		return emp_addr2;
+	}
+	public void setEmp_addr2(String emp_addr2) {
+		this.emp_addr2 = emp_addr2;
 	}
 }

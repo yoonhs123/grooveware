@@ -33,16 +33,7 @@
 	         alert("전화번호을 입력하세요. ");
 	         f.tel.focus();
 	         return;
-	     }
-	     
-
-	     str = f.emp_address.value.trim();
-	     if(!str) {
-	         alert("주소을 입력하세요. ");
-	         f.address.focus();
-	         return;
-	     }
-
+	     }	     
 	     
 	     str = f.emp_join_date.value.trim();
 	     if(!str) {
@@ -120,6 +111,9 @@ function ajaxFun(url, method, query, dataType, fn) {
 	});
 }
 
+
+
+
 /*
 $(function(){
 	$("form select[name=top_dept_no]").change(function(){
@@ -153,18 +147,21 @@ $(function(){
 <div class="left-side-bar">
     <ul>
 		<li>
-			<a href="#">나의 인사정보</a> 
-			<a href="#">&nbsp;인사정보</a> 
-			<a href="#">&nbsp;인사기록카드</a> 
+			<a href="${pageContext.request.contextPath}/myInsa/profile">나의 인사정보</a> 
+			<a href="${pageContext.request.contextPath}/myInsa/profile">&nbsp;인사정보</a> 
+			<a href="${pageContext.request.contextPath}/myInsa/insaCard">&nbsp;인사기록카드</a> 
 			<a href="#">&nbsp;내 출근 기록</a> 
-			<a href="#">&nbsp;내 휴가 기록</a></li>
+			<a href="#">&nbsp;내 휴가 기록</a>
+		</li>
 		<!-- <li class="insateam">  -->
 		<li>
-			<a href="#">인사관리</a> 
+			<a href="${pageContext.request.contextPath}/insaManage/list">인사관리</a> 
+			<a href="${pageContext.request.contextPath}/insaManage/list">&nbsp;사원관리</a>
 			<a href="#">&nbsp;근태관리</a>
 			<a href="#">&nbsp;휴가관리</a> 
 			<a href="#">&nbsp;휴가설정</a> 
-			<a href="#">&nbsp;조직도</a></li>
+			<a href="#">&nbsp;조직도</a>
+		</li>
 	</ul>
 </div>
    <div class="right-contentbody">
@@ -190,8 +187,16 @@ $(function(){
         <input type="text" id="phone"  name="emp_tel" value="${dto.emp_tel}">
         <br><br>
 
-        <label for="address">주소:</label>
-        <input type="text" id="address"  name="emp_address" value="${dto.emp_address}" style="width: 300px;">
+        <label for="zip">우편번호:</label>
+        <div>
+        <input type="text" id="emp_zip"  name="emp_zip" placeholder="우편번호" value="${dto.emp_zip}" disabled="disabled" readonly="readonly" style="width: 200px; height : 30px; margin-bottom:5px;">
+        <button class="btn" type="button" onclick="daumPostcode();" style="margin-left: 3px;">우편번호검색</button>
+        </div>
+        <label for="addr">주소:</label>
+        <div>
+        <input type="text" id="emp_addr1" name="emp_addr1" placeholder="기본 주소" value="${dto.emp_addr1}" readonly="readonly">
+        <input type="text" id="emp_addr2" name="emp_addr2" placeholder="상세 주소" value="${dto.emp_addr2}" readonly="readonly">
+        </div>
         <br><br>
         
         
@@ -270,3 +275,48 @@ $(function(){
    		</form>   		
    		</div>
    	</div>
+   	
+   	
+<script>
+function daumPostcode() {
+    new daum.Postcode({
+        oncomplete: function(data) {
+            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+            // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+            // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+            var fullAddr = ''; // 최종 주소 변수
+            var extraAddr = ''; // 조합형 주소 변수
+
+            // 사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+            if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                fullAddr = data.roadAddress;
+
+            } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                fullAddr = data.jibunAddress;
+            }
+
+            // 사용자가 선택한 주소가 도로명 타입일때 조합한다.
+            if(data.userSelectedType === 'R'){
+                //법정동명이 있을 경우 추가한다.
+                if(data.bname !== ''){
+                    extraAddr += data.bname;
+                }
+                // 건물명이 있을 경우 추가한다.
+                if(data.buildingName !== ''){
+                    extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                }
+                // 조합형주소의 유무에 따라 양쪽에 괄호를 추가하여 최종 주소를 만든다.
+                fullAddr += (extraAddr !== '' ? ' ('+ extraAddr +')' : '');
+            }
+
+            // 우편번호와 주소 정보를 해당 필드에 넣는다.
+            document.getElementById('emp_zip').value = data.zonecode; //5자리 새우편번호 사용
+            document.getElementById('emp_addr1').value = fullAddr;
+
+            // 커서를 상세주소 필드로 이동한다.
+            document.getElementById('emp_addr2').focus();
+        }
+    }).open();
+}   	
+</script>

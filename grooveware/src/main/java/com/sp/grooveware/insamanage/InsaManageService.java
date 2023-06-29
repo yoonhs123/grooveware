@@ -27,13 +27,13 @@ public interface InsaManageService {
 	public List<InsaManage> listPosSubCategory(long top_pos_no);
 	
 	// 사원 인사정보
-	public InsaManage readProfile(String emp_no);
+	public InsaManage readProfile(long emp_no);
 	
 	
 	// 사원 연차
-	public int getAnnualLeave(String emp_no);
+	public int getAnnualLeave(long emp_no);
 	// 사원 기록 카드
-	public InsaManage readInsaCard(String emp_no);
+	public InsaManage readInsaCard(long emp_no);
 	
 	
 	// 사원 상태 변경

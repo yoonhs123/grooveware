@@ -2,38 +2,74 @@
 	border-radius: 5px;
 }
 
-.border-radius {
-	border-radius: 5px;
+.div-container {
+	display: flex;
 }
 
-.profile-ficture {
-	width : 200px;
+.div-left {
+	flex: 1.2;
+	display: flex;
+	flex-direction: column;
+}
+
+.div-right {
+	flex: 4;
+}
+
+.div-top {
+	flex: 5;
+	background : white;
+	margin-bottom: 10px;
+	border-radius: 5px;
+	display: flex;
+  	justify-content: center;
+  	align-items: center;
+}
+
+.insa-image {
+	height: 90%;
+}
+
+.div-bottom {
+	flex: 5;
+}
+
+.profile-picture {
+	width : 100%;
 	height : 100%;
 	background : white;
-	float : left;
+	padding: 20px;
+	/*
+	float: left;
 	display : grid;
 	justify-items: center;
 	align-content: center;
+	*/
 }
+
 
 .profile-content1 {
 	margin-left :50px;
 	width : 100%;
-	height : 200px;
+	height : 100%;
 	background : white;
+	/*
 	float : left;
 	text-align : center;
 	align-content: center;
-	
+	*/
+	border-radius: 5px;
 }
 
 .profile-content2 {
 	margin-top : 50px;
 	padding : 30px;
 	width : 100%;
-	height : 400px;
+	height : 100%;
 	background : white;
+	/*
 	float : left;
+	*/
 	
 }
 
@@ -42,11 +78,11 @@
 	height: 100%;
 	padding : 20px;
 	background: white;
-
+	border-radius: 5px;
 }
 
 .profile-content1-table tbody tr {
-	height : 40px;
+	height : 60px;
 }
 
 .profile-content2 input, .profile-content1 input {
@@ -57,4 +93,9 @@
 .profile-content2 > select {
 	width : 300px;
 	height : 30px;
+}
+
+.th-left {
+	text-align : left;
+	
 }

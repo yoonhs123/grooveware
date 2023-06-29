@@ -160,7 +160,7 @@ public class InsaManageController {
 	
 	// 회원상세 정보 : AJAX-Text 응답
 	@RequestMapping(value = "profile")
-	public String profileInsaMember(@RequestParam String emp_no, Model model) throws Exception {
+	public String profileInsaMember(@RequestParam long emp_no, Model model) throws Exception {
 		
 		InsaManage dto = service.readProfile(emp_no);
 		
@@ -170,7 +170,7 @@ public class InsaManageController {
 	}
 	
 	@RequestMapping(value = "insaCard")
-	public String insaCardArticle(@RequestParam String emp_no,
+	public String insaCardArticle(@RequestParam long emp_no,
 			@RequestParam String page,
 			@RequestParam(defaultValue = "all") String condition,
 			@RequestParam(defaultValue = "") String keyword,

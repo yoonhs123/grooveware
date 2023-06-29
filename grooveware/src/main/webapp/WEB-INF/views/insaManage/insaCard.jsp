@@ -17,19 +17,21 @@ $(function() {
 <div class="left-side-bar">
 	<ul>
 		<li>
-			<a href="#">나의 인사정보</a> 
-			<a href="#">&nbsp;인사정보</a> 
-			<a href="#">&nbsp;인사기록카드</a> 
+			<a href="${pageContext.request.contextPath}/myInsa/profile">나의 인사정보</a> 
+			<a href="${pageContext.request.contextPath}/myInsa/profile">&nbsp;인사정보</a> 
+			<a href="${pageContext.request.contextPath}/myInsa/insaCard">&nbsp;인사기록카드</a> 
 			<a href="#">&nbsp;내 출근 기록</a> 
-			<a href="#">&nbsp;내 휴가 기록</a></li>
+			<a href="#">&nbsp;내 휴가 기록</a>
+		</li>
 		<!-- <li class="insateam">  -->
 		<li>
-			<a href="#">인사관리</a> 
-			<a href="#">&nbsp;사원관리</a>
+			<a href="${pageContext.request.contextPath}/insaManage/list">인사관리</a> 
+			<a href="${pageContext.request.contextPath}/insaManage/list">&nbsp;사원관리</a>
 			<a href="#">&nbsp;근태관리</a>
 			<a href="#">&nbsp;휴가관리</a> 
 			<a href="#">&nbsp;휴가설정</a> 
-			<a href="#">&nbsp;조직도</a></li>
+			<a href="#">&nbsp;조직도</a>
+		</li>
 	</ul>
 </div>
 
@@ -49,10 +51,10 @@ $(function() {
 				<td>${dto.pos_name}</td>
 			</tr>
 			<tr>
-				<td class="main-text">연차 </td>
+				<td class="main-text"> 입사일 </td>
 				<td>
+					[ ${dto.emp_join_date} ] 
 					<span class="work-year">${dto.annual_leave} 년차</span>
-					[ ${dto.emp_join_date} 입사 ] 
 				</td>
 			</tr>
 		</tbody>
@@ -105,10 +107,10 @@ $(function() {
 	<div class="title-name">| 상벌관리</div>
 	<table class="dpMove-info-table">
 		<tr class="my-insa">
-			<td>발령일자</td>
-			<td>소속회사</td>
-			<td>발령분류</td>
-			<td>변경사항</td>
+			<th>발령일자</th>
+			<th>소속회사</th>
+			<th>발령분류</th>
+			<th>변경사항</th>
 		</tr>
 		<tr>
 			<td>?</td>
@@ -117,30 +119,4 @@ $(function() {
 			<td>?</td>
 		</tr>
 	</table>
-
-	<div class="insateam">
-	<div class="title-name">
-		| 상벌관리(관리자)
-		<button>추가</button>
-	</div>
-	<table class="dpMove-info-table">
-		<tr class="my-insa">
-			<td>상벌일자</td>
-			<td>상벌구분</td>
-			<td>상벌명</td>
-			<td>상벌내용</td>
-			<td>상벌권자</td>
-			<td>수정/삭제</td>
-		</tr>
-		<tr>
-			<td>?</td>
-			<td>?</td>
-			<td>?</td>
-			<td>?</td>
-			<td>?</td>
-			<td><button>수정</button>&nbsp;
-				<button>삭제</button></td>
-		</tr>
-	</table>
-	</div>
 </div>

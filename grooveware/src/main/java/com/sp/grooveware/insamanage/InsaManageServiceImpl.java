@@ -148,7 +148,7 @@ public class InsaManageServiceImpl implements InsaManageService  {
 	}
 
 	@Override
-	public InsaManage readProfile(String emp_no) {
+	public InsaManage readProfile(long emp_no) {
 		InsaManage dto = null;
 		
 		try {
@@ -162,7 +162,7 @@ public class InsaManageServiceImpl implements InsaManageService  {
 	}
 	
 	@Override
-	public int getAnnualLeave(String emp_no) {
+	public int getAnnualLeave(long emp_no) {
 		int annualLeave = 0;
 		
 		try {
@@ -176,7 +176,7 @@ public class InsaManageServiceImpl implements InsaManageService  {
 	
 
 	@Override
-	public InsaManage readInsaCard(String emp_no) {
+	public InsaManage readInsaCard(long emp_no) {
 		InsaManage dto = null;
 		
 		try {
