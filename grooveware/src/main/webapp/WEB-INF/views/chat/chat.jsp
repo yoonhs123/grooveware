@@ -3,7 +3,32 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<div class="container">
+<div class="left-side-bar">
+      
+        <ul>
+            <li>
+                <a href="${pageContext.request.contextPath}/address/list">주소록</a>
+                <a href="">메신저</a>
+            <li>
+        </ul>
+       <hr>
+</div>
+    
+
+		<div class="right-contentbody">
+	
+				<div class="title_container">
+				<table class="table" style="margin-bottom: 20px;">
+					<tr>
+						<td class="title" > <h3><span>|</span>메신저</h3> 
+						</td>
+					</tr>
+				</table>
+				
+				<div class="notice-list">
+				<table class="table">
+				
+				<div class="container">
 	<div class="body-container">	
 		<div class="body-title">
 			<h3><i class="bi bi-chat"></i> 채팅 <small class="fs-6 fw-normal">chatting</small> </h3>
@@ -43,3 +68,22 @@
 		</div>
 	</div>
 </div>
+
+</table>
+</div>
+</div>
+</div>
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+			
