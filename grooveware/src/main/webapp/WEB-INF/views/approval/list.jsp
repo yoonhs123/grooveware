@@ -76,7 +76,6 @@ input[type=text]{
                 <a href="#">&nbsp;중요 문서</a>
             <li>
             
-            <hr>
             
             <li>
                 <a href="#">결재함</a>
@@ -180,6 +179,31 @@ input[type=text]{
 								  </c:when>
 								  <c:when test="${dto.doc_status == 4}">
 								    <td>반려문서</td>
+								  </c:when>
+							</c:choose>
+						</tr>
+					</c:forEach>
+					<c:forEach var="dto" items="${listAp}">
+						<tr>
+							<td>
+								<input type="checkbox" name="" value="">
+							</td>					
+							<td>${dto.doc_no}</td>
+							<td>${dto.draft_category == 0 ? '품의서' : '기안서'}</td>
+							<td>
+								<a href="${articleUrl}?doc_no=${dto.doc_no}">${dto.doc_name}</a>
+							</td>
+							<td>${dto.emp_name}</td>
+							<td>${dto.draft_date}</td>
+							<c:choose>
+								  <c:when test="${dto.approval_status == 0}">
+								    <td>대기</td>
+								  </c:when>
+								  <c:when test="${dto.approval_status == 1}">
+								    <td>승인</td>
+								  </c:when>
+								  <c:when test="${dto.approval_status == 2}">
+								    <td>반려</td>
 								  </c:when>
 							</c:choose>
 						</tr>

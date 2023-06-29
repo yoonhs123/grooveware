@@ -327,7 +327,6 @@ function searchList() {
 				class="fa-regular fa-file-lines icon"></i>연차휴가</a>
 		<li>
 
-			<hr>
 		<li><a href="#">일반 결재 문서</a> <a href="#"><i
 				class="fa-regular fa-file-lines icon"></i>계약확인서</a> <a href="#"><i
 				class="fa-regular fa-file-lines icon"></i>공문서</a> <a href="#"><i

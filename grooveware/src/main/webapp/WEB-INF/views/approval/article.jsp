@@ -102,8 +102,7 @@ function deleteOk() {
                 <a href="#">&nbsp;중요 문서</a>
             <li>
 
-			<hr>
-		<li><a href="#">결재함</a> <a href="#">&nbsp;대기</a> <a href="#">&nbsp;진행중</a>
+		<li><a href="">결재함</a> <a href="${pageContext.request.contextPath}/approval/listAp">&nbsp;대기</a> <a href="#">&nbsp;진행중</a>
 			<a href="#">&nbsp;보류</a> <a href="#">&nbsp;반려</a> <a href="#">&nbsp;완료</a>
 		<li>
 	</ul>

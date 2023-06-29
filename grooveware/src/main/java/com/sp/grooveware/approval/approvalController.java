@@ -126,33 +126,26 @@ public class approvalController {
 	
 	@RequestMapping(value = "listAp", method = RequestMethod.GET)
 	public String listAp(  
-			@RequestParam(defaultValue = "all") String condition,
-			@RequestParam(defaultValue = "") String keyword,
 			HttpSession session,
 			HttpServletRequest req,
 			Model model) throws Exception {
 
 		SessionInfo info = (SessionInfo)session.getAttribute("member");
 
-		if (req.getMethod().equalsIgnoreCase("GET")) { 
-			keyword = URLDecoder.decode(keyword, "utf-8");
-		}
-		
+		String cp = req.getContextPath();
+		String articleUrl = cp + "/approval/articleAp";
+
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("emp_no", info.getEmp_no());
 		map.put("approval_status", 0);
-		map.put("condition", condition);
-		map.put("keyword", keyword);
 		
-		// 글 리스트
-		List<Approval> list = service.standByApproval(map);
 
-		model.addAttribute("list", list);
-		model.addAttribute("condition", condition);
-		model.addAttribute("keyword", keyword);
+		List<Approval> listAp = service.standByApproval(map);
+
+		model.addAttribute("listAp", listAp);
+		model.addAttribute("articleUrl", articleUrl);
 		
-		System.out.println("list: " + list);
 		
 		return ".approval.list";
 	}
@@ -230,7 +223,42 @@ public class approvalController {
 
 		return ".approval.article";
 	}	
+
+	@RequestMapping(value = "articleAp")
+	public String article(@RequestParam long doc_no,
+			@RequestParam(defaultValue = "all") String condition,
+			@RequestParam(defaultValue = "") String keyword,
+			Model model) throws Exception {
+
+		
+		keyword = URLDecoder.decode(keyword, "utf-8");
+		
+		
+		
+		String query = "";
+		if (keyword.length() != 0) {
+			query += "&condition=" + condition + "&keyword=" + URLEncoder.encode(keyword, "UTF-8");
+		}
+
+		Approval dto = service.readApproval(doc_no);
+		
+		if (dto == null) {
+			return "redirect:/approval/list?" + query;
+		}
+		
+		List<Approval> listApproval = service.listApproval(doc_no);
 	
+		List<Approval> listFile = service.listFile(doc_no);
+        
+
+		model.addAttribute("dto", dto);
+		model.addAttribute("listApproval", listApproval);
+		model.addAttribute("listFile", listFile);
+		model.addAttribute("query", query);
+
+
+		return ".approval.article";
+	}	 
 	@RequestMapping(value = "download")
 	public void download(@RequestParam long file_no,
 			HttpServletResponse resp,
