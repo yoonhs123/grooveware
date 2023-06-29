@@ -1,10 +1,5 @@
 ﻿@charset "UTF-8";
 
-
-h1, h2, h3, h4, h5, h6 {
-	font-family: NanumGothic, 나눔고딕, "Malgun Gothic", "맑은 고딕", 돋움, sans-serif;
-}
-
 a { color: #222; text-decoration: none; cursor: pointer; }
 a:active, a:hover { color: #0d58ba; }
 
