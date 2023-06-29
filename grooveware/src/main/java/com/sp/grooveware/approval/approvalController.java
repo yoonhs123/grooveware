@@ -69,6 +69,7 @@ public class approvalController {
 		map.put("condition", condition);
 		map.put("keyword", keyword);
 		map.put("emp_no", info.getEmp_no());
+		map.put("emp_name", info.getEmp_name());
 		map.put("doc_status", doc_status);
 		
 		dataCount = service.dataCount(map);
