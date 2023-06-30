@@ -8,7 +8,7 @@
         <ul>
             <li>
                 <a href="${pageContext.request.contextPath}/address/list">주소록</a>
-                <a href="">메신저</a>
+                <a href="${pageContext.request.contextPath}/char/chat">메신저</a>
             <li>
         </ul>
        <hr>
@@ -16,33 +16,33 @@
     
 
 		<div class="right-contentbody">
-	
-				<div class="title_container">
+		
+			<div class="title_container">
 				<table class="table" style="margin-bottom: 20px;">
 					<tr>
-						<td class="title" > <h3><span>|</span>메신저</h3> 
+						<td class="title" ><i class="fa-brands fa-facebook-messenger"></i>&nbsp;<span>그루비&nbsp;톡</span>
 						</td>
 					</tr>
 				</table>
 				
+		
+		
+		
 				<div class="notice-list">
 				<table class="table">
 				
 				<div class="container">
+				
 	<div class="body-container">	
-		<div class="body-title">
-			<h3><i class="bi bi-chat"></i> 채팅 <small class="fs-6 fw-normal">chatting</small> </h3>
-		</div>
-		
 		<div class="body-main content-frame">
-			<div class="row">
+			 <div class="chat-main">
 				<div class="col-8">
 					<p class="form-control-plaintext fs-6"><i class="bi bi-chevron-double-right"></i> 채팅 메시지</p>
 					<div class="border p-3 chat-msg-container"></div>
 					<div class="mt-2">
 						<input type="text" id="chatMsg" class="form-control" 
 							placeholder="채팅 메시지를 입력 하세요...">
-					</div>
+					
 				</div>
 				<div class="col-4">
 					<p class="form-control-plaintext fs-6"><i class="bi bi-chevron-double-right"></i> 접속자 리스트</p>
@@ -54,6 +54,9 @@
 </div>
 
 <!-- 귓속말 Modal -->
+
+
+<!-- 
 <div class="modal fade" id="myDialogModal" tabindex="-1" aria-labelledby="myDialogModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
 		<div class="modal-content">
@@ -68,7 +71,7 @@
 		</div>
 	</div>
 </div>
-
+ -->
 </table>
 </div>
 </div>
