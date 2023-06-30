@@ -68,14 +68,15 @@
 
 
 <script type="text/javascript">
-function submitContents(approval_status) {
+function submitContents() {
 	
-    if(confirm("게시글을 삭제 하시 겠습니까 ? ")) {
-	    let query = "num=${dto.doc_no}";
+	    let query = "doc_no=${dto.doc_no}";
 	    let url = "${pageContext.request.contextPath}/approval/updateAp?" + query;
+    if(confirm("결재하시겠습니까 ? ")) {
     	location.href = url;
     }
 }
+
 </script>
 
 <div class="left-side-bar">
@@ -271,7 +272,7 @@ function submitContents(approval_status) {
 					</div>
 					<div class="">
 						<div class="table table-border table-form">
-							<input type="text" name ="reject_reason" style="padding: 15px; height: 150px; width: 100%; border: 1px solid gray; border-radius: 4px;">
+							<input type="text"  name="reject_reason" value="${dto.reject_reason}" style="padding: 15px; height: 150px; width: 100%; border: 1px solid gray; border-radius: 4px;">
 						</div>
 					</div>
 				</div>

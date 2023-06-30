@@ -89,7 +89,7 @@
 	
 	
 	<!-- 글보기 -->
-	<select id="readApproval" parameterType="Long" resultType="com.sp.grooveware.approval.Approval">
+	<select id="readDoc" parameterType="Long" resultType="com.sp.grooveware.approval.Approval">
 		SELECT d.doc_no, d.doc_name, TO_CHAR(d.draft_date, 'YYYY-MM-DD') AS draft_date, TO_CHAR(d.draft_deadline, 'YYYY-MM-DD') AS draft_deadline, d.approval_step, d.approval_finaldate,
 		       d.submit_date, d.doc_status, d.urgent, d.important, d.is_visible, d.emp_no,
 		       dr.draft_category, dr.draft_content
@@ -144,14 +144,15 @@
 		WHERE doc_no = #{doc_no}  
 	</select>	
 	
+ 
 	
 	<!-- approval 수정 -->
 	<update id="updateApproval" parameterType="com.sp.grooveware.approval.Approval">
-		 UPDATE  approval 
-		 SET emp_no, approval_status_id, approval_status, approval_date, reject_reason 
-		 WHERE doc_no = #{doc_no}  AND emp_no = #{emp_no} 
+	  UPDATE approval
+	  SET emp_no = #{emp_no}, approval_status = #{approval_status}, approval_date = SYSDATE, reject_reason = #{reject_reason, jdbcType=VARCHAR}
+	  WHERE doc_no = #{doc_no} AND emp_no = #{emp_no}
 	</update>
-		
+			
 	<!-- approval 삭제 -->	
 	<delete id="deleteApproval" parameterType="long">
 		DELETE approval where doc_no = #{doc_no}  

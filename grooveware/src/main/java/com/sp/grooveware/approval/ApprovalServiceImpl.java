@@ -102,6 +102,19 @@ public class ApprovalServiceImpl implements ApprovalService {
 
 
 	@Override
+	public Approval readDoc(long doc_no) {
+		Approval dto = null;
+		
+		try {
+			dto = dao.selectOne("approval.readDoc", doc_no);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+				
+		return dto;
+	}
+	
+	@Override
 	public Approval readApproval(long doc_no) {
 		Approval dto = null;
 		
@@ -116,7 +129,7 @@ public class ApprovalServiceImpl implements ApprovalService {
 
 
 	@Override
-	public void updateApproval(Approval dto, String pathname) throws Exception {
+	public void updateDoc(Approval dto, String pathname) throws Exception {
 		try {
 			dao.updateData("approval.updateDoc", dto);
 			dao.updateData("approval.updateDraft", dto);
@@ -137,6 +150,18 @@ public class ApprovalServiceImpl implements ApprovalService {
 					dao.insertData("approval.insertDraftFile", dto);
 				}
 			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		
+	}
+
+	@Override
+	public void updateApproval(Approval dto) throws Exception {
+		try {
+			dao.updateData("approval.updateApproval", dto);
 			
 		} catch (Exception e) {
 			e.printStackTrace();

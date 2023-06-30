@@ -232,7 +232,7 @@ public class approvalController {
 			query += "&condition=" + condition + "&keyword=" + URLEncoder.encode(keyword, "UTF-8");
 		}
 
-		Approval dto = service.readApproval(doc_no);
+		Approval dto = service.readDoc(doc_no);
 		
 		if (dto == null) {
 			return "redirect:/approval/list?" + query;
@@ -259,14 +259,11 @@ public class approvalController {
 			Model model) throws Exception {
 
 
-		Approval dto = service.readApproval(doc_no);
+		Approval dto = service.readDoc(doc_no);
 		
 		if (dto == null) {
-			return "redirect:/approval/list?";
+			return "redirect:/approval/approvalList";
 		}
-		//int approval_status =  dto.getApproval_status();
-		//dto.setApproval_status(approval_status);
-				
 		List<Approval> listApproval = service.listApproval(doc_no);
 	
 		List<Approval> listFile = service.listFile(doc_no);
@@ -278,7 +275,28 @@ public class approvalController {
 
 
 		return ".approval.approvalArticle";
-	}	 
+	}	
+	
+	
+	@RequestMapping(value = "updateAp")
+	public String updateAp(Approval dto,
+			@RequestParam long doc_no,
+			HttpSession session) throws Exception {
+
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+
+		try {
+
+			dto.setEmp_no(info.getEmp_no());
+			dto.setApproval_status(dto.getApproval_status());
+			service.updateApproval(dto);
+		} catch (Exception e) {
+		}
+
+		return "redirect:/approval/ApprovalList";
+	}
+	
+
 	@RequestMapping(value = "download")
 	public void download(@RequestParam long file_no,
 			HttpServletResponse resp,
@@ -313,7 +331,7 @@ public class approvalController {
 			Model model) throws Exception {
 		SessionInfo info = (SessionInfo) session.getAttribute("member");
 
-		Approval dto = service.readApproval(doc_no);
+		Approval dto = service.readDoc(doc_no);
 		if (dto == null || !Long.valueOf(info.getEmp_no()).equals(dto.getEmp_no())) {
 		    return "redirect:/approval/list?page=" + page;
 		}
@@ -339,7 +357,7 @@ public class approvalController {
 			String pathname = root + File.separator + "uploads" + File.separator + "approval";
 
 			dto.setEmp_no(info.getEmp_no());
-			service.updateApproval(dto, pathname);
+			service.updateDoc(dto, pathname);
 		} catch (Exception e) {
 		}
 
@@ -347,25 +365,10 @@ public class approvalController {
 	}
 
 	
-	@RequestMapping(value = "updateAp", method = RequestMethod.POST)
-	public String updateAp(Approval dto,
-			HttpSession session) throws Exception {
-
-		SessionInfo info = (SessionInfo) session.getAttribute("member");
-
-		try {
-
-			dto.setEmp_no(info.getEmp_no());
-			//service.updateApproval(dto, pathname);
-		} catch (Exception e) {
-		}
-
-		return "redirect:/approval/listAp";
-	}
 
 	
-	@RequestMapping(value = "delete")
-	public String delete(@RequestParam long doc_no,
+	@RequestMapping(value = "delete") 
+	public String deleteDoc(@RequestParam long doc_no,
 			@RequestParam String page,
 			@RequestParam(defaultValue = "all") String condition,
 			@RequestParam(defaultValue = "") String keyword,
@@ -386,6 +389,7 @@ public class approvalController {
 
 		return "redirect:/approval/list?" + query;
 	}
+
 	
 	
 	
