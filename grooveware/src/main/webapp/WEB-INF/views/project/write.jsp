@@ -150,7 +150,7 @@ function sendOk() {
 	let str;
 
 	if($("#forms-emp-list input[name=emps]").length === 0) {
-		alert("프로젝트 참여멤버를 추가하세요. ");
+		alert("프로젝트 참여사원를 추가하세요. ");
 		return;
 	}
 	

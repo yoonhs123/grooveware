@@ -48,6 +48,8 @@ public class MemberController {
 		info.setEmp_name(dto.getEmp_name());
 		info.setDept_no(dto.getDept_no());
 		info.setDept_name(dto.getDept_name());
+		info.setPos_no(dto.getPos_no());
+		info.setPos_name(dto.getPos_name());
 		
 		return "redirect:/dashboard/main";
 	}

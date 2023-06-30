@@ -1,13 +1,19 @@
 package com.sp.grooveware.goal;
 
 import java.util.List;
+import java.util.Map;
 
 public interface GoalService {
-    public void addGoal(Goal goal);
-    public Goal getGoalByNo(int goalNo);
-    public List<Goal> getAllGoals();
-    public List<Goal> getChildGoals(int parentGoalNo);
-    public void updateGoal(Goal goal);
-    public void deleteGoal(int goalNo);
-    public void deleteSubgoal(int goalNo);
+    public void insertGoal(Goal dto, String pathname, String mode) throws Exception;
+    
+    public List<Goal> listGoal(Map<String, Object> map);
+    
+    public void updateGoal(Goal dto) throws Exception;
+    
+    public void deleteGoal(int goal_no);
+    
+    public List<Goal> listEmp(Map<String, Object> map);
+    
+    public List<Goal> listDepth1(Map<String, Object> map);
+    public List<Goal> listDepth2(Map<String, Object> map);
 }

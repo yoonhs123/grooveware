@@ -125,7 +125,8 @@ function searchList() {
 						<tr>
 							<td>${dataCount - (page-1) * size - status.index}</td>
 							<td>
-								<a href="${articleUrl}&pj_no=${dto.pj_no}&size=${size}" class="text-reset">${dto.pj_name}</a>
+							<!-- <a href="${articleUrl}&pj_no=${dto.pj_no}&size=${size}" class="text-reset">${dto.pj_name}</a>	-->
+								<a href="${pageContext.request.contextPath}/goal/list?pj_no=${dto.pj_no}" class="text-reset">${dto.pj_name}</a>
 							</td>
 							<td>${dto.pj_creator}</td>
 							<td>${dto.pj_start_date}</td>

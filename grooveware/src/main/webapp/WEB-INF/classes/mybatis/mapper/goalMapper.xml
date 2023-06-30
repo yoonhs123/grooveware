@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="goal">
+	<select id="seq" resultType="Long">
+		SELECT goal_seq.NEXTVAL FROM dual	
+	</select>
+	
+	
+	<update id="insertGoal" parameterType="com.sp.grooveware.goal.Goal">
+		insert all
+		into goal(goal_no, pj_no, goal_name, goal_start_date, goal_end_date, goal_content, goal_achv, parent, group_no, depth, order_no)
+		
+				
+		<foreach collection="emps" item="emp_no" index="index" separator=" " close="SELECT*FROM DUAL">
+	         into  pj_member(pj_member_no, pj_no, pj_join_type, pj_member_join_date)
+		 values
+	        (#{emp_no}, pj_seq.currval, 1, SYSDATE)
+	    </foreach>		
+	</update>
+			
+	
+	
+	
+	
+	<!-- 목표 리스트 -->
+	<select id="listGoal" parameterType="map" resultType="com.sp.grooveware.goal.Goal">
+		SELECT goal_no, pj_no, goal_name, goal_start_date, goal_end_date, goal_content, 
+			goal_achv, parent, group_no, depth, order_no
+		FROM goal a
+		WHERE pj_no = #{pj_no}
+		ORDER BY group_no DESC, order_no ASC
+	</select>	
+
+
+	<!-- 목표참여멤버 모달 -->
+	<select id="listEmp" parameterType="map" resultType="com.sp.grooveware.goal.Goal">
+		SELECT a.emp_no, b.dept_name, c.emp_name, d.pos_name
+		FROM (
+		    SELECT x.emp_no, x.history_no, x.dept_no, x.pos_no FROM emp_history x
+		    LEFT OUTER JOIN emp_history y ON x.emp_no = y.emp_no AND x.history_no &lt; y.history_no
+		    WHERE y.emp_no IS NULL) a
+		LEFT OUTER JOIN dept b ON a.dept_no = b.dept_no
+		LEFT OUTER JOIN emp c ON a.emp_no = c.emp_no
+		LEFT OUTER JOIN pos d ON a.pos_no = d.pos_no
+		<where>
+			emp_resign_date is null
+			<choose>
+				<when test="condition == 'emp_name' ">
+				AND	( INSTR(c.${condition}, #{keyword}) &gt; 0 )
+				</when>
+				<when test="condition == 'emp_no' ">
+				AND	( INSTR(a.${condition}, #{keyword}) &gt; 0 )
+				</when>
+			</choose>
+		</where>
+	</select>
+	
+	
+	<!-- 목표레벨(상위목표) 선택// 최상위의 하위인 상위목표 -->
+	<select id="listDepth0" parameterType="map" resultType="com.sp.grooveware.goal.Goal">
+		SELECT goal_no, goal_name, pj_name
+		FROM goal a
+		JOIN pj b ON b.pj_no = #{pj_no}
+		WHERE depth = 0 AND a.pj_no = #{pj_no}
+	</select>
+
+
+	<!-- 목표레벨(상위목표) 선택// 상위의 하위인 하위목표 -->	
+	<select id="listDepth1" parameterType="map" resultType="com.sp.grooveware.goal.Goal">
+		SELECT goal_no, goal_name, pj_name
+		FROM goal a
+		JOIN pj b ON b.pj_no = #{pj_no}
+		WHERE depth = 1 AND a.pj_no = #{pj_no}
+	</select>
+	
+</mapper>

@@ -4,7 +4,7 @@
 <mapper namespace="member">
 	<select id="loginMember" parameterType="String" resultType="com.sp.grooveware.member.Member">
 		
-		SELECT e.emp_no, e.emp_name, e.emp_pwd, eh.dept_no, d.dept_name
+		SELECT e.emp_no, e.emp_name, e.emp_pwd, eh.dept_no, d.dept_name, eh.pos_no, p.pos_name
 		FROM emp e
 		JOIN (
 		    SELECT *
@@ -14,6 +14,7 @@
 		    FETCH FIRST 1 ROW ONLY
 		) eh ON e.emp_no = eh.emp_no
 		JOIN dept d ON eh.dept_no = d.dept_no
+		JOIN pos p ON eh.pos_no = p.pos_no
 		WHERE e.emp_no = #{emp_no}
 		
 	</select>
