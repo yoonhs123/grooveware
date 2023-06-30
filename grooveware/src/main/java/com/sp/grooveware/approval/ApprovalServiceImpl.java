@@ -183,7 +183,7 @@ public class ApprovalServiceImpl implements ApprovalService {
 				}
 			}
 
-			// 파일 테이블 내용 지우기
+			//  파일 테이블 내용 지우기
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("field", "doc_no");
 			map.put("doc_no", doc_no);

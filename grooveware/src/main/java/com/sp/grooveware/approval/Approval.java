@@ -24,7 +24,7 @@ public class Approval {
 	private int important;
 	private int is_visible;
 	
-	// 결재상세
+	// 결재 상세 
 	private int approval_status_id;
 	private int approval_status;
 	private String approval_date;
