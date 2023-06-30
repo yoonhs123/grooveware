@@ -12,6 +12,30 @@
 }
 </style>
 
+<script type="text/javascript">
+function sendOk() {
+	const f = document.insaProfileForm;
+	let str;
+	
+	str = f.emp_email.value.trim();
+    if(!str) {
+        alert("이메일을 입력하세요. ");
+        f.email.focus();
+        return;
+    }
+	
+	 str = f.emp_tel.value.trim();
+     if(!str) {
+         alert("전화번호을 입력하세요. ");
+         f.tel.focus();
+         return;
+     }
+     
+     f.action = "${pageContext.request.contextPath}/myInsa/profileUpdate";
+     f.submit();
+}
+</script>
+
 
 <div class="left-side-bar">
     <ul>
@@ -34,95 +58,115 @@
 	</ul>
 </div>
 
-
 <div class="right-contentbody">
-	<div style="display: flex; width: 100%; height: 100%;">
-		<table style="width: 100%;">
+	<div class="div-container">
+	
+	<div class="div-left">
+		<div class="div-top">
+		<table style="width: 100%; height: 100%;">
 			<tr>
 				<td>
 					<div class="profile-picture border-radius">
-						<div>
-							<div style="width: 100%; margin-bottom: 10px;" align="center">
-								<input type="text" value="${dto.emp_no}"> 
-								${dto.emp_no}
+						<div style="height: 100%">
+							<div class="insa-image" style="border: 1px solid black;">
+							<img src="${pageContext.request.contextPath}/uploads/insaManage/${dto.emp_picture}">
 							</div>
-							<div style="width: 100%; height: 180px; border: 1px solid red;">
-								<input type="file" value="${dto.emp_picture}">
-								<img src="${pageContext.request.contextPath}/uploads/insaManage/${dto.emp_picture}">
-							</div>
-							<div style="width: 100%; margin-top: 10px;" align="center">
-								<input type="text" value="${dto.emp_email}">
-								${dto.emp_email}
-							</div>
+							<div style="width: 100%; margin-bottom: 10px;" align="center">${dto.emp_no}</div>
 						</div>
 					</div>
 				</td>
 			</tr>
 		</table>
-
-		<div class="profile-content1 border-radius">
-			<table class="profile-content1-table">
+		</div>
+		
+		<div class="div-bottom">
+		<table style="width: 100%;" class="profile-picture border-radius">
 				<tr>
-					<td>이름</td>
-					<td>
-						${dto.emp_name}
-					</td>
-				</tr>
-				<tr>
-					<td>생년월일</td>
-					<td>
-						${dto.emp_rrn}
-					</td>
-				</tr>
-				<tr>
-					<td>부서</td>
+					<th class="th-left">부서</th>
 					<td>${dto.dept_name}</td>
 				</tr>
 				<tr>
-					<td>직급</td>
+					<th class="th-left">직급</th>
 					<td>${dto.pos_name}</td>
 				</tr>
 				<tr>
-					<td>입사일</td>
+					<th class="th-left">입사일</th>
 					<td>${dto.emp_join_date}</td>
 				</tr>
 				<tr>
-					<td>사원상태</td>
+					<th class="th-left">사원상태</th>
 					<td>${dto.emp_status==0?"재직":(dto.emp_status==1?"휴직":"퇴사")}</td>
 				</tr>
-				<tr>
-					<td>주소</td>
-					<td>
-						<label for="zip">우편번호:</label>
-				        <div>
-				        <input type="text" id="emp_zip"  name="emp_zip" placeholder="우편번호" value="${dto.emp_zip}" disabled="disabled" readonly="readonly" style="width: 200px; height : 30px; margin-bottom:5px;">
-				        <button class="btn" type="button" onclick="daumPostcode();" style="margin-left: 3px;">우편번호검색</button>
-				        </div>
-				        <label for="addr">주소:</label>
-				        <div>
-				        <input type="text" id="emp_addr1" name="emp_addr1" placeholder="기본 주소" value="${dto.emp_addr1}" readonly="readonly">
-				        <input type="text" id="emp_addr2" name="emp_addr2" placeholder="상세 주소" value="${dto.emp_addr2}" readonly="readonly">
-				        </div>
-        						${dto.emp_address}
-					</td>
-				</tr>
-				<tr>
-					<td>전화번호</td>
-					<td>
-						<input type="text" value="${dto.emp_tel}">
-						${dto.emp_tel}
-					</td>
-				</tr>
-			</table>
-			<div>
-				<button type="button" onclick="" class="btn">수정완료</button>
-				<button type="reset" class="btn">다시 작성하기</button>
-				<button type="button" onclick="" class="btn">수정취소</button>
-			</div>
-
+		</table>
 		</div>
 	</div>
-</div>
+	
+		<div class="profile-content1 div-right" style="flex-direction: row;">
+		<form name="insaProfileForm" method="post" enctype="multipart/form-data">
+		<table class="profile-content1-table">
+			<tr>
+				<th><h3> | 인적사항 </h3></th>
+				<td></td>
+			</tr>
+			<tr>
+				<th class="th-left">이름</th>
+				<td>${dto.emp_name}</td>
+			</tr>
+			<tr>
+				<th class="th-left">사번</th>
+				<td>${dto.emp_no}</td>
+			</tr>
+			<tr>
+				<th class="th-left">생년월일</th>
+				<td>${dto.emp_rrn}</td>
+			</tr>
+			<tr>
+				<th class="th-left">사진</th>
+				<td>
+					<input type="file" id="photo" name="selectFile" accept="image/*" value="${dto.emp_picture}" style="width: 200px; height : 30px;">
+				</td>
+			</tr>
+			<tr>
+				<th class="th-left">이메일</th>
+				<td>
+					<input type="text" id="emp_email"  name="emp_email" value="${dto.emp_email}" placeholder="이메일을 입력하세요.('@'포함)" style="width: 400px; height : 30px;">
+				</td>
+			</tr>
+			<tr>
+				<th class="th-left">주소</th>
+				<td>
+					<label for="zip">우편번호</label>
+			        <div>
+			        <input type="text" id="emp_zip"  name="emp_zip" placeholder="우편번호" value="${dto.emp_zip}" readonly="readonly" style="width: 200px; height : 30px; margin-bottom:5px;">
+			        <button class="btn" type="button" onclick="daumPostcode();" style="margin-left: 3px;">우편번호검색</button>
+			        </div>
+			        <label for="addr">주소</label>
+			        <div>
+			        <input type="text" id="emp_addr1" name="emp_addr1" placeholder="기본 주소" value="${dto.emp_addr1}" readonly="readonly" style="width: 400px; height : 30px;">
+			        <input type="text" id="emp_addr2" name="emp_addr2" placeholder="상세 주소" value="${dto.emp_addr2}" style="width: 100px; height : 30px;">
+			        </div>
+				</td>
+			</tr>
+			<tr>
+				<th class="th-left">전화번호</th>
+				<td>
+					<input type="text" id="emp_tel"  name="emp_tel" value="${dto.emp_tel}" placeholder="번호를 입력하세요.('-'포함)" style="width: 300px; height : 30px;"> 
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2" style="width: 100%;" align="right">
+					<button type="button" onclick="sendOk();" class="btn">수정완료</button>
+					<button type="reset" class="btn">다시 작성하기</button>
+					<button type="button" onclick="location.href='${pageContext.request.contextPath}/myInsa/profile';" class="btn">수정취소</button>
+					<input type="hidden" name="emp_no" value="${dto.emp_no}">
+				</td>
+			</tr>
+			</table>
+		</form>
+		</div>	
+		
+	</div>
+</div>	
 
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script>

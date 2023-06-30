@@ -3,6 +3,7 @@ package com.sp.grooveware.myInsa;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.sp.grooveware.common.FileManager;
 import com.sp.grooveware.common.dao.CommonDAO;
 
 
@@ -11,6 +12,9 @@ public class MyInsaServiceImpl implements MyInsaService {
 	
 	@Autowired
 	private CommonDAO dao;
+	
+	@Autowired
+	private FileManager fileManager;
 	
 	@Override
 	public int getAnnualLeave(long emp_no) {
@@ -54,6 +58,25 @@ public class MyInsaServiceImpl implements MyInsaService {
 		}
 		
 		return dto;
+	}
+
+	@Override
+	public void profileUpdate(MyInsa dto, String pathname) throws Exception {
+		try {
+			String emp_picture = fileManager.doFileUpload(dto.getSelectFile(), pathname);
+			if(emp_picture != null) {
+				if(dto.getEmp_picture() != null && dto.getEmp_picture().length() != 0) {
+					fileManager.doFileDelete(dto.getEmp_picture(), pathname);
+				}
+				
+				dto.setEmp_picture(emp_picture);
+			}
+			
+			dao.updateData("myInsa.updateProfile", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
 	}
 	
 }

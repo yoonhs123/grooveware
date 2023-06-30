@@ -45,7 +45,7 @@
 					<div class="profile-picture border-radius">
 						<div style="height: 100%">
 							<div class="insa-image" style="border: 1px solid black;">
-							<img src="${pageContext.request.contextPath}/uploads/insaManage/${dto.emp_picture}">
+							<img src="${pageContext.request.contextPath}/uploads/myInsa/${dto.emp_picture}">
 							</div>
 							<div style="width: 100%; margin-bottom: 10px;" align="center">${dto.emp_no}</div>
 						</div>
@@ -114,7 +114,7 @@
 			</tr>
 			<tr>
 				<td colspan="2" style="width: 100%;" align="right">
-					<button type="button" onclick="" class="btn">수정하기</button>
+					<button type="button" onclick="location.href='${pageContext.request.contextPath}/myInsa/profileUpdate?emp_no=${dto.emp_no}';" class="btn">수정하기</button>
 				</td>
 			</tr>
 		</table>

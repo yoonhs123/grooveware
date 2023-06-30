@@ -7,4 +7,8 @@ public interface MyInsaService {
 	
 	// profile
 	public MyInsa readProfile(long emp_no);
+	
+	// profile 수정
+	public void profileUpdate(MyInsa dto, String pathname) throws Exception;
+	
 }

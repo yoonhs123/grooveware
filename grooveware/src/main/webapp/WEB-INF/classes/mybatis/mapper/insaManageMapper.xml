@@ -193,10 +193,17 @@
 		</choose>
 	</update>
 	
-	<!-- 
-	<update id="updateEmpPosDept" parameterType="map">
-		UPDATE emp_history SET 
+	
+	
+	<!-- 직위만 바뀔때 -->
+	<update id="updatePosHistory" parameterType="map">
+		UPDATE emp_history SET pos_enddate = #{pos_enddate} 
+		WHERE emp_no = #{emp_no} AND pos_no = #{pos_no} AND dept_no = #{dept_no} 
 	</update>
-	 -->
+	
+	<insert id="insertNewPosHistory" parameterType="com.sp.grooveware.insamanage.InsaManage">
+		INSERT INTO emp_history (emp_no, pos_no, pos_startdate, dept_no, dept_startdate)
+		VALUES (#{emp_no}, #{pos_no}, #{pos_startdate}, #{dept_no}, #{dept_startdate})
+	</insert>
 	
 </mapper>

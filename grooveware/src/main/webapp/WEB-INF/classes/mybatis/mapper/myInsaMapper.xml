@@ -51,8 +51,9 @@
 	<!-- 사원 정보 update -->
 	<update id="updateProfile" parameterType="com.sp.grooveware.myInsa.MyInsa">
 		UPDATE emp 
-		SET emp_email = #{emp_email}, emp_address = #{emp_address}, 
-			emp_tel = #{emp_tel}, emp_zip = #{emp_zip}, emp_addr1 = #{emp_addr1}, emp_addr2 = #{emp_addr2}
+		SET emp_email = #{emp_email},
+			emp_tel = #{emp_tel}, emp_zip = #{emp_zip}, emp_addr1 = #{emp_addr1}, emp_addr2 = #{emp_addr2},
+			emp_picture = #{emp_picture}
 		WHERE emp_no = #{emp_no}
 	</update>
 

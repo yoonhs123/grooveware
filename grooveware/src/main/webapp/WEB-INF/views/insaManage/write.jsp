@@ -186,13 +186,13 @@ $(function(){
 					</td>
 				</tr>
 				<tr>
-					<th>주민등록번호</th>
+					<th><label for="rrn">이름</label></th>
 					<td>
 						<input type="text" id="rrn"  name="emp_rrn" value="${dto.emp_rrn}" placeholder="주민번호를 입력하세요.('-'포함)" style="width: 400px; height : 30px;">
 					</td>
 				</tr>
 				<tr>
-					<th>핸드폰 번호</th>
+					<th><label for="tel">핸드폰</label></th>
 					<td>
 						<input type="text" id="phone"  name="emp_tel" value="${dto.emp_tel}" placeholder="번호를 입력하세요.('-'포함)" style="width: 300px; height : 30px;"> 
 					</td>
@@ -202,7 +202,7 @@ $(function(){
 					<td>
 						<label for="zip">우편번호</label>
 				        <div>
-				        <input type="text" id="emp_zip"  name="emp_zip" placeholder="우편번호" value="${dto.emp_zip}" disabled="disabled" readonly="readonly" style="width: 200px; height : 30px; margin-bottom:5px;">
+				        <input type="text" id="emp_zip"  name="emp_zip" placeholder="우편번호" value="${dto.emp_zip}" readonly="readonly" style="width: 200px; height : 30px; margin-bottom:5px;">
 				        <button class="btn" type="button" onclick="daumPostcode();" style="margin-left: 3px;">우편번호검색</button>
 				        </div>
 				        <label for="addr">주소</label>
