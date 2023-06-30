@@ -10,7 +10,8 @@ public interface ApprovalService {
 	public void insertApproval(Approval dto, String pathname) throws Exception;
 	public List<Approval> listDoc(Map<String, Object>map);
 	public List<Approval> listApproval(long doc_no);
-	public List<Approval> standByApproval(Map<String, Object>map);
+	public List<Approval> standByList(Map<String, Object>map);
+	public List<Approval> progressList(Map<String, Object>map);
 	
 	public int dataCount(Map<String, Object>map);
 	

@@ -167,7 +167,7 @@ $(function(){
 			</div>
 		</div>
 	</div>
-	<div class="item2">
+	<div class="item">
 		<div class="desc-area commuteBox1">
 			<span class="fontColor title" style="font-size: 18px;">프로젝트 현황</span>
 
@@ -184,7 +184,7 @@ $(function(){
 			</div>
 		</div>
 	</div>
-	<div class="item2">
+	<div class="item">
 		<div class="desc-area commuteBox1">
 			<span class="fontColor title" style="font-size: 18px;">전체 공지사항</span>
 
@@ -198,7 +198,7 @@ $(function(){
 			</div>
 		</div>
 	</div>
-	<div class="item2">
+	<div class="item">
 		<div class="desc-area commuteBox1">
 			<span class="fontColor title" style="font-size: 18px;">부서 공지사항</span>
 

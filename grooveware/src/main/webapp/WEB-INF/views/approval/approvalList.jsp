@@ -59,7 +59,7 @@ input[type=text]{
         <ul>
 		<li>
 					<a href="${pageContext.request.contextPath}/approval/write">문서작성</a>
-		</li>       
+		</li>  
         
             <li>
                 <a href="">문서함</a>
@@ -151,37 +151,6 @@ input[type=text]{
 				</thead>
 				
 				<tbody> 
-					<c:forEach var="dto" items="${list}">
-						<tr>
-							<td>
-								<input type="checkbox" name="" value="">
-							</td>					
-							<td>${dto.doc_no}</td>
-							<td>${dto.draft_category == 0 ? '품의서' : '기안서'}</td>
-							<td>
-								<a href="${articleUrl}&doc_no=${dto.doc_no}&size=${size}">${dto.doc_name}</a>
-							</td>
-							<td>${sessionScope.member.emp_name}</td>
-							<td>${dto.draft_date}</td>
-							<c:choose>
-								  <c:when test="${dto.doc_status == 0}">
-								    <td>임시</td>
-								  </c:when>
-								  <c:when test="${dto.doc_status == 1}">
-								    <td>발송완료</td>
-								  </c:when>
-								  <c:when test="${dto.doc_status == 2}">
-								    <td>결재진행</td>
-								  </c:when>
-								  <c:when test="${dto.doc_status == 3}">
-								    <td>결재완료</td>
-								  </c:when>
-								  <c:when test="${dto.doc_status == 4}">
-								    <td>반려문서</td>
-								  </c:when>
-							</c:choose>
-						</tr>
-					</c:forEach>
 					<c:forEach var="dto" items="${standByList}">
 						<tr>
 							<td>
@@ -236,7 +205,6 @@ input[type=text]{
 			</table>
 				</div>
 	
-			<div class="page-navigation" style="width: 900px; margin: 0 auto;">${dataCount == 0 ? "등록된 게시물이 없습니다." : paging}</div>
 	
 			</div>
 		</div>

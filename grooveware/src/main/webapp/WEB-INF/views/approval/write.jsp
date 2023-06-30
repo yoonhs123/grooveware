@@ -245,6 +245,8 @@ function searchList() {
 				}
 			});
 			
+				var cnt = 0;
+				
 				if (!b) {
 				  // 사번/결재 단계 hidden 처리
 				  s = "<span class='approval-member' style ='margin-right: 30px;'>";
@@ -292,14 +294,7 @@ function searchList() {
 
 	<ul>
 		<li>
-			<div class="box-wrapper">
-				<div class="borderBox">
-					<a>문서작성</a>
-				</div>
-				<div class="borderBox">
-					<a>내문서</a>
-				</div>
-			</div>
+			<a href="${pageContext.request.contextPath}/approval/write">문서작성</a>
 		</li>
 
             <li>
@@ -535,7 +530,6 @@ function searchList() {
 					<input type="hidden" name="doc_no" value="${dto.doc_no}">
 					<input type="hidden" name="page" value="${page}">
 				</c:if>
-					<input type="hidden" name="approval_status_id," value="${page}">
 				
 			</div>
 		</form>

@@ -56,6 +56,7 @@
 		SELECT NVL(COUNT(*), 0)
 		FROM doc d
 		LEFT OUTER JOIN draft dr ON dr.doc_no= d.doc_no
+
 		<where>
 				emp_no = #{emp_no} 
 				AND doc_status = #{doc_status}
@@ -74,6 +75,7 @@
         	dr.draft_category, dr.draft_content
 	FROM doc d
 	LEFT OUTER JOIN draft dr ON d.doc_no = dr.doc_no
+
 		<where>
 			emp_no = #{emp_no} 
 				AND doc_status = #{doc_status}			
@@ -157,8 +159,8 @@
 	
 	
 	<!-- 대기 문서 리스트  -->
-	<select id="standByApproval"  parameterType="map" resultType="com.sp.grooveware.approval.Approval">
-		SELECT  d.doc_no, a.emp_no, emp_name, approval_status, doc_status, urgent, doc_name,  
+	<select id="standByList"  parameterType="map" resultType="com.sp.grooveware.approval.Approval">
+		SELECT  d.doc_no, a.emp_no, e.emp_name, approval_status, doc_status, urgent, doc_name,  
 					TO_CHAR(d.draft_date, 'YYYY-MM-DD') AS draft_date, TO_CHAR(d.draft_deadline, 'YYYY-MM-DD') AS draft_deadline, 
 					approval_step, TO_CHAR(d.approval_finaldate, 'YYYY-MM-DD') AS approval_finaldate, TO_CHAR(d.submit_date, 'YYYY-MM-DD') AS submit_date, important, is_visible,
 					approval_status_id, TO_CHAR(approval_date, 'YYYY-MM-DD') AS approval_date, reject_reason
@@ -169,7 +171,8 @@
 		ORDER BY d.doc_no
 	</select>
 	
-	<!-- 결재자 앞의 사람이 결제를 하지 않은 문서 가져오기 -->
+	
+	<!-- 결재자 앞의 사람이 결재를 하지 않은 문서 가져오기 -->
 	<select id="readNotPreApproval" parameterType="map" resultType="com.sp.grooveware.approval.Approval">
 		SELECT doc_no, emp_no, approval_status_id, approval_status, approval_date, reject_reason
 		FROM approval
@@ -178,6 +181,13 @@
 		FETCH FIRST 1 ROWS ONLY	
 	</select>
 	
+ 
+ 
+ 
+ 
+ 
+ 
+ 
  
 	<!-- 파일 리스트-->
 	<select id="listFile" parameterType="Long" resultType="com.sp.grooveware.approval.Approval">

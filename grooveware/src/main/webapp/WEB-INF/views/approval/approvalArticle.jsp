@@ -68,23 +68,21 @@
 
 
 <script type="text/javascript">
-<c:if test="${sessionScope.member.emp_no == dto.emp_no}">
-function deleteOk() {
-	let query = "doc_no=${dto.doc_no}&${query}";
-	let url = "${pageContext.request.contextPath}/approval/delete?" + query;
-
-	if(confirm("위 자료를 삭제 하시 겠습니까 ? ")) {
-		location.href = url;
-	}
+function submitContents(approval_status) {
+	
+    if(confirm("게시글을 삭제 하시 겠습니까 ? ")) {
+	    let query = "num=${dto.doc_no}";
+	    let url = "${pageContext.request.contextPath}/approval/updateAp?" + query;
+    	location.href = url;
+    }
 }
-</c:if>
 </script>
 
 <div class="left-side-bar">
 
 	<ul>
 		<li>
-					<a href="${pageContext.request.contextPath}/approval/write">문서작성</a>
+			<a href="${pageContext.request.contextPath}/approval/write">문서작성</a>
 		</li>
 
             <li>
@@ -97,7 +95,7 @@ function deleteOk() {
 
 		<li><a href="">결재함</a>  <a href="${pageContext.request.contextPath}/approval/standByList">&nbsp;대기</a>
                 <a href="${pageContext.request.contextPath}/approval/progressList">&nbsp;진행중</a>
-			<a href="#">&nbsp;보류</a> <a href="#">&nbsp;반려</a> <a href="#">&nbsp;완료</a>
+			<a href="#">&nbsp;반려</a> <a href="#">&nbsp;완료</a>
 		<li>
 	</ul>
 </div>
@@ -117,20 +115,13 @@ function deleteOk() {
 								</h2>
 							</td>
 							<td class="title">
-							<c:choose>
-									<c:when test="${sessionScope.member.emp_no == dto.emp_no}">
-										<button type="button" class="btn2"
-											onclick="javascript:location.href='${pageContext.request.contextPath}/approval/update?doc_no=${dto.doc_no}&page=${page}';">수정</button>
-									</c:when>
-									<c:otherwise>
-										<button type="button" class="btn2" disabled="disabled">수정</button>
-									</c:otherwise>
-								</c:choose>
-								<button type="button" class="btn2" onclick="deleteOk(); ">삭제</button>
-								<button type="button" class="btn2" onclick="location.href='${pageContext.request.contextPath}/approval/list?doc_status=${doc_status}&${query}';">목록</button>
-								</td>
+								<button type="button" class="btn2" onclick="submitContents(this.form, 1);">결재</button>
+								<button type="button" class="btn2" onclick="submitContents(this.form, 2)">반려</button>
+							</td>
 						</tr>
 					</table>
+				<input type="hidden" name="approval_status" value="${dto.approval_status }">
+					
 				</div>
 				<div class="line_container" style="height:180px;">
 					<div class="table" style="margin-bottom: 15px;">
@@ -142,22 +133,18 @@ function deleteOk() {
 						</div>
 						<div style="width: 100%; float: left; padding-left: 20px;">
 
-						
-							<div class="img_container ">
-								<img class="" src="${pageContext.request.contextPath}/resources/images/bg.png">
-							</div>
-							<div class="img_container3 ">
-								<i class="fa-solid fa-chevron-right"></i>
-							</div>
-							<div class="img_container ">
-								<img class="" src="${pageContext.request.contextPath}/resources/images/bg.png"">
-							</div>
-							<div class="img_container3 ">
-								<i class="fa-solid fa-chevron-right"></i>
-							</div>
-							<div class=" img_container">
-								<img class="" src="${pageContext.request.contextPath}/resources/images/bg.png"">
-							</div>
+						  <c:forEach var="vo" items="${listApproval}" varStatus="status">
+						    <div class="img_container">
+						      <img class="" src="${pageContext.request.contextPath}/resources/images/bg.png">
+						    </div>
+						    
+						    <c:if test="${!status.last}">
+						      <div class="img_container3">
+						        <i class="fa-solid fa-chevron-right"></i>
+						      </div>
+						    </c:if>
+						  </c:forEach>
+							
 						</div>
 						
 						<div style="width: 100%; float: left;">
@@ -291,19 +278,8 @@ function deleteOk() {
 			</div>
 						
 			<div class="board4 confirm">
-			<c:choose>
-				<c:when test="${sessionScope.member.emp_no == dto.emp_no}">
-					<button type="button" class="btn2"
-						onclick="javascript:location.href='${pageContext.request.contextPath}/approval/update?doc_no=${dto.doc_no}&page=${page}';">수정</button>
-				</c:when>
-				<c:otherwise>
-					<button type="button" class="btn2" disabled="disabled">수정</button>
-				</c:otherwise>
-			</c:choose>			
-				<button type="button" class="btn2" onclick="deleteOk(); ">삭제</button>
-				<button type="button" class="btn2"
-					onclick="location.href='${pageContext.request.contextPath}/approval/list?doc_status=${doc_status}&${query}';">목록</button>
-		
+				<button type="button" class="btn2">결재</button>
+				<button type="button" class="btn2">반려</button>
 
 				<c:if test="${mode=='update'}">
 					<input type="hidden" name="doc_no" value="${dto.doc_no}">

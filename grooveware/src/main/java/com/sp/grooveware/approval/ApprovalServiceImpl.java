@@ -238,27 +238,42 @@ public class ApprovalServiceImpl implements ApprovalService {
 
 
 	@Override
-	public List<Approval> standByApproval(Map<String, Object> map) {
-		List<Approval> standByApproval = null;
+	public List<Approval> standByList(Map<String, Object> map) {
+		List<Approval> standByList = null;
 
 		try {
 			// 대기문서
-			standByApproval = dao.selectList("approval.standByApproval", map);
+			standByList = dao.selectList("approval.standByList", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return standByList;
+	}
+
+
+	@Override
+	public List<Approval> progressList(Map<String, Object> map) {
+		List<Approval> progressList = null;
+
+		try {
+			// 대기문서
+			progressList = dao.selectList("approval.standByList", map);
 			
-			for(Approval dto : standByApproval) {
+			for(Approval dto : progressList) {
 				map.put("doc_no", dto.getDoc_no());
 				map.put("approval_status_id", dto.getApproval_status_id());
+				map.put("approval_status", dto.getApproval_status());
 				
 				Approval vo = dao.selectOne("approval.readNotPreApproval", map);
 				if(vo != null) {
-					standByApproval.remove(dto);
+					progressList.remove(dto);
 				}
 			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return standByApproval;
+		return progressList;
 	}
 
 }

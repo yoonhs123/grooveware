@@ -69,7 +69,6 @@ public class approvalController {
 		map.put("condition", condition);
 		map.put("keyword", keyword);
 		map.put("emp_no", info.getEmp_no());
-		map.put("emp_name", info.getEmp_name());
 		map.put("doc_status", doc_status);
 		
 		dataCount = service.dataCount(map);
@@ -125,8 +124,9 @@ public class approvalController {
 	 
 	
 	
-	@RequestMapping(value = "listAp", method = RequestMethod.GET)
-	public String listAp(  
+	@RequestMapping(value = "standByList", method = RequestMethod.GET)
+	public String standByList(  
+			@RequestParam(defaultValue = "0") int approval_status, 
 			HttpSession session,
 			HttpServletRequest req,
 			Model model) throws Exception {
@@ -139,19 +139,47 @@ public class approvalController {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("emp_no", info.getEmp_no());
-		map.put("approval_status", 0);
-		
+		map.put("approval_status", approval_status);
 
-		List<Approval> listAp = service.standByApproval(map);
+		List<Approval> standByList = service.standByList(map);
 
-		model.addAttribute("listAp", listAp);
+		model.addAttribute("standByList", standByList);
 		model.addAttribute("articleUrl", articleUrl);
+		model.addAttribute("approval_status", approval_status);
 		
 		
-		return ".approval.list";
+		return ".approval.approvalList";
+	}
+	
+	@RequestMapping(value = "progressList", method = RequestMethod.GET)
+	public String progressList(  
+			@RequestParam(defaultValue = "0") int approval_status, 
+			HttpSession session,
+			HttpServletRequest req,
+			Model model) throws Exception {
+
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+
+		String cp = req.getContextPath();
+		String articleUrl = cp + "/approval/articleAp";
+
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("emp_no", info.getEmp_no());
+		map.put("approval_status", approval_status);
+
+		List<Approval> progressList = service.progressList(map);
+
+		model.addAttribute("progressList", progressList);
+		model.addAttribute("articleUrl", articleUrl);
+		model.addAttribute("approval_status", approval_status);
+		
+		
+		return ".approval.approvalList";
 	}
 	
  
+	 
 	@RequestMapping(value = "write", method = RequestMethod.GET)
 	public String writeForm(HttpSession session, Model model) throws Exception {
 		model.addAttribute("mode", "write");
@@ -172,7 +200,7 @@ public class approvalController {
 
 			
 			dto.setDoc_status(doc_status);
-			
+
 			dto.setEmp_no(info.getEmp_no());
 			
 			service.insertApproval(dto, pathname);
@@ -209,6 +237,7 @@ public class approvalController {
 		if (dto == null) {
 			return "redirect:/approval/list?" + query;
 		}
+
 		
 		List<Approval> listApproval = service.listApproval(doc_no);
 	
@@ -226,27 +255,18 @@ public class approvalController {
 	}	
 
 	@RequestMapping(value = "articleAp")
-	public String article(@RequestParam long doc_no,
-			@RequestParam(defaultValue = "all") String condition,
-			@RequestParam(defaultValue = "") String keyword,
+	public String articleAp(@RequestParam long doc_no,
 			Model model) throws Exception {
 
-		
-		keyword = URLDecoder.decode(keyword, "utf-8");
-		
-		
-		
-		String query = "";
-		if (keyword.length() != 0) {
-			query += "&condition=" + condition + "&keyword=" + URLEncoder.encode(keyword, "UTF-8");
-		}
 
 		Approval dto = service.readApproval(doc_no);
 		
 		if (dto == null) {
-			return "redirect:/approval/list?" + query;
+			return "redirect:/approval/list?";
 		}
-		
+		//int approval_status =  dto.getApproval_status();
+		//dto.setApproval_status(approval_status);
+				
 		List<Approval> listApproval = service.listApproval(doc_no);
 	
 		List<Approval> listFile = service.listFile(doc_no);
@@ -255,10 +275,9 @@ public class approvalController {
 		model.addAttribute("dto", dto);
 		model.addAttribute("listApproval", listApproval);
 		model.addAttribute("listFile", listFile);
-		model.addAttribute("query", query);
 
 
-		return ".approval.article";
+		return ".approval.approvalArticle";
 	}	 
 	@RequestMapping(value = "download")
 	public void download(@RequestParam long file_no,
@@ -328,7 +347,23 @@ public class approvalController {
 	}
 
 	
+	@RequestMapping(value = "updateAp", method = RequestMethod.POST)
+	public String updateAp(Approval dto,
+			HttpSession session) throws Exception {
 
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+
+		try {
+
+			dto.setEmp_no(info.getEmp_no());
+			//service.updateApproval(dto, pathname);
+		} catch (Exception e) {
+		}
+
+		return "redirect:/approval/listAp";
+	}
+
+	
 	@RequestMapping(value = "delete")
 	public String delete(@RequestParam long doc_no,
 			@RequestParam String page,
