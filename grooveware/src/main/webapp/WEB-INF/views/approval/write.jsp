@@ -567,7 +567,7 @@ function searchList() {
 	}
 
 	function setDefaultFont() {
-		var sDefaultFont = '돋움';
+		var sDefaultFont = '돋움 ';
 		var nFontSize = 12;
 		oEditors.getById["ir1"].setDefaultFont(sDefaultFont, nFontSize);
 	}
