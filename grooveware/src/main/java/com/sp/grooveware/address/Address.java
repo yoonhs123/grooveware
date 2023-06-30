@@ -1,6 +1,7 @@
 package com.sp.grooveware.address;
 
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.socket.WebSocketSession;
 
 public class Address {
 
@@ -36,6 +37,12 @@ public class Address {
 	
 	
 	// 메신저용
+	
+	
+	
+	private String uid;
+	private String nickName;
+	private WebSocketSession session;
 	
 	private long colleague_no;
 

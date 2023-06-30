@@ -29,48 +29,94 @@
 		  }
 	}
 	
-	
+
+	function displayFriendList(friendList) {
+		var tableBody = document.getElementById("friendListTableBody");
+		tableBody.innerHTML = ""; // 기존 테이블 내용 초기화
+
+		for (var i = 0; i < friendList.length; i++) {
+			var dto = friendList[i];
+			var empNo = dto.emp_no;
+			var empName = dto.emp_name;
+			var empEmail = dto.emp_email;
+			var deptName = dto.dept_name;
+			var posName = dto.pos_name;
+			var empTel = dto.emp_tel;
+			var empJoinDate = dto.emp_join_date;
+			var empStatus = dto.emp_status;
+
+			var empStatusText = empStatus == '0' ? '재직' : (empStatus == '1' ? '휴직' : '퇴사');
+
+			var row = document.createElement("tr");
+
+			var checkboxCell = document.createElement("td");
+			var checkbox = document.createElement("input");
+			checkbox.type = "checkbox";
+			checkbox.name = "employeeCheckbox";
+			checkbox.value = empNo;
+			checkboxCell.appendChild(checkbox);
+			row.appendChild(checkboxCell);
+
+			var empNoCell = document.createElement("td");
+			empNoCell.textContent = empNo;
+			row.appendChild(empNoCell);
+
+			var empNameCell = document.createElement("td");
+			empNameCell.textContent = empName;
+			row.appendChild(empNameCell);
+
+			var empEmailCell = document.createElement("td");
+			empEmailCell.textContent = empEmail;
+			row.appendChild(empEmailCell);
+
+			var deptNameCell = document.createElement("td");
+			deptNameCell.textContent = deptName;
+			row.appendChild(deptNameCell);
+
+			var posNameCell = document.createElement("td");
+			posNameCell.textContent = posName;
+			row.appendChild(posNameCell);
+
+			var empTelCell = document.createElement("td");
+			empTelCell.textContent = empTel;
+			row.appendChild(empTelCell);
+
+			var empJoinDateCell = document.createElement("td");
+			empJoinDateCell.textContent = empJoinDate;
+			row.appendChild(empJoinDateCell);
+
+			var empStatusCell = document.createElement("td");
+			empStatusCell.textContent = empStatusText;
+			row.appendChild(empStatusCell);
+
+			tableBody.appendChild(row);
+		}
+	}
+
 	function moveToAddressBook() {
-		
-		 var selectedEmployees = getSelectedEmployees();
+		var selectedEmployees = getSelectedEmployees();
 
-		    var xhr = new XMLHttpRequest();
-		    xhr.open("POST", "${pageContext.request.contextPath}/address/friendList", true);
-		    xhr.setRequestHeader("Content-Type", "application/json");
+		var xhr = new XMLHttpRequest();
+		xhr.open("POST", "${pageContext.request.contextPath}/address/friendList", true);
+		xhr.setRequestHeader("Content-Type", "application/json");
 
-		    xhr.onreadystatechange = function() {
-		        if (xhr.readyState === XMLHttpRequest.DONE) {
-		            if (xhr.status === 200) {
-		                var response = JSON.parse(xhr.responseText);
-		                var empNo = response.emp_no;
-		                var empName = response.emp_name;
-		                // 필요한 값들을 추출하여 변수에 저장하거나 처리
-		                
-		                // 예시: empNo 값을 출력하는 div 요소 업데이트
-		                var empNoDiv = document.getElementById("empNoDiv");
-		                empNoDiv.innerHTML = empNo;
-		            } else {
-		                console.error("Error:", xhr.statusText);
-		            }
-		        }
-		    };
+		xhr.onreadystatechange = function() {
+			if (xhr.readyState === XMLHttpRequest.DONE) {
+				if (xhr.status === 200) {
+					var response = JSON.parse(xhr.responseText);
+					displayFriendList(response); // friendList를 표시할 함수 호출
+				} else {
+					console.error("Error:", xhr.statusText);
+				}
+			}
+		};
 
-		    xhr.send(JSON.stringify({ selectedEmployees: selectedEmployees }));
+		xhr.send(JSON.stringify({ selectedEmployees: selectedEmployees }));
 	}
-
-	function getSelectedEmployees() {
-	    var checkboxes = document.getElementsByName("employeeCheckbox");
-	    var selectedEmployees = [];
-	    
-	    // 선택된 사원의 값을 배열에 추가
-	    for (var i = 0; i < checkboxes.length; i++) {
-	        if (checkboxes[i].checked) {
-	            selectedEmployees.push(checkboxes[i].value);
-	        }
-	    }
-	    
-	    return selectedEmployees;
-	}
+	
+	
+	
+	
 	
 </script>
 
@@ -82,7 +128,7 @@
 
 		<li><a href="${pageContext.request.contextPath}/address/list">주소록</a>
 			<hr> <a href="${pageContext.request.contextPath}/address/list">&nbsp;공용 주소록</a>
-			<a href="${pageContext.request.contextPath}/address/friendList">&nbsp;개인 주소록</a>
+			 <a href="${pageContext.request.contextPath}/address/friendList">&nbsp;개인 주소록</a>
 			  <a href="${pageContext.request.contextPath}/chat/chat">&nbsp;메신저</a>
 		<li>
 	</ul>
@@ -94,7 +140,7 @@
 				<tr>
 					<td class="title">
 						<h3>
-							<span>|</span> 공용 주소록
+							<span>|</span> 개인 주소록
 						</h3>
 					</td>
 					<td align="right">
@@ -121,7 +167,7 @@
 			<div class="address-button">
 				
 				<button type="button" class="btn" onclick="selectAll();">전체</button>
-				<button type="button" class="btn" onclick="moveToAddressBook();">내 주소록 이동</button>
+				
 				<button type="button" class="btn" onclick="remove();">삭제</button>
 
 			</div>
@@ -143,21 +189,8 @@
 					<th width="10%">상태</th>
 				</tr>
 			</thead>
-			<tbody>
-				<c:forEach var="dto" items="${list}" varStatus="status">
-					<tr>
-					    <td><input type="checkbox" name="employeeCheckbox" value="${dto.emp_no}"></td>
-						<td>${dto.emp_no}</td>
-						<td>${dto.emp_name}</td>
-						<td>${dto.emp_email}</td>
-						<td>${dto.dept_name}</td>
-						<td>${dto.pos_name}</td>
-						<td>${dto.emp_tel}</td>
-						<td>${dto.emp_join_date}</td>
-						<td>${dto.emp_status==0 ? "재직" : (dto.emp_status==1 ? "휴직" : "퇴사")}
-						</td>
-					</tr>
-				</c:forEach>
+		   <tbody id="friendListTableBody">
+				
 			</tbody>
 		</table>
 
