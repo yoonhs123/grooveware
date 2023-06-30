@@ -184,7 +184,7 @@ $(function(){
 			</div>
 		</div>
 	</div>
-	<div class="item ">
+	<div class="item">
 		<div class="desc-area commuteBox1">
 			<span class="fontColor title" style="font-size: 18px;">전체 공지사항</span>
 
