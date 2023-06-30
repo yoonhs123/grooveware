@@ -12,13 +12,21 @@
 	}
 	
 	
-	function all() {
+	function selectAll() {
 		
-		  var checkboxes = document.getElementsByName("employeeCheckbox");
+		 var checkboxes = document.getElementsByName("employeeCheckbox");
+		  var allChecked = true;
+
 		  for (var i = 0; i < checkboxes.length; i++) {
-		    checkboxes[i].checked = true;
+		    if (!checkboxes[i].checked) {
+		      allChecked = false;
+		      break;
+		    }
 		  }
-		
+
+		  for (var i = 0; i < checkboxes.length; i++) {
+		    checkboxes[i].checked = !allChecked;
+		  }
 	}
 	
 </script>
@@ -69,7 +77,7 @@
 			</table>
 			<div class="address-button">
 				
-				<button type="button" class="btn" onclick="all();">전체</button>
+				<button type="button" class="btn" onclick="selectAll();">전체</button>
 				<button type="button" class="btn" onclick="email();">내 주소록 이동</button>
 				<button type="button" class="btn" onclick="remove();">삭제</button>
 
@@ -87,8 +95,8 @@
 					<th width="10%">이메일</th>
 					<th width="15%">부서</th>
 					<th width="10%">직위</th>
+					<th width="15%">전화번호</th>
 					<th width="15%">입사일</th>
-					<th width="15%">퇴사(휴직)일</th>
 					<th width="10%">상태</th>
 				</tr>
 			</thead>
@@ -101,8 +109,8 @@
 						<td>${dto.emp_email}</td>
 						<td>${dto.dept_name}</td>
 						<td>${dto.pos_name}</td>
+						<td>${dto.emp_tel}</td>
 						<td>${dto.emp_join_date}</td>
-						<td>${dto.emp_resign_date}</td>
 						<td>${dto.emp_status==0 ? "재직" : (dto.emp_status==1 ? "휴직" : "퇴사")}
 						</td>
 					</tr>
