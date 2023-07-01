@@ -29,7 +29,7 @@
 	</sql>
 	
     <select id="listAddressMember" parameterType="map" resultType="com.sp.grooveware.address.Address">
-            SELECT emp_no, emp_name,emp_email, dept_name, pos_name, emp_join_date, emp_tel, emp_status
+        SELECT emp_no, emp_name,emp_email, dept_name, pos_name, emp_join_date, emp_tel, emp_status
 			FROM (
 			  SELECT e.emp_no, e.emp_name, e.emp_email,d.dept_name, p.pos_name, 
 			         TO_CHAR(e.emp_join_date, 'YYYY-MM-DD') emp_join_date,
@@ -39,10 +39,12 @@
 			  JOIN emp_history eh ON e.emp_no = eh.emp_no
 			  JOIN dept d ON eh.dept_no = d.dept_no
 			  JOIN pos p ON eh.pos_no = p.pos_no
-			) t WHERE rank = 1
-			<where>
+			  WHERE e.emp_status = 0
+		) 
+		<where>
+			rank = 1
 			<if test="keyword!=null and keyword!='' ">
-				<include refid="where-list"/>
+				AND <include refid="where-list"/>
 			</if>
 		</where>
 		ORDER BY emp_status, emp_join_date DESC
@@ -53,11 +55,14 @@
 		SELECT COUNT(*)
 		FROM emp 
 		<where>
+			emp_status = 0
 			<if test="keyword != null and keyword != '' ">
-				<include refid="where-list"/>
+				AND <include refid="where-list"/>
 			</if>
 		</where>
 	</select>
+	
+
      
   
 </mapper>

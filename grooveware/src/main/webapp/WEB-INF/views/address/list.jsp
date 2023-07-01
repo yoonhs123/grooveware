@@ -11,65 +11,31 @@
 		f.submit();
 	}
 	
-	
-	function selectAll() {
-		
-		 var checkboxes = document.getElementsByName("employeeCheckbox");
-		  var allChecked = true;
+	$(function(){
+		$(".btnSelectAll").click(function(){
+			let select = $(this).attr("data-select");
+			if(select === "0") {
+				$("form input[name=emp_nos]").not(":disabled").prop("checked", true);
+				$(this).attr("data-select", "1");
+				$(this).text("선택해제");
+			} else {
+				$("form input[name=emp_nos]").not(":disabled").prop("checked", false);
+				$(this).attr("data-select", "0");
+				$(this).text("전체선택");
+			}
+		});
+	});
 
-		  for (var i = 0; i < checkboxes.length; i++) {
-		    if (!checkboxes[i].checked) {
-		      allChecked = false;
-		      break;
-		    }
-		  }
-
-		  for (var i = 0; i < checkboxes.length; i++) {
-		    checkboxes[i].checked = !allChecked;
-		  }
-	}
-	
-	
 	function moveToAddressBook() {
+		let cnt = $("form input[name=emp_nos]:checked").not(":disabled").length;
+		if(cnt === 0) {
+			alert("이동할 사원을 먼저 선택하세요.");
+			return;
+		}
 		
-		 var selectedEmployees = getSelectedEmployees();
-
-		    var xhr = new XMLHttpRequest();
-		    xhr.open("POST", "${pageContext.request.contextPath}/address/friendList", true);
-		    xhr.setRequestHeader("Content-Type", "application/json");
-
-		    xhr.onreadystatechange = function() {
-		        if (xhr.readyState === XMLHttpRequest.DONE) {
-		            if (xhr.status === 200) {
-		                var response = JSON.parse(xhr.responseText);
-		                var empNo = response.emp_no;
-		                var empName = response.emp_name;
-		                // 필요한 값들을 추출하여 변수에 저장하거나 처리
-		                
-		                // 예시: empNo 값을 출력하는 div 요소 업데이트
-		                var empNoDiv = document.getElementById("empNoDiv");
-		                empNoDiv.innerHTML = empNo;
-		            } else {
-		                console.error("Error:", xhr.statusText);
-		            }
-		        }
-		    };
-
-		    xhr.send(JSON.stringify({ selectedEmployees: selectedEmployees }));
-	}
-
-	function getSelectedEmployees() {
-	    var checkboxes = document.getElementsByName("employeeCheckbox");
-	    var selectedEmployees = [];
-	    
-	    // 선택된 사원의 값을 배열에 추가
-	    for (var i = 0; i < checkboxes.length; i++) {
-	        if (checkboxes[i].checked) {
-	            selectedEmployees.push(checkboxes[i].value);
-	        }
-	    }
-	    
-	    return selectedEmployees;
+		const f = document.empListForm;
+		f.action="${pageContext.request.contextPath}/address/friendAdd";
+		f.submit();
 	}
 	
 </script>
@@ -99,15 +65,16 @@
 					</td>
 					<td align="right">
 						<form name="searchForm"
-							action="${pageContext.request.contextPath}/" method="post">
+							action="${pageContext.request.contextPath}/address/list" method="post">
 							<div class="address-select">
 								<select name="condition" class="form-select">
+									<option value="all"
+										${condition == "all" ? "selected='selected'" : ""}>제목+내용</option>
+					
 									<option value="subject"
 										${condition == "subject" ? "selected='selected'" : ""}>제목</option>
 									<option value="content"
 										${condition == "content" ? "selected='selected'" : ""}>내용</option>
-									<option value="all"
-										${condition == "all" ? "selected='selected'" : ""}>제목+내용</option>
 									<option value="name"
 										${condition == "name" ? "selected='selected'" : ""}>이름</option>
 								</select> <input type="text" name="keyword" value="${keyword}"
@@ -120,50 +87,49 @@
 			</table>
 			<div class="address-button">
 				
-				<button type="button" class="btn" onclick="selectAll();">전체</button>
+				<button type="button" class="btn btnSelectAll" data-select="0">전체선택</button>
 				<button type="button" class="btn" onclick="moveToAddressBook();">내 주소록 이동</button>
-				<button type="button" class="btn" onclick="remove();">삭제</button>
-
 			</div>
 		</div>
 
-		<table class="table table-border table-list">
-
-			<thead>
-				<tr>
-			
-			        <th width="10%">선택</th>
-					<th width="10%">사원번호</th>
-					<th width="10%">성명</th>
-					<th width="10%">이메일</th>
-					<th width="15%">부서</th>
-					<th width="10%">직위</th>
-					<th width="15%">전화번호</th>
-					<th width="15%">입사일</th>
-					<th width="10%">상태</th>
-				</tr>
-			</thead>
-			<tbody>
-				<c:forEach var="dto" items="${list}" varStatus="status">
+		<form name="empListForm" method="post">
+			<table class="table table-border table-list">
+	
+				<thead>
 					<tr>
-					    <td><input type="checkbox" name="employeeCheckbox" value="${dto.emp_no}"></td>
-						<td>${dto.emp_no}</td>
-						<td>${dto.emp_name}</td>
-						<td>${dto.emp_email}</td>
-						<td>${dto.dept_name}</td>
-						<td>${dto.pos_name}</td>
-						<td>${dto.emp_tel}</td>
-						<td>${dto.emp_join_date}</td>
-						<td>${dto.emp_status==0 ? "재직" : (dto.emp_status==1 ? "휴직" : "퇴사")}
-						</td>
+				
+				        <th width="10%">선택</th>
+						<th width="10%">사원번호</th>
+						<th width="10%">성명</th>
+						<th width="10%">이메일</th>
+						<th width="15%">부서</th>
+						<th width="10%">직위</th>
+						<th width="15%">전화번호</th>
+						<th width="15%">입사일</th>
+						<th width="10%">상태</th>
 					</tr>
-				</c:forEach>
-			</tbody>
-		</table>
+				</thead>
+				<tbody>
+					<c:forEach var="dto" items="${list}" varStatus="status">
+						<tr>
+						    <td><input type="checkbox" name="emp_nos" value="${dto.emp_no}"></td>
+							<td>${dto.emp_no}</td>
+							<td>${dto.emp_name}</td>
+							<td>${dto.emp_email}</td>
+							<td>${dto.dept_name}</td>
+							<td>${dto.pos_name}</td>
+							<td>${dto.emp_tel}</td>
+							<td>${dto.emp_join_date}</td>
+							<td>${dto.emp_status==0 ? "재직" : (dto.emp_status==1 ? "휴직" : "퇴사")}
+							</td>
+						</tr>
+					</c:forEach>
+				</tbody>
+			</table>
+		</form>
 
 		<div class="page-navigation" style="width: 900px; margin: 0 auto;">
-		${dataCount == 0 ? "등록된 주소가 없습니다." : paging }
-
+			${dataCount == 0 ? "등록된 주소가 없습니다." : paging }
 		</div>
 	</div>
 </div>

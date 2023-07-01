@@ -29,7 +29,7 @@
 		  }
 	}
 	
-
+	<script type="text/javascript">
 	function displayFriendList(friendList) {
 		var tableBody = document.getElementById("friendListTableBody");
 		tableBody.innerHTML = ""; // 기존 테이블 내용 초기화
@@ -189,8 +189,20 @@
 					<th width="10%">상태</th>
 				</tr>
 			</thead>
-		   <tbody id="friendListTableBody">
-				
+		  <tbody id="friendListTableBody">
+				<c:forEach var="dto" items="${paramValues.employeeCheckbox}" varStatus="status">
+					<tr>
+					    <td><input type="checkbox" name="employeeCheckbox" value="${dto.emp_no}"></td>
+						<td>${param["emp_no" + empNo]}</td>
+						<td>${param["emp_name" + emp_Name]}</td>
+						<td>${param["emp_email" + emp_Name]}</td>
+						<td>${param["dept_name" + emp_Name]}</td>
+						<td>${param["pos_name" + emp_Name]}</td>
+						<td>${param["emp_tel" + emp_Name]}</td>
+						<td>${param["emp_join_date" + emp_Name]}</td>
+					  <td>${param["emp_status_" + empNo] == '0' ? '재직' : (param["emp_status_" + empNo] == '1' ? '휴직' : '퇴사')}</td>
+					</tr>
+				</c:forEach>
 			</tbody>
 		</table>
 

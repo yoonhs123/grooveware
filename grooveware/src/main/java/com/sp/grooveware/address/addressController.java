@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -42,7 +43,6 @@ public class addressController {
 	        Model model) throws Exception {
 		
 		String cp = req.getContextPath();
-		SessionInfo info = (SessionInfo)session.getAttribute("member");
 		
 		int size = 10;
 		int total_page = 0;
@@ -56,7 +56,6 @@ public class addressController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("keyword", keyword);
 		map.put("condition", condition);
-		map.put("emp_no", info.getEmp_no());
 		
 		dataCount = service.dataCount(map);
 		if(dataCount != 0) {
@@ -142,7 +141,7 @@ public class addressController {
 		map.put("offset", offset);
 		map.put("size", size);
 		
-		List<Address> list = service.listAddressMember(map);
+		List<Address> list = service.listAddressFriend(map);
 		
 		String query = "";
 		String listUrl = cp+ "/address/friendList";
@@ -169,22 +168,24 @@ public class addressController {
 		return ".address.friendList";
 	}
 
-	@RequestMapping(value="friendList", method=RequestMethod.POST)
-	public String friendListForm() {
-		return ".address.write";
-	}
+	@PostMapping("friendAdd")
+	public String friendAdd(
+			@RequestParam List<Long> emp_nos,
+			HttpSession session
+			) throws Exception {
+		
+		try {
+			SessionInfo info = (SessionInfo)session.getAttribute("member");
 			
-	@RequestMapping(value="write", method=RequestMethod.GET)
-	public String writeForm() {
-		return ".address.write";
+			service.insertAddressFriend(info.getEmp_no(), emp_nos);
+			
+		} catch (Exception e) {
+			
+		}
+		
+		
+		return "redirect:/address/friendList";
 	}
-	
-	@RequestMapping(value="article", method=RequestMethod.GET)
-	public String articleForm() {
-		return ".address.article";
-	}
-	
-	
 	
 	
 	
