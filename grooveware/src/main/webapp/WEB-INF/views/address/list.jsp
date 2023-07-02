@@ -69,14 +69,14 @@
 							<div class="address-select">
 								<select name="condition" class="form-select">
 									<option value="all"
-										${condition == "all" ? "selected='selected'" : ""}>제목+내용</option>
+										${condition == "all" ? "selected='selected'" : ""}>전체검색</option>
 					
-									<option value="subject"
-										${condition == "subject" ? "selected='selected'" : ""}>제목</option>
-									<option value="content"
-										${condition == "content" ? "selected='selected'" : ""}>내용</option>
-									<option value="name"
-										${condition == "name" ? "selected='selected'" : ""}>이름</option>
+									<option value="emp_no"
+										${condition == "emp_no" ? "selected='selected'" : ""}>사원번호</option>
+								     <option value="dept_name"
+										${condition == "dept_name" ? "selected='selected'" : ""}>부서이름</option>
+									<option value="emp_name"
+										${condition == "emp_name" ? "selected='selected'" : ""}>이름</option>
 								</select> <input type="text" name="keyword" value="${keyword}"
 									class="addInput" placeholder="검색어를 입력하세요">
 								<button type="button" class="btn" onclick="searchList();">검색</button>
@@ -112,7 +112,9 @@
 				<tbody>
 					<c:forEach var="dto" items="${list}" varStatus="status">
 						<tr>
-						    <td><input type="checkbox" name="emp_nos" value="${dto.emp_no}"></td>
+						    <td>
+						    	<input type="checkbox" name="emp_nos" value="${dto.emp_no}" ${dto.friend_no != 0 ? "disabled='disabled' checked='checked' " :"" }>
+						    </td>
 							<td>${dto.emp_no}</td>
 							<td>${dto.emp_name}</td>
 							<td>${dto.emp_email}</td>

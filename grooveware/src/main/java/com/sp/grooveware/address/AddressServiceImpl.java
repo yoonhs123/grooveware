@@ -44,14 +44,28 @@ public class AddressServiceImpl implements AddressService {
 
 	@Override
 	public int friendCount(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return 0;
+			int result = 0;
+			
+			try {
+				result = dao.selectOne("address.friendCount", map);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			return result;
 	}
 
 	@Override
 	public List<Address> listAddressFriend(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+		   List<Address> list = null;
+			
+			try {
+				list = dao.selectList("address.listAddressFriend", map);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			return list;
 	}
 
 	@Override
@@ -73,7 +87,16 @@ public class AddressServiceImpl implements AddressService {
 
 	@Override
 	public void deleteAddressFriend(Long emp_no, List<Long> emp_nos) throws Exception {
-		// TODO Auto-generated method stub
+		
+		try {
+			
+			
+			dao.deleteData("address.deleteAddressFriend");
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
 		
 	}
 

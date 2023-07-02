@@ -15,7 +15,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sp.grooveware.common.MyUtil;
@@ -42,6 +41,7 @@ public class addressController {
 	        HttpServletRequest req,
 	        Model model) throws Exception {
 		
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
 		String cp = req.getContextPath();
 		
 		int size = 10;
@@ -56,6 +56,7 @@ public class addressController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("keyword", keyword);
 		map.put("condition", condition);
+		map.put("emp_no", info.getEmp_no());
 		
 		dataCount = service.dataCount(map);
 		if(dataCount != 0) {
@@ -126,7 +127,7 @@ public class addressController {
 		map.put("condition", condition);
 		map.put("emp_no", info.getEmp_no());
 		
-		dataCount = service.dataCount(map);
+		dataCount = service.friendCount(map);
 		if(dataCount != 0) {
 			total_page = myUtil.pageCount(dataCount, size);
 		}
@@ -187,6 +188,31 @@ public class addressController {
 		return "redirect:/address/friendList";
 	}
 	
+	
+	@RequestMapping(value = "delete")
+	public String delete(	
+			@RequestParam Long emp_no,
+			@RequestParam List<Long> emp_nos,
+			@RequestParam String page,
+			@RequestParam(defaultValue = "all") String condition,
+			@RequestParam(defaultValue = "") String keyword,
+			HttpSession session) throws Exception {
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+
+		keyword = URLDecoder.decode(keyword, "utf-8");
+		String query = "page=" + page;
+		if (keyword.length() != 0) {
+			query += "&condition=" + condition + "&keyword=" + URLEncoder.encode(keyword, "UTF-8");
+		}
+
+		
+        service.deleteAddressFriend(info.getEmp_no(), emp_nos);
+
+		
+
+        return "redirect:/address/friendList?"+query;
+	}
+
 	
 	
 }

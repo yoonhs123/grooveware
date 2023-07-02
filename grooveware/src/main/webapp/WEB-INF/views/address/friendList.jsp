@@ -11,113 +11,40 @@
 		f.submit();
 	}
 	
-	
-	function selectAll() {
-		
-		 var checkboxes = document.getElementsByName("employeeCheckbox");
-		  var allChecked = true;
 
-		  for (var i = 0; i < checkboxes.length; i++) {
-		    if (!checkboxes[i].checked) {
-		      allChecked = false;
-		      break;
-		    }
-		  }
 
-		  for (var i = 0; i < checkboxes.length; i++) {
-		    checkboxes[i].checked = !allChecked;
-		  }
-	}
-	
-	<script type="text/javascript">
-	function displayFriendList(friendList) {
-		var tableBody = document.getElementById("friendListTableBody");
-		tableBody.innerHTML = ""; // 기존 테이블 내용 초기화
-
-		for (var i = 0; i < friendList.length; i++) {
-			var dto = friendList[i];
-			var empNo = dto.emp_no;
-			var empName = dto.emp_name;
-			var empEmail = dto.emp_email;
-			var deptName = dto.dept_name;
-			var posName = dto.pos_name;
-			var empTel = dto.emp_tel;
-			var empJoinDate = dto.emp_join_date;
-			var empStatus = dto.emp_status;
-
-			var empStatusText = empStatus == '0' ? '재직' : (empStatus == '1' ? '휴직' : '퇴사');
-
-			var row = document.createElement("tr");
-
-			var checkboxCell = document.createElement("td");
-			var checkbox = document.createElement("input");
-			checkbox.type = "checkbox";
-			checkbox.name = "employeeCheckbox";
-			checkbox.value = empNo;
-			checkboxCell.appendChild(checkbox);
-			row.appendChild(checkboxCell);
-
-			var empNoCell = document.createElement("td");
-			empNoCell.textContent = empNo;
-			row.appendChild(empNoCell);
-
-			var empNameCell = document.createElement("td");
-			empNameCell.textContent = empName;
-			row.appendChild(empNameCell);
-
-			var empEmailCell = document.createElement("td");
-			empEmailCell.textContent = empEmail;
-			row.appendChild(empEmailCell);
-
-			var deptNameCell = document.createElement("td");
-			deptNameCell.textContent = deptName;
-			row.appendChild(deptNameCell);
-
-			var posNameCell = document.createElement("td");
-			posNameCell.textContent = posName;
-			row.appendChild(posNameCell);
-
-			var empTelCell = document.createElement("td");
-			empTelCell.textContent = empTel;
-			row.appendChild(empTelCell);
-
-			var empJoinDateCell = document.createElement("td");
-			empJoinDateCell.textContent = empJoinDate;
-			row.appendChild(empJoinDateCell);
-
-			var empStatusCell = document.createElement("td");
-			empStatusCell.textContent = empStatusText;
-			row.appendChild(empStatusCell);
-
-			tableBody.appendChild(row);
-		}
-	}
-
-	function moveToAddressBook() {
-		var selectedEmployees = getSelectedEmployees();
-
-		var xhr = new XMLHttpRequest();
-		xhr.open("POST", "${pageContext.request.contextPath}/address/friendList", true);
-		xhr.setRequestHeader("Content-Type", "application/json");
-
-		xhr.onreadystatechange = function() {
-			if (xhr.readyState === XMLHttpRequest.DONE) {
-				if (xhr.status === 200) {
-					var response = JSON.parse(xhr.responseText);
-					displayFriendList(response); // friendList를 표시할 함수 호출
-				} else {
-					console.error("Error:", xhr.statusText);
-				}
+	$(function(){
+		$(".btnSelectAll").click(function(){
+			let select = $(this).attr("data-select");
+			if(select === "0") {
+				$("form input[name=emp_nos]").not(":disabled").prop("checked", true);
+				$(this).attr("data-select", "1");
+				$(this).text("선택해제");
+			} else {
+				$("form input[name=emp_nos]").not(":disabled").prop("checked", false);
+				$(this).attr("data-select", "0");
+				$(this).text("전체선택");
 			}
-		};
+		});
+	});
+	
+	var contextPath = "${pageContext.request.contextPath}";
 
-		xhr.send(JSON.stringify({ selectedEmployees: selectedEmployees }));
-	}
-	
-	
-	
-	
-	
+	$(function(){
+		$("#btnDelete").click(function(){
+			let cnt = $("form input[name=emp_nos]:checked").length;
+			if(cnt === 0) {
+				alert("삭제할 주소록을 선택하세요");
+				return;
+			}
+			if(confirm("선택한 주소를 삭제하시겠습니까?")) {
+				const f = document.empListForm;
+				f.action = contextPath + "/address/delete";
+				f.submit();
+			}
+		});
+	});
+	  
 </script>
 
 
@@ -148,14 +75,14 @@
 							action="${pageContext.request.contextPath}/" method="post">
 							<div class="address-select">
 								<select name="condition" class="form-select">
-									<option value="subject"
-										${condition == "subject" ? "selected='selected'" : ""}>제목</option>
-									<option value="content"
-										${condition == "content" ? "selected='selected'" : ""}>내용</option>
 									<option value="all"
-										${condition == "all" ? "selected='selected'" : ""}>제목+내용</option>
-									<option value="name"
-										${condition == "name" ? "selected='selected'" : ""}>이름</option>
+										${condition == "all" ? "selected='selected'" : ""}>전체검색</option>
+									<option value="emp_no"
+										${condition == "emp_no" ? "selected='selected'" : ""}>사원번호</option>
+								     <option value="dept_name"
+										${condition == "dept_name" ? "selected='selected'" : ""}>부서이름</option>
+									<option value="emp_name"
+										${condition == "emp_name" ? "selected='selected'" : ""}>이름</option>
 								</select> <input type="text" name="keyword" value="${keyword}"
 									class="addInput" placeholder="검색어를 입력하세요">
 								<button type="button" class="btn" onclick="searchList();">검색</button>
@@ -166,13 +93,12 @@
 			</table>
 			<div class="address-button">
 				
-				<button type="button" class="btn" onclick="selectAll();">전체</button>
-				
-				<button type="button" class="btn" onclick="remove();">삭제</button>
+				<button type="button" class="btn btnSelectAll" data-select="0">전체선택</button>			
+				<button type="button" class="btn" id="btnDelete">삭제</button>
 
 			</div>
 		</div>
-
+<form name="empListForm" method="post">
 		<table class="table table-border table-list">
 
 			<thead>
@@ -190,22 +116,23 @@
 				</tr>
 			</thead>
 		  <tbody id="friendListTableBody">
-				<c:forEach var="dto" items="${paramValues.employeeCheckbox}" varStatus="status">
-					<tr>
-					    <td><input type="checkbox" name="employeeCheckbox" value="${dto.emp_no}"></td>
-						<td>${param["emp_no" + empNo]}</td>
-						<td>${param["emp_name" + emp_Name]}</td>
-						<td>${param["emp_email" + emp_Name]}</td>
-						<td>${param["dept_name" + emp_Name]}</td>
-						<td>${param["pos_name" + emp_Name]}</td>
-						<td>${param["emp_tel" + emp_Name]}</td>
-						<td>${param["emp_join_date" + emp_Name]}</td>
-					  <td>${param["emp_status_" + empNo] == '0' ? '재직' : (param["emp_status_" + empNo] == '1' ? '휴직' : '퇴사')}</td>
-					</tr>
+				<c:forEach var="dto" items="${list}" varStatus="status">
+					    <tr>
+						    <td><input type="checkbox" name="emp_nos" value="${dto.emp_no}"></td>
+							<td>${dto.emp_no}</td>
+							<td>${dto.emp_name}</td>
+							<td>${dto.emp_email}</td>
+							<td>${dto.dept_name}</td>
+							<td>${dto.pos_name}</td>
+							<td>${dto.emp_tel}</td>
+							<td>${dto.emp_join_date}</td>
+							<td>${dto.emp_status==0 ? "재직" : (dto.emp_status==1 ? "휴직" : "퇴사")}
+							</td>
+						</tr>
 				</c:forEach>
 			</tbody>
 		</table>
-
+</form>
 		<div class="page-navigation" style="width: 900px; margin: 0 auto;">
 		${dataCount == 0 ? "등록된 주소가 없습니다." : paging }
 
