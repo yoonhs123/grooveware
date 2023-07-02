@@ -213,8 +213,8 @@ $(function(){
          <li>
          
          <li>
-             <a href="#">설문조사</a>
-             <a href="#">&nbsp;설문리스트</a>
+             <a href="${pageContext.request.contextPath}/research/list">설문조사</a>
+             <a href="${pageContext.request.contextPath}/research/list">&nbsp;설문리스트</a>
              <a href="#">&nbsp;진행중인 설문</a>
              <a href="#">&nbsp;마감된 설문</a>
          <li>

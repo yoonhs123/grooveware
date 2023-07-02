@@ -8,14 +8,30 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.sp.grooveware.approval.ApprovalService;
+import com.sp.grooveware.goal.GoalService;
 import com.sp.grooveware.member.SessionInfo;
+import com.sp.grooveware.myInsa.MyInsaService;
+import com.sp.grooveware.notice.NoticeService;
 
 @Controller("dashBoard.DashBoardController")
 @RequestMapping("/dashboard/*")
 public class DashBoardController {
 	@Autowired
-	private DashBoardService service;
-
+	private DashBoardService dashService;
+	
+	@Autowired
+	private MyInsaService myInsaService;
+	
+	@Autowired
+	private ApprovalService approService;
+	
+	@Autowired
+	private GoalService goalService;
+	
+	@Autowired
+	private NoticeService notiService;
+	
 	
 	@RequestMapping(value="main")
 	public String dashBoard(
@@ -25,7 +41,7 @@ public class DashBoardController {
 		SessionInfo info = (SessionInfo)session.getAttribute("member");
 	
 	
-		WorkTime workTime = service.readWorkTime(info.getEmp_no());
+		WorkTime workTime = dashService.readWorkTime(info.getEmp_no());
 
 		model.addAttribute("workTime", workTime);
 		
@@ -47,10 +63,10 @@ public class DashBoardController {
 		
 		if(dto.getRecord_no() == 0) {
 			// 출근(insert)
-			service.insertWorkTime(dto);
+			dashService.insertWorkTime(dto);
 		} else {
 			// 퇴근(update)
-			service.updateWorkTime(dto);
+			dashService.updateWorkTime(dto);
 		}
 		
 		return "redirect:/dashboard/main";

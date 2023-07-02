@@ -10,7 +10,9 @@ public class Reservation {
 	private long emp_no;
 	private String meroom_resdate;
 	private String res_starttime;
-	private String res_enddate;
+	private String res_endtime;
+	private int starttime;
+	private int endtime;
 	private String res_content;
 	
 	public long getMeroom_id() {
@@ -61,11 +63,23 @@ public class Reservation {
 	public void setRes_starttime(String res_starttime) {
 		this.res_starttime = res_starttime;
 	}
-	public String getRes_enddate() {
-		return res_enddate;
+	public String getRes_endtime() {
+		return res_endtime;
 	}
-	public void setRes_enddate(String res_enddate) {
-		this.res_enddate = res_enddate;
+	public void setRes_endtime(String res_endtime) {
+		this.res_endtime = res_endtime;
+	}
+	public int getStarttime() {
+		return starttime;
+	}
+	public void setStarttime(int starttime) {
+		this.starttime = starttime;
+	}
+	public int getEndtime() {
+		return endtime;
+	}
+	public void setEndtime(int endtime) {
+		this.endtime = endtime;
 	}
 	public String getRes_content() {
 		return res_content;

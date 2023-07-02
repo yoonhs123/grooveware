@@ -15,18 +15,32 @@
     text-align: center;
   }
   
-  th {
+  .timetable th {
     background-color: #f2f2f2;
   }
   
-  td.time {
+  .timetable .time {
     font-weight: bold;
   }
   
-  td.empty {
-    background-color: #f7f7f7;
+  .timetable .empty {
+    background-color: #fff;
+  }
+
+  .timetable .reservation {
+    background-color: yellow;
+  }
+  .timetable .item {
+  	width: 100%; height: 100%;
   }
 </style>
+
+<script>
+function changeDate(date) {
+	let query = "date=" + date;
+	location.href="${pageContext.request.contextPath}/reservation/main?date=" + date;
+}
+</script>
 
 <div class="left-side-bar">
       <ul> 
@@ -46,84 +60,85 @@
 		<div class="table1" style="margin-bottom: 5px;">
 			<div><h2><span>|</span> 회의실 예약 - 시간대별 현황</h2></div>
 		</div>
-	</div>	
+	</div>
+	<div>
+		<div>
+			<button type="button" onclick="changeDate('${preDate}')">이전</button>
+			<span>${date}</span>
+			<button type="button" onclick="changeDate('${nextDate}')">다음</button>
+		</div>
+		<div class="res-button" style="text-align:right;">
+			<button type="button" onclick="location.href='${pageContext.request.contextPath}/reservation/write';" 
+					style="background-color: #eeeeee; border:none; font-size:13px; padding:5px 10px; border-radius: 7px;"> 예약 </button>
+		</div>
+	</div>
+	<br>
 	<table class="timetable">
 	  <tr>
-	    <th></th>
-	    <th>9</th>
-	    <th>10</th>
-	    <th>11</th>
-	    <th>12</th>
-	    <th>13</th>
-	    <th>14</th>
-	    <th>15</th>
-	    <th>16</th>
-	    <th>17</th>
-	    <th>18</th>
+	    <th colspan="2"></th>
+	    <th>9:00</th>
+	    <th>10:00</th>
+	    <th>11:00</th>
+	    <th>12:00</th>
+	    <th>13:00</th>
+	    <th>14:00</th>
+	    <th>15:00</th>
+	    <th>16:00</th>
+	    <th>17:00</th>
 	  </tr>
-	  <tr>
-	    <td>2층 소회의실</td>
-	    <td class="empty"></td>
-	    <td class="empty"></td>
-	    <td class="empty"></td>
-	    <td class="empty"></td>
-	    <td class="empty"></td>
-	    <td class="empty"></td>
-	    <td class="empty"></td>
-	    <td class="empty"></td>
-	    <td class="empty"></td>
-	    <td class="empty"></td>
+	  
+	  <c:forEach var="vo" items="${listMr}">
+	  	<tr>
+	  		<td>${vo.meroom_name}</td>
+	  		<td>
+	    		<button>보기</button>
+	    	</td>
+	    	
+	    	<c:forEach var="t" begin="9" end="17">
+	    		<td style="padding: 0;">
+	    			<c:set var="state" value="0"/>
+	    			<c:forEach var="m" items="${listByDate}">
+	    				<c:if test="${vo.meroom_id == m.meroom_id && (m.starttime==t || m.endtime==t || (m.starttime<t && m.endtime>t))}"><c:set var="state" value="1"/></c:if>
+	    			</c:forEach>
+	    			<c:if test="${state==0}"><div class="item empty">&nbsp;</div></c:if>
+	    			<c:if test="${state==1}"><div class="item reservation">&nbsp;</div></c:if>
+	    		</td>
+	    	</c:forEach>
+	    	
+	  	</tr>
+	  </c:forEach>
 
-	  </tr>
-	  <tr>
-	    <td>3층 소회의실</td>
-	    <td class="empty"></td>
-	    <td class="empty"></td>
-	    <td class="empty"></td>
-	    <td class="empty"></td>
-	    <td class="empty"></td>
-	    <td class="empty"></td>
-	    <td class="empty"></td>
-	    <td class="empty"></td>
-	    <td class="empty"></td>
-	    <td class="empty"></td>
-	  </tr>
-	  <tr>
-	    <td>3층 대회의실</td>
-	    <td class="empty"></td>
-	    <td class="empty"></td>
-	    <td class="empty"></td>
-	    <td class="empty"></td>
-	    <td class="empty"></td>
-	    <td class="empty"></td>
-	    <td class="empty"></td>
-	    <td class="empty"></td>
-	    <td class="empty"></td>
-	    <td class="empty"></td>
-	  </tr>
-	  <!-- 나머지 시간대에 대한 행들을 추가로 작성하시면 됩니다 -->
 	</table>
-		
+	<br>
+	<br>
 	<div class="title_container">
 		<div class="table1" style="margin-bottom: 5px;">
 			<div><h2><span>|</span> 내 예약 현황</h2></div>
 		</div>
 	</div>	
+	<br>
 	<table class="timetable">
+	<c:forEach var="dto" items="${list}">
 	  <tr>
 	    <th>자산</th>
 	    <th>이름</th>
-	    <th>예약 시간</th>
-	    <th>취소</th>
+	    <th>예약날짜</th>
+	    <th>예약시작시간</th>
+	    <th>예약종료시간</th>
+	    <th>예약</th>
 	  </tr>
 	  <tr>
-	    <td>회의실</td>
-	    <td>2층 소회의실</td>
-	    <td>2023.06.28 09:00 ~ 10:00 </td>
+	    <td>${dto.meroom_id}</td>
+	    <td>${dto.meroom_name}</td>
+	    <td>${dto.meroom_resdate} </td>
+	    <td>${dto.res_starttime} </td>
+	    <td>${dto.res_endtime}</td>
 	    <td>
+	    	<button>상세</button>
 	    	<button>취소</button>
 	    </td>
 	  </tr>
+	  </c:forEach>
 	</table>		
 </div>
 
