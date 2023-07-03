@@ -3,82 +3,99 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/club.css" type="text/css"> 
 
 <style type="text/css">
+
 .table1 {
     width: 100%;
-    color: #404040;
 }
+
+.table2 {
+    width: 100%;
+    text-align: center;
+    border: 1px solid #fff;
+    border-spacing: 1px;
+	margin: auto;
+}
+
 .table1 td {
     padding: 5px;
 }
-.table2 {
-	border-spacing: 0;
-    width: 100%;
-    text-align: center;
-	margin: auto;
-	color: #404040;
-}
-.table2 th, .table2 td {
+
+.table1 th {
+    background-color: #939393;
+    color: #fff;
     padding: 10px;
-    border-bottom: 1px solid #c1c1c1;
 }
+
+.table2 td {
+    padding: 10px;
+    background-color: #F3F3F3;
+}
+
 .table2 th {
+    background-color: #939393;
+   <!-- background-color: #333; -->
+    color: #fff;
     padding: 10px;
-    border-top: 2px solid #c1c1c1;
-    border-bottom: 2px solid #c1c1c1;
-    font-size: 16.5px;
 }
+
 img {
     width: 90px;
     height: 90px;
 }
 
-.search-form {
-    display: flex;
-    align-items: center;
-    margin-top: 5px;
-    margin-bottom: 5px;
-}
-.search-option,
-.search-input {
-	height: 30px;
-	margin-right: 5px;
-	border-radius: 5px;
-	border: 1px solid #ccc;
-	outline: none;
-}
-.search-option {
-    width: 100px;
-    padding-left: 5px;
-    color: #404040;
-}
-.search-input {
-    width: 200px;
-    padding: 5px 10px;
-}
-.search-button,
-.club-createbtn {
-	height: 30px;
-	border-radius: 5px;
-    padding: 5px 10px;
-    background-color: #CEDDEF; 
-    color: #404040;
+.read,
+.joinClub {
     border: none;
-    cursor: pointer;
-    font-weight: 600;
+    padding: 5px 10px;
+    color: #2f4f4f;
+    font-weight: bold;
 }
 
-.read,
-.joinClub,
-.enterClub {
-	height: 30px;
-    background-color: #eaeaea; 
-    border: none;
-	border-radius: 5px;
-    padding: 5px 10px;
-    font-weight: 600;
-    color: #404040;
+.read {
+    background-color: #03A9F4;
+}
+
+.joinClub {
+    background-color: #E91E63;
+}
+
+.club-form-select,
+.club-keywordform-control,
+.club-btn {
+  height: 30px;
+  padding: 5px 30px 5px 10px;
+  border-radius: 5px;
+  outline: 0 none;
+}
+
+.form-select{
+  width: 130px;
+}
+
+.club-keywordform-control{
+  width: 200px;
+}
+
+.btn{
+  width: 70px;
+}
+
+.form-select option {
+  
+}
+
+.club-createbtn,
+.club-read,
+.club-joinClub
+.club-enterClub{
+	background-color: #eeeeee; 
+	border:none; 
+	font-size:13px; 
+	padding:5px 10px; 
+	border-radius: 7px;
 }
 
 </style>
@@ -103,6 +120,8 @@ window.addEventListener("load", function(){
 	let total_page = pageCount(dataCount, pageSize);
 	let paging = pagingUrl(page, total_page, url);
 	
+	// document.querySelector(".dataCount").innerHTML = dataCount+"개 ("+page+"/"+total_page+"페이지)";
+
 	document.querySelector(".page-navigation").innerHTML = 
 		dataCount === 0 ? "등록된 게시물이 없습니다." : paging;
 });
@@ -197,7 +216,7 @@ $(function(){
      <ul>
          <li>
              <a href="${pageContext.request.contextPath}/club/list">커뮤니티</a>
-             <a href="${pageContext.request.contextPath}/club/list">&nbsp;사내 커뮤니티</a>
+             <a href="${pageContext.request.contextPath}/club/list">&nbsp;전체 커뮤니티</a>
              <a href="${pageContext.request.contextPath}/club/mylist">&nbsp;가입 커뮤니티</a>
          <li>
          
@@ -212,7 +231,6 @@ $(function(){
 
 <div class="right-contentbody">
 	<div class="board">
-	
 		<!-- 제목:타이틀 -->
 		<div class="title_container">
 		<table class="table1" style="margin-bottom: 5px;">
@@ -221,17 +239,16 @@ $(function(){
 				</td>
 			</tr>
 		</table>
-		
 		<table class="table1" style="margin-bottom: 5px;">
 			<tr>
 				<td>
-					<form name="searchForm" class="search-form" action="${pageContext.request.contextPath}/club/list " method="post">
-						<select name="condition" class="search-option">
+					<form name="searchForm" action="${pageContext.request.contextPath}/club/list " method="post">
+						<select name="condition" class="form-select">
 							<option value="all"  ${condition == "all" ? "selected='selected'" : ""} >커뮤니티</option>
 							<option value="name"  ${condition == "name" ? "selected='selected'" : ""} >운영자</option>
 						</select>
-						<input type="text" name="keyword" value="${keyword}" class="search-input" placeholder="검색어를 입력하세요">
-						<button type="button" class="search-button" onclick="searchList();">검색</button>
+						<input type="text" name="keyword" value="${keyword}" class="club-keywordform-control">
+						<button type="button" class="club-search-btn" onclick="searchList();">검색</button>
 					</form>
 				</td>
 				<td align="right">
@@ -244,7 +261,7 @@ $(function(){
 		</table>
 	 </div>
 	 
-	 <!-- 리스트: 커뮤니티 표 -->
+	 <!-- 리스트 표 -->
 	 <table class="table2">
         <thead>
             <tr>
@@ -255,7 +272,7 @@ $(function(){
 				<th> 운영자 </th>
 				<th> 개설일 </th>
 				<th> 소개 </th>
-				<th> 보기 </th>
+				<th> 클럽 </th>
             </tr>
         </thead>
         
@@ -268,10 +285,10 @@ $(function(){
                 <td> ${dto.emp_name} </td>
                 <td> ${dto.club_startdate} </td>
                 <td>
-                    <button type="button" class="read" onclick="read('${dto.club_id}')">소개</button></td>
+                    <button type="button" class="club-read" onclick="read('${dto.club_id}')">소개</button></td>
                 <td>    
-                    <button type="button" class="joinClub" data-club_id="${dto.club_id}">가입</button>
-					<button type="button" class="enterClub" data-club_id="${dto.club_id}">입장</button>
+                    <button type="button" class="club-joinClub" data-club_id="${dto.club_id}">가입</button>
+					<button type="button" class="club-enterClub" data-club_id="${dto.club_id}">입장</button>
                 </td>
             </tr>
             </c:forEach>

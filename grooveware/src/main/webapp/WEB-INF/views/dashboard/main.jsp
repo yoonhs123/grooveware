@@ -80,6 +80,7 @@ $(function(){
 });
 </script>
 
+<div>
 <div class="dContainer">
 
 	<div class="item1">
@@ -214,6 +215,7 @@ $(function(){
 			</div>
 		</div>
 	</div>
+</div>
 
 <form name="workTimeForm" method="post">
 	<input type="hidden" name="record_no">

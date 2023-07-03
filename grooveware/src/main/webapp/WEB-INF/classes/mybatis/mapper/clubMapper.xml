@@ -73,6 +73,7 @@
 		SELECT NVL(COUNT(*),0)
 		FROM club c
 		JOIN club_member cm ON c.club_id=cm.club_id
+		WHERE member_authority='0'
 		<where>
 			<if test="keyword != null and keyword != '' ">
 				<include refid="where-list"/>

@@ -3,6 +3,42 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+<style type="text/css">
+.club-board-title{
+	padding-bottom : 13px;
+	text-align : right;
+}
+.club-board-article{
+    width: 100%;
+    border-spacing: 0;
+	margin: auto;
+	color: #404040;
+}
+.club-board-article th, .club-board-article td {
+    padding: 10px;
+    border-top: 1px solid #c1c1c1;
+    border-bottom: 1px solid #c1c1c1;
+}
+.club-board-article th {
+    padding: 10px;
+    border-top: 1px solid #c1c1c1;
+    border-bottom: 1px solid #c1c1c1;
+    font-size: 16.5px;
+}
+.club-board-write-btn,
+.club-board-list-btn {
+	height: 30px;
+	border-radius: 5px;
+    padding: 5px 10px;
+    background-color: #CEDDEF; 
+    color: #404040;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    margin: 0 5px; 
+}
+
+</style>
 
 <div class="left-side-bar">
      <ul>
@@ -20,16 +56,30 @@
          <li>
      </ul>
 </div>
+
 <div class="right-contentbody" >
 	<div class="board">
 		<div class="title">
 			<h3>
-				<span>|</span> ${dto.club_name}
+				<span>|</span> ${dto.club_name} 게시글
 			</h3>
 		</div>
+		
+		<table class="club-board-title">
+				<tr>
+					<td class="text-end">
+						<button type="button" class="club-board-write-btn" 
+								onclick="location.href='${pageContext.request.contextPath}/club/${club_id}/board/list?board_category=${board_category}';">수정</button>
+					</td>
+					<td class="text-end">
+						<button type="button" class="club-board-list-btn" 
+								onclick="location.href='${pageContext.request.contextPath}/club/${club_id}/board/list?board_category=${board_category}';">리스트</button>
+					</td>
+				</tr>
+		</table>
+		
 		<div class="comm">
-		<table class="table table-border table-article"
-			style="margin-top: 20px;">
+		<table class="club-board-article">
 			<thead>
 				<tr>
 					<td colspan="2" align="center">
@@ -44,7 +94,7 @@
 							이름 : ${dto.emp_name}
 						</td>
 						<td align="right">
-							 ${dto.clubboard_regdate} | 조회 ${dto.clubboard_hitcount}
+							작성일&nbsp;${dto.clubboard_regdate}&nbsp; | &nbsp;조회&nbsp;${dto.clubboard_hitcount}
 					</td>
 				</tr>
 
@@ -72,14 +122,7 @@
 				</tr>
 			</tbody>
 		</table>
-		<table class="table table-borderless">
-				<tr>
-					<td width="50%">&nbsp;</td>
-					<td class="text-end">
-						<button type="button" class="btn btn-light" onclick="location.href='${pageContext.request.contextPath}/club/${club_id}/board/list?board_category=${board_category}';">리스트</button>
-					</td>
-				</tr>
-		</table>
+
 		
 		</div>
 	</div>

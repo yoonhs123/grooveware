@@ -6,105 +6,141 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/boot-board.css" type="text/css"> 
 
 <style type="text/css">
-.table1.right-align{
-	text-align:right;
+.club-board-table1, 
+.club-board-table2,
+.club-board-table3,
+.club-board-table4{
+ 	width:100%;
+}
+
+.club-board-table3{
+	margin-top: 20px;
+	margin-bottom: 20px;
 }
 
 .box bg-1{
-  width:100%;
-  color: #37474f;
-  border-color: #37474f;
+  display: flex;
   font-size: 16px;
   font-weight: 600;
-  border: 2px solid;
+  border: 1px solid;
   text-align: center;
+  justify-content: space-between;
 }
 
-.button {
-  float: left;
-  min-width: 100px;
-  max-width: 200px;
-  display: block;
-  margin: 10px;
+.op-button {
+  flex-basis: 25%;
+  width: 190px;
+  margin: 15px 15px 0 15px;
   padding: 10px;
   background: none;
   vertical-align: middle;
   position: relative;
   z-index: 1;
-  -webkit-backface-visibility: hidden;
-  -moz-osx-font-smoothing: grayscale;
 }
-.button:focus {
+.op-button:focus {
   outline: none;
 }
-.button > span {
+.op-button > span {
   vertical-align: middle;
 }
-
-.button--wayra {
+.op-button--wayra {
   overflow: hidden;
-  width: 100%;
-  -webkit-transition: border-color 0.3s, color 0.3s;
-  transition: border-color 0.3s, color 0.3s;
-  -webkit-transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
-  transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
+  letter-spacing: 1.5px;
+  font-size: 15px;
 }
-.button--wayra::before {
-  content: '';
+.op-button--wayra::before {
   position: absolute;
   top: 0;
   left: 0;
   width: 150%;
   height: 100%;
-  background: #37474f;
+  background-color: #243A73;
   z-index: -1;
-  -webkit-transform: rotate3d(0, 0, 1, -45deg) translate3d(0, -3em, 0);
-  transform: rotate3d(0, 0, 1, -45deg) translate3d(0, -3em, 0);
-  -webkit-transform-origin: 0% 100%;
-  transform-origin: 0% 100%;
-  -webkit-transition: -webkit-transform 0.3s, opacity 0.3s, background-color 0.3s;
-  transition: transform 0.3s, opacity 0.3s, background-color 0.3s;
 }
-.button--wayra:hover {
+.op-button--wayra:hover {
   color: #fff;
-  border-color: #3f51b5;
+  border-color: #243A73;
+  background-color: #243A73;
 }
-.button--wayra.button--inverted:hover {
-  color: #3f51b5;
-  border-color: #fff;
+.op-button--wayra.button--inverted:hover {
+  color: #404040;
+  border-color: #243A73;
 }
-.button--wayra:hover::before {
+.op-button--wayra:hover::before {
   opacity: 1;
-  background-color: #3f51b5;
-  -webkit-transform: rotate3d(0, 0, 1, 0deg);
-  transform: rotate3d(0, 0, 1, 0deg);
-  -webkit-transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
-  transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
+  background-color: #243A73;
 }
-.button--wayra.button--inverted:hover::before {
-  background-color: #fff;
+.op-button--wayra.button--inverted:hover::before {
+  background-color: #243A73;
 }
-
-.table1, .table2{
- width:100%;
-}
-
 .btnActive {
   color: #fff;
   opacity: 1;
-  background-color: #3f51b5;
-  -webkit-transform: rotate3d(0, 0, 1, 0deg);
-  transform: rotate3d(0, 0, 1, 0deg);
-  -webkit-transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
-  transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
+  background-color: #243A73;
 }
 
+.search-form {
+    display: flex;
+    align-items: center;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+.search-option,
+.search-input {
+	height: 30px;
+	margin-right: 5px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	outline: none;
+}
+.search-option {
+    width: 100px;
+    padding-left: 5px;
+    color: #404040;
+}
+.search-input {
+    width: 200px;
+    padding: 5px 10px;
+}
+.search-button,
+.board-createbtn {
+	height: 30px;
+	border-radius: 5px;
+    padding: 5px 10px;
+    background-color: #CEDDEF; 
+    color: #404040;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+td.write-btn{
+	text-align:right;
+}
+
+.club-board-table4 {
+    width: 100%;
+    border-spacing: 0;
+    text-align: center;
+	margin: auto;
+	color: #404040;
+}
+.club-board-table4 th, .club-board-table4 td {
+    padding: 10px;
+    border-bottom: 1px solid #c1c1c1;
+}
+.club-board-table4 th {
+    padding: 10px;
+    border-top: 2px solid #c1c1c1;
+    border-bottom: 2px solid #c1c1c1;
+    font-size: 16.5px;
+}
 </style>
 
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/paginate.js"></script>
 
-<c:url var="listUrl" value="/club/${club_id}/notice/list">
-	<c:param name="club_noti_no" value="${dto.club_noti_no}"/>
+<c:url var="listUrl" value="/club/${club_id}/board/list?board_category=${board_category}">
+	<c:param name="club_board_no" value="${dto.club_board_no}"/>
 	<c:param name="page" value="${page}"/>
 	<c:if test="${not empty keyword}">
 		<c:param name="condition" value="${condition}"/>
@@ -122,8 +158,6 @@ window.addEventListener("load", function(){
 	let total_page = pageCount(dataCount, pageSize);
 	let paging = pagingUrl(page, total_page, url);
 	
-	// document.querySelector(".dataCount").innerHTML = dataCount+"개 ("+page+"/"+total_page+"페이지)";
-
 	document.querySelector(".page-navigation").innerHTML = 
 		dataCount === 0 ? "등록된 게시물이 없습니다." : paging;
 });
@@ -154,11 +188,9 @@ function searchList() {
      </ul>
 </div>
 <div class="right-contentbody">
-	
-	
 	<div class="board">
 		<div class="title_container">
-			<table class="table1" style="margin-bottom: 5px;">
+			<table class="club-board-table1">
 				<tr>
 					<td class="title"> 
 						<h3>
@@ -167,78 +199,42 @@ function searchList() {
 					</td>
 				</tr>
 			</table>
-
-			    <div class="box bg-1">
-			      <button class="button button--wayra btnActive" 
-			      		onclick="location.href='${pageContext.request.contextPath}/club/${club_id}/notice/list';">공지사항</button>
-			      <button class="button button--wayra" 
-			      		onclick="location.href='${pageContext.request.contextPath}/club/${club_id}/board/list?board_category=0';">가입인사</button>
-			      <button class="button button--wayra" 
-			      		onclick="location.href='${pageContext.request.contextPath}/club/${club_id}/board/list?board_category=1';">자유게시판</button>
-			      <button class="button button--wayra"
-			      		onclick="location.href='${pageContext.request.contextPath}/club/${club_id}/member/list';">커뮤니티 맴버</button>
-			    </div>
-
-			<table class="table2" style="margin-bottom: 5px;">
+			<table class="club-board-table2">
 				<tr>
 					<td>
-						<form name="searchForm" action="${pageContext.request.contextPath}/club/${club_id}/list" method="post">
-							<select name="condition" class="form-select">
-								<option value="all"  ${condition == "all" ? "selected='selected'" : ""} >제목+내용</option>
-								<option value="userName" ${condition=="userName"?"selected='selected'":""}>작성자</option>
-								<option value="reg_date" ${condition=="reg_date"?"selected='selected'":""}>등록일</option>
-								<option value="subject" ${condition=="subject"?"selected='selected'":""}>제목</option>
-								<option value="content" ${condition=="content"?"selected='selected'":""}>내용</option>
-							</select>
-							<input type="text" name="keyword" value="${keyword}" class="keywordform-control">
-							<button type="button" class="btn" onclick="searchList();">검색</button>
-						</form>
-					</td>
-					<td class="right-align">
-						<div>
-							<button type="button" onclick="location.href='${pageContext.request.contextPath}/club/${club_id}/notice/write';" 
-							style="background-color: #eeeeee; border:none; font-size:13px; padding:5px 10px; border-radius: 7px;"> 작성 </button>
-						</div>
-					</td>
-				</tr>
+			    		<div class="box bg-1">
+						  <button class="op-button op-button--wayra " 
+					      		  onclick="location.href='${pageContext.request.contextPath}/club/${club_id}/notice/list';">공지사항</button>
+					      <button class="op-button op-button--wayra" 
+					      		  onclick="location.href='${pageContext.request.contextPath}/club/${club_id}/board/list?board_category=0';">가입인사</button>
+					      <button class="op-button op-button--wayra" 
+					      		  onclick="location.href='${pageContext.request.contextPath}/club/${club_id}/board/list?board_category=1';">자유게시판</button>
+					      <button class="op-button op-button--wayra btnActive"
+					      		  onclick="location.href='${pageContext.request.contextPath}/club/${club_id}/member/list';">커뮤니티 맴버</button>
+		   				</div>
+		   			</td>
+ 			 	</tr>
 			</table>
-		 </div>
 		 
-	<table class="table table-border table-list">
+	<table class="club-board-table4">
 		<thead>
-				<tr>
-					<th> 번호 </th> 
-					<th> 제목 </th>
-					<th> 작성자 </th>
-					<th> 작성일 </th>
-					<th> 조회수 </th>
-					<th> 파일 </th>
-				</tr>
+			<tr>
+				<th> 번호 </th> 
+				<th> 사원이름 </th>
+				<th> 부서명 </th>
+				<th> 직위명 </th>
+				<th> 가입일 </th>
+			</tr>
 		</thead>
 			
 		<tbody> 
 			<c:forEach var="dto" items="${list}" varStatus="status">
 				<tr>
 					<td> ${dataCount - (page-1) * size - status.index} </td>
-					<td align="left">
-						<c:url var="url" value="/club/${club_id}/notice/article">
-							<c:param name="club_noti_no" value="${dto.club_noti_no}"/>
-							<c:param name="page" value="${page}"/>
-							<c:if test="${not empty keyword}">
-								<c:param name="condition" value="${condition}"/>
-								<c:param name="keyword" value="${keyword}"/>
-							</c:if>									
-						</c:url>					
-						<a href="${url}">${dto.club_noti_title}</a>
-					</td>								
-					<td> ${dto.emp_name}</td>
-					<td> ${dto.club_noti_regdate} </td>
-					<td> ${dto.club_noti_hitcount} </td>
-					<td>
-						<c:if test="${not empty dto.save_filename}">
-							<a href="<c:url value='/club/${club_id}/notice/download?club_noti_no=${dto.club_noti_no}'/>" class="text-reset"><i class="bi bi-file-arrow-down"></i></a>
-						</c:if>
-					</td>
+					<td> ${dto.emp_name}</td>								
+					<td> 인사팀</td>
+					<td> 대리 </td>
+					<td> 2000-01-01 </td>
 				</tr>
 			</c:forEach>
 		</tbody>
@@ -247,6 +243,7 @@ function searchList() {
 
 	<div class="page-navigation" style="width: 900px; margin: 0 auto;"></div>
 	
+		</div>
 	</div>
 </div>
 

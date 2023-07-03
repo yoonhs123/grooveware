@@ -7,6 +7,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.sp.grooveware.member.SessionInfo;
+
 @Controller("research.ResearchController")
 @RequestMapping("/research/*")
 public class ResearchController {
@@ -16,10 +18,39 @@ public class ResearchController {
 		return ".research.list";
 	}
 	
-	@RequestMapping(value = "write", method = RequestMethod.GET)
-	public String writeForm(Model model, HttpSession session) throws Exception {
+	@RequestMapping(value = "multipleForm", method = RequestMethod.GET)
+	public String writeMultipleForm(Model model, HttpSession session) throws Exception {
 	    model.addAttribute("mode", "write");
-	    return ".research.write";
+	    return ".research.multipleForm";
+	}
+	
+	@RequestMapping(value = "multipleForm", method = RequestMethod.POST)
+	public String writeMultipleSubmit(Model model, HttpSession session) throws Exception {
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		try {
+			
+		} catch (Exception e) {
+			
+		}
+		
+		return "redirect:/research/list";
+	}
+	
+	@RequestMapping(value = "shortForm", method = RequestMethod.GET)
+	public String writeShortForm(Model model, HttpSession session) throws Exception {
+		model.addAttribute("mode", "write");
+		return ".research.shortForm";
+	}
+	
+	@RequestMapping(value = "shortForm", method = RequestMethod.POST)
+	public String writeShortSubmit(Model model, HttpSession session) throws Exception {
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		try {
+			
+		} catch (Exception e) {
+			
+		}
+		return "redirect:/research/list";
 	}
 	
 }
