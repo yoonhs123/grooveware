@@ -90,8 +90,10 @@ public class AddressServiceImpl implements AddressService {
 		
 		try {
 			
-			
-			dao.deleteData("address.deleteAddressFriend");
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("emp_no", emp_no);
+			map.put("list", emp_nos);
+			dao.deleteData("address.deleteAddressFriend", map);
 			
 		} catch (Exception e) {
 			e.printStackTrace();

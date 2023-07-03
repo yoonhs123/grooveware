@@ -38,7 +38,7 @@
 			 <div class="chat-main">
 				<div class="col-8">
 					<p class="form-control-plaintext fs-6"><i class="bi bi-chevron-double-right"></i> 채팅 메시지</p>
-					<div class="border p-3 chat-msg-container"></div>
+					<div class="chat-msg-container"></div>
 					<div class="mt-2">
 						<input type="text" id="chatMsg" class="form-control" 
 							placeholder="채팅 메시지를 입력 하세요...">
@@ -46,7 +46,7 @@
 				</div>
 				<div class="col-4">
 					<p class="form-control-plaintext fs-6"><i class="bi bi-chevron-double-right"></i> 접속자 리스트</p>
-					<div class="border p-3 chat-connection-list"></div>
+					<div class="chat-connection-list"></div>
 				</div>
 			</div>
 		</div>

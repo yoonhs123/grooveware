@@ -191,26 +191,13 @@ public class addressController {
 	
 	@RequestMapping(value = "delete")
 	public String delete(	
-			@RequestParam Long emp_no,
 			@RequestParam List<Long> emp_nos,
-			@RequestParam String page,
-			@RequestParam(defaultValue = "all") String condition,
-			@RequestParam(defaultValue = "") String keyword,
 			HttpSession session) throws Exception {
 		SessionInfo info = (SessionInfo) session.getAttribute("member");
-
-		keyword = URLDecoder.decode(keyword, "utf-8");
-		String query = "page=" + page;
-		if (keyword.length() != 0) {
-			query += "&condition=" + condition + "&keyword=" + URLEncoder.encode(keyword, "UTF-8");
-		}
-
 		
         service.deleteAddressFriend(info.getEmp_no(), emp_nos);
 
-		
-
-        return "redirect:/address/friendList?"+query;
+        return "redirect:/address/friendList";
 	}
 
 	

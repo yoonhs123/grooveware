@@ -108,8 +108,12 @@
 	 </select>
   
      <delete id="deleteAddressFriend" parameterType="map">
-         DELETE FROM addresss
-         WHERE emp_no = #{emp_no} 
+         DELETE FROM address
+         WHERE emp_no = #{emp_no} AND
+           friend_no IN
+           <foreach collection="list" item="friend_no" open="(" close=")" separator=",">
+           		#{friend_no}
+           </foreach>
      </delete>
   
      

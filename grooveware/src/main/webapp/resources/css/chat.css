@@ -4,12 +4,30 @@
 <style type="text/css">
 .chat-main {
 	
-	display: flex;
-	flex-wrap: wrap;
-	margin-right: -15px;
-	margin-left: -15px;
-	
+
 }
+
+.chat-msg-container {
+    flex-direction: column;
+    height: 310px;
+    width: 400px;
+    background-color: #f8f9fa;
+    border: 1px solid #ccc;
+    border-radius: 0.25rem;
+   
+}
+
+.chat-connection-list {
+
+    flex-direction: column;
+    height: 310px;
+    width: 400px;
+    background-color: #f8f9fa;
+    border: 1px solid #ccc;
+    border-radius: 0.25rem;
+    overflow-y: scroll;
+}
+
 
 .chat-list {
 	
@@ -17,6 +35,11 @@
 	flex-wrap: wrap;
     background-color: #FFFFFF;
     padding: 20px;
+    width: 200px;
+    background-color: #f8f9fa;
+    border: 1px solid #ccc;
+    border-radius: 0.25rem;
+    overflow-y: scroll;
 }
 	
 }
