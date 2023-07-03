@@ -19,18 +19,25 @@
 			<a href="${pageContext.request.contextPath}/myInsa/profile">나의 인사정보</a> 
 			<a href="${pageContext.request.contextPath}/myInsa/profile">&nbsp;인사정보</a> 
 			<a href="${pageContext.request.contextPath}/myInsa/insaCard">&nbsp;인사기록카드</a> 
-			<a href="#">&nbsp;내 출근 기록</a> 
+			<a href="${pageContext.request.contextPath}/myInsa/workRecord">&nbsp;내 출근 기록</a> 
 			<a href="#">&nbsp;내 휴가 기록</a>
 		</li>
-		<!-- <li class="insateam">  -->
-		<li>
-			<a href="${pageContext.request.contextPath}/insaManage/list">인사관리</a> 
-			<a href="${pageContext.request.contextPath}/insaManage/list">&nbsp;사원관리</a>
-			<a href="#">&nbsp;근태관리</a>
-			<a href="#">&nbsp;휴가관리</a> 
-			<a href="#">&nbsp;휴가설정</a> 
-			<a href="#">&nbsp;조직도</a>
-		</li>
+		<c:choose>
+        <c:when test="${sessionScope.member.dept_no >= 60 && sessionScope.member.dept_no <= 70}">
+            <!-- dept_no가 60~70 사이일 때만 아래 <li> 태그들이 보이도록 처리하기 -->
+            <li>
+                <a href="${pageContext.request.contextPath}/insaManage/list">인사관리</a>
+                <a href="${pageContext.request.contextPath}/insaManage/list">&nbsp;사원관리</a>
+                <a href="${pageContext.request.contextPath}/insaManage/workList">&nbsp;근태관리</a>
+                <a href="#">&nbsp;휴가관리</a>
+                <a href="#">&nbsp;휴가설정</a>
+                <a href="#">&nbsp;조직도</a>
+            </li>
+        </c:when>
+        <c:otherwise>
+            <!-- dept_no가 60~ 70 사이가 아닐 때는 두 번째 <li> 태그를 출력하지 않게 -->
+        </c:otherwise>
+   	 	</c:choose>
 	</ul>
 </div>
 
@@ -64,15 +71,7 @@
 							</select>
 						</div>
 					</div>
-					<div class="employee-info">
-						<div class="picture">사진</div>
-						<div class="person-info">
-							<div class="person-name" style="float: left;">김대리</div>
-							<div class="team">개발</div>
-							<div class="position">대리</div>
-						</div>
-					</div>
-					<div class="total-worktime">
+					<div class="total-worktime" style="">
 						<table class="table table-border table-list total-worktime" style="padding:30px 0px 0px 30px;">
 							<tr>
 								<th width="14%">연차휴가</th>
@@ -86,11 +85,11 @@
 
 							<tr>
 								<td>0일</td>
-								<td>21회</td>
-								<td>0회</td>
-								<td>0일</td>
-								<td>0일</td>
-								<td>0일</td>
+								<td>${dto.work_Count}일</td>
+								<td>${dto.workLate_Count}일</td>
+								<td>${dto.workAbsence_Count}일</td>
+								<td>${dto.workLateEarly_Count}일</td>
+								<td>${dto.workLateEarly_Count}일</td>
 								<td>0일</td>
 							</tr>
 						</table>
@@ -106,43 +105,25 @@
 									<th>비고</th>
 								</tr>
 							</thead>
-							<tbody>
-								<tr>
-									<td>01</td>
-									<td>데이터</td>
-									<td>데이터</td>
-									<td>데이터</td>
+							<tbody style="text-align: center;">
+								<c:forEach var="dto" items="${list}" varStatus="status">
+									<tr>
+									<td>${dto.work_day}</td>
+									<td>${dto.work_starttime}</td>
+									<td>${dto.work_endtime}</td>
+									<td>
+										${dto.work_status == 0 ? "정상출근" : (dto.work_status == 1 ? "지각" : (dto.work_status == 2 ? "결근" : (dto.work_status == 3 ? "조퇴" : "" )))}
+									</td>
 								</tr>
-								<tr>
-									<td>02</td>
-									<td>데이터</td>
-									<td>데이터</td>
-									<td>데이터</td>
-								</tr>
-								<tr>
-									<td>03</td>
-									<td>데이터</td>
-									<td>데이터</td>
-									<td>데이터</td>
-								</tr>
-								<tr>
-									<td>04</td>
-									<td>데이터</td>
-									<td>데이터</td>
-									<td>데이터</td>
-								</tr>
-								<tr>
-									<td>05</td>
-									<td>데이터</td>
-									<td>데이터</td>
-									<td>데이터</td>
-								</tr>
+								</c:forEach>
 							</tbody>
 						</table>
 
 
 					</div>
-					<div class="page-navigation" style="width: 900px; margin: 0 auto;">${dataCount == 0 ? "등록된 게시물이 없습니다." : paging} 1 2 3</div>
+					<div class="page-navigation" style="width: 900px; margin: 0 auto;">
+						${dataCount == 0 ? "등록된 게시물이 없습니다." : paging}
+					</div>
 					
 				</div>
 			</div>

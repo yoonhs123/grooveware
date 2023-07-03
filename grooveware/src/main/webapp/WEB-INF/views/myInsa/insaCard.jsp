@@ -20,18 +20,25 @@ $(function() {
 			<a href="${pageContext.request.contextPath}/myInsa/profile">나의 인사정보</a> 
 			<a href="${pageContext.request.contextPath}/myInsa/profile">&nbsp;인사정보</a> 
 			<a href="${pageContext.request.contextPath}/myInsa/insaCard">&nbsp;인사기록카드</a> 
-			<a href="#">&nbsp;내 출근 기록</a> 
+			<a href="${pageContext.request.contextPath}/myInsa/workRecord">&nbsp;내 출근 기록</a> 
 			<a href="#">&nbsp;내 휴가 기록</a>
 		</li>
-		<!-- <li class="insateam">  -->
-		<li>
-			<a href="${pageContext.request.contextPath}/insaManage/list">인사관리</a> 
-			<a href="${pageContext.request.contextPath}/insaManage/list">&nbsp;사원관리</a>
-			<a href="#">&nbsp;근태관리</a>
-			<a href="#">&nbsp;휴가관리</a> 
-			<a href="#">&nbsp;휴가설정</a> 
-			<a href="#">&nbsp;조직도</a>
-		</li>
+		<c:choose>
+        <c:when test="${sessionScope.member.dept_no >= 60 && sessionScope.member.dept_no <= 70}">
+            <!-- dept_no가 60~70 사이일 때만 아래 <li> 태그들이 보이도록 처리하기 -->
+            <li>
+                <a href="${pageContext.request.contextPath}/insaManage/list">인사관리</a>
+                <a href="${pageContext.request.contextPath}/insaManage/list">&nbsp;사원관리</a>
+                <a href="${pageContext.request.contextPath}/insaManage/workList">&nbsp;근태관리</a>
+                <a href="#">&nbsp;휴가관리</a>
+                <a href="#">&nbsp;휴가설정</a>
+                <a href="#">&nbsp;조직도</a>
+            </li>
+        </c:when>
+        <c:otherwise>
+            <!-- dept_no가 60~ 70 사이가 아닐 때는 두 번째 <li> 태그를 출력하지 않게 -->
+        </c:otherwise>
+   	 	</c:choose>
 	</ul>
 </div>
 
@@ -65,17 +72,17 @@ $(function() {
 		<tr class="my-insa">
 			<th style="width: 16.6%;">연도</th>
 			<th style="width: 16.6%;">정상출근</th>
-			<th style="width: 16.6%;">연차휴가</th>
 			<th style="width: 16.6%;">지각</th>
 			<th style="width: 16.6%;">결근</th>
 			<th style="width: 16.6%;">조퇴</th>
+			<th style="width: 16.6%;">연차휴가</th>
 		</tr>
 		<tr>
-			<td>?</td>
-			<td>?</td>
-			<td>?</td>
-			<td>?</td>
-			<td>?</td>
+			<td>${dto2.work_year}년</td>
+			<td>${dto2.work_Count}일</td>
+			<td>${dto2.workLate_Count}일</td>
+			<td>${dto2.workAbsence_Count}일</td>
+			<td>${dto2.workLateEarly_Count}일</td>
 			<td>?</td>
 		</tr>
 	</table>

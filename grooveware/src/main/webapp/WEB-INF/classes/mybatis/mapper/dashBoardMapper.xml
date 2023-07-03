@@ -3,10 +3,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="dashBoard">
 	<!-- 출퇴근 기록 - 출근찍기 -->
-	<insert id="insertWorkTime" parameterType="com.sp.grooveware.dashBoard.WorkTime">
+	<update id="insertWorkTime" parameterType="com.sp.grooveware.dashBoard.WorkTime">
 		INSERT INTO worktime_recode (record_no, emp_no, work_starttime, work_status)
-		VALUES(WORKTIME_RECODE_SEQ.NEXTVAL, #{emp_no}, SYSDATE, 0)
-	</insert>
+        VALUES (WORKTIME_RECODE_SEQ.NEXTVAL, #{emp_no}, SYSDATE, 
+        CASE 
+            WHEN TO_CHAR(SYSDATE, 'HH24:MI:SS') &lt;= '09:00:00' THEN 0
+            WHEN TO_CHAR(SYSDATE, 'HH24:MI:SS') &gt; '09:00:00' AND TO_CHAR(SYSDATE, 'HH24:MI:SS') &lt; '18:00:00' THEN 1
+            ELSE 2	
+        END)
+	</update>
 
 	<!-- 당일 출퇴근기록 보기 -->
 	<select id="readWorkTime" parameterType="Long" resultType="com.sp.grooveware.dashBoard.WorkTime">
@@ -18,7 +23,10 @@
 	
 	<!-- 출퇴근 기록 - 퇴근찍기 -->
 	<update id="updateWorkTime" parameterType="com.sp.grooveware.dashBoard.WorkTime">
-		UPDATE worktime_recode SET work_endtime=SYSDATE
+		UPDATE worktime_recode 
+		SET work_endtime=SYSDATE,
+			work_status = CASE WHEN TO_CHAR(SYSDATE, 'HH24:MI:SS') &lt; '18:00:00' THEN 3
+				ELSE work_status END
 		WHERE record_no=#{record_no} AND emp_no=#{emp_no}
 	</update>
 	

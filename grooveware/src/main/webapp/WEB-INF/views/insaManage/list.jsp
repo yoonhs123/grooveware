@@ -115,18 +115,25 @@ $(function() {
 			<a href="${pageContext.request.contextPath}/myInsa/profile">나의 인사정보</a> 
 			<a href="${pageContext.request.contextPath}/myInsa/profile">&nbsp;인사정보</a> 
 			<a href="${pageContext.request.contextPath}/myInsa/insaCard">&nbsp;인사기록카드</a> 
-			<a href="#">&nbsp;내 출근 기록</a> 
+			<a href="${pageContext.request.contextPath}/myInsa/workRecord">&nbsp;내 출근 기록</a> 
 			<a href="#">&nbsp;내 휴가 기록</a>
 		</li>
-		<!-- <li class="insateam">  -->
-		<li>
-			<a href="${pageContext.request.contextPath}/insaManage/list">인사관리</a> 
-			<a href="${pageContext.request.contextPath}/insaManage/list">&nbsp;사원관리</a>
-			<a href="#">&nbsp;근태관리</a>
-			<a href="#">&nbsp;휴가관리</a> 
-			<a href="#">&nbsp;휴가설정</a> 
-			<a href="#">&nbsp;조직도</a>
-		</li>
+		<c:choose>
+        <c:when test="${sessionScope.member.dept_no >= 60 && sessionScope.member.dept_no <= 70}">
+            <!-- dept_no가 60~70 사이일 때만 아래 <li> 태그들이 보이도록 처리하기 -->
+            <li>
+                <a href="${pageContext.request.contextPath}/insaManage/list">인사관리</a>
+                <a href="${pageContext.request.contextPath}/insaManage/list">&nbsp;사원관리</a>
+                <a href="${pageContext.request.contextPath}/insaManage/workList">&nbsp;근태관리</a>
+                <a href="#">&nbsp;휴가관리</a>
+                <a href="#">&nbsp;휴가설정</a>
+                <a href="#">&nbsp;조직도</a>
+            </li>
+        </c:when>
+        <c:otherwise>
+            <!-- dept_no가 60~ 70 사이가 아닐 때는 두 번째 <li> 태그를 출력하지 않게 -->
+        </c:otherwise>
+   	 	</c:choose>
 	</ul>
 </div>
    <div class="right-contentbody">
@@ -174,17 +181,17 @@ $(function() {
    					</thead>
    					
    					<tbody>
-   						<c:forEach var="dto" items="${list}" varStatus="status">
+   						<c:forEach var="list" items="${list}" varStatus="status">
    							<tr>
    							<td> ${dataCount - (page-1) * size - status.index} </td>
-   							<td> ${dto.emp_no} </td>
-   							<td> ${dto.emp_name} </td>
-   							<td> ${dto.dept_name} </td>
-   							<td> ${dto.pos_name} </td>
-   							<td> ${dto.emp_join_date} </td>
-   							<td> ${dto.emp_resign_date} </td>
+   							<td> ${list.emp_no} </td>
+   							<td> ${list.emp_name} </td>
+   							<td> ${list.dept_name} </td>
+   							<td> ${list.pos_name} </td>
+   							<td> ${list.emp_join_date} </td>
+   							<td> ${list.emp_resign_date} </td>
    							<td>
-   								${dto.emp_status==0 ? "재직" : (dto.emp_status==1 ? "휴직" : "퇴사")}
+   								${list.emp_status==0 ? "재직" : (list.emp_status==1 ? "휴직" : "퇴사")}
    							</td>
    							<td>
 							  <div class="more">

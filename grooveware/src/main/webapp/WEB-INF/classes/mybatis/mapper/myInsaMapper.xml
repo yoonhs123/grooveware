@@ -56,5 +56,38 @@
 			emp_picture = #{emp_picture}
 		WHERE emp_no = #{emp_no}
 	</update>
+	
+	
+	
+	<!--  출퇴근 리스트  -->
+	<select id="dataCount" parameterType="map" resultType="Integer">
+		SELECT COUNT(*)
+		FROM worktime_recode
+	</select>
+	
+	<select id="listWorkRecord" resultType="com.sp.grooveware.myInsa.MyInsa">
+		SELECT record_no, emp_no, 
+		TO_CHAR(work_starttime, 'MM/DD') work_day, 
+		TO_CHAR(work_starttime, 'HH24:MI') work_starttime, 
+		TO_CHAR(work_endtime, 'HH24:MI') work_endtime, work_status 
+		FROM worktime_recode 
+		WHERE emp_no = #{emp_no}
+	</select>
+	
+	
+	<!-- 출근일, 지각일, 결근일 구하기 -->
+	<select id="workCount" parameterType="Long" resultType="com.sp.grooveware.myInsa.MyInsa">
+		SELECT EXTRACT(YEAR FROM work_starttime) AS work_year,
+	        COUNT(CASE WHEN work_status = 0 THEN 1 END) AS work_Count,
+	        COUNT(CASE WHEN work_status = 1 THEN 1 END) AS workLate_Count,
+	        COUNT(CASE WHEN work_status = 2 THEN 1 END) AS workAbsence_Count,
+	       	COUNT(CASE WHEN work_status = 3 THEN 1 END) AS workLateEarly_Count 
+	    FROM worktime_recode
+	    WHERE emp_no = #{emp_no}
+	    GROUP BY EXTRACT(YEAR FROM work_starttime)
+	</select>
+	
+ 	
+	
 
 </mapper>

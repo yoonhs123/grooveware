@@ -1,5 +1,8 @@
 package com.sp.grooveware.myInsa;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -78,5 +81,48 @@ public class MyInsaServiceImpl implements MyInsaService {
 			throw e;
 		}
 	}
+
+	
+	@Override
+	public int dataCount(Map<String, Object> map) {
+		int result = 0;
+		
+		try {
+			result = dao.selectOne("myInsa.dataCount", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	
+	@Override
+	public List<MyInsa> readWorkTime(Map<String, Object> map, long emp_no) {
+		List<MyInsa> list = null;
+		
+		try {
+			list = dao.selectList("myInsa.listWorkRecord", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+
+	@Override
+	public MyInsa getWork(long emp_no) {
+		MyInsa dto = null;
+		
+		try {
+			dto = dao.selectOne("myInsa.workCount", emp_no);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return dto;
+	}
+
+	
 	
 }

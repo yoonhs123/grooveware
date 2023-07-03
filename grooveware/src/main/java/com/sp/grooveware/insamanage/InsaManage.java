@@ -44,7 +44,79 @@ public class InsaManage {
 	private String pos_name;
 	private long top_pos_no;
 	
+	private long record_no;
+	private String work_day;
+	private String work_starttime;
+	private String work_endtime;
+	private String work_status;
 	
+	private String work_year;
+	private long work_Count;
+	private long workLate_Count;
+	private long workAbsence_Count;
+	private long workLateEarly_Count;
+
+	
+	public long getRecord_no() {
+		return record_no;
+	}
+	public void setRecord_no(long record_no) {
+		this.record_no = record_no;
+	}
+	public String getWork_day() {
+		return work_day;
+	}
+	public void setWork_day(String work_day) {
+		this.work_day = work_day;
+	}
+	public String getWork_starttime() {
+		return work_starttime;
+	}
+	public void setWork_starttime(String work_starttime) {
+		this.work_starttime = work_starttime;
+	}
+	public String getWork_endtime() {
+		return work_endtime;
+	}
+	public void setWork_endtime(String work_endtime) {
+		this.work_endtime = work_endtime;
+	}
+	public String getWork_status() {
+		return work_status;
+	}
+	public void setWork_status(String work_status) {
+		this.work_status = work_status;
+	}
+	public String getWork_year() {
+		return work_year;
+	}
+	public void setWork_year(String work_year) {
+		this.work_year = work_year;
+	}
+	public long getWork_Count() {
+		return work_Count;
+	}
+	public void setWork_Count(long work_Count) {
+		this.work_Count = work_Count;
+	}
+	public long getWorkLate_Count() {
+		return workLate_Count;
+	}
+	public void setWorkLate_Count(long workLate_Count) {
+		this.workLate_Count = workLate_Count;
+	}
+	public long getWorkAbsence_Count() {
+		return workAbsence_Count;
+	}
+	public void setWorkAbsence_Count(long workAbsence_Count) {
+		this.workAbsence_Count = workAbsence_Count;
+	}
+	public long getWorkLateEarly_Count() {
+		return workLateEarly_Count;
+	}
+	public void setWorkLateEarly_Count(long workLateEarly_Count) {
+		this.workLateEarly_Count = workLateEarly_Count;
+	}
 	public long getQualifer() {
 		return qualifer;
 	}

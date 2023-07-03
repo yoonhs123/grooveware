@@ -201,5 +201,31 @@ public class InsaManageServiceImpl implements InsaManageService  {
 		}
 	}
 
+	@Override
+	public List<InsaManage> workList(Map<String, Object> map) {
+		List<InsaManage> list = null;
+		
+		try {
+			list = dao.selectList("insaManage.listWork", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+
+	@Override
+	public int workDataCount(Map<String, Object> map) {
+		int result = 0;
+		
+		try {
+			result = dao.selectOne("insaManage.workDataCount", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+
 
 }
