@@ -31,7 +31,7 @@
 	 -->
 </head>
 
-<body>
+<body style="background: #f8f9fa;">
 
 	<div class="container body-container">
 		

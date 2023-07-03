@@ -51,7 +51,13 @@ input[type=text]{
 
 </style>
 
-
+<script type="text/javascript">
+function searchList() {
+	const f = document.searchForm;
+	
+	f.submit();
+}
+</script>
  
 
 <div class="left-side-bar">
@@ -62,7 +68,7 @@ input[type=text]{
 		</li>       
         
             <li>
-                <a href="">문서함</a>
+                <a>문서함</a>
                 <a href="${pageContext.request.contextPath}/approval/list?doc_status=1">&nbsp;내 문서</a>
                 <a href="#">&nbsp;부서 문서</a>
                 <a href="${pageContext.request.contextPath}/approval/list?doc_status=0">&nbsp;임시보관 문서</a>
@@ -71,11 +77,10 @@ input[type=text]{
             
             
             <li>
-                <a href="#">결재함</a>
+                <a>결재함</a>
                 <a href="${pageContext.request.contextPath}/approval/standByList">&nbsp;대기</a>
                 <a href="${pageContext.request.contextPath}/approval/progressList">&nbsp;진행중</a>
-                <a href="#">&nbsp;보류</a>
-                <a href="#">&nbsp;반려</a>
+                <a href="${pageContext.request.contextPath}/approval/sendBackList">&nbsp;반려</a>
                 <a href="#">&nbsp;완료</a>
             <li>
         </ul>
@@ -95,12 +100,7 @@ input[type=text]{
 								  <c:when test="${doc_status == 1}">
 								    내문서
 								  </c:when>								  
-								  <c:when test="${approval_status == 0}">
-								    대기 결재함
-								  </c:when>
-								  <c:when test="${approval_status == 1}">
-								    결재 진행함
-								  </c:when>								  
+											  
 								</c:choose>
 							</h3> 
 						</td>
@@ -114,26 +114,32 @@ input[type=text]{
 							<button type="button" class="btn" onclick="" style="margin-right: 10px;">이동</button>
 							<button type="button" class="btn" onclick="">다운로드</button>
 						</td>
+						
 						<td align="right">
-							<form name="searchForm" action="${pageContext.request.contextPath}/ " method="post">
-								<select name="condition" class="form-select">
-									<option value="all"  ${condition == "all" ? "selected='selected'" : ""} >제목+내용</option>
-									<option value="name"  ${condition == "name" ? "selected='selected'" : ""} >작성자</option>
-									<option value="reg_date"  ${condition == "reg_date" ? "selected='selected'" : ""} >등록일</option>
-									<option value="subject"  ${condition == "subject" ? "selected='selected'" : ""} >제목</option>
-									<option value="content"  ${condition == "content" ? "selected='selected'" : ""} >내용</option>
-								</select>
-								<input type="text" name="keyword" value="${keyword}" class="form-control">
-								<button type="button" class="btn" onclick="searchList();">검색</button>
-								<input type="hidden" name="condition" value="${condition}">
-								<input type="hidden" name="keyword" value="${keyword}">			
-								<input type="hidden" name="size" value="${size}">
-							</form>
+						  <form name="searchForm" action="${pageContext.request.contextPath}/approval/list" method="post">
+						    <select name="condition" class="form-select">
+						      <option value="all" ${condition == "all" ? "selected='selected'" : ""}>전체</option>
+						      <option value="draft_date" ${condition == "draft_date" ? "selected='selected'" : ""}>등록일</option>
+						      <option value="doc_name" ${condition == "doc_name" ? "selected='selected'" : ""}>제목</option>
+						      <option value="draft_content" ${condition == "draft_content" ? "selected='selected'" : ""}>내용</option>
+						    </select>
+						    <input type="text" name="keyword" value="${keyword}" class="form-control">
+						    <button type="button" class="btn" onclick="searchList();">검색</button>
+						    <!-- 
+						    <input type="hidden" name="condition" value="${condition}">
+						    <input type="hidden" name="keyword" value="${keyword}">
+						    <input type="hidden" name="size" value="${size}">
+						     -->
+						  </form>
 						</td>
 					</tr>
 				</table>
 			 </div>
 			<div>
+			<div style="margin-bottom: 10px;">
+		       	${dataCount}개(${page}/${total_page} 페이지)
+			</div>
+			
 			<table class="table table-border table-list" >
 				<thead >
 					<tr>
@@ -144,8 +150,9 @@ input[type=text]{
 						<th> 문서종류 </th>
 						<th width="35%;"> 제목 </th>
 						<th> 작성자 </th>
-						<th> 날짜 </th>
-						<th> 처리결과 </th>
+						<th> 기안일 </th>
+						<th> 문서상태 </th>
+						<th> 긴급여부</th>
 		 
 					</tr>
 				</thead>
@@ -180,58 +187,10 @@ input[type=text]{
 								    <td>반려문서</td>
 								  </c:when>
 							</c:choose>
+							<td>${dto.urgent == 0? '일반' : '긴급' }</td>
 						</tr>
 					</c:forEach>
-					<c:forEach var="dto" items="${standByList}">
-						<tr>
-							<td>
-								<input type="checkbox" name="" value="">
-							</td>					
-							<td>${dto.doc_no}</td>
-							<td>${dto.draft_category == 0 ? '품의서' : '기안서'}</td>
-							<td>
-								<a href="${articleUrl}?doc_no=${dto.doc_no}">${dto.doc_name}</a>
-							</td>
-							<td>${dto.emp_name}</td>
-							<td>${dto.draft_date}</td>
-							<c:choose>
-								  <c:when test="${dto.approval_status == 0}">
-								    <td>대기</td>
-								  </c:when>
-								  <c:when test="${dto.approval_status == 1}">
-								    <td>승인</td>
-								  </c:when>
-								  <c:when test="${dto.approval_status == 2}">
-								    <td>반려</td>
-								  </c:when>
-							</c:choose>
-						</tr>
-					</c:forEach>
-					<c:forEach var="dto" items="${progressList}">
-						<tr>
-							<td>
-								<input type="checkbox" name="" value="">
-							</td>					
-							<td>${dto.doc_no}</td>
-							<td>${dto.draft_category == 0 ? '품의서' : '기안서'}</td>
-							<td>
-								<a href="${articleUrl}?doc_no=${dto.doc_no}">${dto.doc_name}</a>
-							</td>
-							<td>${dto.emp_name}</td>
-							<td>${dto.draft_date}</td>
-							<c:choose>
-								  <c:when test="${dto.approval_status == 0}">
-								    <td>대기</td>
-								  </c:when>
-								  <c:when test="${dto.approval_status == 1}">
-								    <td>승인</td>
-								  </c:when>
-								  <c:when test="${dto.approval_status == 2}">
-								    <td>반려</td>
-								  </c:when>
-							</c:choose>
-						</tr>
-					</c:forEach>					
+			
 				</tbody>
 			</table>
 				</div>

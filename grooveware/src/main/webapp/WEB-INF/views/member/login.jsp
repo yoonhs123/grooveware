@@ -33,9 +33,9 @@
 							<h1>GrooveWare</h1>
 						</div>
 						<div class="row">
-							<label for="login-userId" >이메일</label> <input name="emp_no"
+							<label for="login-userId" >사원번호</label> <input name="emp_no"
 								type="text" class="form-control" id="login-userId"
-								placeholder="이메일">
+								placeholder="사원번호">
 						</div>
 						<div class="row">
 							<label for="login-password">비밀번호</label> <input name="emp_pwd"

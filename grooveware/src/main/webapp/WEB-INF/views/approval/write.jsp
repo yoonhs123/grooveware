@@ -68,8 +68,8 @@
 
 .approval-member {
 	display: inline-block;
-	width: 100px;
-	height: 100px;
+	width: 130px;
+	height: 130px;
 	padding: 3px;
 	float: left;
 }
@@ -209,57 +209,58 @@ function searchList() {
 		
 		// 대화상자-결재자 추가 버튼
 		$(".btnAdd").click(function() {
-			let len1 = $(".dialog-receiver-list ul input[type=checkbox]:checked").length;
-			let len2 = $("#forms-receiver-list input[name=emp_nos]").length;
-			console.log("len1="+len1);
-			console.log("len2="+len2);
-			if (len1 === 0) {
-				alert("추가할 사람을 먼저 선택하세요.");
-				return false;
-			}			
-			
-			if (len1 >= 2) {
-				alert("결재자는 한 명만 선택하세요.");
-				return false;
-			}
+			  let len1 = $(".dialog-receiver-list ul input[type=checkbox]:checked").length;
+			  let len2 = $("#forms-receiver-list input[name=emp_nos]").length;
+			  if (len1 === 0) {
+			    alert("추가할 사람을 먼저 선택하세요.");
+			    return false;
+			  }			
 
-			if (len1 + len2  >= 4) {
-				alert("결재자는 최대 3명까지만 가능합니다.");
-				return false;
-			}
+			  if (len1 >= 2) {
+			    alert("결재자는 한 명만 선택하세요.");
+			    return false;
+			  }
 
-			var b,  emp_no, emp_name, pos_name, dept_name, s;
+			  if (len1 + len2 >= 4) {
+			    alert("결재자는 최대 3명까지만 가능합니다.");
+			    return false;
+			  }
 
-			b = false;
-			$(".dialog-receiver-list ul input[type=checkbox]:checked").each(function() {
-				emp_no = $(this).attr("data-emp_no");
-				emp_name = $(this).next("span").text();
-				pos_name = $(this).next("span").next("span").text();
-				dept_name = $(this).next("span").next("span").next("span").text();
-				
-				$("#forms-receiver-list input[name=emp_nos]").each(function() {
-				if($(this).val() === emp_no) {
-					alert("이미 등록된 결재자입니다.");
-					b = true;
-					return false;
-				}
-			});
-			
-				var cnt = 0;
-				
-				if (!b) {
-				  // 사번/결재 단계 hidden 처리
-				  s = "<span class='approval-member' style ='margin-right: 30px;'>";
-				    s += "<div class='img_container4'><img src='${pageContext.request.contextPath}/resources/images/bg.png' style='width: 100%; height: 100%;'></div>";
-				    s += "<i class='fa-solid fa-chevron-right'></i>";
-					s += "<label style='width: 100%;'><span style=' font-weight: normal; word-break: keep-all;'>"+emp_name+"</span>"
-					s += "<input type='hidden' name='emp_nos' value='" + emp_no + "'>";
-					s +=  "</label>"
-					s += "</span>"
+			  let b = false;
+			  $(".dialog-receiver-list ul input[type=checkbox]:checked").each(function() {
+			    let emp_no = $(this).attr("data-emp_no");
+			    let emp_name = $(this).next("span").text();
+			    let pos_name = $(this).next("span").next("span").text();
+			    let dept_name = $(this).next("span").next("span").next("span").text();
 
-				  $("#forms-receiver-list").append(s);
+			    $("#forms-receiver-list input[name=emp_nos]").each(function() {
+			      if ($(this).val() === emp_no) {
+			        alert("이미 등록된 결재자입니다.");
+			        b = true;
+			        return false;
+			      }
+			    });
 
-				}
+			    if (!b) {
+			    	  let s = "";
+			    	  if (len2 === 0) {
+			    	  s += "<span class='approval-member'>";
+			    	    // 처음 추가 버튼을 눌렀을 때
+			    	    s += "<div class='img_container4'><img src='${pageContext.request.contextPath}/resources/images/bg.png' style='width: 100%; height: 100%;'></div>";
+			    	    s += "<span style='font-weight: normal; word-break: keep-all;'>" + emp_name + "</span></span>";
+			    	  } else {
+			    	    // 다음 추가 버튼을 눌렀을 때
+			    	    s += "<span style='float: left;'><i class='fa-solid fa-chevron-right' style='margin-top: 30px;'></i></span>";
+				    	  s += "<span class='approval-member' style=' margin-left: 30px;'>";
+
+			    	    s += "<div class='img_container4'><img src='${pageContext.request.contextPath}/resources/images/bg.png' style='width: 100%; height: 100%;'></div>";
+			    	    s += "<span style='font-weight: normal; word-break: keep-all;'>" + emp_name + "</span></span>";
+			    	  }
+			    	  s += "<input type='hidden' name='emp_nos' value='" + emp_no + "'>";
+			    	  //s += "</span>";
+
+			    	  $("#forms-receiver-list").append(s);
+			    }
 		});
 
 			
@@ -305,10 +306,14 @@ function searchList() {
                 <a href="#">&nbsp;중요 문서</a>
             <li>
 
-			<hr>
-		<li><a href="#">결재함</a> <a href="#">&nbsp;대기</a> <a href="#">&nbsp;진행중</a>
-			<a href="#">&nbsp;보류</a> <a href="#">&nbsp;반려</a> <a href="#">&nbsp;완료</a>
-		<li>
+            <li>
+                <a href="#">결재함</a>
+                <a href="${pageContext.request.contextPath}/approval/standByList">&nbsp;대기</a>
+                <a href="${pageContext.request.contextPath}/approval/progressList">&nbsp;진행중</a>
+                <a href="${pageContext.request.contextPath}/approval/sendBackList">&nbsp;반려</a>
+                <a href="#">&nbsp;반려</a>
+                <a href="#">&nbsp;완료</a>
+            <li>
 	</ul>
 </div>
 
@@ -318,7 +323,7 @@ function searchList() {
 		<li><a href="#">즐겨찾기</a> <a
 			href="${pageContext.request.contextPath}/approval/write"><i
 				class="fa-regular fa-file-lines icon"></i>기안서</a> <a
-			href="${pageContext.request.contextPath}/approval/write"><i
+			href="${pageContext.request.contextPath}/approval/writeHoliday"><i
 				class="fa-regular fa-file-lines icon"></i>연차휴가</a>
 		<li>
 
@@ -344,6 +349,7 @@ function searchList() {
 		<form name="myForm" method="post" class="myForm"
 			enctype="multipart/form-data">
 			<div class="board1">
+			<c:if test="${mode=='write' || mode == 'update' }">
 				<div class="title_container">
 					<table class="table" style="margin-bottom: 20px;">
 						<tr>
@@ -381,6 +387,7 @@ function searchList() {
 
 					</div>
 				</div>
+				</c:if>
 			</div>
 			<div class="board3">
 				<div class="line_container2">
@@ -513,7 +520,7 @@ function searchList() {
 				<button type="button" class="btn2"
 					onclick="location.href='${pageContext.request.contextPath}/approval/list';">${mode=='update'?'수정취소':'등록취소'}</button>
 			<c:choose>
-				<c:when test="${dto.doc_status == 1}">
+				<c:when test="${dto.doc_status == 0}">
 					<button type="button" class="btn2"
 						onclick="javascript:location.href='${pageContext.request.contextPath}/approval/update?doc_no=${dto.doc_no}&page=${page}';">수정</button>
 				</c:when>

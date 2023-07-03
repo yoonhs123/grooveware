@@ -31,70 +31,86 @@
 	</insert>	
 	
 	<!-- 게시글 조건 -->
- 	<sql id="where-list">
-		<choose>
-			<when test="condition == 'all' ">
-			   (INSTR(subject, #{keyword}) &gt; 0
-		          OR DBMS_LOB.INSTR(content, #{keyword}) &gt; 0 )
-			</when>
-			<when test="condition == 'reg_date' ">
-			   (TO_CHAR(reg_date, 'YYYYMMDD') = #{keyword}
-		          OR TO_CHAR(reg_date, 'YYYY-MM-DD') = #{keyword} )
-			</when>
-			<when test="condition == 'content'">
-			    DBMS_LOB.INSTR(content, #{keyword}) &gt; 0
-			</when>
+	<sql id="where-list">
+	  <choose>
+	    <when test="condition == 'all' ">
+	       (INSTR(doc_name, #{keyword}) &gt; 0
+	          OR DBMS_LOB.INSTR(draft_content, #{keyword}) &gt; 0 )
+	    </when>
+	    <when test="condition == 'draft_date' ">
+	       (TO_CHAR(draft_date, 'YYYYMMDD') = #{keyword}
+	          OR TO_CHAR(draft_date, 'YYYY-MM-DD') = #{keyword} )
+	    </when>
+	    <when test="condition == 'draft_content'">
+	        DBMS_LOB.INSTR(draft_content, #{keyword}) &gt; 0
+	    </when>
 			<otherwise>
 			    INSTR(${condition}, #{keyword}) &gt; 0
 			</otherwise>
-		</choose>
+	  </choose>
 	</sql>
- 
- 
+	
+		
 	<!-- 글 개수 -->
-	<select id="dataCount"  parameterType="map" resultType="Integer">
-		SELECT NVL(COUNT(*), 0)
-		FROM doc d
-		LEFT OUTER JOIN draft dr ON dr.doc_no= d.doc_no
-
-		<where>
-				emp_no = #{emp_no} 
-				AND doc_status = #{doc_status}
-			<if test="keyword!=null and keyword!='' ">
-				<include refid="where-list"/>
-			</if>
-		</where>   		
+	<select id="dataCount" parameterType="map" resultType="Integer">
+	  SELECT NVL(COUNT(*), 0)
+	  FROM doc d
+	  LEFT OUTER JOIN draft dr ON dr.doc_no = d.doc_no
+	  <where>
+	    <if test="emp_no != null">
+	      emp_no = #{emp_no}
+	    </if>
+	    <if test="doc_status != null and doc_status == 1">
+	      AND doc_status IN (1, 2, 3, 4)
+	    </if>
+	    <if test="doc_status != null and doc_status != 1">
+	      AND doc_status = #{doc_status}
+	    </if>
+	    <if test="keyword != null and keyword != ''">
+	      AND <include refid="where-list"/>
+	    </if>
+	  </where>
 	</select>
 	
-	
-	<!-- doc, draft 테이블 리스트 -->
-	<select id="listDoc"  parameterType="map" resultType="com.sp.grooveware.approval.Approval">
-	
-	SELECT d.doc_no, doc_name, TO_CHAR(draft_date, 'YYYY-MM-DD')draft_date, TO_CHAR(draft_deadline, 'YYYY-MM-DD')draft_deadline, approval_step, TO_CHAR(approval_finaldate, 'YYYY-MM-DD')approval_finaldate,
-      	 	TO_CHAR(submit_date, 'YYYY-MM-DD')submit_date, doc_status, urgent, important, is_visible, emp_no, 
-        	dr.draft_category, dr.draft_content
-	FROM doc d
-	LEFT OUTER JOIN draft dr ON d.doc_no = dr.doc_no
+<!-- doc, draft 테이블 리스트 -->
+<select id="listDoc" parameterType="map" resultType="com.sp.grooveware.approval.Approval">
+  SELECT d.doc_no, doc_name, TO_CHAR(draft_date, 'YYYY-MM-DD') AS draft_date, TO_CHAR(draft_deadline, 'YYYY-MM-DD') AS draft_deadline, approval_step, TO_CHAR(approval_finaldate, 'YYYY-MM-DD') AS approval_finaldate,
+    TO_CHAR(submit_date, 'YYYY-MM-DD') AS submit_date, doc_status, urgent, important, is_visible, emp_no,
+    dr.draft_category, dr.draft_content
+  FROM doc d
+  LEFT OUTER JOIN draft dr ON d.doc_no = dr.doc_no
+  <where>
+    <if test="keyword != null and keyword != ''">
+      <include refid="where-list"/>
+    </if>
+    <if test="emp_no != null">
+      AND emp_no = #{emp_no}
+    </if>
+    <choose>
+      <when test="doc_status != null and doc_status == 1">
+        AND doc_status IN (1, 2, 3, 4)
+      </when>
+      <otherwise>
+        AND doc_status = #{doc_status}
+      </otherwise>
+    </choose>
+  </where>
+  ORDER BY d.doc_no DESC
+  OFFSET #{offset} ROWS FETCH FIRST #{size} ROWS ONLY
+</select>
 
-		<where>
-			emp_no = #{emp_no} 
-				AND doc_status = #{doc_status}			
-			<if test="keyword != null and keyword != ''">
-				AND <include refid="where-list"/>
-			</if>
-		</where>
-	ORDER BY d.doc_no DESC
-	OFFSET #{offset} ROWS FETCH FIRST #{size} ROWS ONLY	
-	</select>
-	
-	
+
+
 	<!-- 글보기 -->
 	<select id="readDoc" parameterType="Long" resultType="com.sp.grooveware.approval.Approval">
-		SELECT d.doc_no, d.doc_name, TO_CHAR(d.draft_date, 'YYYY-MM-DD') AS draft_date, TO_CHAR(d.draft_deadline, 'YYYY-MM-DD') AS draft_deadline, d.approval_step, d.approval_finaldate,
+		SELECT d.doc_no, d.doc_name,  e.emp_name, c.dept_name, TO_CHAR(d.draft_date, 'YYYY-MM-DD') AS draft_date, TO_CHAR(d.draft_deadline, 'YYYY-MM-DD') AS draft_deadline, d.approval_step, d.approval_finaldate,
 		       d.submit_date, d.doc_status, d.urgent, d.important, d.is_visible, d.emp_no,
 		       dr.draft_category, dr.draft_content
 		FROM doc d
 		LEFT JOIN draft dr ON d.doc_no = dr.doc_no
+		LEFT OUTER JOIN emp_history b ON d.emp_no = b.emp_no
+		LEFT OUTER JOIN dept c ON b.dept_no = c.dept_no
+		LEFT OUTER JOIN emp e ON b.emp_no = e.emp_no
 		WHERE d.doc_no = #{doc_no}
 	</select>
 		
@@ -114,6 +130,22 @@
 	        is_visible = #{is_visible}
 	    WHERE doc_no = #{doc_no}
 	</update>
+	
+	<!-- 결재완료시 최종결제완료날짜 변경 -->
+	<update id="updateDocFinaldate" parameterType="Long">
+	    UPDATE doc
+	    SET doc_status = 3, 
+	        approval_finaldate = SYSDATE
+	    WHERE doc_no = #{doc_no}
+	</update>
+
+    <!-- 결재완료시 각 단계별 상태 변경 -->
+	<update id="updateDocStatus" parameterType="map">
+	    UPDATE doc
+	    SET doc_status = #{doc_status}
+	    WHERE doc_no = #{doc_no}
+	</update>	
+		
 	<update id="updateDraft" parameterType="com.sp.grooveware.approval.Approval">
 	    UPDATE draft
 	    SET draft_category=#{draft_category, jdbcType=INTEGER}, draft_content=#{draft_content, jdbcType=VARCHAR}
@@ -130,9 +162,7 @@
 		DELETE FROM doc WHERE doc_no = #{doc_no}
 	</delete>
 	
-	
-	
-	<!-- approval 테이블 리스트 -->
+	<!-- 문서에 대한 결제 리스트 approval -->
 	<select id="listApproval" parameterType="Long" resultType="com.sp.grooveware.approval.Approval">
 		SELECT a.doc_no, a.emp_no, a.approval_status_id, a.approval_status, a.approval_date, a.reject_reason,
 			b.emp_no, c.dept_name, d.emp_name, e.pos_name
@@ -141,26 +171,27 @@
 			LEFT OUTER JOIN dept c ON b.dept_no = c.dept_no
 			LEFT OUTER JOIN emp d ON b.emp_no = d.emp_no
 			LEFT OUTER JOIN pos e ON b.pos_no = e.pos_no
-		WHERE doc_no = #{doc_no}  
-	</select>	
+		WHERE doc_no = #{doc_no}
+		ORDER BY a.approval_status_id ASC
+	</select>
 	
- 
+	<!-- 문서에 대한 결재가 완료된 단계 -->
+	<select id="currentApprovalStep" parameterType="Long" resultType="Integer">
+		SELECT COUNT(*)
+		FROM approval
+		WHERE doc_no = #{doc_no} AND approval_status = 2
+	</select>
+
 	
-	<!-- approval 수정 -->
+	<!-- approval 결재/반려 수정 -->
 	<update id="updateApproval" parameterType="com.sp.grooveware.approval.Approval">
 	  UPDATE approval
-	  SET emp_no = #{emp_no}, approval_status = #{approval_status}, approval_date = SYSDATE, reject_reason = #{reject_reason, jdbcType=VARCHAR}
+	  SET approval_status = #{approval_status}, approval_date = SYSDATE, reject_reason = #{reject_reason, jdbcType=VARCHAR}
 	  WHERE doc_no = #{doc_no} AND emp_no = #{emp_no}
 	</update>
 			
-	<!-- approval 삭제 -->	
-	<delete id="deleteApproval" parameterType="long">
-		DELETE approval where doc_no = #{doc_no}  
-	</delete>
-	
-	
-	<!-- 대기 문서 리스트  -->
-	<select id="standByList"  parameterType="map" resultType="com.sp.grooveware.approval.Approval">
+	<!-- 대기/진행중 문서 리스트  -->
+	<select id="ApprovalStepList"  parameterType="map" resultType="com.sp.grooveware.approval.Approval">
 		SELECT  d.doc_no, a.emp_no, e.emp_name, approval_status, doc_status, urgent, doc_name,  
 					TO_CHAR(d.draft_date, 'YYYY-MM-DD') AS draft_date, TO_CHAR(d.draft_deadline, 'YYYY-MM-DD') AS draft_deadline, 
 					approval_step, TO_CHAR(d.approval_finaldate, 'YYYY-MM-DD') AS approval_finaldate, TO_CHAR(d.submit_date, 'YYYY-MM-DD') AS submit_date, important, is_visible,
@@ -168,10 +199,26 @@
 		FROM doc d
 		LEFT OUTER JOIN  approval a ON  d.doc_no = a.doc_no
 		LEFT OUTER JOIN emp e ON e.emp_no = d.emp_no
-		WHERE a.emp_no = #{emp_no}  AND approval_status = #{approval_status}
+		WHERE a.emp_no = #{emp_no}  AND approval_status = #{approval_status} AND
+		  d.doc_no NOT IN (SELECT doc_no FROM  approval WHERE approval_status = 3) AND
+		  d.doc_no NOT IN (SELECT doc_no FROM  doc WHERE doc_status = 3)
 		ORDER BY d.doc_no
 	</select>
 	
+
+	<!-- 반려 문서 리스트  -->
+	<select id="sendBackList"  parameterType="map" resultType="com.sp.grooveware.approval.Approval">
+		SELECT  d.doc_no, a.emp_no, e.emp_name, approval_status, doc_status, urgent, doc_name,  
+					TO_CHAR(d.draft_date, 'YYYY-MM-DD') AS draft_date, TO_CHAR(d.draft_deadline, 'YYYY-MM-DD') AS draft_deadline, 
+					approval_step, TO_CHAR(d.approval_finaldate, 'YYYY-MM-DD') AS approval_finaldate, TO_CHAR(d.submit_date, 'YYYY-MM-DD') AS submit_date, important, is_visible,
+					approval_status_id, TO_CHAR(approval_date, 'YYYY-MM-DD') AS approval_date, reject_reason
+		FROM doc d
+		LEFT OUTER JOIN  approval a ON  d.doc_no = a.doc_no
+		LEFT OUTER JOIN emp e ON e.emp_no = d.emp_no
+		WHERE   a.emp_no = #{emp_no}  AND d.doc_no IN (SELECT doc_no FROM  doc WHERE doc_status = 4)
+		ORDER BY d.doc_no
+	</select>
+
 	
 	<!-- 결재자 앞의 사람이 결재를 하지 않은 문서 가져오기 -->
 	<select id="readNotPreApproval" parameterType="map" resultType="com.sp.grooveware.approval.Approval">
@@ -182,12 +229,21 @@
 		FETCH FIRST 1 ROWS ONLY	
 	</select>
 	
+	<select id="readApproval" parameterType="map" resultType="com.sp.grooveware.approval.Approval">
+	    SELECT doc_no, emp_no, approval_status_id, approval_status, approval_date, reject_reason
+	  	FROM approval
+	  	WHERE emp_no = #{emp_no} AND doc_no = #{doc_no}
+ 	</select>
+
  
- 
- 
- 
- 
- 
+ 	<select id="readAp" parameterType="Long" resultType="com.sp.grooveware.approval.Approval">
+ 		SELECT d.doc_no, d.doc_name, reject_reason,TO_CHAR(d.draft_date, 'YYYY-MM-DD') AS draft_date, TO_CHAR(d.draft_deadline, 'YYYY-MM-DD') AS draft_deadline, d.approval_step, d.approval_finaldate,
+		       d.submit_date, d.doc_status, d.urgent, d.important, d.is_visible, d.emp_no
+		FROM doc d
+        LEFT OUTER JOIN approval a ON d.doc_no = a.doc_no
+        where d.doc_no = #{doc_no}
+        	
+ 	</select>
  
  
 	<!-- 파일 리스트-->

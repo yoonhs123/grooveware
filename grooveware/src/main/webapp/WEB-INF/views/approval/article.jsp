@@ -68,36 +68,35 @@
 
 
 <script type="text/javascript">
-<c:if test="${sessionScope.member.emp_no == dto.emp_no}">
-function deleteOk() {
-	let query = "doc_no=${dto.doc_no}&${query}";
-	let url = "${pageContext.request.contextPath}/approval/delete?" + query;
+	<c:if test="${sessionScope.member.emp_no == dto.emp_no}">
+	function deleteOk() {
+		let query = "doc_no=${dto.doc_no}&${query}";
+		let url = "${pageContext.request.contextPath}/approval/delete?" + query;
 
-	if(confirm("위 자료를 삭제 하시 겠습니까 ? ")) {
-		location.href = url;
+		if (confirm("위 자료를 삭제 하시 겠습니까 ? ")) {
+			location.href = url;
+		}
 	}
-}
-</c:if>
+	</c:if>
 </script>
 
 <div class="left-side-bar">
 
 	<ul>
-		<li>
-					<a href="${pageContext.request.contextPath}/approval/write">문서작성</a>
+		<li><a href="${pageContext.request.contextPath}/approval/write">문서작성</a>
 		</li>
 
-            <li>
-                <a href="">문서함</a>
-                <a href="${pageContext.request.contextPath}/approval/list?doc_status=1">&nbsp;내 문서</a>
-                <a href="#">&nbsp;부서 문서</a>
-                <a href="${pageContext.request.contextPath}/approval/list?doc_status=0">&nbsp;임시보관 문서</a>
-                <a href="#">&nbsp;중요 문서</a>
-            <li>
-
-		<li><a href="">결재함</a>  <a href="${pageContext.request.contextPath}/approval/standByList">&nbsp;대기</a>
-                <a href="${pageContext.request.contextPath}/approval/progressList">&nbsp;진행중</a>
-			<a href="#">&nbsp;보류</a> <a href="#">&nbsp;반려</a> <a href="#">&nbsp;완료</a>
+		<li><a href="">문서함</a> <a
+			href="${pageContext.request.contextPath}/approval/list?doc_status=1">&nbsp;내
+				문서</a> <a href="#">&nbsp;부서 문서</a> <a
+			href="${pageContext.request.contextPath}/approval/list?doc_status=0">&nbsp;임시보관
+				문서</a> <a href="#">&nbsp;중요 문서</a>
+		<li>
+		<li><a href="">결재함</a> <a
+			href="${pageContext.request.contextPath}/approval/standByList">&nbsp;대기</a>
+			<a href="${pageContext.request.contextPath}/approval/progressList">&nbsp;진행중</a>
+			<a href="${pageContext.request.contextPath}/approval/sendBackList">&nbsp;반려</a>
+			<a href="#">&nbsp;완료</a>
 		<li>
 	</ul>
 </div>
@@ -105,211 +104,215 @@ function deleteOk() {
 
 
 <div class="right-contentbody">
-		<form name="myForm" method="post" class="myForm"
-			enctype="multipart/form-data">
-			<div class="board1">
-				<div class="title_container">
-					<table class="table" style="margin-bottom: 20px;">
-						<tr>
-							<td class="title2" width="15%">
-								<h2>
-									<span>|</span> 기안서
-								</h2>
-							</td>
-							<td class="title">
-							<c:choose>
-									<c:when test="${sessionScope.member.emp_no == dto.emp_no}">
-										<button type="button" class="btn2"
-											onclick="javascript:location.href='${pageContext.request.contextPath}/approval/update?doc_no=${dto.doc_no}&page=${page}';">수정</button>
-									</c:when>
-									<c:otherwise>
-										<button type="button" class="btn2" disabled="disabled">수정</button>
-									</c:otherwise>
-								</c:choose>
+	<form name="myForm" method="post" class="myForm"
+		enctype="multipart/form-data">
+		<div class="board1">
+			<div class="title_container">
+				<table class="table" style="margin-bottom: 20px;">
+					<tr>
+						<td class="title2" width="15%">
+							<h2>
+								<span>|</span> 기안서
+							</h2>
+						</td>
+						<td class="title"><c:if test="${dto.doc_status == 0 }">
+								<button type="button" class="btn2"
+									onclick="javascript:location.href='${pageContext.request.contextPath}/approval/update?doc_no=${dto.doc_no}&page=${page}';">수정</button>
 								<button type="button" class="btn2" onclick="deleteOk(); ">삭제</button>
-								<button type="button" class="btn2" onclick="location.href='${pageContext.request.contextPath}/approval/list?doc_status=${doc_status}&${query}';">목록</button>
-								</td>
-						</tr>
-					</table>
-				</div>
-				<div class="line_container" style="height:180px;">
-					<div class="table" style="margin-bottom: 15px;">
-						<div>
-							<div class="title" style="float: left; width: 100%;">
-								<span>결재라인</span>
-							</div>
 
-						</div>
-						<div style="width: 100%; float: left; padding-left: 20px;">
-
-						
-							<div class="img_container ">
-								<img class="" src="${pageContext.request.contextPath}/resources/images/bg.png">
-							</div>
-							<div class="img_container3 ">
-								<i class="fa-solid fa-chevron-right"></i>
-							</div>
-							<div class="img_container ">
-								<img class="" src="${pageContext.request.contextPath}/resources/images/bg.png"">
-							</div>
-							<div class="img_container3 ">
-								<i class="fa-solid fa-chevron-right"></i>
-							</div>
-							<div class=" img_container">
-								<img class="" src="${pageContext.request.contextPath}/resources/images/bg.png"">
-							</div>
-						</div>
-						
-						<div style="width: 100%; float: left;">
-							<c:forEach var="vo" items="${listApproval}">
-							<div class="text_box3">${vo.emp_name }<span style="font-weight: normal;">&nbsp;${vo.pos_name }</span><div>${vo.dept_name }</div></div>
-							</c:forEach>
-							<div class="text_box4">&nbsp;</div>
-
+							</c:if>
+							<button type="button" class="btn2"
+								onclick="location.href='${pageContext.request.contextPath}/approval/list?doc_status=${doc_status}&${query}';">목록</button>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div class="line_container" style="height: 180px;">
+				<div class="table" style="margin-bottom: 15px;">
+					<div>
+						<div class="title" style="float: left; width: 100%;">
+							<span>결재라인</span>
 						</div>
 
 					</div>
+					<div style="width: 100%; float: left; padding-left: 20px;">
+
+
+						<div class="img_container ">
+							<img class=""
+								src="${pageContext.request.contextPath}/resources/images/bg.png">
+						</div>
+						<div class="img_container3 ">
+							<i class="fa-solid fa-chevron-right"></i>
+						</div>
+						<div class="img_container ">
+							<img class=""
+								src="${pageContext.request.contextPath}/resources/images/bg.png">
+						</div>
+						<div class="img_container3 ">
+							<i class="fa-solid fa-chevron-right"></i>
+						</div>
+						<div class=" img_container">
+							<img class=""
+								src="${pageContext.request.contextPath}/resources/images/bg.png">
+						</div>
+					</div>
+
+					<div style="width: 100%; float: left; padding-left: 10px;">
+						<c:forEach var="vo" items="${listApproval}">
+							<div class="text_box3">${vo.emp_name }<span
+									style="font-weight: normal;">&nbsp;${vo.pos_name }</span>
+								<div>${vo.dept_name }</div>
+							</div>
+						</c:forEach>
+						<div class="text_box4">&nbsp;</div>
+
+					</div>
+
 				</div>
 			</div>
-			<div class="board3">
-				<div class="line_container2">
+		</div>
+		<div class="board3">
+			<div class="line_container2">
+				<div>
 					<div>
 						<div>
-							<div>
-								<label>제목</label>
+							<label>제목</label>
+						</div>
+						<p class="ap_pBox">
+							<input type="text" name="doc_name" class="form-control1"
+								style="width: 100%;" readonly="readonly"
+								value="${dto.doc_name } ">
+						</p>
+					</div>
+
+					<div>
+						<div class="flexBox">
+							<div class="leftBox">
+								<label>기안구분 </label>
 							</div>
-							<p class="ap_pBox">
-								<input type="text" name="doc_name" class="form-control1"
-									style="width: 100%;" readonly="readonly" value="${dto.doc_name } ">
+							<div class="leftBox">
+								<label>긴급여부 </label>
+							</div>
+						</div>
+						<div class="flexBox ap_pBox">
+							<div class="leftBox">
+								<input type="text" name="draft_category" class="form-control1"
+									readonly="readonly"
+									value="${dto.draft_category == 0 ? '품의서' : '기안서'}" />
+							</div>
+							<div class="leftBox">
+								<input type="text" name="urgent" class="form-control1"
+									readonly="readonly" value="${dto.urgent == 0 ? '일반' : '긴급'}" />
+							</div>
+						</div>
+					</div>
+
+					<div class="flexBox">
+						<div class="leftBox">
+							<label>기안일자 </label>
+						</div>
+						<div class="leftBox">
+							<label>처리기한 </label>
+						</div>
+					</div>
+					<div class="flexBox ap_pBox">
+
+						<div class="leftBox">
+							<p>
+								<input type="text" name="draft_date" class="form-control1"
+									readonly="readonly" value="${dto.draft_date}" />
 							</p>
 						</div>
-
-						<div>
-							<div class="flexBox">
-								<div class="leftBox">
-									<label>기안구분 </label>
-								</div>
-								<div class="leftBox">
-									<label>긴급여부 </label>
-								</div>
-							</div>
-							<div class="flexBox ap_pBox">
-								<div class="leftBox">
-									<input type="text" name="draft_category" class="form-control1"
-										readonly="readonly"
-										value="${dto.draft_category == 0 ? '품의서' : '기안서'}" />
-								</div>
-								<div class="leftBox">
-									<input type="text" name="urgent" class="form-control1"
-										readonly="readonly" value="${dto.urgent == 0 ? '일반' : '긴급'}" />
-								</div>
-							</div>
-						</div>
-
-						<div class="flexBox">
-							<div class="leftBox">
-								<label>기안일자 </label>
-							</div>
-							<div class="leftBox">
-								<label>처리기한 </label>
-							</div>
-						</div>
-						<div class="flexBox ap_pBox">
-
-							<div class="leftBox">
-								<p>
-									<input type="text" name="draft_date" class="form-control1"
-										readonly="readonly" value="${dto.draft_date}" />
-								</p>
-							</div>
-							<div class="leftBox">
-								<input type="text" name="draft_deadline" class="form-control1"
-									readonly="readonly" value="${dto.draft_deadline}" />
-							</div>
-
-						</div>
-
-						<div class="flexBox">
-							<div class="leftBox">
-								<label>기안부서 </label>
-							</div>
-							<div class="leftBox">
-								<label>기안담당 </label>
-							</div>
-						</div>
-						<div class="flexBox ap_pBox">
-							<div class="leftBox">
-								<input type="text" name="" class="form-control1"
-									readonly="readonly" value="${dto.dept_name}" />
-							</div>
-							<div class="leftBox">
-								<input type="text" name="" class="form-control1"
-									readonly="readonly" value="${dto.emp_name}" />
-							</div>
+						<div class="leftBox">
+							<input type="text" name="draft_deadline" class="form-control1"
+								readonly="readonly" value="${dto.draft_deadline}" />
 						</div>
 
 					</div>
-					<div class="leftBox" style="width: 100%">
-						<label>내용 </label>
+
+					<div class="flexBox">
+						<div class="leftBox">
+							<label>기안부서 </label>
+						</div>
+						<div class="leftBox">
+							<label>기안담당 </label>
+						</div>
 					</div>
-					<div
-						style="padding: 15px; height: 400px; width: 100%; border: 1px solid gray; margin-top: 50px; border-radius: 4px;">${dto.draft_content}</div>
+					<div class="flexBox ap_pBox">
+						<div class="leftBox">
+							<input type="text" name="" class="form-control1"
+								readonly="readonly" value="${dto.dept_name}" />
+						</div>
+						<div class="leftBox">
+							<input type="text" name="" class="form-control1"
+								readonly="readonly" value="${dto.emp_name}" />
+						</div>
+					</div>
+
 				</div>
+				<div class="leftBox" style="width: 100%">
+					<label>내용 </label>
+				</div>
+				<div
+					style="padding: 15px; height: 400px; width: 100%; border: 1px solid gray; margin-top: 50px; border-radius: 4px;">${dto.draft_content}</div>
 			</div>
-			<div class="board1">
-				<div class="file_container">
-					<div class="title3">
-						<span> 첨부파일</span>
-					</div>
-					<div class="">
-						<div class="table table-border table-form">
-							<div
-								style="padding: 15px; height: 150px; width: 100%; border: 1px solid gray; border-radius: 4px;">
-								<c:forEach var="vo" items="${listFile}">
-									<div>
-										<a
-											href="${pageContext.request.contextPath}/approval/download?file_no=${vo.file_no}">
-											${vo.original_filename}</a>
-									</div>
-								</c:forEach>
-							</div>
+		</div>
+		<div class="board1">
+			<div class="file_container">
+				<div class="title3">
+					<span> 첨부파일</span>
+				</div>
+				<div class="">
+					<div class="table table-border table-form">
+						<div
+							style="padding: 15px; height: 150px; width: 100%; border: 1px solid gray; border-radius: 4px;">
+							<c:forEach var="vo" items="${listFile}">
+								<div>
+									<a
+										href="${pageContext.request.contextPath}/approval/download?file_no=${vo.file_no}">
+										${vo.original_filename}</a>
+								</div>
+							</c:forEach>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="board1">
-				<div class="file_container">
-					<div class="title3">
-						<span> 코멘트</span>
-					</div>
-					<div class="">
-						<div class="table table-border table-form">
-							<input type="text" name ="reject_reason" style="padding: 15px; height: 150px; width: 100%; border: 1px solid gray; border-radius: 4px;">
-						</div>
-					</div>
-				</div>
-			</div>
-						
-			<div class="board4 confirm">
-			<c:choose>
-				<c:when test="${sessionScope.member.emp_no == dto.emp_no}">
-					<button type="button" class="btn2"
-						onclick="javascript:location.href='${pageContext.request.contextPath}/approval/update?doc_no=${dto.doc_no}&page=${page}';">수정</button>
-				</c:when>
-				<c:otherwise>
-					<button type="button" class="btn2" disabled="disabled">수정</button>
-				</c:otherwise>
-			</c:choose>			
-				<button type="button" class="btn2" onclick="deleteOk(); ">삭제</button>
-				<button type="button" class="btn2"
-					onclick="location.href='${pageContext.request.contextPath}/approval/list?doc_status=${doc_status}&${query}';">목록</button>
+		</div>
 		
+<c:if test="${dto.doc_status == 4}">
+  <div class="board1">
+    <div class="file_container">
+      <div class="title3">
+        <span>코멘트</span>
+      </div>
+      <div class="table table-border table-form">
+        <c:forEach var="vo" items="${rejectList}">
+          <c:if test="${not empty vo.reject_reason}">
+            <input type="text" name="reject_reason"
+              style="padding: 15px; height: 150px; width: 100%; border: 1px solid gray; border-radius: 4px;"
+              readonly="readonly" value="${vo.reject_reason}">
+          </c:if>
+        </c:forEach>
+      </div>
+    </div>
+  </div>
+</c:if>
 
-				<c:if test="${mode=='update'}">
-					<input type="hidden" name="doc_no" value="${dto.doc_no}">
-					<input type="hidden" name="page" value="${page}">
-				</c:if>
-			</div>
-		</form>
+
+		<div class="board4 confirm">
+			<c:if test="${dto.doc_status == 0 }">
+				<button type="button" class="btn2"
+					onclick="javascript:location.href='${pageContext.request.contextPath}/approval/update?doc_no=${dto.doc_no}&page=${page}';">수정</button>
+				<button type="button" class="btn2" onclick="deleteOk(); ">삭제</button>
+			</c:if>
+			<button type="button" class="btn2"
+				onclick="location.href='${pageContext.request.contextPath}/approval/list?doc_status=${doc_status}&${query}';">목록</button>
+			<c:if test="${mode=='update'}">
+				<input type="hidden" name="doc_no" value="${dto.doc_no}">
+				<input type="hidden" name="page" value="${page}">
+			</c:if>
+		</div>
+	</form>
 
 </div>

@@ -58,7 +58,7 @@ input[type=text]{
       
         <ul>
 		<li>
-					<a href="${pageContext.request.contextPath}/approval/write">문서작성</a>
+			<a href="${pageContext.request.contextPath}/approval/write">문서작성</a>
 		</li>  
         
             <li>
@@ -74,8 +74,7 @@ input[type=text]{
                 <a href="#">결재함</a>
                 <a href="${pageContext.request.contextPath}/approval/standByList">&nbsp;대기</a>
                 <a href="${pageContext.request.contextPath}/approval/progressList">&nbsp;진행중</a>
-                <a href="#">&nbsp;보류</a>
-                <a href="#">&nbsp;반려</a>
+                <a href="${pageContext.request.contextPath}/approval/sendBackList">&nbsp;반려</a>
                 <a href="#">&nbsp;완료</a>
             <li>
         </ul>
@@ -95,11 +94,14 @@ input[type=text]{
 								  <c:when test="${doc_status == 1}">
 								    내문서
 								  </c:when>								  
-								  <c:when test="${approval_status == 0}">
+								  <c:when test="${approval_status == 1}">
 								    대기 결재함
 								  </c:when>
-								  <c:when test="${approval_status == 1}">
+								  <c:when test="${approval_status == 2}">
 								    결재 진행함
+								  </c:when>								  
+								  <c:when test="${approval_status == 3}">
+								    반려함
 								  </c:when>								  
 								</c:choose>
 							</h3> 
@@ -128,6 +130,7 @@ input[type=text]{
 								<input type="hidden" name="condition" value="${condition}">
 								<input type="hidden" name="keyword" value="${keyword}">			
 								<input type="hidden" name="size" value="${size}">
+								<input type="hidden" name="approval_status" value="${approval_status}">
 							</form>
 						</td>
 					</tr>
@@ -144,8 +147,9 @@ input[type=text]{
 						<th> 문서종류 </th>
 						<th width="35%;"> 제목 </th>
 						<th> 작성자 </th>
-						<th> 날짜 </th>
-						<th> 처리결과 </th>
+						<th> 기안일 </th>
+						<th> 문서상태 </th>
+						<th> 긴급여부 </th>
 		 
 					</tr>
 				</thead>
@@ -164,16 +168,17 @@ input[type=text]{
 							<td>${dto.emp_name}</td>
 							<td>${dto.draft_date}</td>
 							<c:choose>
-								  <c:when test="${dto.approval_status == 0}">
+								  <c:when test="${dto.approval_status == 1}">
 								    <td>대기</td>
 								  </c:when>
-								  <c:when test="${dto.approval_status == 1}">
+								  <c:when test="${dto.approval_status == 2}">
 								    <td>승인</td>
 								  </c:when>
-								  <c:when test="${dto.approval_status == 2}">
+								  <c:when test="${dto.approval_status == 3}">
 								    <td>반려</td>
 								  </c:when>
 							</c:choose>
+							<td>${dto.urgent == 0? '일반' : '긴급' }</td>
 						</tr>
 					</c:forEach>
 					<c:forEach var="dto" items="${progressList}">
@@ -189,22 +194,53 @@ input[type=text]{
 							<td>${dto.emp_name}</td>
 							<td>${dto.draft_date}</td>
 							<c:choose>
-								  <c:when test="${dto.approval_status == 0}">
+								  <c:when test="${dto.approval_status == 1}">
 								    <td>대기</td>
 								  </c:when>
-								  <c:when test="${dto.approval_status == 1}">
+								  <c:when test="${dto.approval_status == 2}">
 								    <td>승인</td>
 								  </c:when>
-								  <c:when test="${dto.approval_status == 2}">
+								  <c:when test="${dto.approval_status == 3}">
 								    <td>반려</td>
 								  </c:when>
 							</c:choose>
+							<td>${dto.urgent == 0? '일반' : '긴급' }</td>
+						</tr>
+					</c:forEach>					
+					<c:forEach var="dto" items="${sendBackList}">
+						<tr>
+							<td>
+								<input type="checkbox" name="" value="">
+							</td>					
+							<td>${dto.doc_no}</td>
+							<td>${dto.draft_category == 0 ? '품의서' : '기안서'}</td>
+							<td>
+								<a href="${articleUrl}?doc_no=${dto.doc_no}">${dto.doc_name}</a>
+							</td>
+							<td>${dto.emp_name}</td>
+							<td>${dto.draft_date}</td>
+							<c:choose>
+								  <c:when test="${dto.doc_status == 1}">
+								    <td>대기</td>
+								  </c:when>
+								  <c:when test="${dto.doc_status == 2}">
+								    <td>결재진행</td>
+								  </c:when>
+								  <c:when test="${dto.doc_status == 3}">
+								    <td>결재완료</td>
+								  </c:when>
+								  <c:when test="${dto.doc_status == 4}">
+								    <td>반려</td>
+								  </c:when>
+							</c:choose>
+							<td>${dto.urgent == 0? '일반' : '긴급' }</td>
 						</tr>
 					</c:forEach>					
 				</tbody>
 			</table>
 				</div>
-	
-	
+				
+							<div class="page-navigation" style="width: 900px; margin: 0 auto;">${cnt == 0 ? "등록된 게시물이 없습니다." : ""}</div>
+				
 			</div>
 		</div>
