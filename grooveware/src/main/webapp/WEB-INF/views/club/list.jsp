@@ -28,6 +28,7 @@
     border-top: 2px solid #c1c1c1;
     border-bottom: 2px solid #c1c1c1;
     font-size: 16.5px;
+    background-color: #f6f6f6;
 }
 img {
     width: 90px;
@@ -269,9 +270,13 @@ $(function(){
                 <td> ${dto.club_startdate} </td>
                 <td>
                     <button type="button" class="read" onclick="read('${dto.club_id}')">소개</button></td>
-                <td>    
-                    <button type="button" class="joinClub" data-club_id="${dto.club_id}">가입</button>
-					<button type="button" class="enterClub" data-club_id="${dto.club_id}">입장</button>
+                <td>
+                	<c:if test="${dto.userJoin == 1}">
+						<button type="button" class="enterClub" data-club_id="${dto.club_id}">입장</button>
+                	</c:if>
+                	<c:if test="${dto.userJoin == 0}">
+                    	<button type="button" class="joinClub" data-club_id="${dto.club_id}">가입</button>
+                	</c:if>                	
                 </td>
             </tr>
             </c:forEach>

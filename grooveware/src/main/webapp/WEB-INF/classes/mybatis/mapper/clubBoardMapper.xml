@@ -50,6 +50,7 @@
 		FROM club_board cb
 		JOIN club c ON cb.club_id=c.club_id
 		WHERE cb.board_category=#{board_category}
+		AND c.club_id=#{club_id}
 		<where>
 			<if test="keyword!=null and keyword!='' ">
 				AND <include refid="where-list"/>

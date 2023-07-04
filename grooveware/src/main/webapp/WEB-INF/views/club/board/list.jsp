@@ -133,6 +133,7 @@ td.write-btn{
     border-top: 2px solid #c1c1c1;
     border-bottom: 2px solid #c1c1c1;
     font-size: 16.5px;
+    background-color: #f6f6f6;
 }
 </style>
 
@@ -157,8 +158,6 @@ window.addEventListener("load", function(){
 	let total_page = pageCount(dataCount, pageSize);
 	let paging = pagingUrl(page, total_page, url);
 	
-	// document.querySelector(".dataCount").innerHTML = dataCount+"개 ("+page+"/"+total_page+"페이지)";
-
 	document.querySelector(".page-navigation").innerHTML = 
 		dataCount === 0 ? "등록된 게시물이 없습니다." : paging;
 });
@@ -195,7 +194,7 @@ function searchList() {
 				<tr>
 					<td class="title"> 
 						<h3>
-							<span>|</span>${club_name} 클럽명
+							<span>|</span>&nbsp;${club.club_name}
 						</h3> 
 					</td>
 				</tr>
@@ -206,9 +205,9 @@ function searchList() {
 			    		<div class="box bg-1">
 						  <button class="op-button op-button--wayra" 
 					      		  onclick="location.href='${pageContext.request.contextPath}/club/${club_id}/notice/list';">공지사항</button>
-					      <button class="op-button op-button--wayra btnActive" 
+					      <button class="op-button op-button--wayra ${board_category==0?'btnActive':'' }" 
 					      		  onclick="location.href='${pageContext.request.contextPath}/club/${club_id}/board/list?board_category=0';">가입인사</button>
-					      <button class="op-button op-button--wayra" 
+					      <button class="op-button op-button--wayra ${board_category==1?'btnActive':'' }" 
 					      		  onclick="location.href='${pageContext.request.contextPath}/club/${club_id}/board/list?board_category=1';">자유게시판</button>
 					      <button class="op-button op-button--wayra"
 					      		  onclick="location.href='${pageContext.request.contextPath}/club/${club_id}/member/list';">커뮤니티 맴버</button>

@@ -14,10 +14,12 @@
 	margin: auto;
 	color: #404040;
 }
-.club-board-article th, .club-board-article td {
+.club-board-article th {
     padding: 10px;
-    border-top: 1px solid #c1c1c1;
-    border-bottom: 1px solid #c1c1c1;
+}
+.club-board-article td {
+    padding: 10px;
+    border-bottom: 1.5px solid #c1c1c1;
 }
 .club-board-article th {
     padding: 10px;
@@ -26,6 +28,7 @@
     font-size: 16.5px;
 }
 .club-board-write-btn,
+.club-board-del-btn,
 .club-board-list-btn {
 	height: 30px;
 	border-radius: 5px;
@@ -61,17 +64,21 @@
 	<div class="board">
 		<div class="title">
 			<h3>
-				<span>|</span> ${dto.club_name} 게시글
+				<span>|</span>&nbsp;${club.club_name}&nbsp;${board_category==0?'가입인사':'자유게시판'}
 			</h3>
 		</div>
 		
 		<table class="club-board-title">
-				<tr>
-					<td class="text-end">
+				<tr class="club-board-title-td">
+					<td>
 						<button type="button" class="club-board-write-btn" 
 								onclick="location.href='${pageContext.request.contextPath}/club/${club_id}/board/list?board_category=${board_category}';">수정</button>
 					</td>
-					<td class="text-end">
+					<td>
+						<button type="button" class="club-board-del-btn" 
+								onclick="location.href='${pageContext.request.contextPath}/club/${club_id}/board/list?board_category=${board_category}';">삭제</button>
+					</td>
+					<td>
 						<button type="button" class="club-board-list-btn" 
 								onclick="location.href='${pageContext.request.contextPath}/club/${club_id}/board/list?board_category=${board_category}';">리스트</button>
 					</td>
@@ -82,7 +89,7 @@
 		<table class="club-board-article">
 			<thead>
 				<tr>
-					<td colspan="2" align="center">
+					<td colspan="2" align="center" style="border-top: 1.5px solid #c1c1c1; background-color: #f6f6f6; font-weight:600; font-size: 17px;">
 						${dto.clubboard_title}
 					</td>
 				</tr>
@@ -91,7 +98,7 @@
 			<tbody>
 				<tr>
 					<td width="50%">
-							이름 : ${dto.emp_name}
+							작성자 : ${dto.emp_name}
 						</td>
 						<td align="right">
 							작성일&nbsp;${dto.clubboard_regdate}&nbsp; | &nbsp;조회&nbsp;${dto.clubboard_hitcount}

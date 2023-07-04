@@ -3,7 +3,54 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/community.css" type="text/css"> 
+<style type="text/css">
+
+.club-write{
+  width: 100%;
+  padding: 10px;
+  margin : 10px 0;
+  border-spacing: 0;
+}
+
+.club-write td{
+  padding: 15px 15px;
+  border-top: 1.6px solid #c1c1c1;
+}
+
+.club-write-left{
+  width: 17%;
+  text-align: center;
+  background: #f6f6f6;
+}
+
+.club-write input, 
+.club-write textarea{
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #c1c1c1;
+  border-radius: 4px;
+}
+
+.club-write textarea{
+  height: 150px;
+}
+
+.club-wirte-btn,
+.club-reset-btn,
+.club-cancel-btn{
+	height: 36px;
+	width : 80px;
+	border-radius: 5px;
+    padding: 5px 10px;
+    background-color: #eaeaea; 
+    color: #404040;
+    border: none;
+    cursor: pointer;
+    font-weight: 550;
+    margin: 0 10px;
+}
+</style>
+
 
 <div class="left-side-bar">
      <ul>
@@ -26,27 +73,52 @@
 	<div>
 		<div class="title">
 			<h3>
-				<span>|</span> 커뮤니티 만들기
+				<span>|</span>&nbsp;커뮤니티 만들기
 			</h3>
 		</div>
 		
 		<form name="clubForm" method="post">
 		<div class="club">
-			<table class="table table-border table-form">
-				<tr>
-					<td style="width:20%">커뮤니티명</td>
+			<table class="club-write">
+				<tr class="club-write-table">
+					<td class="club-write-left">커&nbsp;뮤&nbsp;니&nbsp;티&nbsp;명</td>
 					<td><input type="text" name="club_name" class="inputForm-control"></td>
 				</tr>
-				<tr>
-					<td style="width:20%; text-align=center; valign= top;" >소개</td>
+				
+				<tr class="club-write-table">
+					<td class="club-write-left" scope="row">운&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;영&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;자</td>
+					<td>
+						<p class="form-control-plaintext">${sessionScope.member.emp_name}</p>
+					</td>
+				</tr>
+				
+				<tr class="club-write-table">
+					<td class="club-write-left">소&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;개</td>
 					<td><textarea name="club_content" class="form-control"
 							style="height: 100px;"></textarea></td>
 				</tr>
-				<tr>
-					<td style="width:20%" valign="top">커뮤니티 사진</td>
-					<td><textarea name="club_picture" class="form-control"
-							style="height: 100px;"></textarea></td>
+				
+				<tr class="club-write-table">
+					<td class="club-write-left" style="border-bottom: 1.6px solid #c1c1c1;">커&nbsp;뮤&nbsp;니&nbsp;티&nbsp;사&nbsp;진</td>
+					<td style="border-bottom: 1.6px solid #c1c1c1;"> 
+						<input type="file" name="selectFile" class="form-control">
+					</td>
 				</tr>
+				
+				<c:if test="${mode=='update'}">
+					<tr>
+						<td class="table-light col-sm-2" scope="row">첨부된파일</td>
+						<td> 
+							<p class="form-control-plaintext">
+								<c:if test="${not empty dto.save_filename}">
+									<a href="javascript:deleteFile('${dto.club_noti_no}');"><i class="bi bi-trash"></i></a>
+									${dto.original_filename}
+								</c:if>
+								&nbsp;
+							</p>
+						</td>
+					</tr>
+				</c:if>
 
 				</table>
 			</div>
@@ -54,9 +126,9 @@
 			<table class="table">
 				<tr>
 					<td align="center">
-							<button type="button" class="btn" onclick="sendOk();" style="margin-right: 10px">${mode=="write"?"등록하기":"수정완료"}</button>
-						<button type="reset" class="btn" style="margin-right: 10px">다시입력</button>
-						<button type="button" class="btn"
+							<button type="button" class="club-wirte-btn" onclick="sendOk();" style="margin-right: 10px">${mode=="write"?"등록하기":"수정완료"}</button>
+						<button type="reset" class="club-wirte-btn" style="margin-right: 10px">다시입력</button>
+						<button type="button" class="club-wirte-btn"
 								onclick="location.href='${pageContext.request.contextPath}/club/list';">${mode=="write"?"등록취소":"수정취소"}</button>
 						<c:if test="${mode=='update'}">
 							<input type="hidden" name="club_id" value="${dto.club_id}">

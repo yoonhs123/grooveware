@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.sp.grooveware.club.Club;
 import com.sp.grooveware.common.FileManager;
 import com.sp.grooveware.common.MyUtil;
 import com.sp.grooveware.member.SessionInfo;
@@ -27,9 +28,6 @@ import com.sp.grooveware.member.SessionInfo;
 public class ClubNoticeController {
 	@Autowired
 	private ClubNoticeService service;
-	
-	@Autowired
-	private MyUtil myUtil;
 	
 	@Autowired
 	private FileManager fileManager;
@@ -71,8 +69,11 @@ public class ClubNoticeController {
 		map.put("offset", offset);
 		map.put("size", size);
 		
+		Club club = service.readClub(club_id);
+		
 		List<ClubNotice> list = service.listClubNotice(map);
 		
+		model.addAttribute("club", club);
 		model.addAttribute("club_id", club_id);
 		model.addAttribute("list", list);
 		model.addAttribute("page", current_page);
@@ -91,6 +92,9 @@ public class ClubNoticeController {
 			@PathVariable long club_id,
 			HttpSession session, Model model) throws Exception{
 		
+		Club club = service.readClub(club_id);
+		
+		model.addAttribute("club", club);
 		model.addAttribute("club_id",club_id);
 		model.addAttribute("mode","write");
 		
@@ -147,9 +151,12 @@ public class ClubNoticeController {
 		map.put("emp_no", info.getEmp_no());
 		map.put("club_noti_no", club_noti_no);
 		
+		Club club = service.readClub(club_id);
+		
 		ClubNotice preReadDto = service.preReadBoard(map);
 		ClubNotice nextReadDto = service.nextReadBoard(map);
 		
+		model.addAttribute("club", club);
 		model.addAttribute("club_id", club_id);
 		model.addAttribute("club_noti_no", club_noti_no);
 		model.addAttribute("dto", dto);

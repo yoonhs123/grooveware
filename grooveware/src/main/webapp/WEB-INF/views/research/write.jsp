@@ -15,8 +15,7 @@
                 <a href="#">&nbsp;진행중인 설문조사</a>
                 <a href="#">&nbsp;종료된 설문조사</a>
             <li>
-            
-            <hr>
+           
           </li>
           </ul>
     </div>

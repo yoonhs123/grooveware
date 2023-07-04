@@ -3,57 +3,62 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<style>
- /* 예약 폼 컨테이너 */
-.reservation-form {
-  width: 400px;
-  margin: 0 auto;
+<style type="text/css">
+.resForm-table{
+  margin-bottom: 30px;
 }
 
-/* 예약 폼 레이블 */
-.reservation-form label {
-  display: block;
-  margin-bottom: 10px;
-  font-weight: bold;
-}
-
-/* 예약 폼 입력 필드 */
-.reservation-form input[type="text"],
-.reservation-form input[type="date"],
-.reservation-form input[type="time"] {
+.resForm{
   width: 100%;
-  padding: 8px;
-  border: 1px solid #ccc;
+  padding: 10px;
+  margin : 10px 0;
+  border-spacing: 0;
+}
+.res-write-table{
+  padding: 15px 15px;
+  border-top: 2px solid #c1c1c1;
+  
+}
+
+.res-write-table label{
+  width: 30%;
+  text-align: center;
+  margin-left : 30px;
+  margin-right : 20px;
+
+}
+
+.meetingroom,
+.res-write-table input, 
+.res-write-table textarea{
+  width: 80%;
+  padding: 10px;
+  border: 1px solid #c1c1c1;
   border-radius: 4px;
-  box-sizing: border-box;
-  margin-bottom: 20px;
+  margin-left : 20px;
+  margin-right : 30px;
 }
 
-/* 예약 폼 버튼 */
-.reservation-form button {
-  background-color: #4CAF50;
-  color: white;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+.res-write-btn,
+.res-reset-btn,
+.res-cancel-btn{
+	height: 36px;
+	width : 80px;
+	border-radius: 5px;
+    padding: 5px 10px;
+    background-color: #eaeaea; 
+    color: #404040;
+    border: none;
+    cursor: pointer;
+    font-weight: 550;
+    margin: 0 10px;
 }
 
-.reservation-form button:hover {
-  background-color: #45a049;
+.res-btn{
+	margin-top: 30px;
+	text-align: center;
 }
 
-/* 예약 폼 에러 메시지 */
-.reservation-form .error-message {
-  color: red;
-  margin-bottom: 10px;
-}
-
-/* 예약 폼 성공 메시지 */
-.reservation-form .success-message {
-  color: green;
-  margin-bottom: 10px;
-}
 </style>
 
 <script type="text/javascript">
@@ -91,41 +96,63 @@
           <li>
               <a href="${pageContext.request.contextPath}/reservation/main">자원 예약</a>
               <a href="${pageContext.request.contextPath}/reservation/main">&nbsp;회의실 예약</a>
+          	  <a href="${pageContext.request.contextPath}/reservation/myres">&nbsp;내 예약현황</a>
           <li>
       </ul>
 </div>
 
 <div class="right-contentbody">
+	<div class="title_container">
+		<div class="resForm-table">
+			<div>
+				<h2><span>|</span>&nbsp;회의실 예약</h2>
+			</div>
+		</div>
+	</div>	
 	<div class="reservation-form">
 		<form name="resForm" method="post" >
-		  <label for="meetingroom">회의실</label>
-		  <select id="meetingroom" name="meroom_id">
-       			<option value="">:: 회의실 선택 ::</option>
-	       		<c:forEach var="vo" items="${listMeetingroom}">
-	       			<option value="${vo.meroom_id}">
-	       				${vo.meroom_name}
-	       			</option>
-	       		</c:forEach>
-          </select>
-		
-		  <label>예약자</label>
-		  <span>${sessionScope.member.emp_name}</span>
-		
-		  <label for="date">예약 날짜</label>
-		  <input type="date" id="meroom_resdate" name="meroom_resdate" value="${dto.meroom_resdate}">
-		
-		  <label for="start-time">시작 시간</label>
-		  <input type="time" id="res_starttime" name="res_starttime" value="${dto.res_starttime}">
-		
-		  <label for="end-time">종료 시간</label>
-		  <input type="time" id="res_endtime" name="res_endtime" value="${dto.res_endtime}">
-		
-		  <label for="res_content">예약 내용</label>
-		  <input type="text" id="res_content" name="res_content" value="${dto.res_content}" placeholder="예약 내용을 입력하세요">
-		
-		  <button type="button" class="btn btn-dark" onclick="sendOk();">${mode=='write'?'등록하기':'수정완료'}</button>
-		  <button type="reset" class="btn">다시입력</button>
-		  <button type="button" class="btn" onclick="location.href='${pageContext.request.contextPath}/reservation/main';">${mode=='write'?'등록취소':'수정취소'}</button>
+			<div class="res-write-table">
+				  <label for="meetingroom">회&nbsp;&nbsp;&nbsp;의&nbsp;&nbsp;&nbsp;실</label>
+				  <select id="meetingroom" name="meroom_id" class="meetingroom">
+		       			<option value="">:: 회의실 선택 ::</option>
+			       		<c:forEach var="vo" items="${listMeetingroom}">
+			       			<option value="${vo.meroom_id}">
+			       				${vo.meroom_name}
+			       			</option>
+			       		</c:forEach>
+		          </select>
+			</div>
+			
+			<div class="res-write-table">	
+			  <label>예&nbsp;&nbsp;&nbsp;약&nbsp;&nbsp;&nbsp;자</label>
+			  <span style="margin-left : 20px;">${sessionScope.member.emp_name}</span>
+			</div>
+			
+			<div class="res-write-table">
+			  <label for="date">예&nbsp;약&nbsp;날&nbsp;짜</label>
+			  <input type="date" id="meroom_resdate" name="meroom_resdate" value="${dto.meroom_resdate}">
+			</div>
+			
+			<div class="res-write-table">
+			  <label for="start-time">시&nbsp;작&nbsp;시&nbsp;간</label>
+			  <input type="time" id="res_starttime" name="res_starttime" value="${dto.res_starttime}">
+			</div>
+			
+			<div class="res-write-table">
+			  <label for="end-time">종&nbsp;료&nbsp;시&nbsp;간</label>
+			  <input type="time" id="res_endtime" name="res_endtime" value="${dto.res_endtime}">
+			</div>
+			
+			<div class="res-write-table" style="border-bottom: 2px solid #c1c1c1;">
+			  <label for="res_content">예&nbsp;약&nbsp;내&nbsp;용</label>
+			  <input type="text" id="res_content" name="res_content" value="${dto.res_content}" placeholder="예약 내용을 입력하세요">
+			</div>
+			
+			<div class="res-btn">
+			  <button type="button" class="res-write-btn" onclick="sendOk();">${mode=='write'?'예약하기':'수정완료'}</button>
+			  <button type="reset" class="res-reset-btn">다시입력</button>
+			  <button type="button" class="res-cancel-btn" onclick="location.href='${pageContext.request.contextPath}/reservation/main';">${mode=='write'?'취소하기':'수정취소'}</button>
+			</div>
 		</form>
 		
 		  <div class="error-message"></div>

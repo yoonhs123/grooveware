@@ -20,6 +20,8 @@ public class Club {
 	private int member_status;
 	private String member_joindate;
 	
+	private int userJoin;
+	
 	public long getClub_id() {
 		return club_id;
 	}
@@ -103,6 +105,12 @@ public class Club {
 	}
 	public void setSelectFile(MultipartFile selectFile) {
 		this.selectFile = selectFile;
+	}
+	public int getUserJoin() {
+		return userJoin;
+	}
+	public void setUserJoin(int userJoin) {
+		this.userJoin = userJoin;
 	}
 	
 }

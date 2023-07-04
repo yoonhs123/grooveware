@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.sp.grooveware.club.Club;
 import com.sp.grooveware.common.dao.CommonDAO;
 
 @Service("club.board.ClubBoardService")
@@ -224,6 +225,20 @@ public class ClubBoardServiceImpl implements ClubBoardService {
 	public void updateReplyShowHide(Map<String, Object> map) throws Exception {
 		// 댓글 숨기기?
 		
+	}
+
+	@Override
+	public Club readClub(long club_id) {
+		// 클럽 이름 가져오기
+		Club dto = null;
+
+		try {
+			dto = dao.selectOne("club.readClub", club_id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return dto;
 	}
 
 }

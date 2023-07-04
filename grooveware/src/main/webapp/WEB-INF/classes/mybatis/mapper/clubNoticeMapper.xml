@@ -71,7 +71,7 @@
 	
 	<!-- 클럽 공지사항 게시글 보기 -->
 	<select id="readClubNotice" parameterType="Long" resultType="com.sp.grooveware.club.notice.ClubNotice"> 
-		SELECT cn.club_noti_no, e.emp_name, cn.club_id, cn.club_noti_title, TO_CHAR (cn.club_noti_regdate, 'YYYY-MM-DD') startdate, 
+		SELECT cn.club_noti_no, e.emp_name, cn.club_id, cn.club_noti_title, TO_CHAR (cn.club_noti_regdate, 'YYYY-MM-DD') club_noti_regdate, 
 			   cn.club_noti_hitcount, cn.club_noti_content, cn.save_filename
 		FROM club_notice cn
 		JOIN emp e ON cn.emp_no=e.emp_no
@@ -88,11 +88,12 @@
 		SELECT cn.club_noti_no, cn.club_noti_title
 		FROM club_notice cn
 		JOIN emp e ON cn.emp_no=e.emp_no
+		WHERE cb.club_id=#{club_id}
+		AND (club_noti_no &gt; #{club_noti_no})
 		<where>
 			<if test="keyword != null and keyword != '' ">
 				<include refid="where-list"/>
 			</if>
-			AND (club_noti_no &gt; #{club_noti_no})
 		</where>
 		ORDER BY club_noti_no ASC
 		FETCH FIRST 1 ROWS ONLY
@@ -103,14 +104,16 @@
 		SELECT cn.club_noti_no, cn.club_noti_title
 		FROM club_notice cn
 		JOIN emp e ON cn.emp_no=e.emp_no
+		WHERE cb.club_id=#{club_id}
+		AND (club_noti_no &lt; #{club_noti_no})
 		<where>
 			<if test="keyword != null and keyword != '' ">
 				<include refid="where-list"/>
 			</if>
-			AND (club_noti_no &lt; #{club_noti_no})
 		</where>
 		ORDER BY club_noti_no ASC
 		FETCH FIRST 1 ROWS ONLY
 	</select>
+	
 
 </mapper>

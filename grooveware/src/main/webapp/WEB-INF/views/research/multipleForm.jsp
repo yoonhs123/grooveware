@@ -39,35 +39,62 @@
     container.appendChild(newBox);
   };
   
-  function addQuestBox() {
-	    const container = document.getElementById('sbox-container');
+ function addQuestBox() {
+    var questBox = document.querySelector('.QuestBox');
 
-	    const newBox = document.createElement('div');
-	    newBox.className = 'scBox';
+    var newRow = document.createElement('tr');
 
-	    const checkbox = document.createElement('input');
-	    checkbox.type = 'checkbox';
-	    checkbox.className = 'round-checkbox';
+    var newTd = document.createElement('td');
+    newTd.classList.add('sBox');
 
-	    const boxInput = document.createElement('input');
-	    boxInput.type = 'text';
-	    boxInput.className = 'scBox-input';
-	    boxInput.placeholder = '문항 입력';
+    var surveyTitle = document.createElement('div');
+    surveyTitle.classList.add('SurveyTitle');
+    surveyTitle.textContent = '질문';
 
-	    const removeBtn = document.createElement('button');
-	    removeBtn.className = 'remove-btn';
-	    removeBtn.innerText = 'x';
-	    removeBtn.onclick = function () {
-	      removeBox(this);
-	    };
+    var qBox = document.createElement('input');
+    qBox.type = 'text';
+    qBox.classList.add('qBox');
 
-	    newBox.appendChild(checkbox);
-	    newBox.appendChild(boxInput);
-	    newBox.appendChild(removeBtn);
+    newTd.appendChild(surveyTitle);
+    newTd.appendChild(qBox);
 
-	    container.appendChild(newBox);
-	  };
+    newRow.appendChild(newTd);
 
+    questBox.appendChild(newRow);
+    
+    var sBox = document.querySelector('.sBox');
+
+    var surveyTitle = document.createElement('div');
+    surveyTitle.classList.add('SurveyTitle');
+    surveyTitle.textContent = '설문 문항 타입';
+
+    var selectBox = document.createElement('select');
+    selectBox.required = true;
+
+    var defaultOption = document.createElement('option');
+    defaultOption.value = '';
+    defaultOption.disabled = true;
+    defaultOption.selected = true;
+    defaultOption.hidden = true;
+    defaultOption.textContent = ':: 옵션 ::';
+
+    var option1 = document.createElement('option');
+    option1.value = '객관식형';
+    option1.textContent = '객관식형';
+
+    var option2 = document.createElement('option');
+    option2.value = '주관식형';
+    option2.textContent = '주관식형';
+
+    selectBox.appendChild(defaultOption);
+    selectBox.appendChild(option1);
+    selectBox.appendChild(option2);
+
+    sBox.appendChild(surveyTitle);
+    sBox.appendChild(selectBox);
+    
+    questBox.appendChild(newRow);
+ }
 
 
 </script>

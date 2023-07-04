@@ -28,6 +28,7 @@
     border-top: 2px solid #c1c1c1;
     border-bottom: 2px solid #c1c1c1;
     font-size: 16.5px;
+    background-color: #f6f6f6;
 }
 img {
     width: 90px;
@@ -86,7 +87,7 @@ img {
 
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/paginate.js"></script>
 
-<c:url var="listUrl" value="/club/list">
+<c:url var="listUrl" value="/club/mylist">
 	<c:if test="${not empty keyword}">
 		<c:param name="condition" value="${condition}"/>
 		<c:param name="keyword" value="${keyword}"/>
@@ -163,25 +164,6 @@ function read(club_id){
 	};
 	ajaxFun(url, "get", query, "html", fn);
 }
-
-// 가입
-	// ajax json으로 가져오기(true랑 false)
-$(function(){
-	$(".joinClub").click(function(){
-		
-		if(! confirm('커뮤니티에 가입하시겠습니까 ? ')) {
-			return false;
-		}
-		
-		const f = document.clubJoinForm;
-		
-		let club_id = $(this).attr("data-club_id");
-		f.club_id.value = club_id;
-		
-		f.action = "${pageContext.request.contextPath}/club/join";
-		f.submit();
-	});
-});
 
 // 클럽 들어가기 - 입장
 $(function(){
@@ -261,7 +243,8 @@ $(function(){
                 <td> ${dto.emp_name} </td>
                 <td> ${dto.club_startdate} </td>
                 <td>
-                    <button type="button" class="read" onclick="read('${dto.club_id}')">소개</button></td>
+                    <button type="button" class="read" onclick="read('${dto.club_id}')">소개</button>
+                </td>
                 <td>    
 					<button type="button" class="enterClub" data-club_id="${dto.club_id}">입장</button>
                 </td>

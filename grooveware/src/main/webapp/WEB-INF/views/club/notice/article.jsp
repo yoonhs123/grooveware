@@ -3,8 +3,45 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+<style type="text/css">
+.club-noti-head{
+	padding-bottom : 13px;
+	text-align : right;
+}
+.club-noti-article{
+    width: 100%;
+    border-spacing: 0;
+	margin: auto;
+	color: #404040;
+}
+.club-noti-article th {
+    padding: 10px;
+}
+.club-noti-article td {
+    padding: 10px;
+    border-bottom: 1.5px solid #c1c1c1;
+}
+.club-noti-article th {
+    padding: 10px;
+    border-top: 1px solid #c1c1c1;
+    border-bottom: 1px solid #c1c1c1;
+    font-size: 16.5px;
+}
+.club-noti-write-btn,
+.club-noti-del-btn,
+.club-noti-list-btn {
+	height: 30px;
+	border-radius: 5px;
+    padding: 5px 10px;
+    background-color: #CEDDEF; 
+    color: #404040;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    margin: 0 5px; 
+}
 
-
+</style>
 
 <div class="left-side-bar">
      <ul>
@@ -25,15 +62,30 @@
 	<div class="board">
 		<div class="title">
 			<h3>
-				<span>|</span> ${dto.club_name}
+				<span>|</span>&nbsp;${club.club_name}&nbsp;공지사항
 			</h3>
 		</div>
+		<table class="club-noti-head">
+				<tr class="club-noti-head-td">
+					<td>
+						<button type="button" class="club-noti-write-btn" 
+								onclick="location.href='${pageContext.request.contextPath}/club/${club_id}/notice/list?${query}';">수정</button>
+					</td>
+					<td>
+						<button type="button" class="club-noti-del-btn" 
+								onclick="location.href='${pageContext.request.contextPath}/club/${club_id}/notice/list?${query}';">삭제</button>
+					</td>
+					<td>
+						<button type="button" class="club-noti-list-btn" 
+								onclick="location.href='${pageContext.request.contextPath}/club/${club_id}/notice/list?${query}';">리스트</button>
+					</td>
+				</tr>
+		</table>
 		<div class="comm">
-		<table class="table table-border table-article"
-			style="margin-top: 20px;">
+		<table class="club-noti-article">
 			<thead>
 				<tr>
-					<td colspan="2" align="center">
+					<td colspan="2" align="center" style="border-top: 1.5px solid #c1c1c1; background-color: #f6f6f6; font-weight:600; font-size: 17px;">
 						${dto.club_noti_title}
 					</td>
 				</tr>
@@ -42,10 +94,10 @@
 			<tbody>
 				<tr>
 					<td width="50%">
-							이름 : ${dto.emp_name}
+							작성자 : ${dto.emp_name}
 						</td>
 						<td align="right">
-							 ${dto.club_noti_regdate} | 조회 ${dto.club_noti_hitcount}
+							작성일&nbsp;${dto.club_noti_regdate}&nbsp; | &nbsp;조회 ${dto.club_noti_hitcount}
 					</td>
 				</tr>
 
@@ -83,15 +135,6 @@
 				</tr>
 			</tbody>
 		</table>
-		<table class="table table-borderless">
-				<tr>
-					<td width="50%">&nbsp;</td>
-					<td class="text-end">
-						<button type="button" class="btn btn-light" onclick="location.href='${pageContext.request.contextPath}/club/${club_id}/notice/list?${query}';">리스트</button>
-					</td>
-				</tr>
-		</table>
-		
 		</div>
 	</div>
 </div>

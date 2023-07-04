@@ -60,6 +60,19 @@ public class ClubServiceImpl implements ClubService{
 		}
 		return result;
 	}
+	
+	@Override
+	public int dataCountmyClub(Map<String, Object> map) {
+		// 내가 가입한 클럽 개수
+		int result = 0;
+		
+		try {
+			result = dao.selectOne("club.dataCountmyClub", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
 
 	@Override
 	public void updateClub(Club dto, String pathname) throws Exception {
@@ -105,5 +118,7 @@ public class ClubServiceImpl implements ClubService{
 			throw e;
 		}
 	}
+
+
 
 }

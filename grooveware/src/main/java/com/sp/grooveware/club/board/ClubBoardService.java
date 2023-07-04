@@ -3,6 +3,8 @@ package com.sp.grooveware.club.board;
 import java.util.List;
 import java.util.Map;
 
+import com.sp.grooveware.club.Club;
+
 public interface ClubBoardService {
 	public void insertClubBoard(ClubBoard dto) throws Exception;
 	public List<ClubBoard> listClubBoard(Map<String,Object> map);
@@ -14,6 +16,8 @@ public interface ClubBoardService {
 	public void updateBoard(ClubBoard dto, String pathname) throws Exception;
 	public void deleteBoard(long club_board_no, String pathname, String emp_no) throws Exception;
 
+	public Club readClub(long club_id);
+	
 	public void insertBoardLike(Map<String, Object> map) throws Exception;
 	public void deleteBoardLike(Map<String, Object> map) throws Exception;
 	public int boardLikeCount(long club_board_no);

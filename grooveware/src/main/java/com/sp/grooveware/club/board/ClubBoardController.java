@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.sp.grooveware.club.Club;
 import com.sp.grooveware.club.notice.ClubNotice;
 import com.sp.grooveware.common.MyUtil;
 import com.sp.grooveware.member.SessionInfo;
@@ -66,8 +67,11 @@ public class ClubBoardController {
 		map.put("offset", offset);
 		map.put("size", size);
 		
+		Club club = service.readClub(club_id);
+		
 		List<ClubBoard> list = service.listClubBoard(map);
 		
+		model.addAttribute("club", club);
 		model.addAttribute("club_id", club_id);
 		model.addAttribute("board_category", board_category);
 		model.addAttribute("list", list);
@@ -88,6 +92,9 @@ public class ClubBoardController {
 			@RequestParam long board_category,
 			HttpSession session, Model model) throws Exception{
 		
+		Club club = service.readClub(club_id);
+		
+		model.addAttribute("club", club);
 		model.addAttribute("club_id",club_id);
 		model.addAttribute("board_category", board_category);
 		model.addAttribute("mode","write");
@@ -149,9 +156,12 @@ public class ClubBoardController {
 		map.put("club_board_no", club_board_no);
 		map.put("board_category", board_category);
 		
+		Club club = service.readClub(club_id);
+		
 		ClubBoard preReadDto = service.preReadBoard(map);
 		ClubBoard nextReadDto = service.nextReadBoard(map);
 		
+		model.addAttribute("club", club);
 		model.addAttribute("club_id", club_id);
 		model.addAttribute("club_board_no", club_board_no);
 		model.addAttribute("board_category", board_category);

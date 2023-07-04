@@ -27,7 +27,8 @@
 	<!-- 클럽 전체 리스트 조회 -->
 	<select id="listClub" parameterType="map" resultType="com.sp.grooveware.club.Club">
 		SELECT c.club_id, c.club_name, NVL(memberCount,0) member_count, e.emp_name, 
-			   TO_CHAR (c.club_startdate, 'YYYY-MM-DD') club_startdate
+			   TO_CHAR (c.club_startdate, 'YYYY-MM-DD') club_startdate,
+			   NVL(userJoin, 0) userJoin
 		FROM club c
 		LEFT OUTER JOIN (
 		    SELECT club_id, COUNT(*) memberCount
@@ -36,6 +37,9 @@
 		) cmm ON c.club_id=cmm.club_id
 		JOIN club_member cm ON c.club_id=cm.club_id
 		JOIN emp e ON cm.emp_no=e.emp_no
+		LEFT OUTER JOIN (
+			select club_id, emp_no, 1 userJoin from club_member where emp_no = #{emp_no}
+		) jm ON c.club_id = jm.club_id
 		WHERE member_authority='0'
 		<where>
 			<if test="keyword != null and keyword != '' ">
@@ -48,7 +52,7 @@
 	
 	<!-- 내가 가입한 클럽 전체 리스트 조회 -->
 	<select id="listmyClub" parameterType="map" resultType="com.sp.grooveware.club.Club">
-		SELECT c.club_id, c.club_name, NVL(memberCount,0) member_count, e.emp_name, 
+		SELECT c.club_id, c.club_name, NVL(memberCount,0) member_count, ja.emp_name, 
 			   TO_CHAR (c.club_startdate, 'YYYY-MM-DD') club_startdate
 		FROM club c
 		LEFT OUTER JOIN (
@@ -57,8 +61,15 @@
 		    GROUP BY club_id
 		) cmm ON c.club_id=cmm.club_id
 		JOIN club_member cm ON c.club_id=cm.club_id
+		JOIN ( 
+			SELECT club_id, emp_name
+			FROM club_member c1
+			JOIN emp e1
+			ON c1.emp_no = e1.emp_no
+			WHERE member_authority = '0'
+		) ja ON c.club_id = ja.club_id
 		JOIN emp e ON cm.emp_no=e.emp_no
-		WHERE cm.emp_no=#{emp_no}
+		WHERE cm.emp_no=#{emp_no}		
 		<where>
 			<if test="keyword != null and keyword != '' ">
 				AND <include refid="where-list"/>
@@ -74,6 +85,20 @@
 		FROM club c
 		JOIN club_member cm ON c.club_id=cm.club_id
 		WHERE member_authority='0'
+		<where>
+			<if test="keyword != null and keyword != '' ">
+				<include refid="where-list"/>
+			</if>
+		</where>
+	</select>
+	
+	<!-- 내가 가입한 클럽 전체 개수 -->
+	<select id="dataCountmyClub" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*),0)
+		FROM club c
+		JOIN club_member cm ON c.club_id=cm.club_id
+		JOIN emp e ON cm.emp_no=e.emp_no
+		WHERE cm.emp_no=#{emp_no}	
 		<where>
 			<if test="keyword != null and keyword != '' ">
 				<include refid="where-list"/>

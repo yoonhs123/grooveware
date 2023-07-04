@@ -74,6 +74,55 @@ public class ReservationController {
 		
 	}
 	
+	@RequestMapping(value="myres")
+	public String myres(
+			@RequestParam(required = false) String date,
+			HttpServletRequest req,
+			HttpSession session,
+			Model model) throws Exception{
+		
+		Calendar cal = Calendar.getInstance();
+		if(date == null) {
+			date = String.format("%tF", cal);
+		}
+		
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("YYYY-MM-dd");
+		LocalDate localDate = LocalDate.parse(date);
+		LocalDate preLocalDate = localDate.minusDays(1);
+		LocalDate nextLocalDate = localDate.plusDays(1);
+		
+		String preDate = preLocalDate.format(dtf);
+		String nextDate = nextLocalDate.format(dtf);
+		
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("emp_no", info.getEmp_no());
+		map.put("meroom_resdate", date);
+		
+		List<Reservation> listByDate = service.listResByDate(map);
+		for(Reservation vo : listByDate) {
+			vo.setStarttime(Integer.parseInt(vo.getRes_starttime().substring(0, 2)));
+			vo.setEndtime(Integer.parseInt(vo.getRes_endtime().substring(0, 2)));
+		}
+		
+		List<Reservation> listMr = service.listMeetingroom();
+		
+		List<Reservation> list = service.listMyRes(map);
+		
+		model.addAttribute("listByDate", listByDate);
+		model.addAttribute("listMr", listMr);
+		
+		model.addAttribute("list", list);
+		
+		model.addAttribute("date", date);
+		model.addAttribute("preDate", preDate);
+		model.addAttribute("nextDate", nextDate);
+		
+		return ".schedule.reservation.myres"; 
+		
+	}
+	
 	@RequestMapping(value="write", method=RequestMethod.GET)
 	public String resForm(Model model) {
 		

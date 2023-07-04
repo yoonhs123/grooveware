@@ -36,7 +36,6 @@
   vertical-align: middle;
   position: relative;
   z-index: 1;
-  font-weight: 600;
 }
 .op-button:focus {
   outline: none;
@@ -135,6 +134,7 @@ td.write-btn{
     border-top: 2px solid #c1c1c1;
     border-bottom: 2px solid #c1c1c1;
     font-size: 16.5px;
+    background-color: #f6f6f6;
 }
 
 </style>
@@ -198,7 +198,7 @@ function searchList() {
 				<tr>
 					<td class="title"> 
 						<h3>
-							<span>|</span>${dto.club_name} 클럽명
+							<span>|</span>&nbsp;${club.club_name}
 						</h3> 
 					</td>
 				</tr>
@@ -263,7 +263,7 @@ function searchList() {
 			<c:forEach var="dto" items="${list}" varStatus="status">
 				<tr>
 					<td> ${dataCount - (page-1) * size - status.index} </td>
-					<td>
+					<td align="left">
 						<c:url var="url" value="/club/${club_id}/notice/article">
 							<c:param name="club_noti_no" value="${dto.club_noti_no}"/>
 							<c:param name="page" value="${page}"/>

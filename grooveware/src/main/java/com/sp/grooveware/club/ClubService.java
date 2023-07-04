@@ -8,6 +8,7 @@ public interface ClubService {
 	public List<Club> listClub(Map<String, Object> map);
 	public List<Club> listmyClub(Map<String, Object> map);
 	public int dataCountClub(Map<String,Object> map);
+	public int dataCountmyClub(Map<String,Object> map);
 	public void updateClub(Club dto, String pathname) throws Exception;
 	public void deleteClub(Club dto, String pathname, String userId, int member_authority) throws Exception;
 	public Club readClub(long club_id);

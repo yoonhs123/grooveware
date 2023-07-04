@@ -30,7 +30,11 @@ public class ClubController {
 				@RequestParam(defaultValue="all") String condition,
 				@RequestParam(defaultValue="") String keyword,
 				HttpServletRequest req,
+				HttpSession session,
 				Model model) throws Exception {
+		
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		
 		int size = 5;
 		int total_page = 0;
 		int dataCount = 0;
@@ -43,6 +47,7 @@ public class ClubController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("condition", condition);
 		map.put("keyword", keyword);
+		map.put("emp_no", info.getEmp_no());
 		
 		dataCount = service.dataCountClub(map);
 		if(dataCount != 0) {
@@ -95,10 +100,11 @@ public class ClubController {
 		
 		// 전체 페이지 수
 		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("emp_no", info.getEmp_no());
 		map.put("condition", condition);
 		map.put("keyword", keyword);
 		
-		dataCount = service.dataCountClub(map);
+		dataCount = service.dataCountmyClub(map);
 		if(dataCount != 0) {
 			total_page = dataCount / size + (dataCount % size > 0 ? 1: 0);
 		}
@@ -110,14 +116,14 @@ public class ClubController {
 		int offset = (current_page - 1 ) * size;
 		if(offset < 0) offset = 0;
 		
-		map.put("emp_no", info.getEmp_no());
+		
 		map.put("offset", offset);
 		map.put("size", size);
 		
 		// 글 리스트
-		List<Club> list = service.listmyClub(map);
+		List<Club> mylist = service.listmyClub(map);
 		
-		model.addAttribute("list", list);
+		model.addAttribute("list", mylist);
 		model.addAttribute("page", current_page);
 		model.addAttribute("dataCount", dataCount);
 		model.addAttribute("size", size);

@@ -45,8 +45,6 @@ function ajaxFun(url, method, query, dataType, fn){
              <a href="#">&nbsp;가입 커뮤니티</a>
          <li>
          
-         <hr>
-         
          <li>
              <a href="${pageContext.request.contextPath}/research/list">설문조사</a>
              <a href="${pageContext.request.contextPath}/research/list">&nbsp;설문리스트</a>
@@ -60,12 +58,12 @@ function ajaxFun(url, method, query, dataType, fn){
 			<div class="title_container">
 			<table class="table" style="margin-bottom: 20px;">
 				<tr>
-					<td class="title" > <h3><span>|</span> 사내 설문조사</h3> 
+					<td class="title" > <h3><span>|</span>&nbsp;사내 설문조사</h3> 
 					</td>
 					
 					<td align="right">
 						<div>
-							<button type="button" onclick="location.href='${pageContext.request.contextPath}/club/write';" 
+							<button type="button" onclick="location.href='${pageContext.request.contextPath}/research/multipleForm';" 
 							style="background-color: #eeeeee; border:none; font-size:13px; padding:5px 10px; border-radius: 7px;">설문 작성</button>
 						</div>
 
@@ -112,7 +110,7 @@ function ajaxFun(url, method, query, dataType, fn){
 
 		</table>
 
-	<div class="page-navigation" style="width: 900px; margin: 0 auto;">${dataCount == 0 ? "등록된 게시물이 없습니다." : paging} 1 2 3</div>
+	<div class="page-navigation" style="width: 900px; margin: 0 auto;"></div>
 	
 	</div>
 </div>
