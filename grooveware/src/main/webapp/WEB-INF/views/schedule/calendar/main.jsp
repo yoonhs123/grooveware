@@ -77,7 +77,7 @@
             <li>
                 <a href="${pageContext.request.contextPath}/schedule/calendar/main">캘린더</a>
             </li>
-            
+             
             <li>
               <a href="${pageContext.request.contextPath}/reservation/main">자원 예약</a>
               <a href="${pageContext.request.contextPath}/reservation/main">&nbsp;회의실 예약</a>
