@@ -28,11 +28,6 @@
 	
 	
 	
-	<select id="readDeptCategory" parameterType="Long" resultType="com.sp.grooveware.insamanage.InsaManage">
-		SELECT  dept_no, dept_name, dept_status, top_dept_no 
-		FROM dept
-		WHERE dept_no = #{dept_no}
-	</select>
 	
 	<!-- 상위 부서 카테고리 -->
 	<!-- 하위 부서 카테고리 -->
@@ -51,6 +46,12 @@
 		ORDER BY dept_no
 	</select>
 	 -->
+	 
+	<select id="readDeptCategory" parameterType="Long" resultType="com.sp.grooveware.insamanage.InsaManage">
+		SELECT  dept_no, dept_name, dept_status, top_dept_no 
+		FROM dept
+		WHERE dept_no = #{dept_no}
+	</select>
 	 
 	 <select id="listDeptCategory" resultType="com.sp.grooveware.insamanage.InsaManage">
 		SELECT dept_no, dept_name, top_dept_no
@@ -195,46 +196,128 @@
 	
 	
 	
+	
+	
+	<!-- 직위만 변경 -->
+	<update id="updatePos" parameterType="com.sp.grooveware.insamanage.InsaManage">
+		UPDATE emp_history SET pos_enddate = #{pos_enddate} 
+		WHERE emp_no = #{emp_no} AND pos_enddate IS NULL
+	</update>
+	
+	<select id="selectDept" parameterType="Long" resultType="com.sp.grooveware.insamanage.InsaManage">
+		SELECT  eh.dept_no, d.dept_name, eh.dept_startdate
+		FROM emp_history eh
+		JOIN dept d ON d.dept_no = eh.dept_no
+        WHERE eh.emp_no = #{emp_no}
+        ORDER BY dept_startdate DESC
+        FETCH FIRST 1 ROW ONLY
+	</select>
+	
+	<insert id="insertPos" parameterType="com.sp.grooveware.insamanage.InsaManage">
+		INSERT INTO emp_history (history_no, emp_no, pos_no, pos_startdate, dept_no, dept_startdate)
+		VALUES (#{history_no}, #{emp_no}, #{pos_no}, TO_DATE(#{pos_startdate}, 'YYYY-MM-DD')
+			(SELECT dept_no FROM emp_history WHERE emp_no = #{emp_no} ORDER BY dept_startdate DESC FETCH FIRST 1 ROW ONLY),
+			(SELECT dept_startdate FROM emp_history WHERE emp_no = #{emp_no} ORDER BY dept_startdate DESC FETCH FIRST 1 ROW ONLY))
+	</insert>
+	
+	
+	
+	<!-- 부서만 변경 -->
+	<update id="updateDept" parameterType="com.sp.grooveware.insamanage.InsaManage">
+		UPDATE emp_history SET dept_enddate = #{dept_enddate} 
+		WHERE emp_no = #{emp_no} AND dept_enddate IS NULL
+	</update>
+	
+	<select id="selectPos" parameterType="Long" resultType="com.sp.grooveware.insamanage.InsaManage">
+		SELECT  eh.pos_no, p.pos_name, eh.pos_startdate
+		FROM emp_history eh
+		JOIN pos p ON p.pos_no = eh.pos_no
+        WHERE eh.emp_no = #{emp_no}
+        ORDER BY pos_startdate DESC
+        FETCH FIRST 1 ROW ONLY
+	</select>
+	
+	<insert id="insertDept" parameterType="com.sp.grooveware.insamanage.InsaManage">
+		INSERT INTO emp_history (history_no, emp_no, pos_no, pos_startdate, dept_no, dept_startdate)
+		VALUES (#{history_no}, #{emp_no}, 
+			(SELECT pos_no FROM emp_history WHERE emp_no = #{emp_no} ORDER BY pos_startdate DESC FETCH FIRST 1 ROW ONLY),
+			(SELECT pos_startdate FROM emp_history WHERE emp_no = #{emp_no} ORDER BY pos_startdate DESC FETCH FIRST 1 ROW ONLY),
+			#{dept_no}, TO_DATE(#{dept_startdate}, 'YYYY-MM-DD'))
+	</insert>
+	
+	
+	
+	<!-- 직위/부서 모두 변경 -->
+	<update id="updatePosDept" parameterType="com.sp.grooveware.insamanage.InsaManage">
+		UPDATE emp_history SET pos_enddate = #{pos_enddate}, dept_enddate = #{dept_enddate} 
+		WHERE emp_no = #{emp_no} AND pos_enddate IS NULL AND dept_enddate IS NULL
+	</update>
+	
+	<select id="selectPosDept" parameterType="Long" resultType="com.sp.grooveware.insamanage.InsaManage">
+		SELECT  eh.pos_no, p.pos_name, eh.pos_startdate, eh.dept_no,  d.dept_name, eh.dept_startdate
+		FROM emp_history eh
+		JOIN pos p ON p.pos_no = eh.pos_no
+		JOIN dept d ON d.dept_no = eh.dept_no
+        WHERE eh.emp_no = #{emp_no}
+        ORDER BY pos_startdate DESC, dept_startdate DESC
+        FETCH FIRST 1 ROW ONLY
+	</select>
+	
+	<insert id="insertPosDept" parameterType="com.sp.grooveware.insamanage.InsaManage">
+		INSERT INTO emp_history (history_no, emp_no, pos_no, pos_startdate, dept_no, dept_startdate)
+		VALUES (#{history_no}, #{emp_no}, 
+			(SELECT pos_no FROM emp_history WHERE emp_no = #{emp_no} ORDER BY pos_startdate DESC FETCH FIRST 1 ROW ONLY),
+			(SELECT pos_startdate FROM emp_history WHERE emp_no = #{emp_no} ORDER BY pos_startdate DESC FETCH FIRST 1 ROW ONLY),
+			(SELECT dept_no FROM emp_history WHERE emp_no = #{emp_no} ORDER BY dept_startdate DESC FETCH FIRST 1 ROW ONLY),
+			(SELECT dept_startdate FROM emp_history WHERE emp_no = #{emp_no} ORDER BY dept_startdate DESC FETCH FIRST 1 ROW ONLY))
+	</insert>
+	
+	
 	<!-- 직위만 바뀔때 -->
+	<!-- 
 	<update id="updatePosHistory" parameterType="map">
 		UPDATE emp_history SET pos_enddate = #{pos_enddate} 
 		WHERE emp_no = #{emp_no} AND pos_no = #{pos_no} AND dept_no = #{dept_no} 
 	</update>
 	
+	
 	<insert id="insertNewPosHistory" parameterType="com.sp.grooveware.insamanage.InsaManage">
 		INSERT INTO emp_history (emp_no, pos_no, pos_startdate, dept_no, dept_startdate)
 		VALUES (#{emp_no}, #{pos_no}, #{pos_startdate}, #{dept_no}, #{dept_startdate})
 	</insert>
-	
+	 -->
 	
 	<!-- 근태관리 리스트 -->
 	<select id="listWork" parameterType="map" resultType="com.sp.grooveware.insamanage.InsaManage">
-	SELECT emp_no, emp_name, dept_name, pos_name, work_year,
-		COUNT(CASE WHEN work_status = 0 THEN 1 END) AS work_Count,
-		COUNT(CASE WHEN work_status = 1 THEN 1 END) AS workLate_Count,
-		COUNT(CASE WHEN work_status = 2 THEN 1 END) AS workAbsence_Count,
-		COUNT(CASE WHEN work_status = 3 THEN 1 END) AS workLateEarly_Count
-	FROM (
-		SELECT e.emp_no, e.emp_name, d.dept_name, p.pos_name,
-			EXTRACT(YEAR FROM work_starttime) AS work_year,
-			wr.work_status,
-			ROW_NUMBER() OVER (PARTITION BY e.emp_no ORDER BY eh.pos_startdate DESC,
-			eh.dept_startdate DESC) AS rank
-		FROM emp e
-			JOIN emp_history eh ON e.emp_no = eh.emp_no
-			JOIN dept d ON eh.dept_no = d.dept_no
-			JOIN pos p ON eh.pos_no = p.pos_no
-			JOIN worktime_recode wr ON e.emp_no = wr.emp_no
-		) t
-	WHERE rank = 1
-	<where>
-		<if test="keyword!=null and keyword!='' ">
-			<include refid="where-list"/>
-		</if>
-	</where>
-	GROUP BY emp_no, emp_name, dept_name, pos_name, work_year
-	ORDER BY emp_no
-	OFFSET #{offset} ROWS FETCH FIRST #{size} ROWS ONLY
+		SELECT t.emp_no, t.emp_name, t.dept_name, t.pos_name,
+               t.work_year, t.work_month,
+               COUNT(DECODE(wr.work_status, 0, 1)) AS work_Count,
+               COUNT(DECODE(wr.work_status, 1, 1)) AS workLate_Count,
+               COUNT(DECODE(wr.work_status, 2, 1)) AS workAbsence_Count,
+               COUNT(DECODE(wr.work_status, 3, 1)) AS workLateEarly_Count
+        FROM (
+            SELECT e.emp_no, e.emp_name, d.dept_name, p.pos_name,
+                   EXTRACT(YEAR FROM wr.work_starttime) AS work_year,
+                   EXTRACT(MONTH FROM wr.work_starttime) AS work_month,
+                   ROW_NUMBER() OVER (PARTITION BY e.emp_no ORDER BY eh.pos_startdate DESC, eh.dept_startdate DESC) AS rank
+            FROM emp e
+            JOIN emp_history eh ON e.emp_no = eh.emp_no
+            JOIN dept d ON eh.dept_no = d.dept_no
+            JOIN pos p ON eh.pos_no = p.pos_no
+            JOIN worktime_recode wr ON e.emp_no = wr.emp_no
+            WHERE TO_CHAR(wr.work_starttime, 'YYYY') = TO_CHAR(SYSDATE, 'YYYY')
+        ) t
+        JOIN worktime_recode wr ON t.emp_no = wr.emp_no
+        WHERE t.rank = 1 	
+        	AND TO_CHAR(wr.work_starttime, 'YYYY') = TO_CHAR(SYSDATE, 'YYYY')
+        <where>
+			<if test="keyword!=null and keyword!='' ">
+				<include refid="where-list"/>
+			</if>
+		</where>
+		GROUP BY t.emp_no, t.emp_name, t.dept_name, t.pos_name, t.work_year, t.work_month
+        ORDER BY t.work_year DESC, t.work_month DESC, t.emp_no
+        OFFSET #{offset} ROWS FETCH FIRST #{size} ROWS ONLY
 	</select>
 	
 	
@@ -242,6 +325,7 @@
 	<select id="workDataCount" parameterType="map" resultType="Integer">
 		SELECT COUNT(*)
 		FROM worktime_recode
+		WHERE emp_no = #{emp_no}
 		<where>
 			<if test="keyword != null and keyword != '' ">
 				<include refid="where-list"/>
@@ -250,7 +334,19 @@
 	</select>
 	
 	<update id="hoildayUpdate" parameterType="com.sp.grooveware.insamanage.InsaManage">
-		
+		MERGE INTO emp_annual ea
+        USING (
+          SELECT emp_no, emp_join_date FROM emp
+        ) e ON (ea.emp_no = e.emp_no)
+        WHEN MATCHED THEN
+        UPDATE SET ea.annual_count = 
+            CASE 
+              WHEN months_between(SYSDATE, e.emp_join_date) / 12 &lt; 1 THEN 12
+              WHEN months_between(SYSDATE, e.emp_join_date) / 12 &gt;= 1 AND months_between(SYSDATE, e.emp_join_date) / 12 &lt;= 5 THEN 16
+              WHEN months_between(SYSDATE, e.emp_join_date) / 12 &gt; 5 AND months_between(SYSDATE, e.emp_join_date) / 12 &lt;= 10 THEN 20
+              WHEN months_between(SYSDATE, e.emp_join_date) / 12 &gt; 10 AND months_between(SYSDATE, e.emp_join_date) / 12 &lt;= 15 THEN 26
+              ELSE 32
+            END
 	</update>
 	
 	

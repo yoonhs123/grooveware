@@ -67,11 +67,12 @@
 	
 	<select id="listWorkRecord" resultType="com.sp.grooveware.myInsa.MyInsa">
 		SELECT record_no, emp_no, 
-		TO_CHAR(work_starttime, 'MM/DD') work_day, 
-		TO_CHAR(work_starttime, 'HH24:MI') work_starttime, 
-		TO_CHAR(work_endtime, 'HH24:MI') work_endtime, work_status 
+			TO_CHAR(work_starttime, 'MM/DD') work_day, 
+			TO_CHAR(work_starttime, 'HH24:MI') work_starttime, 
+			TO_CHAR(work_endtime, 'HH24:MI') work_endtime, work_status 
 		FROM worktime_recode 
 		WHERE emp_no = #{emp_no}
+		ORDER BY work_day
 	</select>
 	
 	

@@ -2,10 +2,6 @@ package com.sp.grooveware.insamanage;
 
 import org.springframework.web.multipart.MultipartFile;
 
-/**
- * @author user
- *
- */
 public class InsaManage {
 	private long qualifer;
 	private long emp_no;
@@ -26,9 +22,8 @@ public class InsaManage {
 	
 	private MultipartFile selectFile;
 	
-	// 연차
+	// 부서, 직위
 	private int annual_leave;
-	
 	private long history_no;
 	private String pos_startdate;
 	private String pos_enddate;
@@ -44,6 +39,7 @@ public class InsaManage {
 	private String pos_name;
 	private long top_pos_no;
 	
+	// 근태
 	private long record_no;
 	private String work_day;
 	private String work_starttime;
@@ -51,12 +47,37 @@ public class InsaManage {
 	private String work_status;
 	
 	private String work_year;
+	private String work_month;
 	private long work_Count;
 	private long workLate_Count;
 	private long workAbsence_Count;
 	private long workLateEarly_Count;
+	
+	
+	// 휴가관리
+	private String annual_year;
+	private int annual_count;
+	private int annual_use;
 
 	
+	public String getAnnual_year() {
+		return annual_year;
+	}
+	public void setAnnual_year(String annual_year) {
+		this.annual_year = annual_year;
+	}
+	public int getAnnual_count() {
+		return annual_count;
+	}
+	public void setAnnual_count(int annual_count) {
+		this.annual_count = annual_count;
+	}
+	public int getAnnual_use() {
+		return annual_use;
+	}
+	public void setAnnual_use(int annual_use) {
+		this.annual_use = annual_use;
+	}
 	public long getRecord_no() {
 		return record_no;
 	}
@@ -291,6 +312,12 @@ public class InsaManage {
 	}
 	public void setEmp_addr2(String emp_addr2) {
 		this.emp_addr2 = emp_addr2;
+	}
+	public String getWork_month() {
+		return work_month;
+	}
+	public void setWork_month(String work_month) {
+		this.work_month = work_month;
 	}
 	
 }

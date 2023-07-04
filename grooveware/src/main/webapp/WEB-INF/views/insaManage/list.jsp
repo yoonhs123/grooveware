@@ -181,17 +181,17 @@ $(function() {
    					</thead>
    					
    					<tbody>
-   						<c:forEach var="list" items="${list}" varStatus="status">
+   						<c:forEach var="dto" items="${list}" varStatus="status">
    							<tr>
    							<td> ${dataCount - (page-1) * size - status.index} </td>
-   							<td> ${list.emp_no} </td>
-   							<td> ${list.emp_name} </td>
-   							<td> ${list.dept_name} </td>
-   							<td> ${list.pos_name} </td>
-   							<td> ${list.emp_join_date} </td>
-   							<td> ${list.emp_resign_date} </td>
+   							<td> ${dto.emp_no} </td>
+   							<td> ${dto.emp_name} </td>
+   							<td> ${dto.dept_name} </td>
+   							<td> ${dto.pos_name} </td>
+   							<td> ${dto.emp_join_date} </td>
+   							<td> ${dto.emp_resign_date} </td>
    							<td>
-   								${list.emp_status==0 ? "재직" : (list.emp_status==1 ? "휴직" : "퇴사")}
+   								${dto.emp_status==0 ? "재직" : (dto.emp_status==1 ? "휴직" : "퇴사")}
    							</td>
    							<td>
 							  <div class="more">
@@ -201,7 +201,7 @@ $(function() {
 							        +
 							      </h3>
 							      <div class="dropdown-content">
-							      	<a onclick="location.href='${pageContext.request.contextPath}/insaManage/write?emp_no=${dto.emp_no}&page=${page}&size=${size}';">수정</a>
+							      	<a onclick="location.href='${pageContext.request.contextPath}/insaManage/updateEmpHistory?emp_no=${dto.emp_no}&page=${page}&size=${size}';">수정</a>
 							      	<a onclick="profile('${dto.emp_no}');"><i class="bi bi-person-fill"></i>인사관리</a>
 							        <a onclick="location.href='${pageContext.request.contextPath}/insaManage/insaCard?emp_no=${dto.emp_no}&page=${page}&size=${size}';"><i class="bi bi-person-vcard"></i> 인사기록카드</a>
 							        
@@ -213,7 +213,9 @@ $(function() {
 							        	<button style="margin: 5px" type="button" class="btn btnUpdateStatus" data-emp_status="0" data-emp_no="${dto.emp_no}"><i class="bi bi-person-x-fill"></i> 재직 </button>
 							        	<button style="margin: 5px" type="button" class="btn btnUpdateStatus" data-emp_status="2" data-emp_no="${dto.emp_no}"><i class="bi bi-person-x-fill"></i> 퇴사 </button>
 							        </c:if>
-							        
+							        <input type="hidden" name="emp_no" value="${dto.emp_no}">
+							        <input type="hidden" name="page" value="${page}">
+							        <input type="hidden" name="size" value="${size}">
 							      </div>
 							    </div>
 							  </div>

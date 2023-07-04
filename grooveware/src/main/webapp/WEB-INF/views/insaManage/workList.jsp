@@ -76,15 +76,15 @@
 						<th class="emp-list-team" style="width: 10%">부서</th>
 						<th class="emp-list-posi">직위</th>
 						<th class="emp-list-work">정상출근</th>
-						<th class="emp-list-diswork">결근</th>
 						<th class="emp-list-late">지각</th>
+						<th class="emp-list-diswork">결근</th>
 						<th class="emp-list-leave">조퇴</th>
 						<th class="emp-list-holiday">휴가</th>
 					</tr>
 				</thead>
 
 				<tbody>
-					<c:forEach var="dto" items="${list2}" varStatus="stuatus">
+					<c:forEach var="dto" items="${list2}" varStatus="status">
 					<!-- 누른 행의 사원번호와 일치하는 사원의 개인 근태 내역 -->
 					<tr onclick="location-href='#'">
 						<td>${dto.emp_no}</td>
@@ -92,8 +92,8 @@
 						<td>${dto.dept_name}</td>
 						<td>${dto.pos_name}</td>
 						<td>${dto.work_Count}</td>
-						<td>${dto.workLate_Count}</td>
 						<td>${dto.workAbsence_Count}</td>
+						<td>${dto.workLate_Count}</td>
 						<td>${dto.workLateEarly_Count}</td>
 						<td>아직안함 </td>
 					</tr>

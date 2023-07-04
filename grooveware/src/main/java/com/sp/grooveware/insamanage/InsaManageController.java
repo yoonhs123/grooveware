@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -209,11 +210,45 @@ public class InsaManageController {
 		}
 	}
 	
-	@RequestMapping(value = "update")
-	public String updateForm() throws Exception {
+	@RequestMapping(value = "updateEmpHistory", method = RequestMethod.GET)
+	public String updateForm(@RequestParam long emp_no,
+			@RequestParam String page,
+			@RequestParam int size,
+			HttpSession session,
+			Model model) throws Exception {
+		
+		List<InsaManage> listPosCategory = service.listPosCategory();
+		List<InsaManage> listDeptCategory = service.listDeptCategory();
+		
+		model.addAttribute("listDeptCategory", listDeptCategory);
+		model.addAttribute("listPosCategory", listPosCategory);
 		
 		
-		return ".insaManage.write";
+		return ".insaManage.updateEmpHistory";
+	}
+	
+	
+	@PostMapping(value = "updateEmpHistory")
+	public String updateSubmit(InsaManage dto,
+			@RequestParam int size,
+			@RequestParam String page,
+			HttpSession session) throws Exception {
+		
+		/*
+		try {
+			if(dto.getPos_enddate() != null && dto.getDept_enddate() == null) {
+				service.updatePos(dto);
+			} else if(dto.getPos_enddate() == null && dto.getDept_enddate() != null) {
+				service.updateDept(dto);
+			} else if(dto.getPos_enddate() != null && dto.getDept_enddate() != null) {
+				service.updatePosDept(dto);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		*/
+		
+		return "redirect:/insaManage/list";
 	}
 	
 	@RequestMapping(value = "workList", method = RequestMethod.GET)
@@ -252,14 +287,14 @@ public class InsaManageController {
 			current_page = total_page;
 		}
 		
-		int workoOffset = (current_page - 1) * size;
-		if(workoOffset < 0) workoOffset = 0;
+		int offset = (current_page - 1) * size;
+		if(offset < 0) offset = 0;
 		
 		System.out.println("workSize: " +size );
-		System.out.println("workoOffset: " +workoOffset );
+		System.out.println("offset: " +offset );
 		
-		map.put("offset", workoOffset);
-		map.put("workSize", size);
+		map.put("offset", offset);
+		map.put("size", size);
 		
 		List<InsaManage> list2 = service.workList(map);
 		
@@ -287,5 +322,7 @@ public class InsaManageController {
 		
 		return ".insaManage.workList";
 	}
+	
+	
 	
 }
