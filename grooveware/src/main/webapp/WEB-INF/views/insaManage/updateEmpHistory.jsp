@@ -3,6 +3,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+<script type="text/javascript">
+function sendOk() {
+	const f = document.empForm;
+	f.action = "${pageContext.request.contextPath}/insaManage/updateEmpHistory";
+	f.submit();
+}
+</script>
+
 <div class="left-side-bar">
 	<ul>
 		<li>
@@ -35,18 +43,49 @@
 	<div>
 	<h2 style="padding-left: 50px;"> | 사원 직위/부서 변경</h2>
 	
-	<form name="empForm" method="post" enctype="multipart/form-data">
+	<form name="empForm" method="post">
    	<br><br>
    	
-   	<div class="profile-content1 border-radius">
-			<table class="profile-content1-table">
+   	<div class="profile-content3 border-radius change-posdept">
+			<table class="profile-content3-table" style="margin-right: 10px;">
+				<tr>
+					<th><label for="positionCode">기존 직위</label></th>
+					<td style="width: 200px; height : 30px;">${dto.pos_name}</td>
+				</tr>
+				<tr>
+					<th><label for="positionStartDate">기존 직위 시작 일</label></th>
+					<td style="width: 200px; height : 30px;">${dto.pos_startdate}</td>
+				</tr>
+				<tr>
+					<th><label for="positionEndDate">기존 직위 해제 일</label></th>
+					<td>
+						<input type="date" id="positionEndDate" name="pos_enddate" value="${dto.pos_enddate}" style="width: 200px; height : 30px;">
+					</td>
+				</tr>
+				<tr>
+					<th><label for="departmentCode">기존 부서</label></th>
+					<td style="width: 200px; height : 30px;">${dto.dept_name}</td>
+				</tr>
+				<tr>
+					<th><label for="departmentStartDate">기존 부서 발령 일</label></th>
+					<td style="width: 200px; height : 30px;">${dto.dept_startdate}</td>
+				</tr>
+				<tr>
+					<th><label for="departmentEndDate">기존 부서 근무종료 일</label></th>
+					<td>
+						<input type="date" id="departmentEndDate"  name="dept_Enddate" value="${dto.dept_enddate}" style="width: 200px; height : 30px;">
+					</td>
+				</tr>
+			</table>
+			
+			<table class="profile-content3-table">
 				<tr>
 					<th><label for="positionCode">직위</label></th>
 					<td>
 						<select name="pos_no" style="width: 200px; height : 30px;">
-			        		<option value="">:: 직위 선택 ::</option>
+			        		<option value="">${dto.pos_name}</option>
 			        		<c:forEach var="vo" items="${listPosCategory}">
-			        			<option value="${vo.pos_no}" ${dto.top_pos_no == vo.pos_no ? "selected = 'selected' " : ""}>
+			        			<option value="${vo.pos_no}" ${dto.pos_no == vo.pos_no ? "selected = 'selected' " : ""}>
 			        				${vo.pos_name}
 			        			</option>
 			        		</c:forEach>
@@ -56,24 +95,21 @@
 				<tr>
 					<th><label for="positionStartDate">직위시작일</label></th>
 					<td>
-						<input type="date" id="positionStartDate"  name="pos_startdate" value="${dto.pos_startdate}" style="width: 200px; height : 30px;">
-						${dto.pos_startdate}
+						<input type="date" id="positionStartDate" name="pos_startdate" value="${dto.pos_startdate}" style="width: 200px; height : 30px;">
 					</td>
 				</tr>
 				<tr>
 					<th><label for="positionEndDate">직위해제일</label></th>
 					<td>
-						<input type="date" id="positionEndDate"  name="pos_enddate" value="${dto.pos_endsdate}" style="width: 200px; height : 30px;">
-						${dto.pos_endsdate}
+						-
 					</td>
 				</tr>
 				<tr>
 					<th><label for="departmentCode">부서</label></th>
 					<td>
 						<select name="dept_no" style="width: 200px; height : 30px;">
-			        		<option value="">:: 부서 선택 ::</option>
 			        		<c:forEach var="vo" items="${listDeptCategory}">
-			        			<option value="${vo.dept_no}" ${dto.top_dept_no == vo.dept_no ? "selected = 'selected' " : ""}>
+			        			<option value="${vo.dept_no}" ${dto.dept_no == vo.dept_no ? "selected = 'selected' " : ""}>
 			        				${vo.dept_name}
 			        			</option>
 			        		</c:forEach>
@@ -83,24 +119,21 @@
 				<tr>
 					<th><label for="departmentStartDate">부서발령일</label></th>
 					<td>
-						<input type="date" id="departmentStartDate"  name="dept_startdate" value="${dto.dept_startdate}" style="width: 200px; height : 30px;">
-						${dto.dept_startdate}
+						<input type="date" id="departmentStartDate" name="dept_startdate" value="${dto.dept_startdate}" style="width: 200px; height : 30px;">
 					</td>
 				</tr>
 				<tr>
-					<th><label for="departmentEndDate">부서발령일</label></th>
+					<th><label for="departmentEndDate">부서 근무 종료일</label></th>
 					<td>
-						<input type="date" id="departmentEndDate"  name="dept_Enddate" value="${dto.dept_enddate}" style="width: 200px; height : 30px;">
-						${dto.dept_enddate}
+						-
 					</td>
 				</tr>
 				<tr>
 					<th></th>
 					<td align="right">
 						<button type="button" onclick="sendOk();" class="btn">변경하기</button>
-						<input type="hidden" name="emp_no" value="${dto.emp_no}">
-						<input type="hidden" name="page" value="${page}">
-						<input type="hidden" name="size" value="${size}">
+	        			<input type="hidden" name="emp_no" value="${dto.emp_no}">
+	        			<input type="hidden" name="page" value="${page}">
 	        			<button type="reset" class="btn">다시입력</button>
         			</td>
 				</tr>

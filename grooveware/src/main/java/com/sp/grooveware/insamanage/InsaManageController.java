@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -213,40 +212,45 @@ public class InsaManageController {
 	@RequestMapping(value = "updateEmpHistory", method = RequestMethod.GET)
 	public String updateForm(@RequestParam long emp_no,
 			@RequestParam String page,
-			@RequestParam int size,
 			HttpSession session,
 			Model model) throws Exception {
 		
 		List<InsaManage> listPosCategory = service.listPosCategory();
 		List<InsaManage> listDeptCategory = service.listDeptCategory();
 		
+		InsaManage dto = service.readPosDept(emp_no);
+		if(dto == null) {
+			return "redirect:/insaManage/list";
+		}
+		
+		model.addAttribute("dto", dto);
+		model.addAttribute("page", page);
 		model.addAttribute("listDeptCategory", listDeptCategory);
 		model.addAttribute("listPosCategory", listPosCategory);
-		
 		
 		return ".insaManage.updateEmpHistory";
 	}
 	
 	
-	@PostMapping(value = "updateEmpHistory")
+	@RequestMapping(value = "updateEmpHistory", method = RequestMethod.POST)
 	public String updateSubmit(InsaManage dto,
-			@RequestParam int size,
+			@RequestParam long emp_no,
 			@RequestParam String page,
-			HttpSession session) throws Exception {
+			HttpSession session,
+			Model model) throws Exception {
 		
-		/*
+		List<InsaManage> listPosCategory = service.listPosCategory();
+		List<InsaManage> listDeptCategory = service.listDeptCategory();
+		
 		try {
-			if(dto.getPos_enddate() != null && dto.getDept_enddate() == null) {
-				service.updatePos(dto);
-			} else if(dto.getPos_enddate() == null && dto.getDept_enddate() != null) {
-				service.updateDept(dto);
-			} else if(dto.getPos_enddate() != null && dto.getDept_enddate() != null) {
-				service.updatePosDept(dto);
-			}
+			service.updatePosDept(dto);
+			service.insertPosDept(dto);
 		} catch (Exception e) {
-			e.printStackTrace();
 		}
-		*/
+		
+		model.addAttribute("listDeptCategory", listDeptCategory);
+		model.addAttribute("listPosCategory", listPosCategory);
+		
 		
 		return "redirect:/insaManage/list";
 	}
