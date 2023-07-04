@@ -2,7 +2,75 @@
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<style>
+/* Generic styles */
+.modal-content {
+    background-color: #f7f7f7;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
 
+.modal-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-header .btn-close {
+    background-color: #fff;
+    color: #333;
+    border-radius: 50%;
+    height: 25px;
+    width: 25px;
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.modal-body .table {
+    width: 100%;
+}
+
+.table tr td:first-child {
+    font-weight: bold;
+    color: #333;
+}
+
+
+
+/* Button styles */
+.btn {
+    margin: 5px;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-primary {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.btn-outline-primary:hover {
+    background-color: #0056b3;
+    color: #fff;
+}
+
+.btn-outline-danger {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.btn-outline-danger:hover {
+    background-color: #c82333;
+    color: #fff;
+}
+
+.text-end {
+    text-align: right;
+}
+
+</style>
 <div class="left-side-bar">
       
         <ul> 
@@ -11,25 +79,26 @@
             </li>
             
             <li>
-                <a href="${pageContext.request.contextPath}/reservation/main">자원 예약</a>
-                <a href="${pageContext.request.contextPath}/reservation/main">&nbsp;회의실 예약</a>
-            <li>
+              <a href="${pageContext.request.contextPath}/reservation/main">자원 예약</a>
+              <a href="${pageContext.request.contextPath}/reservation/main">&nbsp;회의실 예약</a>
+              <a href="${pageContext.request.contextPath}/reservation/myres">&nbsp;내 예약현황</a>
+          	<li>
         </ul>
 </div>
     
 		<div class="right-contentbody">
 			<div class="container">	
 					<div class="body-title">
-						<h3><i class="bi bi-calendar-event"></i> 일정관리 </h3>
+						
 						<div class="category-list">
 							  <input class="category-item" type="checkbox" id="all" name="option" value="0" checked='checked'>
-							  <label for="0">전사</label>
+							  <label for="all">전사</label>
 							  <input class="category-item" type="checkbox" id="department" name="option" value="${sessionScope.member.dept_no}" checked='checked'>
-							  <label for="${sessionScope.member.dept_no}">부서</label>
+							  <label for="department">부서</label>
 							  <input class="category-item" type="checkbox" id="individual" name="option" value="1" checked='checked'>
-							  <label for="1">개인</label>
+							  <label for="individual">개인</label>
 						 </div>
-					</div>
+					</div>	
 					
 					
 					<div id="calendar"></div>
@@ -42,48 +111,49 @@
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="myDialogModalLabel">일정 상세 보기</h5>
+				<h2 class="modal-title" id="myDialogModalLabel">일정 상세 보기</h2>
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
-			<div class="modal-body pt-1">
+			<div class="modal-body ">
 				<table class="table">
 					<tr>
-						<td colspan="2" class="text-center align-middle">
-							<p class="form-control-plaintext view-subject"></p>
+						<td class="">제목</td>
+						<td>
+							<p class="view-subject"></p>
 						</td>
 					</tr>
 					<tr>
-						<td class="table-light col-2 align-middle">일정분류</td>
+						<td class="">일정분류</td>
 						<td>
-							<p class="form-control-plaintext view-category"></p>
-						</td>
-					</tr>
-
-					<tr>
-						<td class="table-light col-2 align-middle">날 짜</td>
-						<td>
-							<p class="form-control-plaintext view-period"></p>
+							<p class="view-category"></p>
 						</td>
 					</tr>
 
 					<tr>
-						<td class="table-light col-2 align-middle">일정반복</td>
+						<td class="align-middle">날 짜</td>
 						<td>
-							<p class="form-control-plaintext view-repeat"></p>
+							<p class="view-period"></p>
+						</td>
+					</tr>
+
+					<tr>
+						<td class="align-middle">일정반복</td>
+						<td>
+							<p class="view-repeat"></p>
 						</td>
 					</tr>
 
  					<tr>
-						<td class="table-light col-2 align-middle">등록일</td>
+						<td class="">등록일</td>
 						<td>
-							<p class="form-control-plaintext view-reg_date"></p>
+							<p class="view-reg_date"></p>
 						</td>
 					</tr>
 
  					<tr>
-						<td class="table-light col-2 align-middle">메모</td>
+						<td class="">메모</td>
 						<td>
-							<p class="form-control-plaintext view-memo"></p>
+							<p class="view-memo"></p>
 						</td>
 					</tr>
 				</table>
