@@ -29,12 +29,12 @@ public interface InsaManageService {
 	// 사원 인사정보
 	public InsaManage readProfile(long emp_no);
 	
-	// 직위 변경
-	public InsaManage updatePos(long emp_no) throws Exception;
-	// 부서 변경
-	public InsaManage updateDept(long emp_no) throws Exception;
 	// 직위/부서 변경
-	public InsaManage updatePosDept(long emp_no) throws Exception;
+	public void updatePosDept(InsaManage dto) throws Exception;
+	// 직위/부서 상태 article
+	public InsaManage readPosDept(long emp_no);
+	// 직위/부서 insert
+	public void insertPosDept(InsaManage dto) throws Exception;
 	
 	
 	// 사원 연차

@@ -82,3 +82,8 @@
 .insateam {
 	display: none;	
 }
+
+.change-posdept {
+	display: flex;
+	justify-content: space-between;
+}

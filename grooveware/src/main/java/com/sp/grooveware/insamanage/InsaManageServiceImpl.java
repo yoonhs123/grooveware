@@ -191,6 +191,41 @@ public class InsaManageServiceImpl implements InsaManageService  {
 		return dto;
 	}
 
+	
+	@Override
+	public void updatePosDept(InsaManage dto) throws Exception {
+		try {
+			dao.updateData("insaManage.updatePosDept", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
+	@Override
+	public InsaManage readPosDept(long emp_no) {
+		InsaManage dto = null;
+		
+		try {
+			dto = dao.selectOne("insaManage.selectPosDept", emp_no);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dto;
+	}
+	
+	@Override
+	public void insertPosDept(InsaManage dto) throws Exception {
+		try {
+			dao.insertData("insaManage.insertPosDept", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		
+	}
+	
+	
 	@Override
 	public void updateEmpStatus(Map<String, Object> map) throws Exception {
 		try {
@@ -227,63 +262,6 @@ public class InsaManageServiceImpl implements InsaManageService  {
 		return result;
 	}
 
-	@Override
-	public InsaManage updatePos(long emp_no) throws Exception {
-		InsaManage dto = null;
-		
-		try {
-			long seq = dao.selectOne("insaManage.seq");
-			
-			dto.setHistory_no(seq);
-			
-			dao.updateData("insaManage.updatePos", dto);
-			dto = dao.selectOne("insaManage.selectDept", emp_no);
-			dao.insertData("insaManage.insertPos", dto);
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw e;
-		}
-		
-		return dto;
-	}
-
-	@Override
-	public InsaManage updateDept(long emp_no) throws Exception {
-		InsaManage dto = null;
-		
-		try {
-			long seq = dao.selectOne("insaManage.seq");
-			
-			dto.setHistory_no(seq);
-			
-			dao.updateData("insaManage.updateDept", dto);
-			dto = dao.selectOne("insaManage.selectPos", emp_no);
-			dao.insertData("insaManage.insertDept", dto);
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw e;
-		}	
-		return dto;
-	}
-
-	@Override
-	public InsaManage updatePosDept(long emp_no) throws Exception {
-		
-		InsaManage dto = null;
-		try {
-			long seq = dao.selectOne("insaManage.seq");
-			
-			dto.setHistory_no(seq);
-			
-			dao.updateData("insaManage.updatePosDept", dto);
-			dto = dao.selectOne("insaManage.selectPosDept", emp_no);
-			dao.insertData("insaManage.insertPosDept", dto);
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw e;
-		}	
-		return dto;
-	}
 
 
 }

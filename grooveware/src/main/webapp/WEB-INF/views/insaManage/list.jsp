@@ -201,9 +201,9 @@ $(function() {
 							        +
 							      </h3>
 							      <div class="dropdown-content">
-							      	<a onclick="location.href='${pageContext.request.contextPath}/insaManage/updateEmpHistory?emp_no=${dto.emp_no}&page=${page}&size=${size}';">수정</a>
+							      	<a onclick="location.href='${pageContext.request.contextPath}/insaManage/updateEmpHistory?emp_no=${dto.emp_no}&page=${page}';">직위/부서 이동</a>
 							      	<a onclick="profile('${dto.emp_no}');"><i class="bi bi-person-fill"></i>인사관리</a>
-							        <a onclick="location.href='${pageContext.request.contextPath}/insaManage/insaCard?emp_no=${dto.emp_no}&page=${page}&size=${size}';"><i class="bi bi-person-vcard"></i> 인사기록카드</a>
+							        <a onclick="location.href='${pageContext.request.contextPath}/insaManage/insaCard?emp_no=${dto.emp_no}&page=${page}';"><i class="bi bi-person-vcard"></i> 인사기록카드</a>
 							        
 							        <c:if test="${dto.emp_status==0}">
 							        	<button style="margin: 5px" type="button" class="btn btnUpdateStatus" data-emp_status="1" data-emp_no="${dto.emp_no}"><i class="bi bi-person-x-fill"></i> 휴직 </button>
@@ -215,7 +215,6 @@ $(function() {
 							        </c:if>
 							        <input type="hidden" name="emp_no" value="${dto.emp_no}">
 							        <input type="hidden" name="page" value="${page}">
-							        <input type="hidden" name="size" value="${size}">
 							      </div>
 							    </div>
 							  </div>

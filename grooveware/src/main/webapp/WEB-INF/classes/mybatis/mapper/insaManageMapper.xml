@@ -199,6 +199,7 @@
 	
 	
 	<!-- 직위만 변경 -->
+	<!-- 
 	<update id="updatePos" parameterType="com.sp.grooveware.insamanage.InsaManage">
 		UPDATE emp_history SET pos_enddate = #{pos_enddate} 
 		WHERE emp_no = #{emp_no} AND pos_enddate IS NULL
@@ -219,10 +220,11 @@
 			(SELECT dept_no FROM emp_history WHERE emp_no = #{emp_no} ORDER BY dept_startdate DESC FETCH FIRST 1 ROW ONLY),
 			(SELECT dept_startdate FROM emp_history WHERE emp_no = #{emp_no} ORDER BY dept_startdate DESC FETCH FIRST 1 ROW ONLY))
 	</insert>
-	
+	-->
 	
 	
 	<!-- 부서만 변경 -->
+	<!-- 
 	<update id="updateDept" parameterType="com.sp.grooveware.insamanage.InsaManage">
 		UPDATE emp_history SET dept_enddate = #{dept_enddate} 
 		WHERE emp_no = #{emp_no} AND dept_enddate IS NULL
@@ -244,17 +246,20 @@
 			(SELECT pos_startdate FROM emp_history WHERE emp_no = #{emp_no} ORDER BY pos_startdate DESC FETCH FIRST 1 ROW ONLY),
 			#{dept_no}, TO_DATE(#{dept_startdate}, 'YYYY-MM-DD'))
 	</insert>
-	
+	 -->
 	
 	
 	<!-- 직위/부서 모두 변경 -->
 	<update id="updatePosDept" parameterType="com.sp.grooveware.insamanage.InsaManage">
-		UPDATE emp_history SET pos_enddate = #{pos_enddate}, dept_enddate = #{dept_enddate} 
+		UPDATE emp_history SET pos_enddate = #{pos_enddate, jdbcType=DATE}, dept_enddate = #{dept_enddate, jdbcType=DATE} 
 		WHERE emp_no = #{emp_no} AND pos_enddate IS NULL AND dept_enddate IS NULL
 	</update>
 	
 	<select id="selectPosDept" parameterType="Long" resultType="com.sp.grooveware.insamanage.InsaManage">
-		SELECT  eh.pos_no, p.pos_name, eh.pos_startdate, eh.dept_no,  d.dept_name, eh.dept_startdate
+		SELECT  eh.emp_no, eh.pos_no, p.pos_name, 
+			TO_CHAR(eh.pos_startdate, 'YYYY/MM/DD') pos_startdate, 
+			eh.dept_no,  d.dept_name, 
+			TO_CHAR(eh.dept_startdate, 'YYYY/MM/DD') dept_startdate
 		FROM emp_history eh
 		JOIN pos p ON p.pos_no = eh.pos_no
 		JOIN dept d ON d.dept_no = eh.dept_no
@@ -265,12 +270,21 @@
 	
 	<insert id="insertPosDept" parameterType="com.sp.grooveware.insamanage.InsaManage">
 		INSERT INTO emp_history (history_no, emp_no, pos_no, pos_startdate, dept_no, dept_startdate)
+		VALUES (EMP_HISTORY_SEQ.NEXTVAL, #{emp_no}, 
+			#{pos_no, jdbcType=VARCHAR}, #{pos_startdate, jdbcType=DATE}, 
+			#{dept_no, jdbcType=VARCHAR}, #{dept_startdate, jdbcType=DATE} )
+	</insert>
+	
+	<!-- 
+	<insert id="insertPosDept" parameterType="com.sp.grooveware.insamanage.InsaManage">
+		INSERT INTO emp_history (history_no, emp_no, pos_no, pos_startdate, dept_no, dept_startdate)
 		VALUES (#{history_no}, #{emp_no}, 
 			(SELECT pos_no FROM emp_history WHERE emp_no = #{emp_no} ORDER BY pos_startdate DESC FETCH FIRST 1 ROW ONLY),
 			(SELECT pos_startdate FROM emp_history WHERE emp_no = #{emp_no} ORDER BY pos_startdate DESC FETCH FIRST 1 ROW ONLY),
 			(SELECT dept_no FROM emp_history WHERE emp_no = #{emp_no} ORDER BY dept_startdate DESC FETCH FIRST 1 ROW ONLY),
 			(SELECT dept_startdate FROM emp_history WHERE emp_no = #{emp_no} ORDER BY dept_startdate DESC FETCH FIRST 1 ROW ONLY))
 	</insert>
+	-->
 	
 	
 	<!-- 직위만 바뀔때 -->
