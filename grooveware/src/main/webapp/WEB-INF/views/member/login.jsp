@@ -3,28 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<script type="text/javascript">
-	function sendLogin() {
-		const f = document.loginForm;
 
-		let str = f.emp_no.value;
-		if (!str) {
-			alert("이메일을 입력하세요. ");
-			f.emp_no.focus();
-			return;
-		}
-
-		str = f.emp_pwd.value;
-		if (!str) {
-			alert("패스워드를 입력하세요. ");
-			f.emp_pwd.focus();
-			return;
-		}
-
-		f.action = "${pageContext.request.contextPath}/member/login";
-		f.submit();
-	}
-</script>
 
 			<form name="loginForm" method="post" class="loginForm">
 				<div class="members-form">
@@ -46,7 +25,7 @@
 							<button type="button" class="btn" onclick="sendLogin();">로그인</button>
 						</div>
 						<div class="row" style="display: flex;">
-							<span><input name="myCheck" type="checkbox"></span> <span style="font-size: 13px;">내
+							<span><input name="myCheck" id="myCheck" type="checkbox" checked="checked"></span> <span style="font-size: 13px;">내
 								계정 기억하기</span>
 						</div>
 
@@ -77,3 +56,44 @@
 					</div>
 				</div>
 			</form>
+			
+<script type="text/javascript">
+	function sendLogin() {
+		const f = document.loginForm;
+
+		let str = f.emp_no.value;
+		if (!str) {
+			alert("이메일을 입력하세요. ");
+			f.emp_no.focus();
+			return;
+		}
+
+		str = f.emp_pwd.value;
+		if (!str) {
+			alert("패스워드를 입력하세요. ");
+			f.emp_pwd.focus();
+			return;
+		}
+		
+		let b = document.querySelector("#myCheck").checked;
+		if(b) {
+			localStorage.setItem('emp_no', f.emp_no.value);
+		}
+		
+		f.action = "${pageContext.request.contextPath}/member/login";
+		f.submit();
+		
+	}
+	
+	
+	
+</script>
+
+<script>
+	window.onload = function() {
+	
+    var username = localStorage.getItem('emp_no');
+ 
+    document.getElementById('login-userId').value = username;
+	}  
+</script>
