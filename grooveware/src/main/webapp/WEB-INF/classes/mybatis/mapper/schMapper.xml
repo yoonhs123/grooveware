@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="sch">
+	<insert id="insertSchedule" parameterType="com.sp.grooveware.schedule.calendar.Schedule">
+		INSERT INTO schedule(num, emp_no, subject, category_num, color, sday, eday,
+					stime, etime, repeat, repeat_cycle, memo, reg_date) 
+				VALUES(schedule_seq.NEXTVAL, #{emp_no}, #{subject},
+					#{category_num, jdbcType=INTEGER}, 
+					#{color}, #{sday},
+					#{eday, jdbcType=VARCHAR},
+					#{stime, jdbcType=VARCHAR},
+					#{etime, jdbcType=VARCHAR},
+					#{repeat}, #{repeat_cycle},
+					#{memo, jdbcType=VARCHAR},
+					SYSDATE
+		)
+	</insert>
+	
+	<select id="listMonth" parameterType="map" resultType="com.sp.grooveware.schedule.calendar.Schedule">
+		SELECT num id, subject title, sday, eday, stime, etime,
+				s.category_num, category, color, repeat, repeat_cycle, memo, reg_date
+		FROM schedule s
+		JOIN schedule_category sc ON s.category_num = sc.category_num
+		<where>
+			( 
+				(
+					<!-- 가져와야하는 시작과 끝 날짜 --> 
+					 ( TO_DATE(sday, 'YYYY-MM-DD') &gt;= TO_DATE(#{start}, 'YYYY-MM-DD')
+						AND TO_DATE(sday, 'YYYY-MM-DD') &lt;= TO_DATE(#{end}, 'YYYY-MM-DD')
+					 ) OR ( TO_DATE(eday, 'YYYY-MM-DD') &lt;= TO_DATE(#{start}, 'YYYY-MM-DD') 
+					     AND TO_DATE(eday, 'YYYY-MM-DD') &lt;= TO_DATE(#{end}, 'YYYY-MM-DD')
+					 )
+				) OR (
+				<!--  반복 -->
+					repeat=1 AND repeat_cycle!=0
+						AND ADD_MONTHS(TO_DATE(sday, 'YYYY-MM-DD'), 12 * repeat_cycle*TRUNC(((SUBSTR(#{start},1,4)-SUBSTR(sday,1,4))/repeat_cycle))) &gt;= TO_DATE(#{start}, 'YYYY-MM-DD')
+						AND ADD_MONTHS(TO_DATE(sday, 'YYYY-MM-DD'), 12 * repeat_cycle*TRUNC(((SUBSTR(#{start},1,4)-SUBSTR(sday,1,4))/repeat_cycle))) &lt;= TO_DATE(#{end}, 'YYYY-MM-DD')
+			  )
+			)
+			<choose>
+			    <when test="categoryList == null">
+			        AND 1 = 0
+			    </when>
+			    <when test="categoryList.size == 1 and categoryList.contains(1)">
+			        AND s.category_num = 1
+			        AND s.emp_no = #{emp_no}  <!-- emp_no는 사용자가 로그인한 계정의 emp_no를 서버에서 넘겨받아야 합니다. -->
+			    </when>
+			    <otherwise>
+			        AND (
+			            <foreach collection="categoryList" item="category_num" open="" separator=" OR " close="">
+						    <if test="category_num != 1">
+						        (s.category_num = #{category_num})
+						    </if>
+						    <if test="category_num == 1">
+						        (s.category_num = #{category_num}) AND (s.emp_no = #{emp_no})
+						    </if>
+						</foreach>
+			        )
+			    </otherwise>
+			</choose>
+			
+			<!-- <choose>
+			    <when test="categoryList != null">
+			        AND s.category_num IN
+			        <foreach collection="categoryList" item="category_num" open="(" separator="," close=")">
+			            #{category_num}
+			        </foreach>
+			    </when>
+			    <otherwise>
+			        AND 1 = 0
+			    </otherwise>
+			</choose> -->
+		</where>
+		ORDER BY sday ASC, id DESC 
+	</select>
+	
+	<select id="readSchedule" parameterType="Long" resultType="com.sp.grooveware.schedule.calendar.Schedule">
+		SELECT num, subject, sday, eday, stime, etime, s.category_num, category,
+			color, repeat, repeat_cycle, memo, reg_date 
+		FROM schedule s
+		JOIN schedule_category sc ON s.category_num = sc.category_num
+		WHERE num = #{num}
+	</select>
+	
+	<update id="updateSchedule" parameterType="com.sp.grooveware.schedule.calendar.Schedule">
+		UPDATE schedule SET
+			subject=#{subject},
+			category_num=#{category_num, jdbcType=INTEGER}, 
+			color=#{color}, sday=#{sday}, 
+			eday=#{eday, jdbcType=VARCHAR},
+			stime=#{stime, jdbcType=VARCHAR},
+			etime=#{etime, jdbcType=VARCHAR},
+			repeat=#{repeat},
+			repeat_cycle=#{repeat_cycle},
+			memo=#{memo, jdbcType=VARCHAR}
+		WHERE num=#{num} AND emp_no=#{emp_no}
+	</update>
+	
+	<delete id="deleteSchedule" parameterType="map">
+		DELETE FROM schedule WHERE num=#{num} AND emp_no=#{emp_no}
+	</delete>
+	
+	<select id="listCategory" parameterType="map" resultType="com.sp.grooveware.schedule.calendar.Schedule">
+		SELECT category_num, category
+		FROM schedule_category
+		ORDER BY category_num
+	</select>
+	
+	
+	
+
+</mapper>
