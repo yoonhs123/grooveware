@@ -13,7 +13,7 @@
 		<foreach collection="emps" item="emp_no" index="index" separator=" " close="SELECT*FROM DUAL">
 	         into  pj_member(pj_member_no, pj_no, pj_join_type, pj_member_join_date)
 		 values
-	        (#{emp_no}, pj_seq.currval, 1, SYSDATE)
+	        (#{emp_no}, pj_seq.currval, 2, SYSDATE)
 	    </foreach>
 	</update>
 	
@@ -106,7 +106,7 @@
 		LEFT OUTER JOIN emp c ON a.emp_no = c.emp_no
 		LEFT OUTER JOIN pos d ON a.pos_no = d.pos_no
 		<where>
-			emp_resign_date is null
+			emp_resign_date is null AND a.emp_no != ${emp_no}
 			<choose>
 				<when test="condition == 'emp_name' ">
 				AND	( INSTR(c.${condition}, #{keyword}) &gt; 0 )
@@ -131,7 +131,7 @@
 
 
 	<select id="readProjectmember" parameterType="map" resultType="com.sp.grooveware.project.Project">
-		SELECT b.pj_member_no, c.emp_name ,d.dept_name, c.emp_name, e.pos_name, b.pj_join_type, TO_CHAR(pj_member_join_date, 'YYYY-MM-DD') AS pj_member_join_date
+		SELECT b.pj_member_no, c.emp_name ,d.dept_name, e.pos_name, b.pj_join_type, TO_CHAR(pj_member_join_date, 'YYYY-MM-DD') AS pj_member_join_date
 		FROM (
 		   SELECT x.emp_no, x.history_no, x.dept_no, x.pos_no FROM emp_history x
 		   LEFT OUTER JOIN emp_history y ON x.emp_no = y.emp_no AND x.history_no &lt; y.history_no
@@ -144,5 +144,11 @@
 		ORDER BY pj_join_type ASC, e.pos_no ASC, d.dept_no ASC	
 	</select>
 
+
+	<update id="updateProject" parameterType="com.sp.grooveware.project.Project">
+		UPDATE pj SET pj_name=#{pj_name}, pj_content=#{pj_content}, pj_start_date=#{pj_start_date, jdbcType=DATE}, pj_end_date=#{pj_end_date, jdbcType=DATE};
+		UPDATE pj_file SET saveFilename=#{saveFilename, jdbcType=VARCHAR}, originalFilename=#{originalFilename, jdbcType=VARCHAR};
+		UPDATE cli SET client_name=#{client_name};
+	</update>
 
 </mapper>

@@ -296,6 +296,12 @@ input[type="text"] {
     border-radius: 4px;
     background-color: #f8f9fa;
   }
+  
+span.project-member:hover,
+span.project-member:hover label {
+  cursor: pointer;
+  background-color: #c0c0c0;
+}
 
   .project-member img {
     width: 20px;
@@ -303,6 +309,13 @@ input[type="text"] {
     margin-right: 5px;
     vertical-align: middle;
   }
+  
+  textarea {
+  	height : 300px;
+  	resize : none;
+  }
+  
+  
     
  </style>
  
@@ -617,7 +630,7 @@ $(function(){
 								<td> 
 									<p class="form-control-plaintext">
 										<c:if test="${not empty dto.saveFilename}">
-											<a href="javascript:deleteFile('${dto.num}');"><i class="bi bi-trash"></i></a>
+											<a href="javascript:deleteFile('${dto.num}');"><i class="fa-solid fa-trash"></i></a>
 											${dto.originalFilename}
 										</c:if>
 										&nbsp;

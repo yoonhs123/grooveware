@@ -300,14 +300,56 @@ public class ProjectController {
 	
 
 	@GetMapping("update")
-	public String updateForm() {
+	public String updateForm(@RequestParam long pj_no,
+			@RequestParam String page,
+			HttpSession session,
+			Model model) throws Exception {
 		
-		return null;
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		
+		Project dto = service.readProject(pj_no);
+		if (dto == null || !(info.getEmp_no() == dto.getPj_creator())) {
+			return "redirect:/project/list?page=" + page;
+		}
+		
+		// 프로젝트 참여멤버 가져오기
+		List<Project> pj_member = service.readProjectmember(pj_no);
+		
+		
+		model.addAttribute("dto", dto);
+		model.addAttribute("pj_member", pj_member);
+		model.addAttribute("mode", "update");
+		model.addAttribute("page", page);
+		
+		return ".project.write";
 	}
+	
 	
 	@PostMapping("update")
-	public String updatesubmit() {
+	public String updatesubmit(@RequestParam Project dto,
+			@RequestParam String page,
+			HttpSession session) throws Exception {
 	
-		return null;
+		String root = session.getServletContext().getRealPath("/");
+		String pathname = root + "uploads" + File.separator + "project";
+		
+		try {
+			service.updateProject(dto, pathname);
+		} catch (Exception e) {
+		}
+		
+		
+		return "redirect:/project/list?page=" + page;
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

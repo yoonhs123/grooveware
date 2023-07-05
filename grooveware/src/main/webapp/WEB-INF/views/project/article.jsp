@@ -297,7 +297,7 @@ input[type="text"] {
     background-color: #f8f9fa;
   }
 
-  .project-member img {
+  .project-member i {
     width: 20px;
     height: 20px;
     margin-right: 5px;
@@ -316,18 +316,10 @@ input[type="text"] {
   width: 100%;
 }
 
-.main-table tr td:first-child {
-  text-align: center;
-}
-
-
-.main-table tr:last-child td {
-  border-bottom: none;
-}
-
-.main-table tr td:first-child {
+.main-table tr th {
   border-right: 2px solid #e9e9e9;
   padding: 10px;
+  width: 100px;
 }
 
 .main-table tr td:nth-child(2) {
@@ -337,6 +329,37 @@ input[type="text"] {
 .main-table tr:last-child td {
   border-left: none;
 }
+
+
+
+.forms-emp-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.forms-emp-list > tr {
+  width: 100%;
+}
+
+.forms-emp-list > tr > td {
+  width: 100%;
+  padding: 5px;
+}
+
+
+.btn-disabled {
+	border: 1px solid #999999;
+	padding: 5px 10px;
+	border-radius: 4px;
+	font-weight: 500;
+	font-size: 14px;
+	line-height: 15px;
+	background-color: #f0f0f0;
+    color: gray;
+    display: none;
+}
+
+
  </style>
 
 
@@ -367,61 +390,65 @@ input[type="text"] {
 		<div class="body-main">
 					<table class="table table-border border-top2 table-form main-table">
 						<tr>
-							<td>제&nbsp;&nbsp;&nbsp;&nbsp;목</td>
+							<th>제&nbsp;&nbsp;&nbsp;&nbsp;목</th>
 							<td> 
 								${dto.pj_name}
 							</td>
 						</tr>
 				
 						<tr>
-							<td>P&nbsp;&nbsp;&nbsp;&nbsp;M</td>
+							<th>P&nbsp;&nbsp;&nbsp;&nbsp;M</th>
 							<td>${dto.emp_name}</td>
 						</tr>
 		
 						<tr>
-							<td>기&nbsp;&nbsp;&nbsp;&nbsp;간</td>
+							<th>기&nbsp;&nbsp;&nbsp;&nbsp;간</th>
 							<td> 
 								${dto.pj_start_date} ~ ${dto.pj_end_date}
 							</td>
 						</tr>
 				
 						<tr>
-							<td>내&nbsp;&nbsp;&nbsp;&nbsp;용</td>
+							<th>내&nbsp;&nbsp;&nbsp;&nbsp;용</th>
 							<td style="height : 200px;"> 
 								${dto.pj_content}
 							</td>
 						</tr>
 	
 						<tr>
-							<td>클라이언트</td>
+							<th>클라이언트</th>
 							<td> 
 								${dto.client_name}
 							</td>
 						</tr>
 	
 						<tr>
-							<td>참여사원</td>
-							<td>
-								<table id="forms-emp-list">
-									<c:forEach var="dto" items="${pj_member}" varStatus="status">
-										<tr>
-											<td style="text-align : left;">
-												<c:if test="${dto.pj_join_type == 0}"><i class="fa-solid fa-crown"></i></c:if>
-												${dto.emp_name}(${dto.pos_name}_${dto.dept_name})
-											</td> 
-											<td>참여날짜 : ${dto.pj_member_join_date}</td>
-										</tr>
-									</c:forEach>
-								</table>
-							</td>
+						  <th>참여사원</th>
+						  <td>
+						    <table id="forms-emp-list">
+						      <tr>
+						        <td style="text-align: left;">
+						          <c:forEach var="vo" items="${pj_member}" varStatus="status">
+						            <span class='project-member'>
+						              <i class="fa-solid fa-user-tie"></i>
+						              <label>${vo.emp_name}(${vo.pos_name}_${vo.dept_name})
+						                <c:if test="${vo.pj_member_no == dto.pj_creator}">
+						                	&nbsp;<i style="color: #4048a8" class="fa-solid fa-star"></i>
+						                </c:if>
+										<c:if test="${vo.pj_member_no != dto.pj_creator && vo.pj_join_type == 1}">
+											&nbsp;<i style="color: #4048a8" class="fa-regular fa-star"></i>
+										</c:if>
+						              </label>
+						            </span>
+						          </c:forEach>
+						        </td>
+						      </tr>
+						    </table>
+						  </td>
 						</tr>
 				
-				
-				
-								<span class='project-member'>
-								  <img src='${pageContext.request.contextPath}/resources/images/bg.png'>
-								    <label> + emp_name + pos_name + dept_name</label>
-								</span>
+							
+								
 								
 				
 				
@@ -430,7 +457,7 @@ input[type="text"] {
 				
 						
 						<tr>
-							<td class="table-light col-sm-2">첨&nbsp;&nbsp;&nbsp;&nbsp;부</td>
+							<th class="table-light col-sm-2">첨&nbsp;&nbsp;&nbsp;&nbsp;부</th>
 							<td>
 								<c:if test="${not empty dto.saveFilename}">
 										<a href="<c:url value='/project/download?project_no=${dto.pj_no}'/>" class="text-reset"><i class="fa-solid fa-file-arrow-down"></i>
@@ -444,28 +471,29 @@ input[type="text"] {
 					
 					<table class="table">
 						<tr>
-							<td width="50%">
+							<td class="text-end" style= "text-align: left;">
+								<button type="button" class="btn btn-light" onclick="location.href='${pageContext.request.contextPath}/project/list?${query}';"><i class="fa-solid fa-rotate-left"></i></button>
+							</td>
+							
+							<td width="50%" style= "text-align: right; padding-right: 10px;">
 								<c:choose>
 									<c:when test="${sessionScope.member.emp_no==dto.pj_creator}">
-										<button type="button" class="btn btn-light" onclick="location.href='${pageContext.request.contextPath}/project/update?num=${dto.pj_no}&page=${page}';">수정</button>
+										<button type="button" class="btn btn-light" onclick="location.href='${pageContext.request.contextPath}/project/update?num=${dto.pj_no}&page=${page}&pj_no=${dto.pj_no}';">수정</button>
 									</c:when>
 									<c:otherwise>
-										<button type="button" class="btn btn-light" disabled="disabled">수정</button>
+										<button type="button" class="btn-disabled" disabled="disabled">수정</button>
 									</c:otherwise>
 								</c:choose>
-						    	
+								
 								<c:choose>
 						    		<c:when test="${sessionScope.member.emp_no==dto.pj_creator}">
 						    			<button type="button" class="btn btn-light" onclick="deleteBoard();">삭제</button>
 						    		</c:when>
 						    		<c:otherwise>
-						    			<button type="button" class="btn btn-light" disabled="disabled">삭제</button>
+						    			<button type="button" class="btn-disabled" disabled="disabled">삭제</button>
 						    		</c:otherwise>
 						    	</c:choose>
-							</td>
-							<td class="text-end">
-								<button type="button" class="btn btn-light" onclick="location.href='${pageContext.request.contextPath}/project/list?${query}';">리스트</button>
-							</td>
+								</td>
 						</tr>
 					</table>
 				</div>

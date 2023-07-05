@@ -207,7 +207,7 @@ function searchList() {
 									<a href="<c:url value='/project/download?project_no=${dto.pj_no}'/>" class="text-reset"><i class="fa-solid fa-file-arrow-down"></i></a>
 								</c:if>
 							</td>
-							<td><a href="${articleUrl}${dto.pj_no}" class="text-reset"><i class="fa-solid fa-newspaper"></i></a></td>
+							<td><a href="${articleUrl}&pj_no=${dto.pj_no}" class="text-reset"><i class="fa-solid fa-newspaper"></i></a></td>
 						</tr>
 					</c:forEach>
 				</tbody>

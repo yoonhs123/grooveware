@@ -95,10 +95,31 @@ public class ProjectServiceImpl implements ProjectService {
 
 	@Override
 	public void updateProject(Project dto, String pathname) throws Exception {
-		// TODO Auto-generated method stub
+		try {
+			String saveFilename = fileManager.doFileUpload(dto.getSelectFile(), pathname);
+			
+			if (saveFilename != null) {
+				if (dto.getSaveFilename() != null && dto.getSaveFilename().length() !=0) {
+					fileManager.doFileDelete(dto.getSaveFilename(), pathname);
+				}
+				
+				dto.setSaveFilename(saveFilename);
+				dto.setOriginalFilename(dto.getSelectFile().getOriginalFilename());
+			}
+			
+			dao.updateData("project.updateProject", dto);
+					
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
 		
 	}
 
+	
+	
+	
+	
 	@Override
 	public void deleteProject(long pj_no, String pathname, String pj_creator, int membership) throws Exception {
 		// TODO Auto-generated method stub
