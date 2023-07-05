@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<style>
+<style type="text/css">
 .restimetable {
     width: 100%;
     border-spacing: 0;
@@ -29,20 +29,19 @@
 .date-select {
   display: flex;
   align-items: center;
-  max-width: 200px;
 }
 
 .year,
 .month {
-  flex: 1;
   padding: 4px;
   border: 1px solid #c1c1c1;
   border-radius: 4px;
   background-color: #fff;
   font-size: 16px;
   cursor: pointer;
-  margin : 20px 0 15px 0;
+  margin: 20px 0 15px 0;
   margin-right: 10px;
+  width: 90px;
 }
 
 .date-select select:focus {
@@ -54,8 +53,9 @@
 }
 
 .mr-res-read-button,
-.mr-res-cancel-button{
-	height: 30px;
+.mr-res-cancel-button,
+.res-search-btn {
+	height: 35px;
 	width : 55px;
 	border-radius: 5px;
     padding: 5px 10px;
@@ -66,14 +66,34 @@
     font-weight: 550;
     margin: 0 3px;
 }
+.res-search-btn{
+  margin: 20px 0 15px 0;
+}
 
 
 </style>
 
-<script>
-function changeDate(date) {
-	let query = "date=" + date;
-	location.href="${pageContext.request.contextPath}/reservation/main?date=" + date;
+<script type="text/javascript">
+function searchDate() {
+	let y = $("#select-year").val();
+	let m = $("#select-month").val();
+	
+	if(!y || !m) {
+		alert('날짜를 선택하세요.');
+		return;
+	}
+	
+	let query = "year=" + y + "&month=" + m;
+	location.href="${pageContext.request.contextPath}/reservation/myres?" + query;
+}
+</script>
+
+<script type="text/javascript">
+function deleteRes(meroom_res_no) {
+    if(confirm("예약을 취소하시겠습니까 ? ")) {
+	    let query = "meroom_res_no=" + meroom_res_no;
+    	location.href = "${pageContext.request.contextPath}/reservation/delete?" + query;
+    }
 }
 </script>
 
@@ -97,29 +117,29 @@ function changeDate(date) {
 			<div><h2><span>|</span>&nbsp;내 예약 현황</h2></div>
 		</div>
 	</div>
-
 	<div class="date-select">
-		  <select id="year" name="year" class="year">
+		  <select id="select-year" name="year" class="year">
 		    <option value="" disabled selected>년도</option>
-		    <option value="2021">2021년</option>
-		    <option value="2022">2022년</option>
-		    <option value="2023">2023년</option>
+		    <c:forEach var="y" begin="${currentYear-3}" end="${currentYear}">
+		    	<option value="${y}" ${year==y?"selected='selected'":"" }>${y}년</option>
+		    </c:forEach>
 		  </select>
-		  <select id="month" name="month" class="month">
+		  <select id="select-month" name="month" class="month">
 		    <option value="" disabled selected>월</option>
-		    <option value="01">1월</option>
-		    <option value="02">2월</option>
-		    <option value="03">3월</option>
-		    <option value="04">4월</option>
-		    <option value="05">5월</option>
-		    <option value="06">6월</option>
-		    <option value="07">7월</option>
-		    <option value="08">8월</option>
-		    <option value="09">9월</option>
-		    <option value="10">10월</option>
-		    <option value="11">11월</option>
-		    <option value="12">12월</option>
+		    <option value="01" ${month=="01"?"selected='selected'":"" }>1월</option>
+		    <option value="02" ${month=="02"?"selected='selected'":"" }>2월</option>
+		    <option value="03" ${month=="03"?"selected='selected'":"" }>3월</option>
+		    <option value="04" ${month=="04"?"selected='selected'":"" }>4월</option>
+		    <option value="05" ${month=="05"?"selected='selected'":"" }>5월</option>
+		    <option value="06" ${month=="06"?"selected='selected'":"" }>6월</option>
+		    <option value="07" ${month=="07"?"selected='selected'":"" }>7월</option>
+		    <option value="08" ${month=="08"?"selected='selected'":"" }>8월</option>
+		    <option value="09" ${month=="09"?"selected='selected'":"" }>9월</option>
+		    <option value="10" ${month=="10"?"selected='selected'":"" }>10월</option>
+		    <option value="11" ${month=="11"?"selected='selected'":"" }>11월</option>
+		    <option value="12" ${month=="12"?"selected='selected'":"" }>12월</option>
 		  </select>
+		  <button type="button" class="res-search-btn" onclick="searchDate();">검색</button>
 	</div>
 	
 	<table class="restimetable">
@@ -140,7 +160,7 @@ function changeDate(date) {
 	    <td>${dto.res_endtime}</td>
 	    <td>
 	    	<button type="button" class="mr-res-read-button">상세</button>
-	    	<button type="button" class="mr-res-cancel-button">취소</button>
+   			<button type="button" class="mr-res-cancel-button" onclick="deleteRes(${dto.meroom_res_no});">취소</button>
 	    </td>
 	  </tr>
 	  </c:forEach>

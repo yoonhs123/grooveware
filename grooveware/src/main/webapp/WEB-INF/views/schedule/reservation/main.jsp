@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<style>
+<style type="text/css">
 .mr-res-timetable,
 .mr-res-daytable {
     width: 100%;
@@ -90,15 +90,87 @@
     font-weight: 600;
 }
 
-
-  
 </style>
 
-<script>
+<script type="text/javascript">
 function changeDate(date) {
 	let query = "date=" + date;
 	location.href="${pageContext.request.contextPath}/reservation/main?date=" + date;
 }
+</script>
+
+<script type="text/javascript">
+function ajaxFun(url, method, query, dataType, fn){
+	$.ajax({
+		type:method,
+		url:url,
+		data:query,
+		dataType: dataType,
+		success: function(data){
+			fn(data);
+		},
+		beforeSend : function(jqXHR){
+			jqXHR.setRequestHeader("AJAX", true);
+		},
+		error : function(jqXHR){
+			if(jqXHR.status === 403){
+				location.href="${pageContext.request.contextPath}/member/login";
+				return false;
+			} else if(jqXHR.status === 400){
+				alert("요청 처리가 실패했습니다.");
+				return false;
+			}
+			console.log(jqXHR.responseText);
+		}
+	});
+}
+
+// 회의실 정보
+function read(meroom_id){
+	let dlg = $("#mrInfoModal").dialog({
+		autoOpen:false,
+		model:true,
+		height:400,
+		width:700,
+		title:"회의실 정보",
+		close:function(event, ui){
+		}
+	});
+	
+	let url="${pageContext.request.contextPath}/reservation/roominfo";
+	let query="meroom_id="+meroom_id;
+	
+	const fn = function(data){
+		console.log(data);
+		$('#mrInfoModal').html(data);
+		dlg.dialog("open");
+	};
+	ajaxFun(url, "get", query, "html", fn);
+}
+
+// 예약번호별 예약 정보
+function resRead(meroom_res_no){
+	let dlg = $("#resInfoModal").dialog({
+		autoOpen:false,
+		model:true,
+		height:400,
+		width:700,
+		title:"회의실 예약 정보",
+		close:function(event, ui){
+		}
+	});
+	
+	let url="${pageContext.request.contextPath}/reservation/resinfo";
+	let query="meroom_res_no="+meroom_res_no;
+	
+	const fn = function(data){
+		console.log(data);
+		$('#resInfoModal').html(data);
+		dlg.dialog("open");
+	};
+	ajaxFun(url, "get", query, "html", fn);
+}
+
 </script>
 
 <div class="left-side-bar">
@@ -151,7 +223,7 @@ function changeDate(date) {
 	  	<tr>
 	  		<td style="border-bottom: 2px solid #c1c1c1;">${vo.meroom_name}</td>
 	  		<td style="border-bottom: 2px solid #c1c1c1;">
-	    		<button type="button" class="mr-info-button">보기</button>
+	    		<button type="button" class="mr-info-button" onclick="read('${vo.meroom_id}')">보기</button>
 	    	</td>
 	    	
 	    	<c:forEach var="t" begin="9" end="17">
@@ -173,7 +245,7 @@ function changeDate(date) {
 	<div class="title_container">
 		<div class="table1" style="margin-bottom: 5px;">
 			<div>
-				<h2><span>|</span>&nbsp;회의실별 일별 현황</h2>
+				<h2><span>|</span>&nbsp;회의실 예약 상세</h2>
 			</div>
 		</div>
 	</div>	
@@ -195,13 +267,12 @@ function changeDate(date) {
 	    <td>${dto.res_starttime} </td>
 	    <td>${dto.res_endtime}</td>
 	    <td>
-	    	<button type="button" class="mr-res-read-button">상세</button>
-	    	<button type="button" class="mr-res-cancel-button">취소</button>
+	    	<button type="button" class="mr-res-read-button" onclick="resRead('${dto.meroom_res_no}')">상세</button>
 	    </td>
 	  </tr>
 	  </c:forEach>
 	</table>		
 </div>
 
-</body>
-</html>
+<div id="mrInfoModal" style="display: none;"></div>
+<div id="resInfoModal" style="display: none;"></div>

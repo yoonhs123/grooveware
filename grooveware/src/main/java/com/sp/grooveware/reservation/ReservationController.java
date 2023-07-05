@@ -59,12 +59,12 @@ public class ReservationController {
 		
 		List<Reservation> listMr = service.listMeetingroom();
 		
-		List<Reservation> list = service.listMyRes(map);
+		List<Reservation> listToday = service.listResBytoday(map);
 		
 		model.addAttribute("listByDate", listByDate);
 		model.addAttribute("listMr", listMr);
 		
-		model.addAttribute("list", list);
+		model.addAttribute("list", listToday);
 		
 		model.addAttribute("date", date);
 		model.addAttribute("preDate", preDate);
@@ -76,48 +76,38 @@ public class ReservationController {
 	
 	@RequestMapping(value="myres")
 	public String myres(
-			@RequestParam(required = false) String date,
+			@RequestParam(required = false) String year,
+			@RequestParam(required = false) String month,
 			HttpServletRequest req,
 			HttpSession session,
 			Model model) throws Exception{
 		
-		Calendar cal = Calendar.getInstance();
-		if(date == null) {
-			date = String.format("%tF", cal);
-		}
-		
-		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("YYYY-MM-dd");
-		LocalDate localDate = LocalDate.parse(date);
-		LocalDate preLocalDate = localDate.minusDays(1);
-		LocalDate nextLocalDate = localDate.plusDays(1);
-		
-		String preDate = preLocalDate.format(dtf);
-		String nextDate = nextLocalDate.format(dtf);
-		
 		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		Calendar cal = Calendar.getInstance();
+		int currentYear = cal.get(Calendar.YEAR);
+				
+		String date = null;
+		if(year == null || month == null) {
+			year = String.format("%04d",cal.get(Calendar.YEAR));
+			month = String.format("%02d",cal.get(Calendar.MONTH)+1);
+		}
+		date = year + month;
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("emp_no", info.getEmp_no());
 		map.put("meroom_resdate", date);
 		
-		List<Reservation> listByDate = service.listResByDate(map);
-		for(Reservation vo : listByDate) {
+		List<Reservation> list = service.listMyResByMonth(map);
+		for(Reservation vo : list) {
 			vo.setStarttime(Integer.parseInt(vo.getRes_starttime().substring(0, 2)));
 			vo.setEndtime(Integer.parseInt(vo.getRes_endtime().substring(0, 2)));
 		}
 		
-		List<Reservation> listMr = service.listMeetingroom();
-		
-		List<Reservation> list = service.listMyRes(map);
-		
-		model.addAttribute("listByDate", listByDate);
-		model.addAttribute("listMr", listMr);
-		
 		model.addAttribute("list", list);
 		
-		model.addAttribute("date", date);
-		model.addAttribute("preDate", preDate);
-		model.addAttribute("nextDate", nextDate);
+		model.addAttribute("currentYear", currentYear);
+		model.addAttribute("year", year);
+		model.addAttribute("month", month);
 		
 		return ".schedule.reservation.myres"; 
 		
@@ -151,7 +141,25 @@ public class ReservationController {
 		return "redirect:/reservation/main";
 	}
 
-	@RequestMapping(value= "read", method=RequestMethod.GET)
+	@RequestMapping(value= "roominfo", method=RequestMethod.GET)
+	public String roominfo(@RequestParam long meroom_id,
+			HttpSession session,
+			Model model) throws Exception{
+		
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+
+		Reservation dto = service.Meetingroom(meroom_id);
+
+		Map<String,Object> map = new HashMap<String, Object>();
+		map.put("meroom_id", meroom_id);
+		map.put("emp_no", info.getEmp_no());
+		
+		model.addAttribute("dto", dto);
+		
+		return "schedule/reservation/roominfo";
+	}
+	
+	@RequestMapping(value= "resinfo", method=RequestMethod.GET)
 	public String readDetail(@RequestParam long meroom_res_no,
 			HttpSession session,
 			Model model) throws Exception{
@@ -166,9 +174,20 @@ public class ReservationController {
 		
 		model.addAttribute("dto", dto);
 		
-		return ".schedule.reservation.read"; // 모달로 띄우기(예약번호별)
+		return "schedule/reservation/resinfo"; // 모달로 띄우기(예약번호별)
 		// 포워딩 시켜서 데이터 읽어오기
 	}
 
+	@RequestMapping(value = "delete")
+	public String delete(@RequestParam long meroom_res_no
+			) throws Exception {
+
+		try {
+			service.deleteReservation(meroom_res_no);
+		} catch (Exception e) {
+		}
+
+		return "redirect:/reservation/myres";
+	}
 }
 	

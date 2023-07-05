@@ -5,10 +5,9 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 
-@Controller("chat.chatController")
+@Controller("chat.ChatController")
 @RequestMapping("/chat/*")
 public class ChatController {
 
@@ -24,18 +23,6 @@ public class ChatController {
 		
 		return ".chat.chat";
 	}
-	
-	
-	
-	
-	
-	
-	@RequestMapping(value="chat", method=RequestMethod.GET)
-	public String method() {
-		return ".chat.chat";
-	}
-	
-	
 	
 }
  

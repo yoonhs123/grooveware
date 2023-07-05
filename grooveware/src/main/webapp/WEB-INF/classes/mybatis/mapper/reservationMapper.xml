@@ -9,6 +9,13 @@
 		ORDER BY meroom_id
 	</select>
 	
+	<!-- 회의실별 정보조회 조회 -->
+	<select id="Meetingroom" resultType="com.sp.grooveware.reservation.Reservation">
+		select meroom_id, meroom_name, meroom_info, meroom_status
+		FROM meetingroom
+		WHERE meroom_id=#{meroom_id}
+	</select>
+	
 	<!-- 회의실 등록 -->
 	<insert id="insertMeetingroom" parameterType="com.sp.grooveware.reservation.Reservation">
 		INSERT INTO meetingroom (meroom_id, meroom_name, meroom_info, meroom_status) 
@@ -82,6 +89,33 @@
 		JOIN meetingroom m ON m.meroom_id=mr.meroom_id
 		JOIN emp e ON mr.emp_no=e.emp_no
 		WHERE TO_CHAR(mr.meroom_resdate,'YYYY-MM-DD')=#{meroom_resdate}
+	</select>
+	
+	<!-- 회의실 예약 현황 리스트(당일) ?? -->
+	<select id="listResBytoday" parameterType="map" resultType="com.sp.grooveware.reservation.Reservation">
+	    SELECT m.meroom_id, m.meroom_name, m.meroom_info, mr.meroom_res_no, e.emp_name, 
+               TO_CHAR(mr.meroom_resdate,'YYYY-MM-DD') meroom_resdate, TO_CHAR(mr.res_starttime,'HH24:MI') res_starttime, 
+               TO_CHAR(mr.res_endtime ,'HH24:MI') res_endtime, mr.res_content
+		FROM meetingroom_reservation mr
+		JOIN meetingroom m ON m.meroom_id=mr.meroom_id
+		JOIN emp e ON mr.emp_no=e.emp_no
+		WHERE TO_CHAR(mr.meroom_resdate,'YYYY-MM-DD')=#{meroom_resdate}
+	</select>
+	
+	<!-- 회의실 예약 현황 리스트(월별) -->
+	<select id="listMyResByMonth" parameterType="map" resultType="com.sp.grooveware.reservation.Reservation">
+	    SELECT m.meroom_id, m.meroom_name, m.meroom_info, mr.meroom_res_no, e.emp_name, 
+               TO_CHAR(mr.meroom_resdate,'YYYY-MM-DD') meroom_resdate, TO_CHAR(mr.res_starttime,'HH24:MI') res_starttime, 
+               TO_CHAR(mr.res_endtime ,'HH24:MI') res_endtime, mr.res_content
+		FROM meetingroom_reservation mr
+		JOIN meetingroom m ON m.meroom_id=mr.meroom_id
+		JOIN emp e ON mr.emp_no=e.emp_no
+		<where>
+			e.emp_no=${emp_no}
+			<if test="meroom_resdate != null">
+				AND TO_CHAR(mr.meroom_resdate,'YYYYMM')=#{meroom_resdate}
+			</if>
+		</where>
 	</select>
 
 </mapper>

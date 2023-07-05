@@ -1,68 +1,86 @@
-﻿
-.chat-main {
-    display: flex;
+﻿.chat-main {
+  display: flex;
 }
 
 .chat-left {
-    flex: 0.5;
-    display: flex;
-    flex-direction: column;
-    background-color: white;
-    border-radius: 5px;
-    padding: 20px;
-    margin: 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: #f4f4f4;
+  border-radius: 10px;
+  padding: 20px;
+  margin: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .chat-right {
-    flex: 1;
-    padding: 20px;
-    background-color: white;
-    border-radius: 5px;
-    margin: 20px;
-    margin-left: 10px;
+  flex: 0.2;
+  padding: 20px;
+  background-color: #f4f4f4;
+  border-radius: 10px;
+  margin: 20px;
+  margin-left: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+
+
 
 .chat-msg-container {
     height: 310px;
-    width: 300px;
-    background-color: #f8f9fa;
+    background-color: #ffffff;
     border: 1px solid #ccc;
     border-radius: 0.25rem;
 }
 
 #chatMsg {
-    text-align: right;
+  text-align: right;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-top: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .chat-connection-list {
-    height: 310px;
-    width: 150px;
-    background-color: #f8f9fa;
-    border: 1px solid #ccc;
-    border-radius: 0.25rem;
-    overflow-y: scroll;
+  height: 350px;
+  width: 100%;
+  background-color: white;
+  border-radius: 5px;
+  overflow-y: scroll;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  
 }
 
 .chat-left-main {
-    display: flex;
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
 }
+
 
 .mt-2 {
-	background-color: #f8f9fa;
+    background-color: #ffffff;
     border: 1px solid #ccc;
     border-radius: 0.25rem;
-	width: 300px;
-}
-.mt-3{
-	background-color: #f8f9fa;
-    border: 1px solid #ccc;
-    border-radius: 0.25rem;
-    width:150px;
+    width: 100%;
 }
 
-.chatMsg {
-	background-color: #f8f9fa;
-    border: 1px solid #ccc;
-    border-radius: 0.25rem;
-	width:100%;
+.mt-3 {
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 150px;
+  height: 40px;
+  padding: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+#chatForm {
+  text-align: right;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-top: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
