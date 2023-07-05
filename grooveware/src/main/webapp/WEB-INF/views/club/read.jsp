@@ -37,7 +37,7 @@
    		
    		<div class="clubinfo-items">
     		<div class="clubcontent-detail">
-    			<h4>커뮤니티명.</h4>
+    			<h4>커뮤니티명</h4>
     			<p> ${dto.club_name} </p>	
     		</div>
     		
