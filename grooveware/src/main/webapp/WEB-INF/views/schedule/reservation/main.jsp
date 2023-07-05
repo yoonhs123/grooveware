@@ -190,7 +190,7 @@ function resRead(meroom_res_no){
 <div class="right-contentbody">
 	<div class="title_container">
 		<div class="table1" style="margin-bottom: 5px;">
-			<div><h2><span>|</span>&nbsp;회의실 예약 현황</h2></div>
+			<div><h2><span>|</span>&nbsp;회의실 예약 현황.</h2></div>
 		</div>
 	</div>
 	<div class="res-date">

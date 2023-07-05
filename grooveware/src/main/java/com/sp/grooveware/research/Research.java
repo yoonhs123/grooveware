@@ -4,6 +4,7 @@ public class Research {
 	// 설문조사
 	private long research_id;
 	private long emp_no;
+	private String emp_name;
 	private String research_title;
 	private String research_content;
 	private String research_regdate;
@@ -14,10 +15,12 @@ public class Research {
 	// 설문조사 - 질문
 	private long question_no;
 	private String question_content;
+	private long question_num;
 	
 	// 설문조사 - 객관식 옵션
 	private long answer_no;
 	private String ans_option_content;
+	private long ans_option_num;
 	
 	// 설문조사 - 실제 응답
 	private long response_no;
@@ -113,5 +116,23 @@ public class Research {
 	}
 	public void setResponse_content(String response_content) {
 		this.response_content = response_content;
+	}
+	public long getQuestion_num() {
+		return question_num;
+	}
+	public void setQuestion_num(long question_num) {
+		this.question_num = question_num;
+	}
+	public long getAns_option_num() {
+		return ans_option_num;
+	}
+	public void setAns_option_num(long ans_option_num) {
+		this.ans_option_num = ans_option_num;
+	}
+	public String getEmp_name() {
+		return emp_name;
+	}
+	public void setEmp_name(String emp_name) {
+		this.emp_name = emp_name;
 	}
 }
