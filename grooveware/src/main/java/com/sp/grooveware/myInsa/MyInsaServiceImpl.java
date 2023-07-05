@@ -123,6 +123,32 @@ public class MyInsaServiceImpl implements MyInsaService {
 		return dto;
 	}
 
+
+	@Override
+	public List<MyInsa> posHistoryList(long emp_no) {
+		List<MyInsa> list = null;
+		
+		try {
+			list = dao.selectList("myInsa.posHistoryList", emp_no);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	@Override
+	public List<MyInsa> deptHistoryList(long emp_no) {
+		List<MyInsa> list = null;
+		
+		try {
+			list = dao.selectList("myInsa.deptHistoryList", emp_no);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+	
 	
 	
 }

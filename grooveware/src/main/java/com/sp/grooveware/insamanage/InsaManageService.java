@@ -50,4 +50,11 @@ public interface InsaManageService {
 	public List<InsaManage> workList(Map<String, Object> map);
 	// 근태 사원 수
 	public int workDataCount(Map<String, Object> map);
+	// 사원 근태 계산
+	public InsaManage getWork(long emp_no);
+	
+	// PosHistoryList 
+	public List<InsaManage> posHistoryList(long emp_no);
+	// DeptHistoryList
+	public List<InsaManage> deptHistoryList(long emp_no);
 }

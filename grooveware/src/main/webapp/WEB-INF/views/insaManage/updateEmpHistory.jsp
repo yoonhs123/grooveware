@@ -73,7 +73,7 @@ function sendOk() {
 				<tr>
 					<th><label for="departmentEndDate">기존 부서 근무종료 일</label></th>
 					<td>
-						<input type="date" id="departmentEndDate"  name="dept_Enddate" value="${dto.dept_enddate}" style="width: 200px; height : 30px;">
+						<input type="date" id="departmentEndDate" name="dept_enddate" value="${dto.dept_enddate}" style="width: 200px; height : 30px;">
 					</td>
 				</tr>
 			</table>
@@ -83,7 +83,6 @@ function sendOk() {
 					<th><label for="positionCode">직위</label></th>
 					<td>
 						<select name="pos_no" style="width: 200px; height : 30px;">
-			        		<option value="">${dto.pos_name}</option>
 			        		<c:forEach var="vo" items="${listPosCategory}">
 			        			<option value="${vo.pos_no}" ${dto.pos_no == vo.pos_no ? "selected = 'selected' " : ""}>
 			        				${vo.pos_name}

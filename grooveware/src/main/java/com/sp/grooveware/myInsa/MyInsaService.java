@@ -18,4 +18,9 @@ public interface MyInsaService {
 	public int dataCount(Map<String, Object> map);
 	public List<MyInsa> readWorkTime(Map<String, Object> map, long emp_no);
 	public MyInsa getWork(long emp_no);
+	
+	// PosHistoryList 
+	public List<MyInsa> posHistoryList(long emp_no);
+	// DeptHistoryList
+	public List<MyInsa> deptHistoryList(long emp_no);
 }

@@ -88,7 +88,24 @@
 	    GROUP BY EXTRACT(YEAR FROM work_starttime)
 	</select>
 	
- 	
+	
+ 	<!-- 사원 부서 리스트 -->
+	<select id="deptHistoryList" parameterType="map" resultType="com.sp.grooveware.myInsa.MyInsa">
+		SELECT eh.dept_no, TO_CHAR(eh.dept_startdate, 'YYYY-MM-DD') dept_startdate, 
+			TO_CHAR(eh.dept_enddate, 'YYYY-MM-DD') dept_enddate, d.dept_name
+		FROM emp_history eh
+		JOIN dept d ON eh.dept_no = d.dept_no
+		WHERE eh.emp_no = #{emp_no}
+	</select>
+	
+	<!-- 사원 직위 리스트 -->
+	<select id="posHistoryList" parameterType="map" resultType="com.sp.grooveware.myInsa.MyInsa">
+		SELECT eh.pos_no, TO_CHAR(eh.pos_startdate, 'YYYY-MM-DD') pos_startdate, 
+			TO_CHAR(eh.pos_enddate, 'YYYY-MM-DD') pos_enddate, p.pos_name
+		FROM emp_history eh
+		JOIN pos p ON eh.pos_no = p.pos_no
+		WHERE eh.emp_no = #{emp_no}
+	</select>
 	
 
 </mapper>

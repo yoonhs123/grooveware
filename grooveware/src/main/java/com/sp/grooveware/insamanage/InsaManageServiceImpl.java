@@ -261,6 +261,47 @@ public class InsaManageServiceImpl implements InsaManageService  {
 		
 		return result;
 	}
+	
+	@Override
+	public InsaManage getWork(long emp_no) {
+		InsaManage dto = null;
+		
+		try {
+			dto = dao.selectOne("insaManage.workCount", emp_no);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dto;
+	}
+
+	@Override
+	public List<InsaManage> posHistoryList(long emp_no) {
+		List<InsaManage> list = null;
+		
+		try {
+			list = dao.selectList("insaManage.posHistoryList", emp_no);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	@Override
+	public List<InsaManage> deptHistoryList(long emp_no) {
+		List<InsaManage> list = null;
+		
+		try {
+			list = dao.selectList("insaManage.deptHistoryList", emp_no);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+
+	
+	
+	
 
 
 

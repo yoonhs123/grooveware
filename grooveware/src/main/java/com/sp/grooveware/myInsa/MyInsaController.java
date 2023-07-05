@@ -41,9 +41,13 @@ public class MyInsaController {
 		
 		MyInsa dto = myInsaService.readInsaCard(info.getEmp_no());
 		MyInsa dto2 = myInsaService.getWork(info.getEmp_no());
+		List<MyInsa> posHistoryList = myInsaService.posHistoryList(info.getEmp_no());
+		List<MyInsa> deptHistoryList = myInsaService.deptHistoryList(info.getEmp_no());
 		
 		model.addAttribute("dto", dto);
 		model.addAttribute("dto2", dto2);
+		model.addAttribute("posHistoryList", posHistoryList);
+		model.addAttribute("deptHistoryList", deptHistoryList);
 		
 		return ".myInsa.insaCard";
 	}

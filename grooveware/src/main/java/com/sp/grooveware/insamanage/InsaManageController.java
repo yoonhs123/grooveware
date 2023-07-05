@@ -184,9 +184,15 @@ public class InsaManageController {
 		}
 		
 		InsaManage dto = service.readInsaCard(emp_no);
+		InsaManage dto2 = service.getWork(emp_no);
+		List<InsaManage> posHistoryList = service.posHistoryList(emp_no);
+		List<InsaManage> deptHistoryList = service.deptHistoryList(emp_no);
 		
 		model.addAttribute("dto", dto);
+		model.addAttribute("dto2", dto2);
 		model.addAttribute("query", query);
+		model.addAttribute("posHistoryList", posHistoryList);
+		model.addAttribute("deptHistoryList", deptHistoryList);
 		
 		return ".insaManage.insaCard";
 	}
@@ -326,6 +332,8 @@ public class InsaManageController {
 		
 		return ".insaManage.workList";
 	}
+	
+	
 	
 	
 	

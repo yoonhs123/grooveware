@@ -96,17 +96,17 @@ $(function(){
 		<tr class="my-insa">
 			<th style="width: 16.6%;">연도</th>
 			<th style="width: 16.6%;">정상출근</th>
-			<th style="width: 16.6%;">연차휴가</th>
 			<th style="width: 16.6%;">지각</th>
 			<th style="width: 16.6%;">결근</th>
 			<th style="width: 16.6%;">조퇴</th>
+			<th style="width: 16.6%;">연차휴가</th>
 		</tr>
 		<tr>
-			<td>?</td>
-			<td>?</td>
-			<td>?</td>
-			<td>?</td>
-			<td>?</td>
+			<td>${dto2.work_year}년</td>
+			<td>${dto2.work_Count}일</td>
+			<td>${dto2.workLate_Count}일</td>
+			<td>${dto2.workAbsence_Count}일</td>
+			<td>${dto2.workLateEarly_Count}일</td>
 			<td>?</td>
 		</tr>
 	</table>
@@ -114,33 +114,29 @@ $(function(){
 	<div class="title-name">| 내 부서 연혁</div>
 	<table class="dpMove-info-table">
 		<tr class="my-insa">
-			<th>부서 재직 기간</th>
 			<th>부서 이름</th>
+			<th>부서 발령 기간</th>
 		</tr>
+		<c:forEach var="dto" items="${deptHistoryList}" varStatus="status">
 		<tr>
-			<td>?</td>
-			<td>?</td>
+			<td>${dto.dept_name}</td>
+			<td>${dto.dept_startdate} ~ ${dto.dept_enddate}</td>
 		</tr>
+		</c:forEach>
 	</table>
 	
-	<div class="title-name">| 내 인사 연혁</div>
+	<div class="title-name">| 내 직위 연혁</div>
 	<table class="dpMove-info-table">
 		<tr class="my-insa">
 			<th>직위 이름</th>
-			<th>직위 시작 일</th>
-			<th>직위 종료 일</th>
-			<th>부서 이름</th>
-			<th>부서 시작 일</th>
-			<th>부서 종료 일</th>
+			<th>직위 기간</th>
 		</tr>
+		<c:forEach var="dto" items="${posHistoryList}" varStatus="status">
 		<tr>
-			<td>?</td>
-			<td>?</td>
-			<td>?</td>
-			<td>?</td>
-			<td>?</td>
-			<td>?</td>
+			<td>${dto.pos_name}</td>
+			<td>${dto.pos_startdate} ~ ${dto.pos_enddate}</td>
 		</tr>
+		</c:forEach>
 	</table>
 
 	<div class="title-name">| 상벌관리</div>

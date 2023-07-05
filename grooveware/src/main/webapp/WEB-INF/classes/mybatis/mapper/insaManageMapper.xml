@@ -257,9 +257,9 @@
 	
 	<select id="selectPosDept" parameterType="Long" resultType="com.sp.grooveware.insamanage.InsaManage">
 		SELECT  eh.emp_no, eh.pos_no, p.pos_name, 
-			TO_CHAR(eh.pos_startdate, 'YYYY/MM/DD') pos_startdate, 
+			TO_CHAR(eh.pos_startdate, 'YYYY-MM-DD') pos_startdate, 
 			eh.dept_no,  d.dept_name, 
-			TO_CHAR(eh.dept_startdate, 'YYYY/MM/DD') dept_startdate
+			TO_CHAR(eh.dept_startdate, 'YYYY-MM-DD') dept_startdate
 		FROM emp_history eh
 		JOIN pos p ON p.pos_no = eh.pos_no
 		JOIN dept d ON d.dept_no = eh.dept_no
@@ -274,6 +274,24 @@
 			#{pos_no, jdbcType=VARCHAR}, #{pos_startdate, jdbcType=DATE}, 
 			#{dept_no, jdbcType=VARCHAR}, #{dept_startdate, jdbcType=DATE} )
 	</insert>
+	
+	<!-- 사원 부서 리스트 -->
+	<select id="deptHistoryList" parameterType="map" resultType="com.sp.grooveware.insamanage.InsaManage">
+		SELECT eh.dept_no, TO_CHAR(eh.dept_startdate, 'YYYY-MM-DD') dept_startdate, 
+			TO_CHAR(eh.dept_enddate, 'YYYY-MM-DD') dept_enddate, d.dept_name
+		FROM emp_history eh
+		JOIN dept d ON eh.dept_no = d.dept_no
+		WHERE eh.emp_no = #{emp_no}
+	</select>
+	
+	<!-- 사원 직위 리스트 -->
+	<select id="posHistoryList" parameterType="map" resultType="com.sp.grooveware.insamanage.InsaManage">
+		SELECT eh.pos_no, TO_CHAR(eh.pos_startdate, 'YYYY-MM-DD') pos_startdate, 
+			TO_CHAR(eh.pos_enddate, 'YYYY-MM-DD') pos_enddate, p.pos_name
+		FROM emp_history eh
+		JOIN pos p ON eh.pos_no = p.pos_no
+		WHERE eh.emp_no = #{emp_no}
+	</select>
 	
 	<!-- 
 	<insert id="insertPosDept" parameterType="com.sp.grooveware.insamanage.InsaManage">
@@ -345,6 +363,18 @@
 				<include refid="where-list"/>
 			</if>
 		</where>
+	</select>
+	
+	<!-- 사원 개인 근태 계산 -->
+	<select id="workCount" parameterType="Long" resultType="com.sp.grooveware.myInsa.MyInsa">
+		SELECT EXTRACT(YEAR FROM work_starttime) AS work_year,
+	        COUNT(CASE WHEN work_status = 0 THEN 1 END) AS work_Count,
+	        COUNT(CASE WHEN work_status = 1 THEN 1 END) AS workLate_Count,
+	        COUNT(CASE WHEN work_status = 2 THEN 1 END) AS workAbsence_Count,
+	       	COUNT(CASE WHEN work_status = 3 THEN 1 END) AS workLateEarly_Count 
+	    FROM worktime_recode
+	    WHERE emp_no = #{emp_no}
+	    GROUP BY EXTRACT(YEAR FROM work_starttime)
 	</select>
 	
 	<update id="hoildayUpdate" parameterType="com.sp.grooveware.insamanage.InsaManage">

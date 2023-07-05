@@ -25,9 +25,13 @@ public class MyInsa {
 
 	private long dept_no;
 	private String dept_name;
+	private String dept_startdate;
+	private String dept_enddate;
 	
 	private int pos_no;
 	private String pos_name;
+	private String pos_startdate;
+	private String pos_enddate;
 	
 	// 출퇴근
 	private long record_no;
@@ -41,6 +45,7 @@ public class MyInsa {
 	private long workLate_Count;
 	private long workAbsence_Count;
 	private long workLateEarly_Count;
+	
 	
 	public long getWork_Count() {
 		return work_Count;
@@ -222,5 +227,30 @@ public class MyInsa {
 	}
 	public void setWork_year(String work_year) {
 		this.work_year = work_year;
+	}
+
+	public String getDept_startdate() {
+		return dept_startdate;
+	}
+	public void setDept_startdate(String dept_startdate) {
+		this.dept_startdate = dept_startdate;
+	}
+	public String getDept_enddate() {
+		return dept_enddate;
+	}
+	public void setDept_enddate(String dept_enddate) {
+		this.dept_enddate = dept_enddate;
+	}
+	public String getPos_startdate() {
+		return pos_startdate;
+	}
+	public void setPos_startdate(String pos_startdate) {
+		this.pos_startdate = pos_startdate;
+	}
+	public String getPos_enddate() {
+		return pos_enddate;
+	}
+	public void setPos_enddate(String pos_enddate) {
+		this.pos_enddate = pos_enddate;
 	}
 }
