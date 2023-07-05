@@ -102,6 +102,20 @@ public class ApprovalServiceImpl implements ApprovalService {
 		}
 		return list;
 	}
+	
+	@Override
+	public List<Approval> listImportant(Map<String, Object> map) {
+		List<Approval> listImportant = null;
+		
+		try {
+			listImportant = dao.selectList("approval.listImportant", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return listImportant;
+	}
+	
+	
 	@Override
 	public int dataCount(Map<String, Object> map) {
 		int result = 0;
@@ -133,6 +147,9 @@ public class ApprovalServiceImpl implements ApprovalService {
 	@Override
 	public void updateDoc(Approval dto, String pathname) throws Exception {
 		try {
+			
+ 
+			
 			dao.updateData("approval.updateDoc", dto);
 			dao.updateData("approval.updateDraft", dto);
 			
@@ -159,6 +176,18 @@ public class ApprovalServiceImpl implements ApprovalService {
 		}
 	}
 
+	
+    @Override
+    public void updateImportant(Approval dto) throws Exception {
+        try {
+        	dao.updateData("approval.updateImportant", dto);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+    }	
+	
 	@Override
 	public void updateApproval(Approval dto, String last) throws Exception {
 		try {
@@ -171,9 +200,9 @@ public class ApprovalServiceImpl implements ApprovalService {
 				Map<String, Object> map = new HashMap<String, Object>();
 				map.put("doc_no", dto.getDoc_no());
 				if(dto.getApproval_status() == 3) { // 결재 상세 단계가 반려일 경우
-					map.put("doc_status", 4); // 반려
+					map.put("doc_status", 4); // 문서 상태 반려
 				} else {
-					map.put("doc_status", 2); // 진행중
+					map.put("doc_status", 2); // 문서 상태 진행중
 				}
 				
 				dao.updateData("approval.updateDocStatus", map);
@@ -302,6 +331,18 @@ public class ApprovalServiceImpl implements ApprovalService {
 			e.printStackTrace();
 		}
 		return sendBackList;
+	}	
+	@Override
+	public List<Approval> completionList(Map<String, Object> map) {
+		List<Approval> completionList = null;
+		
+		try {
+			// 대기문서
+			completionList = dao.selectList("approval.completionList", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return completionList;
 	}	
 
 /*

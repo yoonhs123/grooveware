@@ -198,9 +198,9 @@ function searchList() {
 				let emp_no = data.listMember[i].emp_no;
 				let pos_name = data.listMember[i].pos_name;
 				let dept_name = data.listMember[i].dept_name;
-				let emp_picture = data.listMember[i].emp_picture;
+			console.log(data );
 
-				s = "<li style='padding: 5px 0px 3px 10px' ><input type='checkbox' style='margin-right: 5px;' class='form-check-input' data-emp_no='"+emp_no+"' data-emp_picture='"+emp_picture+"' title='"+emp_no+"'><span>"+emp_name+ " " +pos_name+"<span>" + " (" + "</span>";
+				s = "<li style='padding: 5px 0px 3px 10px' ><input type='checkbox' style='margin-right: 5px;' class='form-check-input' data-emp_no='"+emp_no+"' title='"+emp_no+"'><span>"+emp_name+ " " +pos_name+"<span>" + " (" + "</span>";
 				s += "<span>" + dept_name + ")" + "</span></li>";
 				$(".dialog-receiver-list ul").append(s);
 			}
@@ -229,7 +229,6 @@ function searchList() {
 			  let b = false;
 			  $(".dialog-receiver-list ul input[type=checkbox]:checked").each(function() {
 			    let emp_no = $(this).attr("data-emp_no");
-			    let emp_picture = $(this).attr("data-emp_picture") != "" ? $(this).attr("data-emp_picture") : "user.jpg";
 			    let emp_name = $(this).next("span").text();
 			    let pos_name = $(this).next("span").next("span").text();
 			    let dept_name = $(this).next("span").next("span").next("span").text();
@@ -247,14 +246,14 @@ function searchList() {
 			    	  if (len2 === 0) {
 			    	  s += "<span class='approval-member'>";
 			    	    // 처음 추가 버튼을 눌렀을 때
-			    	    s += "<div class='img_container4'><img src='${pageContext.request.contextPath}/resources/images/"+emp_picture+"' style='width: 100%; height: 100%;'></div>";
+			    	    s += "<div class='img_container4'><img src='${pageContext.request.contextPath}/resources/images/bg.png' style='width: 100%; height: 100%;'></div>";
 			    	    s += "<span style='font-weight: normal; word-break: keep-all;'>" + emp_name + "</span></span>";
 			    	  } else {
 			    	    // 다음 추가 버튼을 눌렀을 때
 			    	    s += "<span style='float: left;'><i class='fa-solid fa-chevron-right' style='margin-top: 30px;'></i></span>";
 				    	  s += "<span class='approval-member' style=' margin-left: 30px;'>";
 
-			    	    s += "<div class='img_container4'><img src='${pageContext.request.contextPath}/resources/images/"+emp_picture+"' style='width: 100%; height: 100%;'></div>";
+			    	    s += "<div class='img_container4'><img src='${pageContext.request.contextPath}/resources/images/bg.png' style='width: 100%; height: 100%;'></div>";
 			    	    s += "<span style='font-weight: normal; word-break: keep-all;'>" + emp_name + "</span></span>";
 			    	  }
 			    	  s += "<input type='hidden' name='emp_nos' value='" + emp_no + "'>";
@@ -349,12 +348,13 @@ function searchList() {
 		<form name="myForm" method="post" class="myForm"
 			enctype="multipart/form-data">
 			<div class="board1">
+			<c:if test="${mode=='write' || mode == 'update' }">
 				<div class="title_container">
 					<table class="table" style="margin-bottom: 20px;">
 						<tr>
 							<td class="title2" width="15%">
 								<h2>
-									<span>|</span> 기안서
+									<span>|</span> 연차휴가
 								</h2>
 							</td>
 							<td class="title" style="padding-left: 30px;">
@@ -368,14 +368,12 @@ function searchList() {
 						</tr>
 					</table>
 				</div>
-			<c:if test="${mode=='write'}">
 				<div class="line_container" style="height:200px;"> 
 					<div class="table" style="margin-bottom: 15px;">
 						<div>
 							<div class="title" style="float: left; width: 100%;">
 								<span>결재라인</span>
 							</div>
-		
 
 						</div>
 						<div style="width: 100%; float: left;">
@@ -388,55 +386,7 @@ function searchList() {
 
 					</div>
 				</div>
-			</c:if>
-				
-			<c:if test="${mode=='update'}">
-			<div class="line_container" style="height: 200px;">
-				<div class="table" style="margin-bottom: 15px;">
-					<div>
-						<div class="title" style="float: left; width: 100%;">
-							<span>결재라인</span>
-						</div>
-
-					</div>
-					<div style="width: 100%; float: left; padding-left: 20px;">
-						<c:forEach var="vo" items="${listApproval}" varStatus="status">
-							<div class="img_container" style="${vo.approval_status==2 ? 'border: 3px solid #0232f2;' : ''}">
-								<img class="imgSize"
-									src="${pageContext.request.contextPath}/resources/images/bg.png">
-							</div>
-
-							<c:if test="${!status.last}">
-								<div class="img_container3">
-									<i class="fa-solid fa-chevron-right"></i>
-								</div>
-							</c:if>
-							<c:if test="${vo.emp_no == sessionScope.member.emp_no}">
-
-								<input type="hidden" name="approval_status_id"
-									value="${vo.approval_status_id}">
-								<input type="hidden" name="approval_total_step"
-									value="${listApproval.size()}">
-							</c:if>
-						</c:forEach>
-					</div>
-
-
-					<div style="width: 100%; float: left; ">
-						<c:forEach var="vo" items="${listApproval}">
-							<div class="text_box3">${vo.emp_name }<span
-									style="font-weight: normal;">&nbsp;${vo.pos_name }</span>
-								<div>${vo.dept_name }</div>
-							</div>
-						</c:forEach>
-						<div class="text_box4">&nbsp;</div>
-
-					</div>
-
-				</div>
-			</div>			
-			</c:if>
-				
+				</c:if>
 			</div>
 			<div class="board3">
 				<div class="line_container2">
@@ -465,9 +415,12 @@ function searchList() {
 								<div class="leftBox">
 									<p class="ap_pBox">
 										<label for="draft1"> <input type="radio"
-											name="draft_category" id="draft1" checked value="0" ${dto.draft_category == 0 ? 'checked' : ''} />품의서
+											name="draft_category" id="draft1" checked value="0" ${dto.draft_category == 0 ? 'checked' : ''} />연차
 										</label> <label for="draft2"> <input type="radio"
-											name="draft_category" id="draft2" value="1" ${dto.draft_category == 1 ? 'checked' : ''} />기안서
+											name="draft_category" id="draft2" value="1" ${dto.draft_category == 1 ? 'checked' : ''} />보상휴가
+										</label>
+										<label for="draft2"> <input type="radio"
+											name="draft_category" id="draft2" value="1" ${dto.draft_category == 1 ? 'checked' : ''} />경조사휴가
 										</label>
 									</p>
 								</div>
@@ -475,7 +428,8 @@ function searchList() {
 									<p class="ap_pBox">
 										<label for="draft1"> <input type="radio" name="urgent"
 											id="draft1" checked value="0" ${dto.urgent == 0 ? 'checked' : ''} />일반
-										</label> <label for="draft2"> <input type="radio"
+										</label> 
+										<label for="draft2"> <input type="radio"
 											name="urgent" id="draft2" value="1"
 											${dto.urgent == 1 ? 'checked' : ''} />긴급
 										</label>
@@ -525,41 +479,56 @@ function searchList() {
 								</div>
 							</div>
 
+							<div class="flexBox">
+								<div class="leftBox">
+									<label>휴가타입 </label>
+								</div>
+								<div class="leftBox">
+									<label>휴가용개수 </label>
+								</div>
+							</div>
+							<div class="flexBox ap_pBox">
+									<p class="ap_pBox">
+										<label for="draft1"> <input type="radio"
+											name="draft_category" id="draft1" checked value="0" ${dto.draft_category == 0 ? 'checked' : ''} />종일
+										</label> 
+										<label for="draft2"> <input type="radio"
+											name="draft_category" id="draft2" value="1" ${dto.draft_category == 1 ? 'checked' : ''} />반차
+										</label> 
+									</p>
+								<div class="leftBox">
+									<input type="text" name="" class="form-control1"
+										readonly="readonly" value="" />
+								</div>
+							</div>
+							<div class="flexBox">
+								<div class="leftBox">
+									<label>휴가시작 일자 </label>
+								</div>
+								<div class="leftBox">
+									<label>휴가종료 일자 </label>
+								</div>
+							</div>
+							<div class="flexBox ap_pBox">
+
+								<div class="leftBox">
+									<p>
+										<input type="date" name="draft_date" class="form-control1"
+											value="${dto.draft_date }" />
+									</p>
+								</div>
+								<div class="leftBox">
+									<input type="date" name="draft_deadline" class="form-control1"
+										value="${dto.draft_deadline }" />
+								</div>
+
+							</div>
 						</div>
 						<div class="leftBox">
-							<label>내용 </label>
+							<label>휴가사유 </label>
 						</div>
 						<textarea name="draft_content" id="ir1" class="form-control"
 							style="width: 93%; padding: 7px 5px; height: 400px;">${dto.draft_content}</textarea>
-					</div>
-				</div>
-			</div>
-			<div class="board1">
-				<div class="file_container">
-					<div>
-						<div class="title3">
-							<span> 첨부파일</span>
-						</div>
-					</div>
-					<div class="file_container2">
-						<div class="table table-border table-form">
-							<div>
-								<input type="file" name="selectFile" multiple="multiple"
-									class="form-control1">
-							</div>
-
-							<c:if test="${mode=='update'}">
-								<c:forEach var="vo" items="${listFile}">
-									<div id="f${vo.file_no}" class="img-box">
-										<div>
-											<a href="javascript:deleteFile('${vo.file_no}');">
-												<i class="fa-solid fa-trash-can"></i> </a> 
-												${vo.original_filename}
-										</div>
-									</div>
-								</c:forEach>
-							</c:if>
-						</div>
 					</div>
 				</div>
 			</div>

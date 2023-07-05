@@ -58,13 +58,40 @@ function searchList() {
 	f.submit();
 }
 </script>
+<script type="text/javascript">
+
+$(function() {
+    $("#chkAll").click(function() {
+	   if($(this).is(":checked")) {
+		   $("input[name=doc_no]").prop("checked", true);
+        } else {
+		   $("input[name=doc_no]").prop("checked", false);
+        }
+    });
  
+    $(".btnMove").click(function(){
+		let cnt = $("input[name=doc_no]:checked").length;
+
+		if (cnt === 0) {
+			alert("이동할 문서를 선택하세요");
+			return;
+		}
+         
+		if(confirm("선택한 문서를 이동하시겠습니까 ? ")) {
+			const f = document.listForm;
+			f.action = "${pageContext.request.contextPath}/approval/updateList";
+			f.submit();
+		}
+	});
+});
+
+</script> 
 
 <div class="left-side-bar">
       
         <ul>
 		<li>
-					<a href="${pageContext.request.contextPath}/approval/write">문서작성</a>
+			<a href="${pageContext.request.contextPath}/approval/write">문서작성</a>
 		</li>       
         
             <li>
@@ -72,22 +99,23 @@ function searchList() {
                 <a href="${pageContext.request.contextPath}/approval/list?doc_status=1">&nbsp;내 문서</a>
                 <a href="#">&nbsp;부서 문서</a>
                 <a href="${pageContext.request.contextPath}/approval/list?doc_status=0">&nbsp;임시보관 문서</a>
-                <a href="#">&nbsp;중요 문서</a>
+                <a href="${pageContext.request.contextPath}/approval/listImportant?important=1">&nbsp;중요 문서</a>
             <li>
             
             
             <li>
                 <a>결재함</a>
-                <a href="${pageContext.request.contextPath}/approval/standByList">&nbsp;대기</a>
-                <a href="${pageContext.request.contextPath}/approval/progressList">&nbsp;진행중</a>
-                <a href="${pageContext.request.contextPath}/approval/sendBackList">&nbsp;반려</a>
-                <a href="#">&nbsp;완료</a>
+<a href="${pageContext.request.contextPath}/approval/approvalListByStatus/1">&nbsp;대기문서</a>
+<a href="${pageContext.request.contextPath}/approval/approvalListByStatus/2">&nbsp;진행중 문서</a>
+<a href="${pageContext.request.contextPath}/approval/approvalListByStatus/3">&nbsp;반려문서</a>
+<a href="${pageContext.request.contextPath}/approval/approvalListByStatus/4">&nbsp;완료문서</a>
             <li>
         </ul>
     </div>
 		<div class="right-contentbody">
 		
 			<div class="board1">
+			<form name="listForm" action="${pageContext.request.contextPath}/approval/list" method="post">
 				<div class="title_container">
 				<table class="table" style="margin-bottom: 20px;">
 					<tr>
@@ -100,23 +128,23 @@ function searchList() {
 								  <c:when test="${doc_status == 1}">
 								    내문서
 								  </c:when>								  
-											  
+								  <c:when test="${important == 1}">
+								    중요문서
+								  </c:when>												  
 								</c:choose>
 							</h3> 
 						</td>
-						<td class="title" >
-								<select name="condition" class="form-select"> 
-									<option value="all"  ${condition == "all" ? "selected='selected'" : ""} >내문서</option>
-									<option value="name"  ${condition == "name" ? "selected='selected'" : ""} >그룹문서</option>
-									<option value="reg_date"  ${condition == "reg_date" ? "selected='selected'" : ""} >임시문서</option>
-									<option value="subject"  ${condition == "subject" ? "selected='selected'" : ""} >중요문서</option>
-								</select> 
-							<button type="button" class="btn" onclick="" style="margin-right: 10px;">이동</button>
-							<button type="button" class="btn" onclick="">다운로드</button>
+						<td class="title">
+						    <select name="condition" class="form-select">
+						        <option value="all" ${condition == "all" ? "selected='selected'" : ""}>내문서</option>
+						        <option value="name" ${condition == "name" ? "selected='selected'" : ""}>부서문서</option>
+						        <option value="important" ${condition == "important" ? "selected='selected'" : ""}>중요문서</option>
+						    </select>
+						    <button type="button" class="btn btnMove" style="margin-right: 10px;">이동</button>
+						    <button type="button" class="btn" onclick="">다운로드</button>
 						</td>
-						
+												
 						<td align="right">
-						  <form name="searchForm" action="${pageContext.request.contextPath}/approval/list" method="post">
 						    <select name="condition" class="form-select">
 						      <option value="all" ${condition == "all" ? "selected='selected'" : ""}>전체</option>
 						      <option value="draft_date" ${condition == "draft_date" ? "selected='selected'" : ""}>등록일</option>
@@ -130,7 +158,7 @@ function searchList() {
 						    <input type="hidden" name="keyword" value="${keyword}">
 						    <input type="hidden" name="size" value="${size}">
 						     -->
-						  </form>
+						
 						</td>
 					</tr>
 				</table>
@@ -144,7 +172,7 @@ function searchList() {
 				<thead >
 					<tr>
 						<th width="5%;">
-							<input type="checkbox" name="chkAll" value="all"> 
+							<input type="checkbox" name="chkAll"  id="chkAll" value="all"> 
 						</th> 
 						<th> 문서번호 </th>
 						<th> 문서종류 </th>
@@ -161,7 +189,7 @@ function searchList() {
 					<c:forEach var="dto" items="${list}">
 						<tr>
 							<td>
-								<input type="checkbox" name="" value="">
+								<input type="checkbox" name="doc_no" value="${dto.doc_no}">
 							</td>					
 							<td>${dto.doc_no}</td>
 							<td>${dto.draft_category == 0 ? '품의서' : '기안서'}</td>
@@ -184,7 +212,7 @@ function searchList() {
 								    <td>결재완료</td>
 								  </c:when>
 								  <c:when test="${dto.doc_status == 4}">
-								    <td>반려문서</td>
+								    <td>반려</td>
 								  </c:when>
 							</c:choose>
 							<td>${dto.urgent == 0? '일반' : '긴급' }</td>
@@ -194,7 +222,7 @@ function searchList() {
 				</tbody>
 			</table>
 				</div>
-	
+	  </form>
 			<div class="page-navigation" style="width: 900px; margin: 0 auto;">${dataCount == 0 ? "등록된 게시물이 없습니다." : paging}</div>
 	
 			</div>

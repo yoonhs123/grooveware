@@ -51,7 +51,34 @@ input[type=text]{
 
 </style>
 
+<script type="text/javascript">
 
+$(function() {
+    $("#chkAll").click(function() {
+	   if($(this).is(":checked")) {
+		   $("input[name=doc_no]").prop("checked", true);
+        } else {
+		   $("input[name=doc_no]").prop("checked", false);
+        }
+    });
+ 
+    $(".btnMove").click(function(){
+		let cnt = $("input[name=doc_no]:checked").length;
+
+		if (cnt === 0) {
+			alert("이동할 문서를 선택하세요");
+			return;
+		}
+         
+		if(confirm("선택한 문서를 이동하시겠습니까 ? ")) {
+			const f = document.listForm;
+			f.action = "${pageContext.request.contextPath}/note/${menuItem}/update";
+			f.submit();
+		}
+	});
+});
+
+</script> 
  
 
 <div class="left-side-bar">
@@ -72,10 +99,10 @@ input[type=text]{
             
             <li>
                 <a href="#">결재함</a>
-                <a href="${pageContext.request.contextPath}/approval/standByList">&nbsp;대기</a>
-                <a href="${pageContext.request.contextPath}/approval/progressList">&nbsp;진행중</a>
-                <a href="${pageContext.request.contextPath}/approval/sendBackList">&nbsp;반려</a>
-                <a href="#">&nbsp;완료</a>
+<a href="${pageContext.request.contextPath}/approval/approvalListByStatus/1">&nbsp;대기문서</a>
+<a href="${pageContext.request.contextPath}/approval/approvalListByStatus/2">&nbsp;진행중 문서</a>
+<a href="${pageContext.request.contextPath}/approval/approvalListByStatus/3">&nbsp;반려문서</a>
+<a href="${pageContext.request.contextPath}/approval/approvalListByStatus/4">&nbsp;완료문서</a>
             <li>
         </ul>
     </div>
@@ -99,10 +126,15 @@ input[type=text]{
 								  </c:when>
 								  <c:when test="${approval_status == 2}">
 								    결재 진행함
-								  </c:when>								  
+								  </c:when>	
 								  <c:when test="${approval_status == 3}">
 								    반려함
-								  </c:when>								  
+								  </c:when>	
+								  <c:otherwise>
+								  	결재 완료함
+								  </c:otherwise>							  
+							  
+								   						  
 								</c:choose>
 							</h3> 
 						</td>
@@ -235,7 +267,36 @@ input[type=text]{
 							</c:choose>
 							<td>${dto.urgent == 0? '일반' : '긴급' }</td>
 						</tr>
-					</c:forEach>					
+					</c:forEach>	
+					<c:forEach var="dto" items="${completionList}">
+						<tr>
+							<td>
+								<input type="checkbox" name="" value="">
+							</td>					
+							<td>${dto.doc_no}</td>
+							<td>${dto.draft_category == 0 ? '품의서' : '기안서'}</td>
+							<td>
+								<a href="${articleUrl}?doc_no=${dto.doc_no}">${dto.doc_name}</a>
+							</td>
+							<td>${dto.emp_name}</td>
+							<td>${dto.draft_date}</td>
+							<c:choose>
+								  <c:when test="${dto.doc_status == 1}">
+								    <td>대기</td>
+								  </c:when>
+								  <c:when test="${dto.doc_status == 2}">
+								    <td>결재진행</td>
+								  </c:when>
+								  <c:when test="${dto.doc_status == 3}">
+								    <td>결재완료</td>
+								  </c:when>
+								  <c:when test="${dto.doc_status == 4}">
+								    <td>반려</td>
+								  </c:when>
+							</c:choose>
+							<td>${dto.urgent == 0? '일반' : '긴급' }</td>
+						</tr>
+					</c:forEach>										
 				</tbody>
 			</table>
 				</div>

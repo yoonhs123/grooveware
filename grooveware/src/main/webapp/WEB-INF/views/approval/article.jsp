@@ -92,11 +92,11 @@
 			href="${pageContext.request.contextPath}/approval/list?doc_status=0">&nbsp;임시보관
 				문서</a> <a href="#">&nbsp;중요 문서</a>
 		<li>
-		<li><a href="">결재함</a> <a
-			href="${pageContext.request.contextPath}/approval/standByList">&nbsp;대기</a>
-			<a href="${pageContext.request.contextPath}/approval/progressList">&nbsp;진행중</a>
-			<a href="${pageContext.request.contextPath}/approval/sendBackList">&nbsp;반려</a>
-			<a href="#">&nbsp;완료</a>
+		<li><a href="">결재함</a>
+                <a href="${pageContext.request.contextPath}/approval/standByList">&nbsp;대기문서</a>
+                <a href="${pageContext.request.contextPath}/approval/progressList">&nbsp;진행중 문서</a>
+                <a href="${pageContext.request.contextPath}/approval/sendBackList">&nbsp;반려문서</a>
+                <a href="${pageContext.request.contextPath}/approval/completionList">&nbsp;완료문서</a>		
 		<li>
 	</ul>
 </div>
@@ -127,7 +127,7 @@
 					</tr>
 				</table>
 			</div>
-			<div class="line_container" style="height: 180px;">
+			<div class="line_container" style="height: 200px;">
 				<div class="table" style="margin-bottom: 15px;">
 					<div>
 						<div class="title" style="float: left; width: 100%;">
@@ -136,29 +136,29 @@
 
 					</div>
 					<div style="width: 100%; float: left; padding-left: 20px;">
+						<c:forEach var="vo" items="${listApproval}" varStatus="status">
+							<div class="img_container" style="${vo.approval_status==2 ? 'border: 3px solid #0232f2;' : ''}">
+								<img class="imgSize"
+									src="${pageContext.request.contextPath}/resources/images/bg.png">
+							</div>
 
+							<c:if test="${!status.last}">
+								<div class="img_container3">
+									<i class="fa-solid fa-chevron-right"></i>
+								</div>
+							</c:if>
+							<c:if test="${vo.emp_no == sessionScope.member.emp_no}">
 
-						<div class="img_container ">
-							<img class=""
-								src="${pageContext.request.contextPath}/resources/images/bg.png">
-						</div>
-						<div class="img_container3 ">
-							<i class="fa-solid fa-chevron-right"></i>
-						</div>
-						<div class="img_container ">
-							<img class=""
-								src="${pageContext.request.contextPath}/resources/images/bg.png">
-						</div>
-						<div class="img_container3 ">
-							<i class="fa-solid fa-chevron-right"></i>
-						</div>
-						<div class=" img_container">
-							<img class=""
-								src="${pageContext.request.contextPath}/resources/images/bg.png">
-						</div>
+								<input type="hidden" name="approval_status_id"
+									value="${vo.approval_status_id}">
+								<input type="hidden" name="approval_total_step"
+									value="${listApproval.size()}">
+							</c:if>
+						</c:forEach>
 					</div>
 
-					<div style="width: 100%; float: left; padding-left: 10px;">
+
+					<div style="width: 100%; float: left; ">
 						<c:forEach var="vo" items="${listApproval}">
 							<div class="text_box3">${vo.emp_name }<span
 									style="font-weight: normal;">&nbsp;${vo.pos_name }</span>
