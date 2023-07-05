@@ -48,8 +48,8 @@ public class MySocketHandler extends TextWebSocketHandler{
 
 		if (type.equals("connect")) { // 처음 접속한 경우
 			// 접속한 사용자의 아이디를 키로 session과 유저 정보를 저장
-			String nickName = jsonReceive.getString("emp_name");
-			String uid = jsonReceive.getString("emp_no");
+			String nickName = jsonReceive.getString("nickName");
+			String uid = jsonReceive.getString("uid");
 
 			User user = new User();
 			user.setUid(uid);

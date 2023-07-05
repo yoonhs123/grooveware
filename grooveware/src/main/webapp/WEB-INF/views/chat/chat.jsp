@@ -3,6 +3,50 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+<style type="text/css">
+.chat-msg-container { display: flex; flex-direction:column; height: 310px; overflow-y: scroll; padding: 5px; }
+.chat-connection-list { height: 355px; overflow-y: scroll; padding: 5px; }
+.chat-connection-list span { display: block; cursor: pointer; margin-bottom: 3px; }
+.chat-connection-list span:hover { color: #0d6efd }
+
+.user-left {
+	color: #0d6efd;
+	font-weight: 700;
+	font-size: 10px;
+	margin-left: 3px;
+	margin-bottom: 1px;
+}
+
+.chat-info, .msg-left, .msg-right {
+	max-width: 350px;
+	line-height: 1.5;
+	font-size: 13px;
+    padding: 0.35em 0.65em;
+    border: 1px solid #ccc;
+    color: #333;
+    white-space: pre-wrap;
+    vertical-align: baseline;
+    border-radius: 0.25rem;
+}
+.chat-info {
+    background: #f8f9fa;
+    color: #333;
+    margin-right: auto;
+    margin-left: 3px;
+    margin-bottom: 5px;
+}
+.msg-left {
+    margin-right: auto;
+    margin-left: 8px;
+    margin-bottom: 5px;
+}
+.msg-right {
+	margin-left: auto;
+    margin-right: 3px;
+    margin-bottom: 5px;
+}
+</style>
+
 <div class="left-side-bar">
     <ul>
         <li>
@@ -18,33 +62,34 @@
     <div class="title_container">
         <table class="table" style="margin-bottom: 20px;">
             <tr>
-                <td class="title"><i class="fa-brands fa-facebook-messenger"></i>&nbsp;<span>그루비&nbsp;톡</span></td>
+                <td class="title"><i class="fa-regular fa-comments"></i>&nbsp;<span>그루비&nbsp;톡</span></td>
             </tr>
         </table>
     </div>
-  <div class="chat-main">
-    <div class="chat-left">
-        <div class="chat-left-main">
-             <div class="mt-2">
-            <p class="form-control-plaintext fs-6">
-                <i class="bi bi-chevron-double-right"></i> &nbsp; 그루비 &nbsp; 톡 </p>
-            </div>
-        </div>
-        <div class="chat-msg-container"></div>
+    
+	<div class="chat-main">
+		<div class="chat-left">
+			<div class="chat-left-main">
+  				<div style="margin-top: 10px;">
+					<p style="padding: 5px 0; font-weight: 600;">
+						<i class="fa-solid fa-angles-right"></i> &nbsp; 그루비 &nbsp; 톡
+					</p>
+				</div>
+			</div>
+			<div class="chat-msg-container"></div>
       
             <input type="text" id="chatMsg" class="form-control" placeholder="채팅 메시지를 입력하세요...">
-     
-    </div>
+		</div>
     
-    <div class="chat-right">	
-        <div class="mt-3">
-        <p class="form-control-plaintext fs-6">
-            <i class="bi bi-chevron-double-right"></i> 접속자 리스트</p>
-        </div>
-        <div class="chat-connection-list"></div>
-      </div>
+		<div class="chat-right">	
+			<div style="margin-top: 10px;">
+				<p style="padding: 5px 0; font-weight: 600;">
+					<i class="fa-solid fa-angles-right"></i> 접속자 리스트</p>
+			</div>
+			<div class="chat-connection-list"></div>
+		</div>
 
-        </div>
+	</div>
          
 </div>
 
@@ -77,9 +122,10 @@ $(function(){
 	
 	 // 서버 접속이 성공한 경우 호출되는 콜백함수
 	function onOpen(evt) {
-		 // Login 처리에서 세션에 memberIdx 저장 유무 확인
+		 // Login 처리에서 세션에 emp_no 저장 유무 확인
 	    let uid = "${sessionScope.member.emp_no}";
 	    let nickName = "${sessionScope.member.emp_name}";
+	    let dept_name = "${sessionScope.member.dept_name}";
 	    if( ! uid ) {
 	    	location.href="${pageContext.request.contextPath}/member/login";
 	    	return;
@@ -127,7 +173,7 @@ $(function(){
     			let uid = users[i][0];
     			let nickName = users[i][1];
     			
-    			let out = "<span id='user-"+uid+"' data-uid='"+uid+"'><i class='bi bi-person-square'></i> "+nickName+"</span>";
+    			let out = "<span id='user-"+uid+"' data-uid='"+uid+"'><i class='fa-solid fa-circle-user'></i> "+nickName+"</span>";                                             
         		$(".chat-connection-list").append(out);
     		}
     		
@@ -138,7 +184,7 @@ $(function(){
     		let out = "<div class='chat-info'>"+nickName+"님이 입장하였습니다.</div>";
     		writeToScreen(out);
     		
-    		out = "<span id='user-"+uid+"' data-uid='"+uid+"'><i class='bi bi-person-square'></i> "+nickName+"<span>";
+    		out = "<span id='user-"+uid+"' data-uid='"+uid+"'><i class='fa-solid fa-circle-user'></i> "+nickName+"<span>";
     		$(".chat-connection-list").append(out);
     		
     	} else if(cmd === "userDisconnect") { // 접속자가 나갔을 때
@@ -159,18 +205,7 @@ $(function(){
     		out += "<div class='msg-left'>" + msg + "</div>";
     		writeToScreen(out);
     		
-    	} else if(cmd === "whisper") { // 위스퍼
-    		let uid = data.uid;
-    		let nickName = data.nickName;
-    		let msg = data.chatMsg;
-    		
-    		let out = "<div class='user-left'>" + nickName + "(귓속)</div>";
-    		out += "<div class='msg-left'>" + msg + "</div>";
-    		
-    		writeToScreen(out);
-    	}  else if(cmd === "time") {
-    		// console.log(evt.data);
-    	}
+    	} 
 	}
 
 	// 에러가 발생시 호출되는 콜백함수
@@ -196,62 +231,7 @@ $(function(){
         $("#chatMsg").val("");
         writeToScreen("<div class='msg-right'>" + msg +"<div>");
 	}
-	
-	// -----------------------------------------
-	// 채팅 참여자 리스트를 클릭한 경우 위스퍼(귓속말, dm) 대화상자 열기
-	$("body").on("click", ".chat-connection-list span", function(){
-		let uid = $(this).attr("data-uid");
-		let nickName = $(this).text();
-		
-		$('#chatOneMsg').attr("data-uid", uid);
-		$('#chatOneMsg').attr("data-nickName", nickName);
-		
-		$("#myDialogModalLabel").html("귓속말-"+nickName);
-		$("#myDialogModal").modal("show");
-	});
-	
-	const modalEl = document.getElementById("myDialogModal");
-	modalEl.addEventListener("show.bs.modal", function(){
-		// 모달 대화상자가 보일때
-		$("#chatOneMsg").on("keydown", function(evt){
-			let key = evt.key || evt.keyCode;
-			if(key === 'Enter' || key === 13) {
-				sendOneMessage();
-			}
-		});
-	});
-	modalEl.addEventListener("hidden.bs.modal", function(){
-		// 모달 대화상자가 사라질때
-		$("#chatOneMsg").off("keydown");
-		$("#chatOneMsg").val("");
-	});
-	
-	// -----------------------------------------
-	// 귓속말 전송
-	function sendOneMessage() {
-		let msg = $("#chatOneMsg").val().trim();
-		if(! msg) {
-			$("#chatOneMsg").focus();
-			return;
-		}
-		
-		let uid = $('#chatOneMsg').attr("data-uid");
-		let nickName = $('#chatOneMsg').attr("data-nickName").trim();
-		
-		let obj = {};
-        obj.type = "whisper";
-        obj.chatMsg = msg;
-        obj.receiver = uid;
-        
-        let jsonStr = JSON.stringify(obj);
-        socket.send(jsonStr);
-        
-        writeToScreen("<div class='msg-right'>"+msg+"("+nickName+")</div>");
-        
-        $("#chatOneMsg").val("");
-        $("#myDialogModal").modal("hide");
-	}
-	
+
 });
 
 //---------------------------------------------
