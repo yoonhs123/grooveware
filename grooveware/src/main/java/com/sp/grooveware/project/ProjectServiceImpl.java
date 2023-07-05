@@ -93,38 +93,6 @@ public class ProjectServiceImpl implements ProjectService {
 		return dto;
 	}
 
-	@Override
-	public void updateProject(Project dto, String pathname) throws Exception {
-		try {
-			String saveFilename = fileManager.doFileUpload(dto.getSelectFile(), pathname);
-			
-			if (saveFilename != null) {
-				if (dto.getSaveFilename() != null && dto.getSaveFilename().length() !=0) {
-					fileManager.doFileDelete(dto.getSaveFilename(), pathname);
-				}
-				
-				dto.setSaveFilename(saveFilename);
-				dto.setOriginalFilename(dto.getSelectFile().getOriginalFilename());
-			}
-			
-			dao.updateData("project.updateProject", dto);
-					
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw e;
-		}
-		
-	}
-
-	
-	
-	
-	
-	@Override
-	public void deleteProject(long pj_no, String pathname, String pj_creator, int membership) throws Exception {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public List<Project> readProjectmember(long pj_no) {
@@ -139,8 +107,84 @@ public class ProjectServiceImpl implements ProjectService {
 		return list;
 	}
 
+	@Override
+	public void updateProject(Project dto, String pathname) throws Exception {
+		try {
+			String saveFilename = fileManager.doFileUpload(dto.getSelectFile(), pathname);
+			
+			if (saveFilename != null) {
+				if (dto.getSaveFilename() != null && dto.getSaveFilename().length() !=0) {
+					fileManager.doFileDelete(dto.getSaveFilename(), pathname);
+				}
+				
+				dto.setSaveFilename(saveFilename);
+				dto.setOriginalFilename(dto.getSelectFile().getOriginalFilename());
+			}
+			
+			dao.updateData("project.updateProject1", dto);
+			dao.updateData("project.updateProject2", dto);
+			dao.updateData("project.updateProject3", dto);
+			
+			if(dto.getEmps() != null) {
+				
+				insertPjmember(dto);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		
+	}
+	
 
 
+	@Override
+	public void insertPjmember(Project dto) throws Exception {
+		try {
+			dao.insertData("project.insertPjmember", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		
+	}
+
+
+
+	
+	@Override
+	public void deleteProject(long pj_no, String pathname, long emp_no) throws Exception {
+		try {
+			Project dto = readProject(pj_no);
+			if (dto == null || !(dto.getPj_creator() == emp_no)) {
+				return;
+			}
+			
+			fileManager.doFileDelete(dto.getSaveFilename(), pathname);
+			
+			dao.deleteData("project.deleteProject2", pj_no);
+			dao.deleteData("project.deleteProject3", pj_no);
+			dao.deleteData("project.deleteProject4", pj_no);
+			dao.deleteData("project.deleteProject1", pj_no);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+
+
+	@Override
+	public void deletePjmember(Map<String, Object> map) throws Exception {
+		try {
+			dao.deleteData("project.deletePjmember", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		
+	}
 
 
 

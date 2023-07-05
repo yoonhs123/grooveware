@@ -22,19 +22,16 @@
 		values (#{pj_creator}, pj_seq.currval, 0, SYSDATE)
 	</insert>
 	
-	
-<!-- 	
-	<insert id="insertProject2" parameterType="com.sp.grooveware.project.Project">
-		insert into  pj_member(pj_member_no, pj_no, pj_join_type, pj_member_join_date)
+	<update id="insertPjmember" parameterType="com.sp.grooveware.project.Project">
+		insert all
+		<foreach collection="emps" item="emp_no" index="index" separator=" " close="SELECT*FROM DUAL">
+	         into pj_member(pj_member_no, pj_no, pj_join_type, pj_member_join_date)
 		 values
-		<foreach collection="emps" item="emp_no" separator=",">
-	        (#{emp_no}, pj_seq.currval, 1, SYSDATE)
-	    </foreach>
-	</insert>
+	        (#{emp_no}, #{pj_no}, 2, SYSDATE)
+	    </foreach> 
+	</update>
 	
- -->
- 
- 
+	
  	<sql id="where-list">
 		<choose>
 			<when test="condition == 'pj_name' ">
@@ -145,10 +142,47 @@
 	</select>
 
 
-	<update id="updateProject" parameterType="com.sp.grooveware.project.Project">
-		UPDATE pj SET pj_name=#{pj_name}, pj_content=#{pj_content}, pj_start_date=#{pj_start_date, jdbcType=DATE}, pj_end_date=#{pj_end_date, jdbcType=DATE};
-		UPDATE pj_file SET saveFilename=#{saveFilename, jdbcType=VARCHAR}, originalFilename=#{originalFilename, jdbcType=VARCHAR};
-		UPDATE cli SET client_name=#{client_name};
+	<update id="updateProject1" parameterType="com.sp.grooveware.project.Project">
+		UPDATE pj SET pj_name=#{pj_name}, pj_content=#{pj_content}, pj_start_date=#{pj_start_date, jdbcType=DATE}, pj_end_date=#{pj_end_date, jdbcType=DATE}
+		WHERE pj_no = #{pj_no}
 	</update>
+
+	<update id="updateProject2" parameterType="com.sp.grooveware.project.Project">
+		UPDATE pj_file SET saveFilename=#{saveFilename, jdbcType=VARCHAR}, originalFilename=#{originalFilename, jdbcType=VARCHAR}
+		WHERE pj_no = #{pj_no}	
+	</update>
+
+	<update id="updateProject3" parameterType="com.sp.grooveware.project.Project">
+		UPDATE cli SET client_name=#{client_name}
+		WHERE pj_no = #{pj_no}
+	</update>
+	
+	<!-- 삭제 -->
+	<delete id="deleteProject1" parameterType="Long">
+		DELETE FROM pj WHERE pj_no = #{pj_no}
+		ON DELETE CASCADE
+	</delete>	
+
+	<delete id="deleteProject2" parameterType="Long">
+		DELETE FROM pj_file WHERE pj_no = #{pj_no}
+	</delete>	
+
+	<delete id="deleteProject3" parameterType="Long">
+		DELETE FROM pj_member WHERE pj_no = #{pj_no}
+	</delete>	
+
+	<delete id="deleteProject4" parameterType="Long">
+		DELETE FROM cli WHERE pj_no = #{pj_no}
+	</delete>	
+	
+	<select id="readPjmember" parameterType="map" resultType="com.sp.grooveware.project.Project">
+		SELECT pj_no, pj_member_no
+		FROM pj_member
+		WHERE pj_member_no = #{pj_member_no} AND pj_no = #{pj_no}
+	</select>
+	
+	<delete id="deletePjmember" parameterType="map">
+		DELETE FROM pj_member WHERE  pj_member_no = #{pj_member_no} AND pj_no = #{pj_no}
+	</delete>
 
 </mapper>

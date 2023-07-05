@@ -337,7 +337,7 @@ textarea {
 		if( ! confirm("파일을 삭제하시겠습니까 ?") ) {
 			return;
 		}
-		let url = "${pageContext.request.contextPath}/project/deleteFile?pj_no=" + ${dto.pj_no} + "&page=${page}";
+		let url = "${pageContext.request.contextPath}/project/deleteFile?&page=${page}&pj_no=" + ${dto.pj_no};
 		location.href = url;
 	}
 	</c:if>
@@ -349,10 +349,6 @@ function sendOk() {
 	const f = document.projectForm;
 	let str;
 
-	if($("#forms-emp-list input[name=emps]").length === 0) {
-		alert("프로젝트 참여사원를 추가하세요. ");
-		return;
-	}
 	
     str = f.pj_name.value.trim();
     if(!str) {
@@ -368,11 +364,19 @@ function sendOk() {
         return false;
     }
 
+	<c:if test="${mode=='write'}">
+	if($("#forms-emp-list input[name=emps]").length === 0) {
+		alert("프로젝트 참여사원를 추가하세요. ");
+		return;
+	}
+	</c:if>
+	
     f.action = "${pageContext.request.contextPath}/project/${mode}";
     f.submit();
     
 }    
 </script>
+
 
 <script type="text/javascript"> 
 $(function(){
@@ -417,119 +421,6 @@ function ajaxFun(url, method, query, dataType, fn){
 	});
 }
 
- 
-$(function(){
-	$(".btn_pj_add").click(function(){
-		$("#condition").val("emp_name");
-		$("#keyword").val("");
-		$(".dialog-emp-list ul").empty();
-		
-		$("#myDialogModal").show();
-	});
-	
-	// 대화상자 - 받는사람 검색 버튼
-	$(".btn_emp_find").click(function(){
-		let condition = $("#condition").val();
-		let keyword = $("#keyword").val();
-		if(!keyword) {
-			$("#keyword").focus();
-			return false;
-		}
-		
-		let url = "${pageContext.request.contextPath}/project/listEmp"; 
-		let query = "condition=" + condition + "&keyword=" + encodeURIComponent(keyword);
-		
-		const fn = function(data){
-			$(".dialog-emp-list ul").empty();
-			searchListEmp(data);
-		};
-		ajaxFun(url, "get", query, "json", fn);
-	});
-	
-	function searchListEmp(data) {
-		let s;
-		for(let i=0; i<data.listEmp.length; i++) {
-			let emp_no = data.listEmp[i].emp_no;
-			let emp_name = data.listEmp[i].emp_name;
-			let pos_name = data.listEmp[i].pos_name;
-			let dept_name = data.listEmp[i].dept_name;
-			
-			s = "<li><input type='checkbox' class='form-check-input' data-emp_no='" + emp_no + "' title='" + emp_no+ "'> <span>" + emp_name+ "</span>"
-			s += "<span>" + " (" + pos_name + "_" + "</span>";
-			s += "<span>" + dept_name + ")" + "</span></li>";
-			$(".dialog-emp-list ul").append(s);
-		}
-	}
-	
-	// 대화상자-받는 사람 추가 버튼
-	$(".btnAdd").click(function(){
-		let len1 = $(".dialog-emp-list ul input[type=checkbox]:checked").length;
-		let len2 = $("#forms-emp-list input[name=emps]").length;
-		console.log("len1="+len1);
-		console.log("len2="+len2);
-		
-		if(len1 === 0) {
-			alert("추가할 사람을 먼저 선택하세요.");
-			return false;			
-		}
-		
-		var b, emp_no, emp_name, pos_name, dept_name, s;
-
-		b = false;
-		$(".dialog-emp-list ul input[type=checkbox]:checked").each(function(){
-			emp_no = $(this).attr("data-emp_no");
-			emp_name = $(this).next("span").text();
-			pos_name = $(this).next("span").next("span").text();
-			dept_name = $(this).next("span").next("span").next("span").text();
-			
-			
-			$("#forms-emp-list input[name=emps]").each(function(){
-				if($(this).val() === emp_no) {
-					b = true;
-					return false;
-				}
-			});
-			
-			if(!b) {
-				s = "<span class='project-member'>";
-				s += "  <img src='${pageContext.request.contextPath}/resources/images/bg.png'>";
-				s += "    <label>" + emp_name + pos_name + dept_name;
-				s += "    <input type='hidden' name='emps' value='" + emp_no + "'>";
-				s+=  "  </label>"
-				s += "</span>"
-				
-				$("#forms-emp-list").append(s);
-			}
-		});
-	
-		
-/* 		s += "<span>" + " (" + pos_name + "_" + "</span>";
-		s += "<span>" + dept_name + ")" + "</span></li>";
- */		
-		
-		$("#myDialogModal").hide();
-	});
-	
-	$(".btnClose").click(function(){
-		$("#myDialogModal").hide();
-	});
-	
-	$(".close").click(function(){
-		$("#myDialogModal").hide();
-	});
-	
-	
-	$("body").on("click", ".project-member", function(){
-		if(! confirm("해당 사원을 제외 하시겠습니까?")) {
-			return false;
-		}
-		$(this).remove();
-	});
-});
-    
-
-	
-	
 	
 </script>
 
@@ -663,6 +554,7 @@ $(function(){
 							            <span class='project-member'>
 							              <i class="fa-solid fa-user-tie"></i>
 							              <label>${vo.emp_name}(${vo.pos_name}_${vo.dept_name})
+							              <input type="hidden" name="pj_member_no" value="${vo.pj_member_no}">
 							                <c:if test="${vo.pj_member_no == dto.pj_creator}">
 							                	&nbsp;<i style="color: #4048a8" class="fa-solid fa-star"></i>
 							                </c:if>
@@ -755,3 +647,170 @@ input.addEventListener('blur', function() {
 });
 </script> 
 
+
+<script type="text/javascript"> 
+$(function(){
+	$(".btn_pj_add").click(function(){
+		$("#condition").val("emp_name");
+		$("#keyword").val("");
+		$(".dialog-emp-list ul").empty();
+		
+		$("#myDialogModal").show();
+	});
+	
+	// 대화상자 - 받는사람 검색 버튼
+	$(".btn_emp_find").click(function(){
+		let condition = $("#condition").val();
+		let keyword = $("#keyword").val();
+		if(!keyword) {
+			$("#keyword").focus();
+			return false;
+		}
+		
+		let url = "${pageContext.request.contextPath}/project/listEmp"; 
+		let query = "condition=" + condition + "&keyword=" + encodeURIComponent(keyword);
+		
+		const fn = function(data){
+			$(".dialog-emp-list ul").empty();
+			searchListEmp(data);
+		};
+		ajaxFun(url, "get", query, "json", fn);
+	});
+	
+	function searchListEmp(data) {
+		let s;
+		for(let i=0; i<data.listEmp.length; i++) {
+			let emp_no = data.listEmp[i].emp_no;
+			let emp_name = data.listEmp[i].emp_name;
+			let pos_name = data.listEmp[i].pos_name;
+			let dept_name = data.listEmp[i].dept_name;
+			
+			s = "<li><input type='checkbox' class='form-check-input' data-emp_no='" + emp_no + "' title='" + emp_no+ "'> <span>" + emp_name+ "</span>"
+			s += "<span>" + " (" + pos_name + "_" + "</span>";
+			s += "<span>" + dept_name + ")" + "</span></li>";
+			$(".dialog-emp-list ul").append(s);
+		}
+	}
+	
+	// 대화상자-받는 사람 추가 버튼
+	$(".btnAdd").click(function(){
+		let len1 = $(".dialog-emp-list ul input[type=checkbox]:checked").length;
+		let len2 = $("#forms-emp-list input[name=emps]").length;
+		
+		if(len1 === 0) {
+			alert("추가할 사람을 먼저 선택하세요.");
+			return false;			
+		}
+		
+		var b, emp_no, emp_name, pos_name, dept_name, s;
+		let existingEmps = [];
+		let preexistingEmps = [];
+		
+		
+	
+		
+        $(".dialog-emp-list ul input[type=checkbox]:checked").each(function(){
+            emp_no = $(this).attr("data-emp_no");
+            emp_name = $(this).next("span").text();
+            pos_name = $(this).next("span").next("span").text();
+            dept_name = $(this).next("span").next("span").next("span").text();
+
+            // 중복 체크
+            let isDuplicate = false;
+            $("#forms-emp-list input[name=emps]").each(function(){
+                if($(this).val() === emp_no) {
+                    isDuplicate = true;
+                    return false;
+                }
+            });
+            
+            if(isDuplicate) {
+                existingEmps.push(emp_name); // 중복된 경우 배열에 추가
+                existingEmps.push(pos_name); // 중복된 경우 배열에 추가
+                existingEmps.push(dept_name); // 중복된 경우 배열에 추가
+                return true; // 중복된 경우 다음 사원으로 진행
+            }
+
+        	
+    		let preisDuplicate = false;
+            $("#forms-emp-list input[name=pj_member_no]").each(function(){
+                if($(this).val() === emp_no) {
+                    preisDuplicate = true;
+                    return false;
+                }
+            });
+            
+            if(preisDuplicate) {
+            	preexistingEmps.push(emp_name); // 중복된 경우 배열에 추가
+            	preexistingEmps.push(pos_name); // 중복된 경우 배열에 추가
+            	preexistingEmps.push(dept_name); // 중복된 경우 배열에 추가
+                return true; // 중복된 경우 다음 사원으로 진행
+            }
+    				
+            
+            
+            s = "<span class='project-member'>";
+            s += "  <img src='${pageContext.request.contextPath}/resources/images/bg.png'>";
+            s += "    <label>" + emp_name + pos_name + dept_name;
+            s += "    <input type='hidden' name='emps' value='" + emp_no + "'>";
+            s +=  "  </label>"
+            s += "</span>"
+
+            $("#forms-emp-list").append(s);
+        });
+
+        // 중복된 emp_no가 있는 경우 알림창 표시
+        if(existingEmps.length > 0) {
+            let message = "이미 등록된 사원입니다: " + existingEmps.join(" ");
+            alert(message);
+        }
+        
+		
+        if(preexistingEmps.length > 0) {
+            let message = "기존에 등록된 사원입니다: " + preexistingEmps.join(" ");
+            alert(message);
+        }
+        
+		
+		$("#myDialogModal").hide();
+	});
+	
+	$(".btnClose").click(function(){
+		$("#myDialogModal").hide();
+	});
+	
+	$(".close").click(function(){
+		$("#myDialogModal").hide();
+	});
+	
+	
+	$("body").on("click", ".project-member", function(){
+		if(! confirm("해당 사원을 제외 하시겠습니까?")) {
+			return false;
+		}
+		$(this).remove();
+	});
+});
+</script>
+
+
+<script type="text/javascript">
+
+<c:if test="${mode=='update'}">
+$(function(){
+	$("body").on("click", ".project-member", function(){
+		let $pj_member = $(this);			
+		let pj_member_no = $pj_member.find("input[name='pj_member_no']").val();
+		
+		console.log(pj_member_no);
+		
+		let url="${pageContext.request.contextPath}/project/deleteMember?&page=${page}&pj_no=" + ${dto.pj_no};
+		$.post(url, {pj_member_no:pj_member_no}, function(data){
+			$pj_member.remove();
+		}, "json");
+	});
+});
+</c:if>
+
+
+</script>

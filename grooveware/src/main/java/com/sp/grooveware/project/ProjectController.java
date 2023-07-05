@@ -1,6 +1,7 @@
 package com.sp.grooveware.project;
 
 import java.io.File;
+import java.io.PrintWriter;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.HashMap;
@@ -8,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -326,12 +328,15 @@ public class ProjectController {
 	
 	
 	@PostMapping("update")
-	public String updatesubmit(@RequestParam Project dto,
+	public String updatesubmit(Project dto,
 			@RequestParam String page,
+			@RequestParam long pj_no,
 			HttpSession session) throws Exception {
 	
 		String root = session.getServletContext().getRealPath("/");
 		String pathname = root + "uploads" + File.separator + "project";
+		
+		dto.setPj_no(pj_no);
 		
 		try {
 			service.updateProject(dto, pathname);
@@ -343,13 +348,73 @@ public class ProjectController {
 	}
 	
 	
+	@RequestMapping(value = "deleteMember")
+	public Map<String, Object> deleteFile(@RequestParam long pj_no,
+			@RequestParam long pj_member_no,
+			@RequestParam String page) throws Exception {
+		
+
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("pj_no", pj_no);
+		map.put("pj_member_no", pj_member_no);
+		service.deletePjmember(map);
+		
+		// 작업 결과를 json으로 전송
+		Map<String, Object> model = new HashMap<>();
+		model.put("state", "true");
+		return model;
+	}
 	
 	
 	
+	@RequestMapping(value = "delete")
+	public String delete(@RequestParam long pj_no,
+			@RequestParam String page,
+			@RequestParam(defaultValue = "all") String condition,
+			@RequestParam(defaultValue = "") String keyword,
+			HttpSession session) throws Exception {
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+
+		keyword = URLDecoder.decode(keyword, "utf-8");
+		String query = "page=" + page;
+		if (keyword.length() != 0) {
+			query += "&condition=" + condition + "&keyword=" + URLEncoder.encode(keyword, "UTF-8");
+		}
+		
+		String root = session.getServletContext().getRealPath("/");
+		String pathname = root + "uploads" + File.separator + "project";
+		
+		service.deleteProject(pj_no, pathname, info.getEmp_no());
+
+		return "redirect:/project/list?" + query;
+	}
 	
 	
 	
+	@GetMapping(value = "download")
+	public void download(@RequestParam long pj_no, 
+			HttpServletResponse resp,
+			HttpSession session) throws Exception {
 	
+		String root = session.getServletContext().getRealPath("/");
+		String pathname = root + "uploads" + File.separator + "bbs";
+
+		Project dto = service.readProject(pj_no);	
+		
+		if (dto != null) {
+			boolean b = fileManager.doFileDownload(dto.getSaveFilename(),
+					dto.getOriginalFilename(), pathname, resp);
+			
+			if(b) {
+				return;
+			}
+		}
+		
+		resp.setContentType("text/html;charset=utf-8");
+		PrintWriter out = resp.getWriter();
+		out.print("<script>alert('파일 다운로드가 실패 했습니다.');history.back();</script>");
+	}
 	
 	
 }

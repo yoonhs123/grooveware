@@ -361,6 +361,22 @@ input[type="text"] {
 
 
  </style>
+ 
+<script type="text/javascript">
+<c:if test="${sessionScope.member.emp_no==dto.pj_creator}">
+	function deletePj() {
+	    if(confirm("프로젝트를 삭제 하시겠습니까 ? ")) {
+		    let query = "pj_no=${dto.pj_no}&${query}";
+		    let url = "${pageContext.request.contextPath}/project/delete?" + query;
+	    	location.href = url;
+	    }
+	}
+</c:if>
+</script>
+
+
+
+
 
 
 <div class="left-side-bar">
@@ -460,7 +476,7 @@ input[type="text"] {
 							<th class="table-light col-sm-2">첨&nbsp;&nbsp;&nbsp;&nbsp;부</th>
 							<td>
 								<c:if test="${not empty dto.saveFilename}">
-										<a href="<c:url value='/project/download?project_no=${dto.pj_no}'/>" class="text-reset"><i class="fa-solid fa-file-arrow-down"></i>
+										<a href="<c:url value='/project/download?pj_no=${dto.pj_no}'/>" class="text-reset"><i class="fa-solid fa-file-arrow-down"></i>
 										${dto.originalFilename}
 										</a>
 								</c:if>
@@ -487,7 +503,7 @@ input[type="text"] {
 								
 								<c:choose>
 						    		<c:when test="${sessionScope.member.emp_no==dto.pj_creator}">
-						    			<button type="button" class="btn btn-light" onclick="deleteBoard();">삭제</button>
+						    			<button type="button" class="btn btn-light" onclick="deletePj();">삭제</button>
 						    		</c:when>
 						    		<c:otherwise>
 						    			<button type="button" class="btn-disabled" disabled="disabled">삭제</button>

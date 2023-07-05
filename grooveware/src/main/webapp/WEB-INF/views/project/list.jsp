@@ -210,7 +210,7 @@ function searchList() {
 							<td>${dto.pj_end_date}</td>
 							<td>
 								<c:if test="${not empty dto.saveFilename}">
-									<a href="<c:url value='/project/download?project_no=${dto.pj_no}'/>" class="text-reset"><i class="fa-solid fa-file-arrow-down"></i></a>
+									<a href="<c:url value='/project/download?pj_no=${dto.pj_no}'/>" class="text-reset"><i class="fa-solid fa-file-arrow-down"></i></a>
 								</c:if>
 							</td>
 							<td><a href="${articleUrl}&pj_no=${dto.pj_no}" class="text-reset"><i class="fa-solid fa-newspaper"></i></a></td>						
