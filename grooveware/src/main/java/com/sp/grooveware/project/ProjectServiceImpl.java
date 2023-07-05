@@ -5,7 +5,6 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.sp.grooveware.common.FileManager;
 import com.sp.grooveware.common.dao.CommonDAO;
@@ -30,6 +29,9 @@ public class ProjectServiceImpl implements ProjectService {
 			
 			dao.insertData("project.insertProject", dto);
 		
+			// 글쓴사람은 자동적으로 인서트됨
+			dao.insertData("project.defaultInsert", dto);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
@@ -78,12 +80,12 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 
 	@Override
-	public Project readProject(long num) {	// 프로젝트 가져오기
+	public Project readProject(long pj_no) {	// 프로젝트 가져오기
 		Project dto = null;
 		
 		// 게시물 가져오기
 		try {
-			dto = dao.selectOne("project.readBoard", num);
+			dto = dao.selectOne("project.readProject", pj_no);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -101,6 +103,19 @@ public class ProjectServiceImpl implements ProjectService {
 	public void deleteProject(long pj_no, String pathname, String pj_creator, int membership) throws Exception {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public List<Project> readProjectmember(long pj_no) {
+		List<Project> list = null;
+		
+		try {
+			list = dao.selectList("project.readProjectmember", pj_no);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
 	}
 
 

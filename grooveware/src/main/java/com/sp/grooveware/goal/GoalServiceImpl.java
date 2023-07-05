@@ -1,5 +1,6 @@
 package com.sp.grooveware.goal;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,37 +19,49 @@ public class GoalServiceImpl implements GoalService {
 	private FileManager fileManager;
 	
 	@Override
-	public void insertGoal(Goal dto, String pathname, String mode) throws Exception {
+	public void insertGoal1(Goal dto, String pathname) throws Exception {
 		try {
-			
+			// 최상위 목표로 인서트
 			String saveFilename = fileManager.doFileUpload(dto.getSelectFile(), pathname);
-			if(saveFilename != null) {
+			if (saveFilename != null) {
 				dto.setSaveFilename(saveFilename);
 				dto.setOriginalFilename(dto.getSelectFile().getOriginalFilename());
 			}
 			
-			long seq = dao.selectOne("board.seq");
+			dao.insertData("goal.insertGoal1",dto);
 			
-			if(mode.equals("write")) {	// 최상위 목표로 작성할때
-				dto.setGoal_no(seq);
-				dto.setGroup_no(0);
-				dto.setDepth(0);
-				dto.setOrder_no(0);
-				dto.setParent(0);
-				dto.setGoal_achv(0);
-			} 
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+
+	@Override
+	public void insertGoal2(Goal dto, String pathname) throws Exception {
+		try {
+			// 자식 목표로 인서트
+			String saveFilename = fileManager.doFileUpload(dto.getSelectFile(), pathname);
+			if (saveFilename != null) {
+				dto.setSaveFilename(saveFilename);
+				dto.setOriginalFilename(dto.getSelectFile().getOriginalFilename());
+			}
+			
+			Map<String, Object> map = new HashMap<>();
+			map.put("group_no", dto.getGroup_no());
+			map.put("order_no", dto.getOrder_no());
+			map.put("depth", dto.getDepth());
 			
 			
+			dao.updateData("goal.updateOrderno",map);
 			
-			
-			dao.insertData("goal.insertGoal", dto);
+			dao.insertData("goal.insertGoal2", dto);
 		
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
 		}
-		
-	}
+	}	
+
 
 	@Override
 	public List<Goal> listGoal(Map<String, Object> map) {
@@ -71,7 +84,7 @@ public class GoalServiceImpl implements GoalService {
 	}
 
 	@Override
-	public void deleteGoal(int goal_no) {
+	public void deleteGoal(long goal_no) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -114,7 +127,61 @@ public class GoalServiceImpl implements GoalService {
 		}
 				
 		return list;
-	}	
+	}
+
+	@Override
+	public Goal selectParent(long parent) {	// 셀렉트박스에서 상위목표 정보읽어오기
+		Goal dto = null;
+		
+		try {
+			dto = dao.selectOne("goal.readGoalparent", parent);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return dto;
+	}
+
+	@Override
+	public Goal readPjname(long pj_no) {
+		Goal dto = null;
+		
+		try {
+			dto = dao.selectOne("goal.readPjname", pj_no);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return dto;
+	}
+
+	@Override
+	public Goal readGoal(long goal_no) {
+		Goal dto = null;
+		
+		try {
+			dto = dao.selectOne("goal.readGoal", goal_no);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return dto;
+	}
+
+
+	@Override
+	public List<Goal> readGoalmember(Map<String, Object> map) {
+		List<Goal> list = null;
+		
+		try {
+			list = dao.selectList("goal.readGoalmember",map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+
 
 
 }

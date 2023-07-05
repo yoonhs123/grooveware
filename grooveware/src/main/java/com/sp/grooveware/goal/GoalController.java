@@ -34,7 +34,7 @@ public class GoalController {
     @RequestMapping(value = "/list")
     public String list(HttpSession session,
     					HttpServletRequest req,
-    					@RequestParam int pj_no,
+    					@RequestParam long pj_no,
     					Model model) throws Exception {
     	
     	Map<String, Object> map = new HashMap<String, Object>();
@@ -45,8 +45,18 @@ public class GoalController {
     	
     	List<Goal> list = service.listGoal(map);
     	
+    	Goal dto = service.readPjname(pj_no);
+    	
+    	
+    	// article Url
+    	String cp = req.getContextPath();
+    	String articleUrl = cp + "/goal/article?goal_no=";
+    	
+    	
+    	model.addAttribute("articleUrl", articleUrl);
     	model.addAttribute("pj_no", pj_no);
     	model.addAttribute("list", list);
+    	model.addAttribute("pj_name", dto.getPj_name());
     	
     	return ".goal.list";
     }
@@ -54,20 +64,21 @@ public class GoalController {
     
     @RequestMapping(value = "write", method = RequestMethod.GET)
     public String writeForm(HttpSession session,
-				    		@RequestParam int pj_no,
+				    		@RequestParam long pj_no,
 				    		Model model) throws Exception {
-    	
-    	SessionInfo info = (SessionInfo) session.getAttribute("member");
     	
     	Map<String, Object> map = new HashMap<>();
     	map.put("pj_no", pj_no);
-    	map.put("login_emp", info.getEmp_no());
     	
-
+    	
+    	
+    	
+    	
     	List<Goal> depth_0 = service.listDepth1(map);		// 최상위 밑에 상위
     	List<Goal> depth_1 = service.listDepth2(map);		// 상위 밑에 하위
     	
     	
+    	model.addAttribute("pj_no", pj_no);
     	model.addAttribute("mode", "write");
     	model.addAttribute("listdepth_0", depth_0);
     	model.addAttribute("listdepth_1", depth_1);
@@ -78,20 +89,42 @@ public class GoalController {
     
     
     @RequestMapping(value = "write", method = RequestMethod.POST)
-    public String writeSubmit(Goal dto, HttpSession session) throws Exception {
-    	SessionInfo info = (SessionInfo) session.getAttribute("member");
-    
+    public String writeSubmit(Goal dto,
+    						@RequestParam long pj_no,
+    						@RequestParam long parent,
+    						HttpSession session) throws Exception {
+    	
     	String root = session.getServletContext().getRealPath("/");
     	String pathname = root + "uploads" + File.separator + "goal";
     	
+    	Goal dto1 = new Goal();
+    	
+    	dto1 = service.selectParent(parent);
+    	
+    	
+    	dto.setPj_no(pj_no);
+    
+    	
     	try {
-    		dto.setEmp_no(info.getEmp_no());
-    		service.insertGoal(dto, pathname, "write");		// 모드로 write을 넘김
+    		if(dto1 == null) {	// 최상위목표로 인서트  
+    			
+    			
+    			service.insertGoal1(dto, pathname);	
+    		
+    		} else  {	// 상위목표로 인서트	
+    			dto.setParent(dto1.getGoal_no());
+    			dto.setGroup_no(dto1.getGroup_no());
+    			dto.setDepth(dto1.getDepth());
+    			dto.setOrder_no(dto1.getOrder_no());
+    			
+    			service.insertGoal2(dto, pathname);	
+    		}   
+    		
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
     	
-    	return "redirect:/goal/list";
+    	return "redirect:/goal/list?pj_no="+pj_no;
     }
 
     
@@ -120,6 +153,27 @@ public class GoalController {
 		return model;
     }
     		
+    @GetMapping("article")
+    public String article(@RequestParam long goal_no,
+    						Model model) throws Exception {
+    	
+    	
+    	Goal dto = service.readGoal(goal_no);
+    	
+    	Map<String, Object> map = new HashMap<String, Object>();
+    	map.put("goal_no", goal_no);
+    	
+    	List<Goal> goal_member = service.readGoalmember(map);
+    	
+    	
+    	model.addAttribute("dto", dto);
+    	model.addAttribute("goal_member", goal_member);
+    	
+    	return ".goal.article";
+    }
+    
+    
+    
     
     
 }

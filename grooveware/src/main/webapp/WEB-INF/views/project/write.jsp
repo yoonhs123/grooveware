@@ -4,6 +4,19 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <style>
+.left-side-bar ul > li > a:first-child {
+    font-weight: initial;
+    padding-left : 30px;
+} 
+
+.left-side-bar ul > li > p {
+    display: block;
+    padding: 15px 10px 10px 30px;
+    white-space: nowrap;
+    font-weight: bold;
+    padding-left : 20px;
+}
+
 .close {
   color: #aaa;
   float: right;
@@ -134,11 +147,12 @@
 
 <script type="text/javascript">
 	<c:if test="${mode=='update'}">
-	function deleteFile(file_no) {
-		let url = "${pageContext.request.contextPath}/approval/deleteFile";
-		$.post(url, { file_no : file_no }, function(data) {
-			$("#f" + file_no).remove();
-		}, "json");
+	function deleteFile(num) {
+		if( ! confirm("파일을 삭제하시겠습니까 ?") ) {
+			return;
+		}
+		let url = "${pageContext.request.contextPath}/bbs/deleteFile?num=" + num + "&page=${page}";
+		location.href = url;
 	}
 	</c:if>
 </script>
@@ -398,14 +412,13 @@ $(function(){
 <div class="left-side-bar">
          <ul>
             <li>
+            	<p>나의 프로젝트</p>
                 <a href="${pageContext.request.contextPath}/project/list">&nbsp;진행중인 프로젝트</a>
                 <a href="${pageContext.request.contextPath}/project/listend">&nbsp;완료된 프로젝트</a>
             <li>
             <hr>
             <li>
-                <a href="#">&nbsp;멤버</a>
-                <a href="#">&nbsp;목표</a>
-                <a href="#">&nbsp;업무</a>
+            	<p>메뉴</p>
                 <a href="#">&nbsp;일정</a>
                 <a href="#">&nbsp;공지사항</a>
                 <a href="#">&nbsp;자료실</a>

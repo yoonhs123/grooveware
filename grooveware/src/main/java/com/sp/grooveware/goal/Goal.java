@@ -18,6 +18,8 @@ public class Goal {
     private int depth;
     private int order_no;
     
+    private long goal_member_no;
+    
 	private long emp_no;
 	private List<Long> emps;
 	private String emp_name;
@@ -27,6 +29,15 @@ public class Goal {
 	private String saveFilename;
 	private String originalFilename;
 	private MultipartFile selectFile;
+	
+	
+	
+	public long getGoal_member_no() {
+		return goal_member_no;
+	}
+	public void setGoal_member_no(long goal_member_no) {
+		this.goal_member_no = goal_member_no;
+	}
 	public long getGoal_no() {
 		return goal_no;
 	}
@@ -147,11 +158,7 @@ public class Goal {
 	public void setSelectFile(MultipartFile selectFile) {
 		this.selectFile = selectFile;
 	}
-    
 	
-	
-	
-    
     
     
     

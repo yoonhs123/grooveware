@@ -6,7 +6,7 @@
 		insert all
 		into pj(pj_no, pj_name, pj_content, pj_creator, pj_start_date, pj_end_date)
 		 values (pj_seq.nextval, #{pj_name}, #{pj_content}, #{pj_creator}, #{pj_start_date, jdbcType=DATE}, #{pj_end_date, jdbcType=DATE})
-		into pj_file(pj_file_no, pj_no, save_filename, original_filename)
+		into pj_file(pj_file_no, pj_no, saveFilename, originalFilename)
 		 values (pj_file_seq.nextval, pj_seq.currval, #{saveFilename, jdbcType=VARCHAR}, #{originalFilename, jdbcType=VARCHAR})
 		into cli(client_no, pj_no, client_name)
 		 values (cli_seq.nextval, pj_seq.currval, #{client_name})
@@ -17,6 +17,10 @@
 	    </foreach>
 	</update>
 	
+	<insert id="defaultInsert" parameterType="com.sp.grooveware.project.Project">
+		insert into pj_member(pj_member_no, pj_no, pj_join_type, pj_member_join_date)
+		values (#{pj_creator}, pj_seq.currval, 0, SYSDATE)
+	</insert>
 	
 	
 <!-- 	
@@ -73,11 +77,12 @@
 	
 	<!-- 글 리스트 -->
 	<select id="listProject" parameterType="map" resultType="com.sp.grooveware.project.Project">
-		SELECT a.pj_no, pj_name, pj_creator, pj_start_date, pj_end_date, client_name, save_filename
+		SELECT a.pj_no, pj_name, pj_creator, TO_CHAR(pj_start_date, 'YYYY-MM-DD') AS pj_start_date, TO_CHAR(pj_end_date, 'YYYY-MM-DD') AS pj_end_date, client_name, saveFilename, emp_name
 		FROM pj a 
 		JOIN cli b ON a.pj_no = b.pj_no
 		JOIN pj_member c ON a.pj_no = c.pj_no
 		JOIN pj_file d ON a.pj_no = d.pj_no
+		JOIN emp f ON a.pj_creator = f.emp_no
 		<where>
 			pj_member_no = #{login_emp} AND pj_status = #{category}
 			<if test="keyword!=null and keyword!='' ">
@@ -112,8 +117,32 @@
 			</choose>
 		</where>
 	</select>
+	
+	
+	<!-- 글보기 -->
+	<select id="readProject" parameterType="Long" resultType="com.sp.grooveware.project.Project">
+		SELECT a.pj_no, pj_name, pj_content, pj_creator, TO_CHAR(pj_start_date, 'YYYY-MM-DD') AS pj_start_date, TO_CHAR(pj_end_date, 'YYYY-MM-DD') AS pj_end_date, pj_status, client_name, saveFilename, originalFilename, emp_name
+		FROM pj a
+		LEFT OUTER JOIN cli b ON a.pj_no = b.pj_no
+		LEFT OUTER JOIN pj_file c ON a.pj_no = c.pj_no
+		LEFT OUTER JOIN emp d ON a.pj_creator = d.emp_no
+		WHERE a.pj_no = #{pj_no}
+	</select>
 
 
+	<select id="readProjectmember" parameterType="map" resultType="com.sp.grooveware.project.Project">
+		SELECT b.pj_member_no, c.emp_name ,d.dept_name, c.emp_name, e.pos_name, b.pj_join_type, TO_CHAR(pj_member_join_date, 'YYYY-MM-DD') AS pj_member_join_date
+		FROM (
+		   SELECT x.emp_no, x.history_no, x.dept_no, x.pos_no FROM emp_history x
+		   LEFT OUTER JOIN emp_history y ON x.emp_no = y.emp_no AND x.history_no &lt; y.history_no
+		   WHERE y.emp_no IS NULL) a
+		LEFT OUTER JOIN pj_member b ON a.emp_no = b.pj_member_no
+		LEFT OUTER JOIN emp c ON a.emp_no = c.emp_no
+		LEFT OUTER JOIN dept d ON a.dept_no = d.dept_no
+		LEFT OUTER JOIN pos e ON a.pos_no = e.pos_no
+		WHERE b.pj_no = #{pj_no}
+		ORDER BY pj_join_type ASC, e.pos_no ASC, d.dept_no ASC	
+	</select>
 
 
 </mapper>

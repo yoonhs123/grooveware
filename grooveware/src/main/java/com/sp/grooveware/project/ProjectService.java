@@ -12,4 +12,6 @@ public interface ProjectService {
 	public void deleteProject(long pj_no, String pathname, String pj_creator, int membership) throws Exception;
 	
 	public List<Project> listEmp(Map<String, Object> map);
+	
+	public List<Project> readProjectmember(long pj_no);
 }

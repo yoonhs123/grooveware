@@ -2,7 +2,7 @@
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
+ 
 <style type="text/css">
  
 .project {
@@ -135,16 +135,8 @@ div.board1 .sort_numbering {
 
 
 </style>
-
-
-<script type="text/javascript">
-function searchList() {
-	const f = document.searchForm;
-	
-	f.submit();
-}
-</script>
-
+    
+<body>
 <div class="left-side-bar">
          <ul>
             <li>
@@ -161,73 +153,92 @@ function searchList() {
             <li>
         </ul>
 </div>
-   <div class="right-contentbody">
-		
-			<div class="board1">
-				<div class="title_container">
-						<div class="project"> <i class="fa-solid fa-toggle-on"></i> 진행중인 프로젝트 	</div>
-						<div class="keyword_left">
-							<form name="searchForm" action="${pageContext.request.contextPath}/project/list" method="post">
-								<select name="condition" class="form-select">
-									<option value="pj_name"  ${condition == "pj_name" ? "selected='selected'" : ""} >프로젝트 이름</option>
-									<option value="pj_creator"  ${condition == "pj_creator" ? "selected='selected'" : ""} >PM</option>
-									<option value="client_name"  ${condition == "client_name" ? "selected='selected'" : ""} >클라이언트</option>
-									<option value="pj_start_date"  ${condition == "pj_start_date" ? "selected='selected'" : ""} >시작일</option>
-									<option value="pj_end_date"  ${condition == "pj_end_date" ? "selected='selected'" : ""} >종료일</option>
-								</select>
-								<input type="text" name="keyword" value="${keyword}" class="form-control">
-								<button type="button" class="btn" onclick="searchList();">검색</button> 	
-							<%-- 	<input type="hidden" name="size" value="${size}"> 	--%>
-							</form>
-						</div>
-			 </div>
-			<div>
-				<div class="col-auto me-auto dataCount">
-	            	${dataCount}개(${page}/${total_page} 페이지)
-	            </div>
-			<table class="table table-border table-list" >
-				<thead >
+
+<div class="right-contentbody">
+
+
+
+<div class="board1">
+	<div class="body-container">
+	    <div class="body-title">
+			<h2><i class="fa-solid fa-list-check"></i> ${dto.goal_name} </h2>
+	    </div>
+<br>
+	
+	
+	<div class="body-main">	
+		<table class="table mb-0">
+				<thead>
 					<tr>
-						<th class="sort_numbering"><i class="fa-solid fa-sort-down"></i></th>
-						<th width="35%;"> 프로젝트 이름 </th>
-						<th> PM </th>
-						<th> 시작일 </th>
-						<th> 종료일 </th>
-						<th> 파일 </th>
-						<th> 기획서 </th>
+						<td colspan="2" align="center">
+							${''}
+						</td>
 					</tr>
 				</thead>
-				
-				<tbody> 
-					<c:forEach var="dto" items="${list}" varStatus="status">
+					
+					<tbody>
 						<tr>
-							<td class="numbering">${dataCount - (page-1) * size - status.index}</td>
-							<td class="left title_left">
-								<a href="${goalUrl}?pj_no=${dto.pj_no}" class="text-reset">${dto.pj_name}</a>
+							<td width="50%">
+								이름 : ${''}
 							</td>
-							<td>${dto.emp_name}</td>
-							<td>${dto.pj_start_date}</td>
-							<td>${dto.pj_end_date}</td>
-							<td>
+							<td align="right">
+								${''} | 조회 ${''}
+							</td>
+						</tr>
+						
+						<tr>
+							<td colspan="2" valign="top" height="200" style="border-bottom: none;">
+					    		<c:forEach var="dto" items="${goal_member}" varStatus="status">
+						    		<tr>
+						    			<td>사원이름 : ${dto.emp_name}</td>
+						    			<td>직위 : ${dto.pos_name}</td>
+						    			<td>부서 : ${dto.dept_name}</td>
+						    		</tr>
+						   		</c:forEach>								
+							</td>
+						</tr>
+						
+						<tr>
+							<td colspan="2">
+								파&nbsp;&nbsp;일 :
 								<c:if test="${not empty dto.saveFilename}">
-									<a href="<c:url value='/project/download?project_no=${dto.pj_no}'/>" class="text-reset"><i class="fa-solid fa-file-arrow-down"></i></a>
+									<a href="${pageContext.request.contextPath}/bbs/download?goal_no=${dto.goal_no}">${dto.originalFilename}</a>
 								</c:if>
 							</td>
-							<td><a href="${articleUrl}&pj_no=${dto.pj_no}" class="text-reset"><i class="fa-solid fa-newspaper"></i></a></td>						
 						</tr>
-					</c:forEach>
-				</tbody>
-			</table>
-			</div>
-			
-			<div class="page-navigation" style="width: 900px; margin: 0 auto;">
-				${dataCount == 0 ? "등록된 게시물이 없습니다." : paging}
-			</div>
-			
-			<div align="right">
-				<button type="button" class="btn" onclick="location.href='${pageContext.request.contextPath}/project/write'">새 프로젝트 생성</button>
-   			</div>
-			</div>
-
-   </div>
-   
+					</tbody>
+				</table>
+				
+				<table class="table table-borderless mb-2">
+					<tr>
+						<td width="50%">
+							<c:choose>
+								<c:when test="${''}">
+									<button type="button" class="btn btn-light" onclick="location.href='${pageContext.request.contextPath}/bbs/update?num=${''}&page=${''}';">수정</button>
+								</c:when>
+								<c:otherwise>
+									<button type="button" class="btn btn-light" disabled="disabled">수정</button>
+								</c:otherwise>
+							</c:choose>
+					    	
+							<c:choose>
+					    		<c:when test="${''}">
+					    			<button type="button" class="btn btn-light" onclick="deleteBoard();">삭제</button>
+					    		</c:when>
+					    		<c:otherwise>
+					    			<button type="button" class="btn btn-light" disabled="disabled">삭제</button>
+					    		</c:otherwise>
+					    	</c:choose>
+						</td>
+						<td class="text-end">
+							<button type="button" class="btn btn-light" onclick="location.href='${pageContext.request.contextPath}/bbs/list?${''}';">리스트</button>
+						</td>
+					</tr>
+				</table>
+				
+		
+		
+	</div>
+	</div>	
+</div>
+</div>

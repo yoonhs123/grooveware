@@ -90,25 +90,23 @@ public class ProjectController {
 		// 글 리스트
 		List<Project> list = service.listProject(map);
 		
-		
 		// 페이징 처리
 		String cp = req.getContextPath();
-		String query = "";
+		String query = "size=" + size;
 		String listUrl = cp + "/project/list";
 		String articleUrl = cp + "/project/article?page=" + current_page;
 		if (keyword.length() != 0) {
-			query = "condition=" + condition + "&keyword=" + URLEncoder.encode(keyword, "utf-8");
+			query += "condition=" + condition + "&keyword=" + URLEncoder.encode(keyword, "utf-8");
 		}
-
-		if (query.length() != 0) {
-			listUrl = cp + "/project/list?" + query;
-			articleUrl = cp + "/project/article?page=" + current_page + "&" + query;
-		}
-
+		
+		listUrl += "?" + query;
+		articleUrl += "&" + query;
+		
+		
 		String paging = myUtil.paging(current_page, total_page, listUrl);
-
 		
-		
+		//
+		String goalUrl = cp + "/goal/list";
 		
 		
 		model.addAttribute("list", list);
@@ -118,6 +116,7 @@ public class ProjectController {
 		model.addAttribute("total_page", total_page);
 		model.addAttribute("paging", paging);
 		model.addAttribute("articleUrl", articleUrl);
+		model.addAttribute("goalUrl", goalUrl);
 
 		model.addAttribute("condition", condition);
 		model.addAttribute("keyword", keyword);
@@ -173,31 +172,24 @@ public class ProjectController {
 		map.put("size", size);
 		
 		
-
-		
-		
 		// 글 리스트
 		List<Project> list = service.listProject(map);
 		
 		
 		// 페이징 처리
 		String cp = req.getContextPath();
-		String query = "";
+		String query = "size=" + size;
 		String listUrl = cp + "/project/list";
 		String articleUrl = cp + "/project/article?page=" + current_page;
 		if (keyword.length() != 0) {
 			query = "condition=" + condition + "&keyword=" + URLEncoder.encode(keyword, "utf-8");
 		}
 		
-		if (query.length() != 0) {
-			listUrl = cp + "/project/list?" + query;
-			articleUrl = cp + "/project/article?page=" + current_page + "&" + query;
-		}
+		listUrl += "?" + query;
+		articleUrl += "&" + query;
+		
 		
 		String paging = myUtil.paging(current_page, total_page, listUrl);
-		
-		
-		
 		
 		
 		model.addAttribute("list", list);
@@ -232,7 +224,7 @@ public class ProjectController {
 		
 		try {
 			dto.setPj_creator(info.getEmp_no());
-			service.insertProject(dto, "write");
+			service.insertProject(dto, pathname);
 		} catch (Exception e) {
 
 		}
@@ -268,31 +260,39 @@ public class ProjectController {
 
 	
 	@GetMapping("article")
-	public String article(@RequestParam long num,
+	public String article(@RequestParam long pj_no,
 			@RequestParam String page,
 			@RequestParam(defaultValue = "all") String condition,
 			@RequestParam(defaultValue = "") String keyword,
+			@RequestParam int size,
 			HttpSession session,
 			Model model) throws Exception {
 		
 		keyword = URLDecoder.decode(keyword, "utf-8");
 		
-		String query = "page=" + page;
+		String query = "page=" + page + "&size=" + size;
 		if (keyword.length() != 0) {
 			query += "&condition=" + condition + 
 					"&keyword=" + URLEncoder.encode(keyword, "UTF-8"); 
 		}
 		
 		// 해당 레코드 가져오기
-		Project dto = service.readProject(num);
+		Project dto = service.readProject(pj_no);
+		
 		if(dto == null) {
 			return "redirect:/project/list?" + query;
 		}
 		
-		model.addAttribute("dto", dto);
-		model.addAttribute("page", page);
-		model.addAttribute("query", query);
 		
+		// 프로젝트 참여멤버 가져오기
+		List<Project> pj_member = service.readProjectmember(pj_no);
+		
+		
+		model.addAttribute("dto", dto);
+		model.addAttribute("pj_member", pj_member);
+		model.addAttribute("query", query);
+		model.addAttribute("size", size);
+		model.addAttribute("page", page);
 		
 		
 		return ".project.article";

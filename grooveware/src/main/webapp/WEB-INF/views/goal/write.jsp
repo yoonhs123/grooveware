@@ -3,6 +3,20 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
  <style type="text/css">
+ 
+ .left-side-bar ul > li > a:first-child {
+    font-weight: initial;
+    padding-left : 30px;
+} 
+
+.left-side-bar ul > li > p {
+    display: block;
+    padding: 15px 10px 10px 30px;
+    white-space: nowrap;
+    font-weight: bold;
+    padding-left : 20px;
+}
+
  /* 부모 컨테이너에 플렉스를 적용하여 요소들을 세로 방향으로 정렬합니다. */
 #goal_list {
   display: flex;
@@ -297,30 +311,35 @@ function sendOk() {
     const f = document.goalinsert;
 
     
-    if(! f.selectparent.value) {
+    if(! f.parent.value) {
     	alert("상위 목표를 선택하세요. ")
+    	f.selectparent.focus
     	return;
     }
     
     
     if(! f.goal_name.value) {
     	alert("제목을 입력하세요. ")
+    	f.goal_name.focus
     	return;
     }
     
     if(! f.goal_start_date.value) {
     	alert("시작일을 입력하세요. ")
+    	f.goal_start_date.focus
     	return;
     }
     
     
     if(! f.goal_end_date.value) {
     	alert("종료일을 입력하세요. ")
+    	f.goal_end_date.focus
     	return;
     }
     
     if(! f.goal_content.value) {
     	alert("내용을 입력하세요. ")
+    	f.goal_content.focus
     	return;
     }
     
@@ -332,9 +351,20 @@ function sendOk() {
 	}
 	
     
-    f.action="${pageContext.request.contextPath}/admin/faqManage/${mode}";
+    f.action="${pageContext.request.contextPath}/goal/${mode}";
     f.submit();
 }
+
+
+<c:if test="${mode=='update'}">
+function deleteFile(num) {
+	if( ! confirm("파일을 삭제하시겠습니까 ?") ) {
+		return;
+	}
+	let url = "${pageContext.request.contextPath}/bbs/deleteFile?num=" + num + "&page=${page}";
+	location.href = url;
+}
+</c:if>
 </script> 
  
 
@@ -423,8 +453,6 @@ $(function(){
 	$(".btnAdd").click(function(){
 		let len1 = $(".dialog-emp-list ul input[type=checkbox]:checked").length;
 		let len2 = $("#forms-emp-list input[name=emps]").length;
-		console.log("len1="+len1);
-		console.log("len2="+len2);
 		
 		if(len1 === 0) {
 			alert("추가할 사람을 먼저 선택하세요.");
@@ -479,19 +507,17 @@ $(function(){
 
 </script>
 
-
+<body>
 <div class="left-side-bar">
          <ul>
             <li>
-            	<a></a>
+            	<p>나의 프로젝트</p>
                 <a href="${pageContext.request.contextPath}/project/list">&nbsp;진행중인 프로젝트</a>
                 <a href="${pageContext.request.contextPath}/project/listend">&nbsp;완료된 프로젝트</a>
             <li>
             <hr>
             <li>
-                <a href="#">&nbsp;멤버</a>
-                <a href="#">&nbsp;목표</a>
-                <a href="#">&nbsp;업무</a>
+            	<p>메뉴</p>
                 <a href="#">&nbsp;일정</a>
                 <a href="#">&nbsp;공지사항</a>
                 <a href="#">&nbsp;자료실</a>
@@ -510,7 +536,10 @@ $(function(){
 	<br>
 			<div class="body-main">
 				
-				<form name="goalinsert" method="post">
+				<form name="goalinsert" method="post" enctype="multipart/form-data">
+				
+				<input type="hidden" name="pj_no" value="${pj_no}">
+									
 					<table class="table table-border border-top2 table-form">
 						<tr>
 							<td>프로젝트이름</td>
@@ -520,8 +549,8 @@ $(function(){
 						<tr>
 							<td>최상위목표</td>
 							<td>
-								<select name="selectparent" class="form-select yoonhs-select">
-									<option value="topgoal">최상위 목표로 설정</option>
+								<select name="parent" class="form-select yoonhs-select">
+									<option value="0">최상위 목표로 설정</option>
 									<optgroup>
 									</optgroup>
 									<optgroup label="최상위목표">
@@ -567,12 +596,7 @@ $(function(){
 							<td>참여사원</td>
 							<td>
 								<div id="forms-emp-list">
-									<span class='project-member'>
-									<img src='${pageContext.request.contextPath}/resources/images/bg.png'>
-									<label> ${sessionScope.member.emp_name}(${sessionScope.member.pos_name}_${sessionScope.member.dept_name})
-									<input type="hidden" name="emps" value="emp_no">
-									</label>
-									</span>
+								
 								</div>
 							</td>
 							<td>
@@ -585,23 +609,22 @@ $(function(){
 							<td> 
 								<input type="file" name="selectFile" class="form-control">
 							</td>
-						</tr>
+						</tr>						
 						
 						<c:if test="${mode=='update'}">
-						<tr>
-							<td class="table-light col-sm-2" scope="row">첨부된파일</td>
-							<td> 
-								<p class="form-control-plaintext">
-									<c:if test="${not empty dto.saveFilename}">
-										<a href="javascript:deleteFile('${dto.num}');"><i class="bi bi-trash"></i></a>
-										${dto.originalFilename}
-									</c:if>
-									&nbsp;
-								</p>
-							</td>
-						</tr>
-					</c:if>
-						
+							<tr>
+								<td class="table-light col-sm-2" scope="row">첨부된파일</td>
+								<td> 
+									<p class="form-control-plaintext">
+										<c:if test="${not empty dto.saveFilename}">
+											<a href="javascript:deleteFile('${dto.num}');"><i class="bi bi-trash"></i></a>
+											${dto.originalFilename}
+										</c:if>
+										&nbsp;
+									</p>
+								</td>
+							</tr>
+						</c:if>
 					</table>
 					
 					<table class="table">
@@ -610,12 +633,11 @@ $(function(){
 								<button type="button" class="btn btn-dark" onclick="sendOk();">${mode=='update'?'수정완료':'등록하기'}&nbsp;<i class="bi bi-check2"></i></button>
 								<button type="reset" class="btn">다시입력</button>
 								<button type="button" class="btn" onclick="location.href='${pageContext.request.contextPath}/admin/faqManage/main?pageNo=${pageNo}';">${mode=='update'?'수정취소':'등록취소'}&nbsp;<i class="bi bi-x"></i></button>
-								<c:if test="${mode=='update'}">
-									<input type="hidden" name="num" value="${dto.num}">
+									<c:if test="${mode=='update'}">
+									<input type="hidden" name="goal_no" value="${dto.goal_no}">
 									<input type="hidden" name="saveFilename" value="${dto.saveFilename}">
 									<input type="hidden" name="originalFilename" value="${dto.originalFilename}">
-									<input type="hidden" name="pageNo" value="${pageNo}">
-								</c:if>
+		 							</c:if>			
 							</td>
 						</tr>
 					</table>
@@ -673,7 +695,7 @@ $(function(){
 		  </div>
 		</div>    
     
-    
+</body>    
 
 <script type="text/javascript"> 
 

@@ -4,6 +4,25 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <style type="text/css">
+.project {
+  color: #4048a8;
+  font-size: 30px;
+  font-weight : bold;
+ 
+ }
+
+.left-side-bar ul > li > a:first-child {
+    font-weight: initial;
+    padding-left : 30px;
+} 
+
+.left-side-bar ul > li > p {
+    display: block;
+    padding: 15px 10px 10px 30px;
+    white-space: nowrap;
+    font-weight: bold;
+    padding-left : 20px;
+}
  
 /* table */
 .table { width: 100%; border-spacing: 0; border-collapse: collapse; }
@@ -22,11 +41,6 @@
 .table-list th, .table-list td { text-align: center; }
 .table-list td:nth-child(5n+2) {  padding-left: 5px; }
 
-.table-list .num { width: 60px; color: #787878; }
-.table-list .subject { color: #787878; }
-.table-list .name { width: 100px; color: #787878; }
-.table-list .date { width: 100px; color: #787878; }
-.table-list .hit { width: 70px; color: #787878; }
 
  
 .btn {
@@ -48,6 +62,72 @@ input[type=text]{
 
 .form-select{ height: 26px; margin-right: 10px; border-radius: 4px;}
 
+
+
+.title_container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.table th,
+.table td {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+  text-align: center;
+  font-size: 16px;
+}
+
+.table th {
+  font-weight: bold;
+  background-color: #f2f2f2;
+}
+
+.table .left {
+  position: relative;
+}
+
+.table .text-reset {
+  text-decoration: none;
+  color: #333;
+}
+
+.table .text-reset:hover {
+  text-decoration: none;
+  color: #4048a8; 
+}
+
+
+.keyword_left {
+
+	justify-content : flex-end;
+}
+
+
+div.board1 .title_left {
+	text-align : left;
+}
+
+
+div.board1 .numbering {
+	font-size : 10px;
+	color : #BDBDBD;
+}
+
+div.board1 .sort_numbering {
+	color : #BDBDBD;
+}
+
+
 </style>
 
 
@@ -62,15 +142,13 @@ function searchList() {
 <div class="left-side-bar">
          <ul>
             <li>
-            	<a></a>
+            	<p>나의 프로젝트</p>
                 <a href="${pageContext.request.contextPath}/project/list">&nbsp;진행중인 프로젝트</a>
                 <a href="${pageContext.request.contextPath}/project/listend">&nbsp;완료된 프로젝트</a>
             <li>
             <hr>
             <li>
-                <a href="#">&nbsp;멤버</a>
-                <a href="#">&nbsp;목표</a>
-                <a href="#">&nbsp;업무</a>
+            	<p>메뉴</p>
                 <a href="#">&nbsp;일정</a>
                 <a href="#">&nbsp;공지사항</a>
                 <a href="#">&nbsp;자료실</a>
@@ -81,11 +159,8 @@ function searchList() {
 		
 			<div class="board1">
 				<div class="title_container">
-				<table class="table" style="margin-bottom: 20px;">
-					<tr>
-						<td class="title" > <h3><span>|</span> 완료된 프로젝트 </h3> 
-						</td>
-						<td align="right">
+						<div class="project"> <i class="fa-solid fa-toggle-off"></i> 완료된 프로젝트 </div> 
+						<div class="keyword_left">
 							<form name="searchForm" action="${pageContext.request.contextPath}/project/listend" method="post">
 								<select name="condition" class="form-select">
 									<option value="pj_name"  ${condition == "pj_name" ? "selected='selected'" : ""} >프로젝트 이름</option>
@@ -98,9 +173,7 @@ function searchList() {
 								<button type="button" class="btn" onclick="searchList();">검색</button> 	
 							<%-- 	<input type="hidden" name="size" value="${size}"> 	--%>
 							</form>
-						</td>
-					</tr>
-				</table>
+						</div>
 			 </div>
 			<div>
 				<div class="col-auto me-auto dataCount">
@@ -109,26 +182,32 @@ function searchList() {
 			<table class="table table-border table-list" >
 				<thead >
 					<tr>
-						<th>번호</th>
+						<th class="sort_numbering"><i class="fa-solid fa-sort-down"></i></th>
 						<th width="35%;"> 프로젝트 이름 </th>
 						<th> PM </th>
 						<th> 시작일 </th>
 						<th> 종료일 </th>
-						<th> 클라이언트 </th>
+						<th> 파일 </th>
+						<th> 기획서 </th>
 					</tr>
 				</thead>
 				
 				<tbody> 
 					<c:forEach var="dto" items="${list}" varStatus="status">
 						<tr>
-							<td>${dataCount - (page-1) * size - status.index}</td>
-							<td>
+							<td class="numbering">${dataCount - (page-1) * size - status.index}</td>
+							<td class="left title_left">
 								<a href="${articleUrl}&pj_no=${dto.pj_no}&size=${size}" class="text-reset">${dto.pj_name}</a>
 							</td>
-							<td>${dto.pj_creator}</td>
+							<td>${dto.emp_name}</td>
 							<td>${dto.pj_start_date}</td>
 							<td>${dto.pj_end_date}</td>
-							<td>${dto.client_name}</td>
+							<td>
+								<c:if test="${not empty dto.saveFilename}">
+									<a href="<c:url value='/project/download?project_no=${dto.pj_no}'/>" class="text-reset"><i class="fa-solid fa-file-arrow-down"></i></a>
+								</c:if>
+							</td>
+							<td><a href="${articleUrl}${dto.pj_no}" class="text-reset"><i class="fa-solid fa-newspaper"></i></a></td>
 						</tr>
 					</c:forEach>
 				</tbody>
@@ -139,9 +218,6 @@ function searchList() {
 				${dataCount == 0 ? "등록된 게시물이 없습니다." : paging}
 			</div>
 			
-			<div align="right">
-				<button type="button" class="btn"><a href="${pageContext.request.contextPath}/project/write">&nbsp;새 프로젝트 생성</a></button>
-   			</div>
 			</div>
 
    </div>

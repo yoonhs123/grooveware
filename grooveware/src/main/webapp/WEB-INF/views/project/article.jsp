@@ -3,98 +3,353 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<style>
+ <style type="text/css">
+ .left-side-bar ul > li > a:first-child {
+    font-weight: initial;
+    padding-left : 30px;
+} 
 
-* {
-	readonly: readonly;
-
-}
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgba(0, 0, 0, 0.5);
+.left-side-bar ul > li > p {
+    display: block;
+    padding: 15px 10px 10px 30px;
+    white-space: nowrap;
+    font-weight: bold;
+    padding-left : 20px;
 }
 
-.modal-content {
-    background-color: #fefefe;
-    margin: 15% 50%;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 30%;
+ /* 부모 컨테이너에 플렉스를 적용하여 요소들을 세로 방향으로 정렬합니다. */
+#goal_list {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
-.close {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
+/* 각 목표 아이템을 감싸는 li 요소에 스타일을 적용합니다. */
+#goal_list li {
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+}
+
+/* 목표 이름을 감싸는 span 요소에 스타일을 적용합니다. */
+#goal_list li span {
   font-weight: bold;
 }
 
-.close:hover,
-.close:focus {
-  color: black;
-  text-decoration: none;
+/* 목표 추가 입력 폼을 감싸는 div 요소에 스타일을 적용합니다. */
+#addGoalForm {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+/* 목표 추가 입력 폼의 라벨 스타일을 적용합니다. */
+#addGoalForm label {
+  margin-bottom: 5px;
+}
+
+/* 목표 추가 입력 폼의 버튼 스타일을 적용합니다. */
+#addGoalForm button {
+  margin-top: 5px;
+  padding: 5px 10px;
+  background-color: #e0e0e0;
+  border: none;
+  border-radius: 3px;
   cursor: pointer;
 }
 
-.myForm .flexBox{display: flex; justify-content: space-between;}
-
-.board5 {
-	display: flex;
-	justify-content: flex-end;
-	padding-top : 20px;
+#addGoalForm button:hover {
+  background-color: #c0c0c0;
 }
 
-</style>
+/* 하위 목표 목록을 감싸는 ul 요소에 스타일을 적용합니다. */
+ul[id^="subgoal_"] {
+  margin-top: 5px;
+  padding-left: 20px;
+  list-style-type: none;
+}
 
-<script type="text/javascript">
-        // JavaScript를 사용하여 readonly 속성 설정
-        window.onload = function() {
-            var elements = document.getElementsByTagName("input");
-            for (var i = 0; i < elements.length; i++) {
-                elements[i].readOnly = true;
-            }
-        };
-</script>
+/* 하위 목표 아이템을 감싸는 li 요소에 스타일을 적용합니다. */
+ul[id^="subgoal_"] li {
+  margin: 5px 0;
+}
 
-<script type="text/javascript">
-	//모달 열기
-	function openModal() {
-		document.getElementById("myModal").style.display = "block";
-	}
+/* 하위 목표 삭제 버튼에 스타일을 적용합니다. */
+.deleteSubgoal {
+  margin-left: 5px;
+  padding: 2px 5px;
+  background-color: #e0e0e0;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
 
-	// 모달 닫기
-	function closeModal() {
-		document.getElementById("myModal").style.display = "none";
-	}
+.deleteSubgoal:hover {
+  background-color: #c0c0c0;
+}
 
-	// 사용자가 모달 외부를 클릭할 때 모달 닫기
-	window.onclick = function(event) {
-		var modal = document.getElementById("myModal");
-		if (event.target === modal) {
-			modal.style.display = "none";
-		}
-	};
-</script>
+label {
+  display: inline-block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+/* 목표 추가 입력 폼의 입력 필드 스타일을 적용합니다. */
+input[type="text"] {
+  display: inline-block;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  width: 200px;
+  margin-bottom: 10px;
+}
+
+/* 목표 추가 버튼의 스타일을 적용합니다. */
+#addGoal {
+  display: inline-block;
+  padding: 5px 10px;
+  background-color: #e0e0e0;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+#addGoal:hover {
+  background-color: #c0c0c0;
+}
+ 
+
+
+
+
+ /* 수평적인 표시를 위한 스타일 */
+    .yoonhs-select {
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* 카테고리 스타일 */
+    optgroup {
+      display: flex;
+      flex-direction: row;
+      margin-right: 20px;
+    }
+
+    /* 선택지 스타일 */
+    option {
+      margin-bottom: 5px;
+    }
+    
+ 
+   td span {
+    margin: 0 5px; /* 텍스트 간격 조정 */
+    font-weight: bold; /* 텍스트 굵게 표시 */
+  }
+  
+.placeholder-style {
+    color: #999;
+}
+
+.placeholder-style::placeholder {
+    color: #999;
+}
+
+
+.table-category {
+	border-spacing: 1px;
+	background: #999;
+	width: 100%;
+}
+.table-category thead>tr {
+	text-align: center;
+	background: #f8f9fa;
+}
+.table-category thead tr>th {
+	color:  #787878;
+	padding: 10px 0;
+}
+
+.table-category tbody>tr, .table-category tfoot>tr {
+	text-align: center;
+	background: #fff;
+	height: 30px;
+}
+
+.table-category input {
+	border:1px solid #ccc;
+	padding:3px 5px 3px;
+	background-color:#fff;
+	width:100%;
+	font-family:"맑은 고딕", 나눔고딕, 돋움, sans-serif;
+	box-sizing: border-box;
+}
+.table-category button {
+	border:1px solid #ccc;
+	padding:3px 5px 3px;
+	background-color:#fff;
+	width:100%;
+	font-family:"맑은 고딕", 나눔고딕, 돋움, sans-serif;
+	vertical-align: baseline;
+	box-sizing: border-box;
+}
+.table-category input[disabled] {
+    pointer-events: none;
+    border: none;
+    text-align: center;
+}
+.table-category select {
+	border:1px solid #ccc;
+	padding:3px 5px 3px;
+	background-color:#fff;
+	width:100%;
+	font-family:"맑은 고딕", 나눔고딕, 돋움, sans-serif;
+	vertical-align: baseline;
+	box-sizing: border-box;
+}
+.table-category select[disabled] {
+    pointer-events: none;
+    border: none;
+    text-align: center;
+}
+.btnCategoryAddOk, .btnSpanIcon {
+	cursor: pointer;
+}
+
+
+
+<!-- -->
+  .modal-content {
+    border-radius: 10px;
+  }
+
+  .modal-header {
+    border-bottom: 1px solid #ced4da;
+    padding-bottom: 10px;
+  }
+
+  .modal-body {
+    padding: 20px;
+  }
+
+  .modal-title {
+    margin-bottom: 10px;
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  .btn_emp_find {
+    margin-top: 10px;
+  }
+
+  .emp-list {
+    height: 150px;
+    border: 1px solid black;
+    overflow-y: auto;
+    padding: 10px;
+  }
+
+  .emp-list ul {
+    padding: 0;
+    list-style: none;
+  }
+
+  .modal-footer {
+    justify-content: flex-end;
+    border-top: none;
+  }
+
+  /* Added styles for project members */
+  .title2 {
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .title2 span {
+    font-weight: bold;
+    font-size: 18px;
+  }
+
+  .line_container {
+    height: 250px;
+  }
+
+  .table {
+    margin-bottom: 15px;
+  }
+
+  .forms-emp-name {
+    margin-bottom: 10px;
+  }
+
+  .project-member {
+    display: inline-block;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    padding: 6px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    background-color: #f8f9fa;
+  }
+
+  .project-member img {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+    vertical-align: middle;
+  }
+
+
+.pj-title {
+ padding-bottom : 10px; 
+ font-size: 30px; 
+ font-weight: bold;"
+}
+
+.table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.main-table tr td:first-child {
+  text-align: center;
+}
+
+
+.main-table tr:last-child td {
+  border-bottom: none;
+}
+
+.main-table tr td:first-child {
+  border-right: 2px solid #e9e9e9;
+  padding: 10px;
+}
+
+.main-table tr td:nth-child(2) {
+	padding-left : 20px;
+}
+
+.main-table tr:last-child td {
+  border-left: none;
+}
+ </style>
+
 
 <div class="left-side-bar">
          <ul>
             <li>
-                <a href="#" class="current_pj_name">현재 진행중인 프로젝트</a>
-                <a href="#">&nbsp;메인으로</a>
-                <a href="#">&nbsp;새 프로젝트 생성</a>
+            	<p>나의 프로젝트</p>
+                <a href="${pageContext.request.contextPath}/project/list">&nbsp;진행중인 프로젝트</a>
+                <a href="${pageContext.request.contextPath}/project/listend">&nbsp;완료된 프로젝트</a>
             <li>
             <hr>
             <li>
-                <a href="#">&nbsp;멤버</a>
-                <a href="#">&nbsp;목표</a>
-                <a href="#">&nbsp;업무</a>
+            	<p>메뉴</p>
                 <a href="#">&nbsp;일정</a>
                 <a href="#">&nbsp;공지사항</a>
                 <a href="#">&nbsp;자료실</a>
@@ -102,221 +357,117 @@
         </ul>
 </div>
 
-		<div class="right-contentbody">
-				<form name="myForm" method="post" class="myForm">
-					<div class="board1">
-						<div class="title_container">
-							<table class="table" style="margin-bottom: 20px;">
-								<tr>
-									<td class="title2" width="85%">
-										<h2>
-											<span>|</span> 프로젝트 생성
-										</h2>
-									</td>
-									<td class="title">
-										<span>생성자 : </span> <span> 윤현상 </span>
-									</td>
-								</tr>
-							</table>
-						</div>
-						
-					</div>
-					<div class="pj_write">
-						<div class="line_container2">
-							<div>
-								<div>
-									<div>
-										<label>제목 </label>
-									</div>
-									<p class="ap_pBox">
-										<input type="text" name="" class="form-control1"
-											style="width: 100%;">
-									</p>
-									<br><br><br><br>
-								</div>
 
-								<div>
-								
-								<table class="table" style="margin-bottom: 20px;">
-								<tr>
-									<td class="title2" width="90%">
-										<label>구성멤버</label> 
-									</td>
-									<td class="title">
-										<!-- 모달을 띄울 추가 버튼 -->
-										<button type="button" class="btn" onclick="openModal()" style="margin-top: 5px;">추가</button>
-									</td>
-								</tr>
+<div class="right-contentbody">
+	<div class="body-container">	
+		<div class="body-title pj-title">
+			<i class="fa-solid fa-clipboard-check"></i> <span>프로젝트 상세</span>
+		</div>
+		
+		<div class="body-main">
+					<table class="table table-border border-top2 table-form main-table">
+						<tr>
+							<td>제&nbsp;&nbsp;&nbsp;&nbsp;목</td>
+							<td> 
+								${dto.pj_name}
+							</td>
+						</tr>
+				
+						<tr>
+							<td>P&nbsp;&nbsp;&nbsp;&nbsp;M</td>
+							<td>${dto.emp_name}</td>
+						</tr>
+		
+						<tr>
+							<td>기&nbsp;&nbsp;&nbsp;&nbsp;간</td>
+							<td> 
+								${dto.pj_start_date} ~ ${dto.pj_end_date}
+							</td>
+						</tr>
+				
+						<tr>
+							<td>내&nbsp;&nbsp;&nbsp;&nbsp;용</td>
+							<td style="height : 200px;"> 
+								${dto.pj_content}
+							</td>
+						</tr>
+	
+						<tr>
+							<td>클라이언트</td>
+							<td> 
+								${dto.client_name}
+							</td>
+						</tr>
+	
+						<tr>
+							<td>참여사원</td>
+							<td>
+								<table id="forms-emp-list">
+									<c:forEach var="dto" items="${pj_member}" varStatus="status">
+										<tr>
+											<td style="text-align : left;">
+												<c:if test="${dto.pj_join_type == 0}"><i class="fa-solid fa-crown"></i></c:if>
+												${dto.emp_name}(${dto.pos_name}_${dto.dept_name})
+											</td> 
+											<td>참여날짜 : ${dto.pj_member_join_date}</td>
+										</tr>
+									</c:forEach>
 								</table>
-								
-								
-								
-								
-													
-									
-									
-									
-									<div class="flexBox" >
-										<div class="line_container">
-											<div class="table" style="margin-bottom: 15px;">
-												<div>
-													<div class="title" style="float: left; width: 50%;">
-														<span>결재라인</span>
-													</div>
-													<div class="title">
-														<span> 공유자</span>
-													</div>
-												</div>
-												<div style="width: 50%; float: left;">
-													<div class="img_container ">
-														<img class="" src="/test.jpg">
-													</div>
-													<div class="img_container3 ">
-														<i class="fa-solid fa-chevron-right"></i>
-													</div>
-													<div class="img_container ">
-														<img class="" src="test.jpg">
-													</div>
-													<div class="img_container3 ">
-														<i class="fa-solid fa-chevron-right"></i>
-													</div>
-													<div class=" img_container">
-														<img class="" src="test.jpg">
-													</div>
-
-												</div>
-				
-												<div style="">
-													<div class="img_container">
-														<img class="" src="test.jpg">
-													</div>
-													<!-- 플러스 버튼 후 결제라인 설정 팝업 -->
-												</div>
+							</td>
+						</tr>
 				
 				
-												<div style="width: 50%; float: left;">
-													<div class="text_box3">김민교</div>
-													<div class="text_box4">&nbsp;</div>
-													<div class="text_box3">남기현</div>
-													<div class="text_box4">&nbsp;</div>
-													<div class="text_box3">최고관리자</div>
 				
-													<!-- 플러스 버튼 후 결제라인 설정 팝업 -->
-												</div>
+								<span class='project-member'>
+								  <img src='${pageContext.request.contextPath}/resources/images/bg.png'>
+								    <label> + emp_name + pos_name + dept_name</label>
+								</span>
+								
 				
-												<div>
-													<div class="text_box3" style="margin-bottom: 10px;">최민정</div>
-													<!-- 플러스 버튼 후 결제라인 설정 팝업 -->
-												</div>
-											</div>
-										</div>
-										
-									</div>									
-									 <br><br><br><br>
-									<div class="flexBox">
-										<div class="leftBox"  >
-											<label>프로젝트 시작일 </label>
-										</div>
-										<div class="leftBox">
-											<label>프로젝트 종료일 </label>
-										</div>
-									</div>
-									
-									<div class="flexBox ap_pBox">
-										<div class="leftBox"  >
-											<input type="date" name="urgent" class="form-control1"/> 
-										</div>
-										<div class="leftBox">
-											<input type="date" name="urgent" class="form-control1"/> 
-										</div>									
-									</div>
-
-									<br><br><br><br>
-										<div class="leftBox">
-											<label>내용 </label>
-										</div>
-										<input type="text" name="content" style="display: block; width: 100%; padding: 7px 5px; height: 400px;" />
-							
-									<br><br><br><br>
-										<div class="leftBox">
-											<label>클라이언트 정보 </label>
-										</div>
-										<input type="text" name="content" style="display: block; width: 100%; padding: 7px 5px; height: 400px;" />
-							
-								</div>
-								
-								
-									
-								<br><br>
-										<div>
-											<div class="title3">
-												<span> 첨부파일</span>
-											</div>
-										</div>
-										<div class="file_container2">
-											<div class="table table-border table-form">
-												<div>
-													<input type="file" name="selectFile" accept="image/*"
-														multiple="multiple" class="form-control1">
-												</div>
-												<div>
-													<div>
-														<div class="img-box">
-															<c:forEach var="vo" items="${listFile}">
-																<img
-																	src="${pageContext.request.contextPath}/ / /${vo.imageFilename}"
-																	onclick="deleteFile('${vo.fileNum}');">
-															</c:forEach>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-							</div>
-						</div>
-					</div>
-
-
-
-					<div class="board5">
-						<button type="button" class="btn2">수정</button>
-						<button type="button" class="btn2" style= "justify-content : flex-end">취소</button>
-					</div>
-				</form>
-
-
-</div>
-
-
-
-		<!-- 모달 -->
-		<div id="myModal" class="modal">
-		  <div class="modal-content">
-			<form name="nameForm" method="post">
-			<div style="border-bottom: 1px solid #ced4da; padding-bottom: 10px;">
-			    <span class="close">&times;</span>
-			    <h3 style="margin-bottom: 10px;">이름 검색</h3>
-			   <input type="text" id="nameInput" placeholder="이름을 입력하세요" class="form-control" style="height: 26px;">
-		      <button type="submit" class="btn">검색</button>
-			</div>					
-			<table class="table table-border table-form">
-				<tbody>
-					<tr>
-						<td height="50%">
-						 <div style="height: 150px; border: 1px solid black;"></div>
-						</td>
-					</tr>
-					<tr>
-						<td align="right">
-							<input type="hidden" name="num" value="${dto.num}">
-							<input type="hidden" name="winnerNumber" value="${dto.winnerNumber}">
-							<input type="hidden" name="page" value="${page}">
-							<button type="button" class="btn">추가</button>
-							<button type="button" class="btn">삭제</button>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</form>
-		  </div>
+				
+				
+				
+				
+						
+						<tr>
+							<td class="table-light col-sm-2">첨&nbsp;&nbsp;&nbsp;&nbsp;부</td>
+							<td>
+								<c:if test="${not empty dto.saveFilename}">
+										<a href="<c:url value='/project/download?project_no=${dto.pj_no}'/>" class="text-reset"><i class="fa-solid fa-file-arrow-down"></i>
+										${dto.originalFilename}
+										</a>
+								</c:if>
+							</td>
+						</tr>						
+						
+					</table>
+					
+					<table class="table">
+						<tr>
+							<td width="50%">
+								<c:choose>
+									<c:when test="${sessionScope.member.emp_no==dto.pj_creator}">
+										<button type="button" class="btn btn-light" onclick="location.href='${pageContext.request.contextPath}/project/update?num=${dto.pj_no}&page=${page}';">수정</button>
+									</c:when>
+									<c:otherwise>
+										<button type="button" class="btn btn-light" disabled="disabled">수정</button>
+									</c:otherwise>
+								</c:choose>
+						    	
+								<c:choose>
+						    		<c:when test="${sessionScope.member.emp_no==dto.pj_creator}">
+						    			<button type="button" class="btn btn-light" onclick="deleteBoard();">삭제</button>
+						    		</c:when>
+						    		<c:otherwise>
+						    			<button type="button" class="btn btn-light" disabled="disabled">삭제</button>
+						    		</c:otherwise>
+						    	</c:choose>
+							</td>
+							<td class="text-end">
+								<button type="button" class="btn btn-light" onclick="location.href='${pageContext.request.contextPath}/project/list?${query}';">리스트</button>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
 		</div>
