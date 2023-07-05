@@ -68,9 +68,9 @@
 					</td>
 				</tr>
 			</table>
-			<table class="table table-border table-list emp-list">
+			<table class="table table-list emp-list">
 				<thead>
-					<tr>
+					<tr class="insa-home-tr">
 						<th class="emp-list-empNo">사원번호</th>
 						<th class="emp-list-name">성명</th>
 						<th class="emp-list-team" style="width: 10%">부서</th>
@@ -86,7 +86,7 @@
 				<tbody>
 					<c:forEach var="dto" items="${list2}" varStatus="status">
 					<!-- 누른 행의 사원번호와 일치하는 사원의 개인 근태 내역 -->
-					<tr onclick="location-href='#'">
+					<tr onclick="location-href='#'" class="insa-home-td">
 						<td>${dto.emp_no}</td>
 						<td>${dto.emp_name}</td>
 						<td>${dto.dept_name}</td>

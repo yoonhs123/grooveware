@@ -199,13 +199,19 @@ public class InsaManageController {
 	
 
 	@RequestMapping(value = "updateEmpStatus")
-	public String updateEmpStatus(@RequestParam long emp_no, @RequestParam long emp_status) throws Exception {
+	public String updateEmpStatus(@RequestParam long emp_no, @RequestParam long emp_status
+			) throws Exception {
 		try {
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("emp_no", emp_no);
 			map.put("emp_status", emp_status);
 			
 			service.updateEmpStatus(map);
+			
+			if(emp_status == 2) {
+				service.updateEmpStatus(map);
+				service.updateEmpStatus2(map);
+			}
 			
 			return "redirect:/insaManage/list";
 			
@@ -334,7 +340,10 @@ public class InsaManageController {
 	}
 	
 	
-	
+	@RequestMapping("holidayList")
+	public String holidayList() throws Exception {
+		return ".insaManage.holidayList";
+	}
 	
 	
 }

@@ -28,6 +28,17 @@
 	padding-left : 30px;
 }
 
+.insa-home-tr {
+	border-bottom: 2px solid #ced4da;
+	border-top: 2px solid #ced4da;
+}
+
+.insa-home-td {
+	border-bottom: 1px solid #ced4da;
+	height: 50px;
+}
+
+
 .form-select{ height: 23px;}
 
 .title { 

@@ -43,6 +43,7 @@
 
 
 <div class="right-contentbody">
+	<h1 style="margin-bottom: 3%">&nbsp;내 인사 정보</h1>
 	<div class="div-container">
 	<div class="div-left">
 		<div class="div-top">
@@ -51,7 +52,7 @@
 				<td>
 					<div class="profile-picture border-radius">
 						<div style="height: 100%">
-							<div class="insa-image" style="border: 1px solid black;">
+							<div class="insa-image" align="center">
 							<img src="${pageContext.request.contextPath}/uploads/insaManage/${dto.emp_picture}">
 							</div>
 							<div style="width: 100%; margin-bottom: 10px;" align="center">${dto.emp_no}</div>

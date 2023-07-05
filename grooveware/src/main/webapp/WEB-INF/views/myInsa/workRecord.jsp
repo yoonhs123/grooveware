@@ -47,32 +47,11 @@
 				<div class="main-container" style="width: 100%;">
 					<div class="title-worktime">
 						<div class="worktime-header">
-							<h1><i class="bi bi-person-fill"></i>근태현황</h1>
-						</div>
-						<div class="worktime-select">
-							<select>
-								<option value="">2021년</option>
-								<option value="">2022년</option>
-								<option value="">2023년</option>
-							</select>
-							<select>
-								<option value="">1월</option>
-								<option value="">2월</option>
-								<option value="">3월</option>
-								<option value="">4월</option>
-								<option value="">5월</option>
-								<option value="">6월</option>
-								<option value="">7월</option>
-								<option value="">8월</option>
-								<option value="">9월</option>
-								<option value="">10월</option>
-								<option value="">11월</option>
-								<option value="">12월</option>
-							</select>
+							<h1><i class="bi bi-person-fill"></i>내 출근 현황</h1>
 						</div>
 					</div>
 					<div class="total-worktime" style="">
-						<table class="table table-border table-list total-worktime" style="padding:30px 0px 0px 30px;">
+						<table class="table table-border table-list total-worktime" style="padding:30px 0px 0px 30px; border: 2px solid #ced4da">
 							<tr>
 								<th width="14%">연차휴가</th>
 								<th width="14%">정상출근</th>
@@ -93,16 +72,37 @@
 								<td>0일</td>
 							</tr>
 						</table>
-
+					</div>
+					
+				<div class="worktime-select">
+						<select>
+							<option value="">2021년</option>
+							<option value="">2022년</option>
+							<option value="">2023년</option>
+						</select>
+						<select>
+							<option value="">1월</option>
+							<option value="">2월</option>
+							<option value="">3월</option>
+							<option value="">4월</option>
+							<option value="">5월</option>
+							<option value="">6월</option>
+							<option value="">7월</option>
+							<option value="">8월</option>
+							<option value="">9월</option>
+							<option value="">10월</option>
+							<option value="">11월</option>
+							<option value="">12월</option>
+						</select>
 					</div>
 					<div class="calendar-worktime">
-						<table class="table table-border table-form">
+						<table class="table table-form total-worktime" style="border: 2px solid #ced4da">
 							<thead>
-								<tr>
-									<th>날짜</th>
-									<th>출근</th>
-									<th>퇴근</th>
-									<th>비고</th>
+								<tr style="border-bottom: 1px solid #ced4da">
+									<th style="width: 25%">날짜</th>
+									<th style="width: 25%">출근</th>
+									<th style="width: 25%">퇴근</th>
+									<th style="width: 25%">비고</th>
 								</tr>
 							</thead>
 							<tbody style="text-align: center;">
@@ -120,9 +120,6 @@
 						</table>
 
 
-					</div>
-					<div class="page-navigation" style="width: 900px; margin: 0 auto;">
-						${dataCount == 0 ? "등록된 게시물이 없습니다." : paging}
 					</div>
 					
 				</div>

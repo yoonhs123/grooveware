@@ -6,14 +6,31 @@
 	display: flex;
 }
 
+.div-container2 {
+	display: flex;
+	margin: 3%;
+}
+
 .div-left {
 	flex: 1.2;
 	display: flex;
 	flex-direction: column;
 }
 
+.div-left2 {
+	flex: 1.5;
+	display: flex;
+	flex-direction: column;
+}
+
 .div-right {
 	flex: 4;
+	border: 1px solid #ced4da;
+}
+
+.div-right2 {
+	flex: 3;
+	border: 1px solid #ced4da;
 }
 
 .div-top {
@@ -24,14 +41,34 @@
 	display: flex;
   	justify-content: center;
   	align-items: center;
+  	border: 1px solid #ced4da;
+}
+
+.div-top2 {
+	flex: 5;
+	background : white;
+	margin-bottom: 10px;
+	border-radius: 5px;
+	display: flex;
+  	justify-content: center;
+  	align-items: center;
+  	border: 1px solid #ced4da;
 }
 
 .insa-image {
 	height: 90%;
+	margin: 2%;
+	align-content: center;
 }
 
 .div-bottom {
 	flex: 5;
+	border: 1px solid #ced4da;
+}
+
+.div-bottom2 {
+	flex: 5;
+	border: 1px solid #ced4da;
 }
 
 .profile-picture {

@@ -45,6 +45,7 @@ public interface InsaManageService {
 	
 	// 사원 상태 변경
 	public void updateEmpStatus(Map<String, Object> map) throws Exception;
+	public void updateEmpStatus2(Map<String, Object> map) throws Exception;
 	
 	// 근태 사원 리스트
 	public List<InsaManage> workList(Map<String, Object> map);

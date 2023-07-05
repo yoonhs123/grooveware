@@ -71,16 +71,16 @@
 			</div>
 		</div>
 	-->
-	<div class="div-container">
-	<div class="div-left">
-		<div class="div-top">
+	<div class="div-container2">
+	<div class="div-left2">
+		<div class="div-top2">
 		<table style="width: 100%; height: 100%;">
 			<tr>
 				<td>
 					<div class="profile-picture border-radius">
 						<div style="height: 100%">
 							<div style="width: 100%; margin-bottom: 10px;" align="center">${dto.emp_no}</div>
-							<div class="insa-image" style="border: 1px solid black;">
+							<div class="insa-image">
 							<img src="${pageContext.request.contextPath}/uploads/insaManage/${dto.emp_picture}">
 							</div>
 						</div>
@@ -91,7 +91,7 @@
 		</div>
 
 		
-		<div class="div-bottom">
+		<div class="div-bottom2">
 		<table style="width: 100%;" class="profile-picture border-radius">
 				<tr>
 					<th class="th-left">부서</th>
@@ -115,7 +115,7 @@
 		
 		
 
-	<div class="profile-content1 div-right" style="flex-direction: row;">
+	<div class="profile-content1 div-right2" style="flex-direction: row;">
 		<table class="profile-content1-table">
 			<tr>
 				<td><h3> | 인적사항 </h3></td>

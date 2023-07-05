@@ -32,6 +32,22 @@ public class MyInsaController {
 	private MyUtil myUtil;
 
 	
+	
+	@RequestMapping("profile")
+	public String articleProfile(
+			HttpSession session,
+			Model model) throws Exception {
+		
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		
+		MyInsa dto = myInsaService.readProfile(info.getEmp_no());
+		
+		model.addAttribute("dto", dto);
+		
+		return ".myInsa.profile";
+	}
+	
+	
 	@RequestMapping("insaCard")
 	public String articleInsaCard(
 			HttpSession session,
@@ -50,20 +66,6 @@ public class MyInsaController {
 		model.addAttribute("deptHistoryList", deptHistoryList);
 		
 		return ".myInsa.insaCard";
-	}
-	
-	@RequestMapping("profile")
-	public String articleProfile(
-			HttpSession session,
-			Model model) throws Exception {
-		
-		SessionInfo info = (SessionInfo)session.getAttribute("member");
-		
-		MyInsa dto = myInsaService.readProfile(info.getEmp_no());
-		
-		model.addAttribute("dto", dto);
-		
-		return ".myInsa.profile";
 	}
 	
 	@GetMapping("profileUpdate")

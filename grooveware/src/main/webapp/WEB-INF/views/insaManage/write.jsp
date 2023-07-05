@@ -193,7 +193,7 @@ $(function(){
 					</td>
 				</tr>
 				<tr>
-					<th><label for="rrn">이름</label></th>
+					<th><label for="rrn">주민번호</label></th>
 					<td>
 						<input type="text" id="rrn"  name="emp_rrn" value="${dto.emp_rrn}" placeholder="주민번호를 입력하세요.('-'포함)" style="width: 400px; height : 30px;">
 					</td>

@@ -165,9 +165,9 @@ $(function() {
 						</td>
    					</tr>
    				</table>
-   				<table class="table table-border table-list insa-home">
+   				<table class="table table-list insa-home">
    					<thead>
-   					<tr>
+   					<tr class="insa-home-tr">
    						<th width="5%"> 번호 </th>
    						<th width="10%"> 사원번호 </th>
    						<th width="10%"> 성명 </th>
@@ -182,7 +182,7 @@ $(function() {
    					
    					<tbody>
    						<c:forEach var="dto" items="${list}" varStatus="status">
-   							<tr>
+   							<tr class="insa-home-td">
    							<td> ${dataCount - (page-1) * size - status.index} </td>
    							<td> ${dto.emp_no} </td>
    							<td> ${dto.emp_name} </td>

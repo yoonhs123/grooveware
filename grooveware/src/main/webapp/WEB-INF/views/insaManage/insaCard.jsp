@@ -110,7 +110,9 @@ $(function(){
 			<td>?</td>
 		</tr>
 	</table>
-
+	
+	<div class="workhistory-container">
+	<div class="workhistory-left">
 	<div class="title-name">| 내 부서 연혁</div>
 	<table class="dpMove-info-table">
 		<tr class="my-insa">
@@ -124,7 +126,9 @@ $(function(){
 		</tr>
 		</c:forEach>
 	</table>
+	</div>
 	
+	<div class="workhistory-right">
 	<div class="title-name">| 내 직위 연혁</div>
 	<table class="dpMove-info-table">
 		<tr class="my-insa">
@@ -138,6 +142,8 @@ $(function(){
 		</tr>
 		</c:forEach>
 	</table>
+	</div>
+	</div>
 
 	<div class="title-name">| 상벌관리</div>
 	<table class="dpMove-info-table">

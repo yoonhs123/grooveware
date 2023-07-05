@@ -191,6 +191,23 @@
 			<when test="emp_status == 0">
 				UPDATE emp SET emp_status = #{emp_status}, emp_resign_date = NULL WHERE emp_no = #{emp_no}
 			</when>
+			<when test="emp_status == 2">
+				UPDATE emp SET emp_status = #{emp_status}, emp_resign_date = SYSDATE WHERE emp_no = #{emp_no}
+			</when>
+		</choose>
+	</update>
+	
+	<update id="updateEmpStatus2" parameterType="map">
+		<choose>
+			<when test="emp_status == 1">
+				UPDATE emp SET emp_status = #{emp_status}, emp_resign_date = SYSDATE WHERE emp_no = #{emp_no}
+			</when>
+			<when test="emp_status == 0">
+				UPDATE emp SET emp_status = #{emp_status}, emp_resign_date = NULL WHERE emp_no = #{emp_no}
+			</when>
+			<when test="emp_status == 2">
+				UPDATE emp_history SET pos_enddate = SYSDATE, dept_enddate = SYSDATE WHERE emp_no = #{emp_no}
+			</when>
 		</choose>
 	</update>
 	
@@ -365,16 +382,16 @@
 		</where>
 	</select>
 	
-	<!-- 사원 개인 근태 계산 -->
-	<select id="workCount" parameterType="Long" resultType="com.sp.grooveware.myInsa.MyInsa">
-		SELECT EXTRACT(YEAR FROM work_starttime) AS work_year,
+	<!-- 사원 개인 출근일, 지각일, 결근일 계산 -->
+	<select id="workCount" parameterType="Long" resultType="com.sp.grooveware.insamanage.InsaManage">
+		SELECT TO_CHAR(work_starttime, 'YYYY') AS work_year,
 	        COUNT(CASE WHEN work_status = 0 THEN 1 END) AS work_Count,
 	        COUNT(CASE WHEN work_status = 1 THEN 1 END) AS workLate_Count,
 	        COUNT(CASE WHEN work_status = 2 THEN 1 END) AS workAbsence_Count,
 	       	COUNT(CASE WHEN work_status = 3 THEN 1 END) AS workLateEarly_Count 
 	    FROM worktime_recode
 	    WHERE emp_no = #{emp_no}
-	    GROUP BY EXTRACT(YEAR FROM work_starttime)
+	    GROUP BY TO_CHAR(work_starttime, 'YYYY')
 	</select>
 	
 	<update id="hoildayUpdate" parameterType="com.sp.grooveware.insamanage.InsaManage">

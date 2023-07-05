@@ -235,6 +235,16 @@ public class InsaManageServiceImpl implements InsaManageService  {
 			throw e;
 		}
 	}
+	
+	@Override
+	public void updateEmpStatus2(Map<String, Object> map) throws Exception {
+		try {
+			dao.updateData("insaManage.updateEmpStatus2", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
 
 	@Override
 	public List<InsaManage> workList(Map<String, Object> map) {

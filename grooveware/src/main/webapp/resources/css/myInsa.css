@@ -8,7 +8,7 @@
 .insa-info-table {
 	border-radius : 5px;
 	padding : 20px;
-	background: white;
+	background: #ced4da;
 	margin-bottom: 30px;
 	width: 100%;
 }
@@ -23,7 +23,7 @@
 }
 
 .my-insa {
-	border-bottom: 1px solid black;
+	border-bottom: 1px solid #ced4da;
 }
 
 .geuntae-info-table, .dpMove-info-table{
@@ -35,19 +35,39 @@
 	padding : 20px;
 	background: white;
 	height : 100px;
+	border: 1.5px solid #ced4da;
 }
 
+.workhistory-container{
+	display: flex;
+}
+
+.workhistory-left {
+	flex-basis: 50%;
+	margin-right: 3%;
+}
+
+
+.workhistory-right{
+	flex-basis: 50%;
+}
 
 
 .geuntae-info-table tr, .dpMove-info-table tr{
 	text-align : center;
-	height : 30px;
+	height : 50px;
+}
+
+.geuntae-info-table td, .dpMove-info-table td{
+	text-align : center;
+	height : 50px;
+	border-bottom: 1px solid #ced4da;
 }
 
 
 
 .geuntae-info-table tr:first-child, .dpMove-info-table tr:first-child {
-	border-bottom : 1px solid black;
+	border-bottom : 1px solid #ced4da;;
 }
 
 .title-name {

@@ -43,6 +43,7 @@ $(function() {
 </div>
 
 <div class="right-contentbody">
+	<h1  style="margin-bottom: 3%">내 인사 기록 카드</h1>
 	<table class="insa-info-table">
 		<tbody>
 			<tr>
@@ -87,10 +88,12 @@ $(function() {
 		</tr>
 	</table>
 
+	<div class="workhistory-container">
+	<div class="workhistory-left">
 	<div class="title-name">| 내 부서 연혁</div>
 	<table class="dpMove-info-table">
 		<tr class="my-insa">
-			<th>부서 이름</th>
+			<th style="width: 40%">부서 이름</th>
 			<th>부서 재직 기간</th>
 		</tr>
 		<c:forEach var="dto" items="${deptHistoryList}" varStatus="status">
@@ -100,7 +103,9 @@ $(function() {
 		</tr>
 		</c:forEach>
 	</table>
+	</div>
 	
+	<div class="workhistory-right">
 	<div class="title-name">| 내 직위 연혁</div>
 	<table class="dpMove-info-table">
 		<tr class="my-insa">
@@ -114,6 +119,8 @@ $(function() {
 		</tr>
 		</c:forEach>
 	</table>
+	</div>
+	</div>
 
 	<div class="title-name">| 상벌관리</div>
 	<table class="dpMove-info-table">

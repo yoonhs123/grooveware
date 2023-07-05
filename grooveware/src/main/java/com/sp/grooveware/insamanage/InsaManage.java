@@ -48,6 +48,7 @@ public class InsaManage {
 	
 	private String work_year;
 	private String work_month;
+	private String work_YearMonth;
 	private long work_Count;
 	private long workLate_Count;
 	private long workAbsence_Count;
@@ -318,6 +319,12 @@ public class InsaManage {
 	}
 	public void setWork_month(String work_month) {
 		this.work_month = work_month;
+	}
+	public String getWork_YearMonth() {
+		return work_YearMonth;
+	}
+	public void setWork_YearMonth(String work_YearMonth) {
+		this.work_YearMonth = work_YearMonth;
 	}
 	
 }
