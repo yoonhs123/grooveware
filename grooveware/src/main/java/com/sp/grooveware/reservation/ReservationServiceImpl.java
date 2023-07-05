@@ -27,6 +27,19 @@ public class ReservationServiceImpl implements ReservationService{
 		return list;
 	}
 
+	@Override
+	public Reservation Meetingroom(long meroom_id) {
+		// 회의실 정보 가져오기
+		Reservation dto = null;
+		
+		try {
+			dto = dao.selectOne("reservation.Meetingroom");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dto;
+	}
+
 	
 	@Override
 	public void insertReservation(Reservation dto) throws Exception {
@@ -90,6 +103,36 @@ public class ReservationServiceImpl implements ReservationService{
 			throw e;
 		}
 	}
+
+
+	@Override
+	public List<Reservation> listResBytoday(Map<String, Object> map) {
+		// 회의실 당일 예약 리스트 보기
+		List<Reservation> list = null;
+		
+		try {
+			list = dao.selectList("reservation.listResBytoday", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+
+	@Override
+	public List<Reservation> listMyResByMonth(Map<String, Object> map) {
+		// 내 예약 리스트 보기(월별)
+		List<Reservation> list = null;
+		
+		try {
+			list = dao.selectList("reservation.listMyResByMonth", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+
 
 
 }

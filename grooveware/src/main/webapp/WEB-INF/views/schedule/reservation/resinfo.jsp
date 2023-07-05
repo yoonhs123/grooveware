@@ -47,12 +47,7 @@
 	    <div class = "right-main textarea">
 	    <textarea rows="4" cols="50" placeholder="텍스트를 입력하세요"></textarea>	
 	  </div>
-	   <div class="button-container">
-    	<div style="float: right;">
-			<button class="blueBtn" type="button" onclick="#">등록</button>
-			<button class="blueBtn" type="button" onclick="#">취소</button>
-		</div>
-	  </div>
+
   	  </div>
 	</div>  
 	</div>

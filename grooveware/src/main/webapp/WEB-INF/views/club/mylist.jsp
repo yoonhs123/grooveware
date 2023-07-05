@@ -74,12 +74,20 @@ img {
 .joinClub,
 .enterClub {
 	height: 30px;
-    background-color: #eaeaea; 
     border: none;
 	border-radius: 5px;
     padding: 5px 10px;
     font-weight: 600;
     color: #404040;
+}
+.read {
+	background-color: #eaeaea; 
+}
+.joinClub {
+	background-color: #eee6fc; 
+}
+.enterClub {
+	background-color: #F8E8EE; 
 }
 
 </style>
