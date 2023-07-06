@@ -138,21 +138,11 @@ $(function() {
 								</c:choose>
 							</h3> 
 						</td>
-						<td class="title" >
-								<select name="condition" class="form-select"> 
-									<option value="all"  ${condition == "all" ? "selected='selected'" : ""} >내문서</option>
-									<option value="name"  ${condition == "name" ? "selected='selected'" : ""} >그룹문서</option>
-									<option value="reg_date"  ${condition == "reg_date" ? "selected='selected'" : ""} >임시문서</option>
-									<option value="subject"  ${condition == "subject" ? "selected='selected'" : ""} >중요문서</option>
-								</select> 
-							<button type="button" class="btn" onclick="" style="margin-right: 10px;">이동</button>
-							<button type="button" class="btn" onclick="">다운로드</button>
-						</td>
 						<td align="right">
 							<form name="searchForm" action="${pageContext.request.contextPath}/ " method="post">
 								<select name="condition" class="form-select">
 									<option value="all"  ${condition == "all" ? "selected='selected'" : ""} >제목+내용</option>
-									<option value="name"  ${condition == "name" ? "selected='selected'" : ""} >작성자</option>
+									<option value="name"  ${condition == "name" ? "selected='selected'" : ""} >기안자</option>
 									<option value="reg_date"  ${condition == "reg_date" ? "selected='selected'" : ""} >등록일</option>
 									<option value="subject"  ${condition == "subject" ? "selected='selected'" : ""} >제목</option>
 									<option value="content"  ${condition == "content" ? "selected='selected'" : ""} >내용</option>
@@ -178,7 +168,7 @@ $(function() {
 						<th> 문서번호 </th>
 						<th> 문서종류 </th>
 						<th width="35%;"> 제목 </th>
-						<th> 작성자 </th>
+						<th> 기안자 </th>
 						<th> 기안일 </th>
 						<th> 문서상태 </th>
 						<th> 긴급여부 </th>

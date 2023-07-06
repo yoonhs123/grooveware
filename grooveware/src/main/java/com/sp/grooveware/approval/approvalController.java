@@ -430,7 +430,7 @@ public class approvalController {
 		Approval dto = service.readDoc(doc_no);
 		
 		if (dto == null) {
-			return "redirect:/approval/standByList";
+			return "redirect:/approval/approvalListByStatus";
 		}
 		List<Approval> listApproval = service.listApproval(doc_no);
 		List<Approval> listFile = service.listFile(doc_no);
@@ -461,6 +461,7 @@ public class approvalController {
 		    }
 		}
 		
+	 
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("doc_no", doc_no);
@@ -518,7 +519,7 @@ public class approvalController {
 	        e.printStackTrace();
 	    }
 
-	    return "redirect:/approval/standByList";
+	    return "redirect:/approval/approvalListByStatus/" + approval_status;
 	}
 	
 
@@ -697,5 +698,23 @@ public class approvalController {
 
 		return model;
 	}
+	
+	@RequestMapping(value = "deleteMember")
+	public Map<String, Object> deleteFile(@RequestParam long doc_no,
+			@RequestParam long emp_no,
+			@RequestParam String page) throws Exception {
+		
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("doc_no", doc_no);
+		map.put("emp_no", emp_no);
+		service.deleteMember(map);
+		
+		// 작업 결과를 json으로 전송
+		Map<String, Object> model = new HashMap<>();
+		model.put("state", "true");
+		return model;
+	}
+		
 	
 }

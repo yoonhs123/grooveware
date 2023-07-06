@@ -135,19 +135,22 @@ $(function() {
 		<li><a href="${pageContext.request.contextPath}/approval/write">문서작성</a>
 		</li>
 
-		<li><a href="">문서함</a> <a
-			href="${pageContext.request.contextPath}/approval/list?doc_status=1">&nbsp;내
-				문서</a> <a href="#">&nbsp;부서 문서</a> <a
-			href="${pageContext.request.contextPath}/approval/list?doc_status=0">&nbsp;임시보관
-				문서</a> <a href="#">&nbsp;중요 문서</a>
-		<li>
-		<li><a href="">결재함</a> <a
-			href="${pageContext.request.contextPath}/approval/standByList">&nbsp;대기문서</a>
-			<a href="${pageContext.request.contextPath}/approval/progressList">&nbsp;진행중
-				문서</a> <a
-			href="${pageContext.request.contextPath}/approval/sendBackList">&nbsp;반려문서</a>
-			<a href="${pageContext.request.contextPath}/approval/completionList">&nbsp;완료문서</a>
-		<li>
+            <li>
+                <a>문서함</a>
+                <a href="${pageContext.request.contextPath}/approval/list?doc_status=1">&nbsp;내 문서</a>
+                <a href="#">&nbsp;부서 문서</a>
+                <a href="${pageContext.request.contextPath}/approval/list?doc_status=0">&nbsp;임시보관 문서</a>
+                <a href="${pageContext.request.contextPath}/approval/listImportant?important=1">&nbsp;중요 문서</a>
+            <li>
+            
+            
+            <li>
+                <a>결재함</a>
+				<a href="${pageContext.request.contextPath}/approval/approvalListByStatus/1">&nbsp;대기문서</a>
+				<a href="${pageContext.request.contextPath}/approval/approvalListByStatus/2">&nbsp;진행중 문서</a>
+				<a href="${pageContext.request.contextPath}/approval/approvalListByStatus/3">&nbsp;반려문서</a>
+				<a href="${pageContext.request.contextPath}/approval/approvalListByStatus/4">&nbsp;완료문서</a>
+            <li>
 	</ul>
 </div>
 
@@ -164,9 +167,9 @@ $(function() {
 								<span>|</span> 기안서
 							</h2>
 						</td>
-						<td class="title" style="padding-left: 30px;">
+						<td class="title">
 							<c:if
-								test="${pre_state==2 && state.doc_status!=3 && state.doc_status!=4}">
+								test="${pre_state==2 && current_state !=2}">
 								<button type="button" class="btn2"
 									onclick="submitContents(${dto.doc_no}, 2);">결재</button>
 								<button type="button" class="btn2 btnApprovalDialog">반려</button>

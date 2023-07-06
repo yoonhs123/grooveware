@@ -405,4 +405,15 @@ public class ApprovalServiceImpl implements ApprovalService {
 		return rejectList;
 	}
 
+
+	@Override
+	public void deleteMember(Map<String, Object> map) throws Exception {
+		try {
+			dao.deleteData("approval.deleteMember", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+
 }

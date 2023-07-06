@@ -4,9 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 public interface ApprovalService {
-	
-	public List<Approval> listMember(Map<String, Object>map);
-	
+
+
 	public void insertApproval(Approval dto, String pathname) throws Exception;
 	public List<Approval> listDoc(Map<String, Object>map);
 	public List<Approval> listImportant(Map<String, Object>map);
@@ -30,5 +29,7 @@ public interface ApprovalService {
 	public List<Approval> listFile(long doc_no);
 	public Approval readFile(long file_no);
 	public void deleteFile(Map<String, Object>map)throws Exception;
-
+	
+	public List<Approval> listMember(Map<String, Object>map);
+	public void deleteMember(Map<String, Object>map)throws Exception;
 }

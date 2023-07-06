@@ -124,36 +124,6 @@
 	  OFFSET #{offset} ROWS FETCH FIRST #{size} ROWS ONLY
 	</select>
 	
-<select id="listDoc1" parameterType="map" resultType="com.sp.grooveware.approval.Approval">
-  SELECT d.doc_no, doc_name, TO_CHAR(draft_date, 'YYYY-MM-DD') AS draft_date, TO_CHAR(draft_deadline, 'YYYY-MM-DD') AS draft_deadline, approval_step, TO_CHAR(approval_finaldate, 'YYYY-MM-DD') AS approval_finaldate,
-    TO_CHAR(submit_date, 'YYYY-MM-DD') AS submit_date, doc_status, urgent, important, is_visible, emp_no,
-    dr.draft_category, dr.draft_content
-  FROM doc d
-  LEFT OUTER JOIN draft dr ON d.doc_no = dr.doc_no
-  <where>
-    <if test="keyword != null and keyword != ''">
-      <include refid="where-list"/>
-    </if>
-    <if test="emp_no != null">
-      AND emp_no = #{emp_no}
-    </if>
-    <choose>
-      <when test="important != 0">
-        AND important = 1
-      </when>
-      <otherwise>
-        <if test="doc_status != null">
-          AND doc_status = #{doc_status}
-        </if>
-        <if test="doc_status != null and doc_status == 1">
-          AND doc_status IN (1, 2, 3, 4)
-        </if>
-      </otherwise>
-    </choose>
-  </where>
-  ORDER BY d.doc_no DESC
-  OFFSET #{offset} ROWS FETCH FIRST #{size} ROWS ONLY
-</select>
 
 	<!-- doc, draft 테이블 글보기 -->
 	<select id="readDoc" parameterType="Long" resultType="com.sp.grooveware.approval.Approval">
@@ -373,6 +343,9 @@
 			</if>
 		</where>
 	</select>
-
-
+	
+	<!-- 결재라인 삭제 -->
+	<delete id="deleteMember" parameterType="map">
+		DELETE FROM approval where emp_no = #{emp_no} AND doc_no=#{doc_no}
+	</delete>
 </mapper>

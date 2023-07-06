@@ -415,12 +415,12 @@ function searchList() {
 								<div class="leftBox">
 									<p class="ap_pBox">
 										<label for="draft1"> <input type="radio"
-											name="draft_category" id="draft1" checked value="0" ${dto.draft_category == 0 ? 'checked' : ''} />연차
+											name="draft_category" id="draft1" checked value="0"   />연차
 										</label> <label for="draft2"> <input type="radio"
-											name="draft_category" id="draft2" value="1" ${dto.draft_category == 1 ? 'checked' : ''} />보상휴가
+											name="draft_category" id="draft2" checked value="0"  />보상휴가
 										</label>
 										<label for="draft2"> <input type="radio"
-											name="draft_category" id="draft2" value="1" ${dto.draft_category == 1 ? 'checked' : ''} />경조사휴가
+											name="draft_category" id="draft2" value="0"   />경조사휴가
 										</label>
 									</p>
 								</div>
@@ -484,21 +484,20 @@ function searchList() {
 									<label>휴가타입 </label>
 								</div>
 								<div class="leftBox">
-									<label>휴가용개수 </label>
+									<label>휴가 사용개수 </label>
 								</div>
 							</div>
 							<div class="flexBox ap_pBox">
 									<p class="ap_pBox">
 										<label for="draft1"> <input type="radio"
-											name="draft_category" id="draft1" checked value="0" ${dto.draft_category == 0 ? 'checked' : ''} />종일
+											name="draft_category" id="draft1" checked value="0"  />종일
 										</label> 
 										<label for="draft2"> <input type="radio"
-											name="draft_category" id="draft2" value="1" ${dto.draft_category == 1 ? 'checked' : ''} />반차
+											name="draft_category" id="draft2" value="1"   />반차
 										</label> 
 									</p>
 								<div class="leftBox">
-									<input type="text" name="" class="form-control1"
-										readonly="readonly" value="" />
+									<input type="text" name="" class="form-control1"  value="" />
 								</div>
 							</div>
 							<div class="flexBox">

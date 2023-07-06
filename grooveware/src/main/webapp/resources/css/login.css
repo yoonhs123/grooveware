@@ -1,10 +1,15 @@
 @charset "UTF-8";
 
-.loginForm{margin: 4.7% 0;}
+
+
+.loginForm{
+	margin: 4.7% 0;
+	font-family: 'Noto Sans KR', sans-serif;
+}
 .members-form .btn {
 	color: #ffffff;;
 	border: 1px solid #999999;
-	background-color: #4048a8;
+	background-color: #243A73;
 	padding: 5px 10px;
 	border-radius: 4px;
 	font-weight: 500;
@@ -53,12 +58,15 @@
 
 .text-center {
 	text-align: center;
+	letter-spacing: 2px;
 }
 
 input[name=myCheck] {
 	position: relative;
-    top: 2.5px;
-    margin-right: 10px;
+    top: 4.5px;
+    margin-right: 8px;
+    width: 14px;
+    height: 14px;
 }
 
 tr.noticelist td {
@@ -89,5 +97,5 @@ tr.noticelist td {
 	text-align: center;
 }
 
-.fontColor{color: #4048a8; }
+.fontColor{color: #243A73; }
 .bold{font-weight: bold;}

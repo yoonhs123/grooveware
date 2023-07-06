@@ -186,7 +186,7 @@
 	float: left;
 	border-radius: 70%;
 	overflow: hidden;
-	margin: 0px 60px 10px 0px;
+	margin: 0px 60px 10px 10px;
 }
 
 .img_container2 {
@@ -209,7 +209,7 @@
 	float: left;
 	border-radius: 70%;
 	overflow: hidden;
-	margin: 0px 40px 10px 0px;
+	margin: 0px 40px 10px 10px;
 }
 
 .text_box3 {
@@ -370,7 +370,7 @@
 	width: 50%;
 	text-align: center;
 	line-height: 30px;
-	color: #4048a8;
+	color: #243A73;
 	font-weight: bold;
 	box-shadow: 0 0 0 1px white;
 }

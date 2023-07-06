@@ -64,6 +64,10 @@
 	display: flex;
 	justify-content: space-between;
 }
+.imgSize{
+width: 100%;
+height: 100%;
+}
 </style>
 
 
@@ -86,18 +90,22 @@
 		<li><a href="${pageContext.request.contextPath}/approval/write">문서작성</a>
 		</li>
 
-		<li><a href="">문서함</a> <a
-			href="${pageContext.request.contextPath}/approval/list?doc_status=1">&nbsp;내
-				문서</a> <a href="#">&nbsp;부서 문서</a> <a
-			href="${pageContext.request.contextPath}/approval/list?doc_status=0">&nbsp;임시보관
-				문서</a> <a href="#">&nbsp;중요 문서</a>
-		<li>
-		<li><a href="">결재함</a>
-                <a href="${pageContext.request.contextPath}/approval/standByList">&nbsp;대기문서</a>
-                <a href="${pageContext.request.contextPath}/approval/progressList">&nbsp;진행중 문서</a>
-                <a href="${pageContext.request.contextPath}/approval/sendBackList">&nbsp;반려문서</a>
-                <a href="${pageContext.request.contextPath}/approval/completionList">&nbsp;완료문서</a>		
-		<li>
+            <li>
+                <a>문서함</a>
+                <a href="${pageContext.request.contextPath}/approval/list?doc_status=1">&nbsp;내 문서</a>
+                <a href="#">&nbsp;부서 문서</a>
+                <a href="${pageContext.request.contextPath}/approval/list?doc_status=0">&nbsp;임시보관 문서</a>
+                <a href="${pageContext.request.contextPath}/approval/listImportant?important=1">&nbsp;중요 문서</a>
+            <li>
+            
+            
+            <li>
+                <a>결재함</a>
+				<a href="${pageContext.request.contextPath}/approval/approvalListByStatus/1">&nbsp;대기문서</a>
+				<a href="${pageContext.request.contextPath}/approval/approvalListByStatus/2">&nbsp;진행중 문서</a>
+				<a href="${pageContext.request.contextPath}/approval/approvalListByStatus/3">&nbsp;반려문서</a>
+				<a href="${pageContext.request.contextPath}/approval/approvalListByStatus/4">&nbsp;완료문서</a>
+            <li>
 	</ul>
 </div>
 
@@ -135,7 +143,7 @@
 						</div>
 
 					</div>
-					<div style="width: 100%; float: left; padding-left: 20px;">
+					<div style="width: 100%; float: left; ">
 						<c:forEach var="vo" items="${listApproval}" varStatus="status">
 							<div class="img_container" style="${vo.approval_status==2 ? 'border: 3px solid #0232f2;' : ''}">
 								<img class="imgSize"
@@ -144,7 +152,7 @@
 
 							<c:if test="${!status.last}">
 								<div class="img_container3">
-									<i class="fa-solid fa-chevron-right"></i>
+									<i class="fa-solid fa-chevron-right fa-xl"  style="${vo.approval_status==2 ? 'color: #0232f2;' : ''}"></i>
 								</div>
 							</c:if>
 							<c:if test="${vo.emp_no == sessionScope.member.emp_no}">

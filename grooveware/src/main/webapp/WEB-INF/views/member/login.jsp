@@ -9,7 +9,7 @@
 				<div class="members-form">
 					<div class="textBox">
 						<div class="row text-center fontColor">
-							<h1>GrooveWare</h1>
+							<h1>GROOVE WARE</h1>
 						</div>
 						<div class="row">
 							<label for="login-userId" >사원번호</label> <input name="emp_no"
@@ -19,7 +19,7 @@
 						<div class="row">
 							<label for="login-password">비밀번호</label> <input name="emp_pwd"
 								type="password" class="form-control" id="login-password"
-								autocomplete="off" placeholder="패스워드">
+								autocomplete="off" placeholder="비밀번호">
 						</div>
 						<div class="row text-center">
 							<button type="button" class="btn" onclick="sendLogin();">로그인</button>
