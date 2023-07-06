@@ -40,6 +40,9 @@
 	
 	<div>
 		<div id="container"></div>
+		<div style="float: right;">
+			<button type="button" class="">부서추가</button>
+		</div>
 	</div>
 	
 </div>
@@ -53,7 +56,7 @@ Highcharts.chart('container', {
     },
 
     title: {
-        text: 'Highcharts Org Chart'
+        text: 'GROOVE WARE'
     },
 
     accessibility: {

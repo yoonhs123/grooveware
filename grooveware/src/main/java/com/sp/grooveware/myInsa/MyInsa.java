@@ -23,6 +23,7 @@ public class MyInsa {
 	// 연차
 	private int annual_leave;
 
+	private long top_dept_no;
 	private long dept_no;
 	private String dept_name;
 	private String dept_startdate;
@@ -252,5 +253,11 @@ public class MyInsa {
 	}
 	public void setPos_enddate(String pos_enddate) {
 		this.pos_enddate = pos_enddate;
+	}
+	public long getTop_dept_no() {
+		return top_dept_no;
+	}
+	public void setTop_dept_no(long top_dept_no) {
+		this.top_dept_no = top_dept_no;
 	}
 }
