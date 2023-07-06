@@ -107,7 +107,7 @@
 			</div>
 
 <!-- 일정 상세 보기 Modal -->
-<div class="modal fade" id="myDialogModal" tabindex="-1" aria-labelledby="myDialogModalLabel" aria-hidden="true">
+<div class="modal" id="myDialogModal" tabindex="-1" aria-labelledby="myDialogModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -380,7 +380,7 @@ $(function(){
 			var event = calendar.getEventById(num);
 	        event.remove();
 	        
-	        $("#myDialogModal").modal("hide");
+	        document.getElementById("myDialogModal").style.display = "none";
 		};
 		
 		var num = $(this).attr("data-num");
@@ -388,7 +388,7 @@ $(function(){
 		var url = "${pageContext.request.contextPath}/schedule/calendar/delete";
 
 		ajaxFun(url, "post", query, "json", fn);
-		document.getElementById("myDialogModal").style.display = "none";
+		
 	});
 });
 

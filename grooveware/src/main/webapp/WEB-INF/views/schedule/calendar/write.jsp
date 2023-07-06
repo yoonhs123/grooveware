@@ -4,8 +4,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 
-
-
 <script type="text/javascript">
 function sendOk() {
     const f = document.scheduleForm;
@@ -170,25 +168,29 @@ $(function(){
 								<div class="col-5">
 									<select name="category_num" id="form-categoryNum" class="form-select">
 										<%-- <option value="0">설정하지 않음</option> --%>
-										<option value="0">전사</option>
-										<option value="${sessionScope.member.dept_no}" >부서</option>
-										<option value="1">개인</option>
+										<c:forEach var="ct" items="${listCategory}">
+											<c:if test="${ ((sessionScope.member.dept_no == '61' || sessionScope.member.dept_no == '62') && ct.category_num == 0) 
+														|| 	ct.category_num == 1 
+														|| sessionScope.member.dept_no == ct.category_num}">
+												<option value="${ct.category_num}" ${dto.category_num == ct.category_num ? "selected='selected'":""}>${ct.category}</option>
+											</c:if>
+										</c:forEach>
 									</select>
 								</div>
 							</div>
 						</td>
 					</tr>
 
-					<tr>
+					<%-- <tr>
 						<td class="table-light col-2" scope="row">색 상</td>
 						<td>
 							<div class="row">
 								<div class="col-5">
 									<select name="color" id="form-color" class="form-select">
-										<option value="blue" style="background:blue;" ${dto.color=="blue"?"selected='selected'":""}>파랑</option>
-										<option value="green" style="background:green;" ${dto.color=="green"?"selected='selected'":""}>녹색</option>
-										<option value="red" style="background:red;" ${dto.color=="red"?"selected='selected'":""}>빨강</option>
-										<option value="orange" style="background:orange;" ${dto.color=="orange"?"selected='selected'":""}>주황</option>
+										<option value="#5882FA" style="background:#5882FA;" ${dto.color=="#5882FA"?"selected='selected'":""}>파랑</option>
+										<option value="#FA5858" style="background:#FA5858;" ${dto.color=="#FA5858"?"selected='selected'":""}>녹색</option>
+										<option value="#AC58FA" style="background:#AC58FA;" ${dto.color=="#FF8000"?"selected='selected'":""}>빨강</option>
+										<option value="#F5A9BC" style="background:#F5A9BC;" ${dto.color=="#F5A9BC"?"selected='selected'":""}>주황</option>
 										<option value="tomato" style="background:tomato;" ${dto.color=="chartreuse"?"selected='selected'":""}>토마토</option>
 										<option value="magenta" style="background:magenta;" ${dto.color=="cyan"?"selected='selected'":""}>마젠타</option>
 										<option value="purple" style="background:purple;" ${dto.color=="purple"?"selected='selected'":""}>보라</option>
@@ -200,7 +202,7 @@ $(function(){
 								</div>
 							</div>
 						</td>
-					</tr>
+					</tr> --%>
 
 					<tr>
 						<td class="table-light col-2" scope="row">종일일정</td>
