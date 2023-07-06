@@ -2,7 +2,6 @@
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 
 
@@ -115,11 +114,11 @@ function goBack() {
         <ul>
             
             <li>
-                <a href="${pageContext.request.contextPath}/archive/1">전사 자료실</a>
+                <a href="${pageContext.request.contextPath}/archive/list">전사 자료실</a>
             </li>
             
             <li>
-                <a href="${pageContext.request.contextPath}/archive/2">개인 자료실</a>
+                <a href="#">개인 자료실</a>
             </li>
             
             
@@ -131,23 +130,27 @@ function goBack() {
 				<div class="title_container">
 				<table class="table" style="margin-bottom: 20px;">
 					<tr>
-						<td class="title" style="width:15%"> 
-							<h3><span>|</span> 
-								${root_folderNum == '1' ? '전사 자료실' : '개인 자료실'}
-							</h3> 
+						<td class="title" > 
+							<h3><span>|</span> 전사 자료실</h3> 
 							
 						</td>
-						<td class="left" >
+						<td class="title" >
 							<c:if test="${folder.folder_no != 1}">
-								<button type="button" class="btn" onclick="location.href='${pageContext.request.contextPath}/archive/${preFolder_no}'">상위 폴더</button>
+								<button type="button" class="btn" onclick="goBack()">상위 폴더</button>
 							</c:if>
-								<button type="button" class="btn" onclick="openModal();">파일 업로드</button>
-							<c:if test="${((root_folderNum == '1' && (sessionScope.member.dept_no == '61' || sessionScope.member.dept_no == '62')) || root_folderNum == '2')}">
-								<button type="button" class="btn" onclick="openModal1();">폴더 생성</button>
-								<button type="button" class="btn" id="btnDelete">삭제</button>
-							</c:if>
+							<button type="button" class="btn" onclick="openModal1();" style="margin-right: 10px;">폴더 생성</button>
+							<button type="button" class="btn" onclick="openModal();" style="margin-right: 10px;">파일 업로드</button>
+							<button type="button" class="btn" id="btnDelete">삭제</button>
 						</td>
-						
+						<td align="right">
+							<form name="searchForm" action="${pageContext.request.contextPath}/ " method="post">
+								<select name="condition" class="form-select">
+									<option value="all"  ${condition == "all" ? "selected='selected'" : ""} >파일명</option>
+								</select>
+								<input type="text" name="keyword" value="${keyword}" class="form-control">
+								<button type="button" class="btn" onclick="searchList();">검색</button>
+							</form>
+						</td>
 					</tr>
 				</table>
 			 </div>
@@ -155,19 +158,35 @@ function goBack() {
 				<table class="table table-border table-list" >
 					<thead>
 						<tr>
-							<th width="10%;">
+							<th width="5%;">
 								<input type="checkbox" id="chkAll" value="all"> 
 							</th> 
-							<th style=" width:60%; text-align:left;"> 이름 </th>
+							<th width="60%;"> 이름 </th>
 							<th> 크기 </th>
 							<th> 업로드 날짜 </th>
-							<th><input type="hidden" name="root_folder" value="${folder_no}"></th>
+							<th> 삭제 </th>
 			 
 						</tr>
 					</thead>
 					
 					<tbody>
-												
+						
+						<c:if test="${folder.folder_no == 1}">
+							<tr>
+								<td>
+									<input type="checkbox" name="folder_no" value="${folder.folder_no}">
+								</td>
+								<td>
+									<a href="${pageContext.request.contextPath}/archive/${folder.folder_no}"><i class="fa-regular fa-folder"></i>&nbsp;${folder.folder_name}</a>
+								</td>
+								<td>${folder.reg_date}</td>
+								<td></td>
+								<td>
+								</td>
+							</tr>
+						</c:if>
+						
+						
 							
 						<c:forEach var="folder" items="${sub_folders}">
 					    	<c:if test="${folder.getRoot_folder() != null}">
@@ -175,12 +194,14 @@ function goBack() {
 									<td>
 										<input type="checkbox" name="folder_no" value="${folder.folder_no}">
 									</td>		
-									<td style="text-align:left;">
-										<a href="${pageContext.request.contextPath}/archive/${folder.folder_no}?preFolder_no=${folder_no}"><i class="fa-regular fa-folder"></i>&nbsp;${folder.folder_name}</a>
+									<td>
+										<a href="${pageContext.request.contextPath}/archive/${folder.folder_no}"><i class="fa-regular fa-folder"></i>&nbsp;${folder.folder_name}</a>
 									</td>
 									<td></td>
 									<td>${folder.reg_date}</td>
-									
+									<td>
+										<input type="button" value="삭제" onclick="deleteScore('${dto.hak}')" class="btn">
+									</td>
 								</tr>
 					    	</c:if>
 					    </c:forEach>
@@ -189,13 +210,13 @@ function goBack() {
 									<td>
 										<input type="checkbox" name="file_no" value="${file.file_no}">
 									</td>		
-									<td style="text-align:left;">
-										<a style="margin-left:20px;" href="${pageContext.request.contextPath}/archive/download/${file.file_no}"><i class="fa-regular fa-file"></i>&nbsp;${file.original_filename}</a>
+									<td>
+										<a href="${pageContext.request.contextPath}/archive/download/${file.file_no}"><i class="fa-regular fa-file"></i>&nbsp;${file.original_filename}</a>
 									</td>
 									<td>${file.file_size}</td>
 									<td>${file.reg_date}</td>
 									<td>
-										
+										<input type="button" value="삭제" onclick="deleteScore('${dto.hak}')" class="btn">
 									</td>
 								</tr>
 								
@@ -203,7 +224,6 @@ function goBack() {
 					</tbody>
 				</table>
 			</form>
-					    <div class="page-navigation" style="width: 900px; margin: 0 auto;">${msg}</div>
 			<%-- <div class="page-navigation" style="width: 900px; margin: 0 auto;">${dataCount == 0 ? "등록된 게시물이 없습니다." : paging}</div> --%>
 				
 			</div>
