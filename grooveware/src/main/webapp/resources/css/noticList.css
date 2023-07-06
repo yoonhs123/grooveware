@@ -16,16 +16,15 @@
 
 
 .btn-notice {
-      color: #fff;
-      background-color: #3039a6;
-      border: none;
-      padding: 5px 10px;
-      border-radius: 4px;
-      font-weight: 500;
-      cursor: pointer;
-      font-size: 14px;
-      line-height: 15px;
-    }
+    height: 30px;
+    border-radius: 5px;
+    padding: 5px 10px;
+    background-color: #CEDDEF;
+    color: #404040;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+ }
  
 .addInput{
     width: 300px;

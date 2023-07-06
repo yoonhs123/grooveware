@@ -1,6 +1,7 @@
 package com.sp.grooveware.notice;
 
 import java.io.File;
+import java.io.PrintWriter;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.HashMap;
@@ -8,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.sp.grooveware.common.FileManager;
 import com.sp.grooveware.common.MyUtil;
 import com.sp.grooveware.member.SessionInfo;
 
@@ -37,6 +40,10 @@ public class NoticeController {
 	@Autowired
 	@Qualifier("myUtilGeneral")
 	private MyUtil myUtil;
+	
+	@Autowired
+	private FileManager fileManager;
+	
 	
 	@RequestMapping(value = "list")
 	public String list(
@@ -271,4 +278,33 @@ public class NoticeController {
 
 	
 	
+	@GetMapping(value = "download")
+	public void download(
+			@PathVariable String gubun,
+	        @RequestParam long noti_id,
+	        HttpServletResponse resp,
+	        HttpSession session) throws Exception {
+
+	    String root = session.getServletContext().getRealPath("/");
+	    String pathname = root + "uploads" + File.separator + "notice";
+
+	    Notice dto = service.readNotice(noti_id);    
+
+	    if (dto != null) {
+	        String originalFilename = dto.getOriginal_filename();
+	        
+	        if (originalFilename != null) {
+	            boolean b = fileManager.doFileDownload(
+	            dto.getSave_filename(), dto.getOriginal_filename(), pathname, resp);
+	    
+	            if (b) {
+	                return;
+	            } 
+	        } 
+	    }
+	    
+	    resp.setContentType("text/html;charset=utf-8");
+	    PrintWriter out = resp.getWriter();
+	    out.print("<script>alert('파일 다운로드가 실패했습니다.');history.back();</script>");
+	}
 }

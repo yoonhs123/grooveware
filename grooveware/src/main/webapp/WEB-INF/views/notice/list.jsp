@@ -91,7 +91,12 @@ function
 							<td>${dto.emp_name}</td>
 							<td>${dto.noti_regdate}</td>
 							<td>${dto.noti_hitcount}</td>
-							<td>${dto.original_filename}</td>
+							<td>
+								<c:if test="${not empty dto.save_filename}">
+										<a href="<c:url value='/notice/${gubun}/download?noti_id=${dto.noti_id}'/>" class="text-reset"><i class="fa-solid fa-file-arrow-down"></i></a>
+								</c:if>
+							
+							</td>
 							
 						</tr>
 					</c:forEach>

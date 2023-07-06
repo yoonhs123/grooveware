@@ -66,7 +66,7 @@
     <!-- 공지 글 리스트 -->
     <select id="listNotice" parameterType="map" resultType="com.sp.grooveware.notice.Notice">
 	   SELECT noti_id, noti_title, emp_name, TO_CHAR(noti_regdate, 'YYYY-MM-DD') noti_regdate,
-       noti_hitcount, NVL(save_filename, 0) as save_filename
+       noti_hitcount, save_filename
        FROM notice n
        JOIN emp e ON n.emp_no=e.emp_no
        <where>

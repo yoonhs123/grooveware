@@ -72,7 +72,7 @@
 			<div class="chat-left-main">
   				<div style="margin-top: 10px;">
 					<p style="padding: 5px 0; font-weight: 600;">
-						<i class="fa-solid fa-angles-right"></i> &nbsp; 그루비 &nbsp; 톡
+						<span></span>
 					</p>
 				</div>
 			</div>
