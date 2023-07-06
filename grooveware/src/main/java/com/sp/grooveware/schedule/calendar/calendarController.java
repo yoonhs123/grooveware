@@ -55,14 +55,14 @@ public class calendarController {
 	public String writeForm(@ModelAttribute(value = "dto") Schedule dto,
 			HttpSession session,
 			Model model) throws Exception {
-		SessionInfo info = (SessionInfo)session.getAttribute("member");
 
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("emp_no", info.getEmp_no());
 		List<Schedule> listCategory = service.listCategory(map);
+		System.out.println("listCategory:" + listCategory);
 		
 		model.addAttribute("mode", "write");
 		model.addAttribute("listCategory", listCategory);
+		
 		
 		return ".schedule.calendar.write";
 	}
@@ -73,6 +73,14 @@ public class calendarController {
 		SessionInfo info=(SessionInfo)session.getAttribute("member");
 		
 		try {
+			
+			if(dto.getCategory_num() == 0) {
+				dto.setColor("#5882FA");
+			} else if(dto.getCategory_num() == 1) {
+				dto.setColor("#FA5858");
+			} else {
+				dto.setColor("#AC58FA");
+			}
 			
 			dto.setEmp_no(info.getEmp_no());
 			service.insertSchedule(dto);
@@ -136,7 +144,6 @@ public class calendarController {
 	public String updateForm(@RequestParam int num,
 			HttpSession session,
 			Model model) throws Exception {
-		SessionInfo info = (SessionInfo)session.getAttribute("member");
 		
 		Schedule dto = service.readSchedule(num);
 		if(dto == null) {
@@ -164,7 +171,6 @@ public class calendarController {
 		}
 		
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("Emp_no", info.getEmp_no());
 		List<Schedule> listCategory = service.listCategory(map);
 		
 		model.addAttribute("mode", "update");
@@ -180,7 +186,13 @@ public class calendarController {
 		SessionInfo info=(SessionInfo)session.getAttribute("member");
 		
 		try {
-			
+			if(dto.getCategory_num() == 0) {
+				dto.setColor("#5882FA");
+			} else if(dto.getCategory_num() == 1) {
+				dto.setColor("#FA5858");
+			} else {
+				dto.setColor("#AC58FA");
+			}
 			dto.setEmp_no(info.getEmp_no());
 			service.updateSchedule(dto);
 		} catch (Exception e) {
