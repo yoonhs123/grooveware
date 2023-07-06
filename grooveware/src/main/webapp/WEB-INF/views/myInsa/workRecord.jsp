@@ -45,14 +45,10 @@
 <div class="right-contentbody">
 			<div class="board">
 				<div class="main-container" style="width: 100%;">
-					<div class="title-worktime">
-						<div class="worktime-header">
-							<h1><i class="bi bi-person-fill"></i>내 출근 현황</h1>
-						</div>
-					</div>
+					<h1><i class="bi bi-person-fill"></i>내 출근 현황</h1>
 					<div class="total-worktime" style="">
 						<table class="table table-border table-list total-worktime" style="padding:30px 0px 0px 30px; border: 2px solid #ced4da">
-							<tr>
+							<tr style="border-bottom: 2px solid #ced4da">
 								<th width="14%">연차휴가</th>
 								<th width="14%">정상출근</th>
 								<th width="14%">지각</th>
@@ -73,7 +69,7 @@
 							</tr>
 						</table>
 					</div>
-					
+				
 				<div class="worktime-select">
 						<select>
 							<option value="">2021년</option>
@@ -95,10 +91,11 @@
 							<option value="">12월</option>
 						</select>
 					</div>
+					
 					<div class="calendar-worktime">
 						<table class="table table-form total-worktime" style="border: 2px solid #ced4da">
 							<thead>
-								<tr style="border-bottom: 1px solid #ced4da">
+								<tr style="border-bottom: 2px solid #ced4da">
 									<th style="width: 25%">날짜</th>
 									<th style="width: 25%">출근</th>
 									<th style="width: 25%">퇴근</th>

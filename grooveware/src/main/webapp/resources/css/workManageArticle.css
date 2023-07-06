@@ -62,10 +62,7 @@
 
 .title-worktime {
 	padding: 20px 0px 10px 0px;
-	float: left;
-	display: flex;
 	width: 100%;
-	margin-bottom: 3%;
 }
 
 .worktime-header {
@@ -73,12 +70,13 @@
 }
 
 .worktime-select {
+	/*
 	width: 85%;
 	margin-left: auto;
 	padding: auto;
-	display: flex;
-    justify-content: flex-end;
+	*/
     height: 50px;
+    float: right;
 }
 
 
@@ -111,6 +109,8 @@
 .total-worktime {
 	padding-top: 20px;
 }
+
+
 
 .calendar-worktime {
 	padding: 10px 0px 20px 0px;
