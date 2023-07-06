@@ -161,8 +161,10 @@
 				<table class="table table-borderless">
 					<tr>
 						<td class="text-end">
-							<button type="button" class="btn btn-outline-primary btnScheduleUpdate">일정 수정</button>
-			    			<button type="button" class="btn btn-outline-danger btnScheduleDelete">일정 삭제</button>
+							<c:if test="${sessionScope.member.dept_no == '61' || sessionScope.member.dept_no == '62' }">
+								<button type="button" class="btn btn-outline-primary btnScheduleUpdate">일정 수정</button>
+				    			<button type="button" class="btn btn-outline-danger btnScheduleDelete">일정 삭제</button>
+							</c:if>
 						</td>
 					</tr>
 				</table>
