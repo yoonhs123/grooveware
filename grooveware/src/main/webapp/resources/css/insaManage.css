@@ -98,3 +98,78 @@
 	display: flex;
 	justify-content: space-between;
 }
+
+.insa-list-tab {
+	width: 100%;
+}
+
+.box insa {
+	display: flex;
+	font-size: 16px;
+	font-weight: 600;
+	border: 1px solid;
+	text-align: center;
+	justify-content: space-between;
+	margin-bottom: 5%;
+}
+
+.box-insa {
+	margin-bottom: 3%;
+	text-align: center;
+}
+
+.insa-button {
+	flex-basis: 25%;
+	width: 220px;
+	margin: 15px 15px 0 15px;
+	padding: 10px;
+	background: none;
+	vertical-align: middle;
+	position: relative;
+	z-index: 1;
+}
+
+.insa-button > span {
+	vertical-align: middle;
+}
+
+.insa-button:focus {
+	outline: none;
+}
+
+.insa-button-zz {
+	overflow: hidden;
+	letter-spacing: 1.5px;
+	font-size: 15px;	
+}
+
+.insa-button-zz::before {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 150%;
+	height: 100%;
+	background-color: #243A73;
+	z-index: -1;
+}
+
+.insa-button-zz:hover {
+	color: #fff;
+	border-color: #243A73;
+	background-color: #243A73;
+}
+
+.insa-button-zz.button--inverted:hover {
+	opacity: 1;
+	background-color: #243A73;
+}
+
+.insa-button-zz.button--inverted:hover::before {
+	background-color: #243A73;
+}
+
+.btnInsaActive {
+	color: #fff;
+	opacity: 1;
+	background-color: #243A73;
+}

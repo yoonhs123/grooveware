@@ -1,10 +1,12 @@
 package com.sp.grooveware.myInsa;
 
 import java.io.File;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -101,18 +103,31 @@ public class MyInsaController {
 
 	@RequestMapping(value="workRecord", method = RequestMethod.GET)
 	public String workRecordArticle(
+			@RequestParam(required = false) String year,
+			@RequestParam(required = false) String month,
 			@RequestParam(defaultValue = "all") String condition,
 			@RequestParam(defaultValue = "") String keyword,
+			HttpServletRequest req,
 			HttpSession session,
 			Model model) throws Exception {
 		
 		 SessionInfo info = (SessionInfo)session.getAttribute("member");
+		 Calendar cal = Calendar.getInstance();
+		 int currentYear = cal.get(Calendar.YEAR);
+		 
+		 String date = null;
+		 if(year == null || month == null) {
+			 year = String.format("%04d", cal.get(Calendar.YEAR));
+			 month = String.format("%02d", cal.get(Calendar.MONTH) + 1);
+		 }
+		 date = year + month;
 			 
 		 
 		 Map<String, Object> map = new HashMap<String, Object>();
 		 map.put("keyword", keyword);
 		 map.put("condition", condition);
 		 map.put("emp_no", info.getEmp_no());
+		 map.put("work_starttime", date);
 		 
 		 List<MyInsa> list = myInsaService.readWorkTime(map, info.getEmp_no());
 		 
@@ -123,9 +138,24 @@ public class MyInsaController {
 		model.addAttribute("condition", condition);
 		model.addAttribute("keyword", keyword);
 		model.addAttribute("dto", dto);
+		model.addAttribute("currentYear", currentYear);
+		model.addAttribute("year", year);
+		model.addAttribute("month", month);
 		
 		
 		return ".myInsa.workRecord";
+	}
+	
+	@RequestMapping(value = "organization", method = RequestMethod.GET)
+	public String Article(Model model) throws Exception {
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		List<MyInsa> list = myInsaService.listDept(map);
+		
+		
+		model.addAttribute("list", list);
+		return ".myInsa.organization";
 	}
 	
 	

@@ -3,6 +3,19 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+<script type="text/javascript">
+function searchDate() {
+	let y = $("#select-year").val();
+	
+	if(!y) {
+		alert('연도를 선택하세요.');
+		return;
+	}
+	
+	let query = "year=" +y;
+	location.href = "${pageContext.request.contextPath}/insaManage/workList?" +query;
+}
+</script>
 
 <div class="left-side-bar">
 	<ul>
@@ -12,6 +25,7 @@
 			<a href="${pageContext.request.contextPath}/myInsa/insaCard">&nbsp;인사기록카드</a> 
 			<a href="${pageContext.request.contextPath}/myInsa/workRecord">&nbsp;내 출근 기록</a> 
 			<a href="#">&nbsp;내 휴가 기록</a>
+			<a href="${pageContext.request.contextPath}/myInsa/organization">&nbsp;조직도</a>
 		</li>
 		<c:choose>
         <c:when test="${sessionScope.member.dept_no >= 60 && sessionScope.member.dept_no <= 70}">
@@ -22,7 +36,6 @@
                 <a href="${pageContext.request.contextPath}/insaManage/workList">&nbsp;근태관리</a>
                 <a href="#">&nbsp;휴가관리</a>
                 <a href="#">&nbsp;휴가설정</a>
-                <a href="#">&nbsp;조직도</a>
             </li>
         </c:when>
         <c:otherwise>
@@ -36,24 +49,19 @@
 
 	<div class="board-emp-list">
 		<div class="title_container-emp-list">
-			<h2>
+			<h1>
 				<i class="bi bi-person-fill"></i>근태관리
-			</h2>
+			</h1>
 			<table class="table emp-list-1">
 				<tr>
 					<td class="title-emp-list">
-						<span> 검색할 년도&nbsp;:&nbsp; 
-						<select onChange="changeConditionPeriod(this);">
-								<option value="2018">2018</option>
-								<option value="2019">2019</option>
-								<option value="2020">2020</option>
-								<option value="2021">2021</option>
-								<option value="2022">2022</option>
-								<option value="2023">2023</option>
-								<option value="2024">2024</option>
-								<option value="2025">2025</option>
-						</select> &nbsp;년&nbsp;&nbsp; 
-						</span>
+						<select id="select-year" name="year" class="year">
+								<option value="" disabled="disabled">년도</option>
+								<c:forEach var="y" begin="${currentYear-5}" end="${currentYear}">
+									<option value="${y}" ${year==y?"selected='selected'" : "" }>${y}년</option>
+								</c:forEach>
+						</select>
+						<button type="button" class="work-search-btn" onclick="searchDate();">검색</button>
 					<td align="right">
 						<form name="searchForm" action="${pageContext.request.contextPath}/ " method="post">
 							<select name="condition" class="emp-list-select">
@@ -92,8 +100,8 @@
 						<td>${dto.dept_name}</td>
 						<td>${dto.pos_name}</td>
 						<td>${dto.work_Count}</td>
-						<td>${dto.workAbsence_Count}</td>
 						<td>${dto.workLate_Count}</td>
+						<td>${dto.workAbsence_Count}</td>
 						<td>${dto.workLateEarly_Count}</td>
 						<td>아직안함 </td>
 					</tr>

@@ -23,4 +23,8 @@ public interface MyInsaService {
 	public List<MyInsa> posHistoryList(long emp_no);
 	// DeptHistoryList
 	public List<MyInsa> deptHistoryList(long emp_no);
+	
+	
+	// 부서 리스트
+	public List<MyInsa> listDept(Map<String, Object> map);
 }

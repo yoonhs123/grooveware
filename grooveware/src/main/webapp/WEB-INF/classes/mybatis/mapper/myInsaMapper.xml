@@ -22,6 +22,7 @@
 		WHERE e.emp_no = #{emp_no}
 	</select>
 	
+	<!-- 연차 구하기 -->
 	<select id="readAnnualLeave" parameterType="long" resultType="Integer">
 		SELECT TRUNC((MONTHS_BETWEEN(TRUNC(SYSDATE), TRUNC(e.emp_join_date)) / 12 ) + 1) AS annual_leave
 		FROM emp e
@@ -65,13 +66,18 @@
 		FROM worktime_recode
 	</select>
 	
-	<select id="listWorkRecord" resultType="com.sp.grooveware.myInsa.MyInsa">
+	<select id="listWorkRecord" parameterType="map" resultType="com.sp.grooveware.myInsa.MyInsa">
 		SELECT record_no, emp_no, 
 			TO_CHAR(work_starttime, 'MM/DD') work_day, 
 			TO_CHAR(work_starttime, 'HH24:MI') work_starttime, 
 			TO_CHAR(work_endtime, 'HH24:MI') work_endtime, work_status 
 		FROM worktime_recode 
-		WHERE emp_no = #{emp_no}
+		<where>
+			AND emp_no = #{emp_no}
+			<if test="work_starttime != null">
+				AND TO_CHAR(work_starttime, 'YYYYMM') = #{work_starttime}
+			</if>			
+		</where>
 		ORDER BY work_day
 	</select>
 	
@@ -107,5 +113,14 @@
 		WHERE eh.emp_no = #{emp_no}
 	</select>
 	
-
+	<!-- 조직도 부서 리스트 -->
+	<select id="listDept" parameterType="Long" resultType="com.sp.grooveware.myInsa.MyInsa">
+		SELECT dept_no, dept_name, dept_status, top_dept_no 
+        FROM dept
+        WHERE dept_status = 0
+        START WITH top_dept_no IS NULL
+        CONNECT BY PRIOR dept_no = top_dept_no
+        ORDER BY dept_no
+	</select>
+	 
 </mapper>

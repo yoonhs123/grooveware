@@ -12,6 +12,21 @@
 }
 </style>
 
+<script type="text/javascript">
+function searchDate() {
+	let y = $("#select-year").val();
+	let m = $("#select-month").val();
+	
+	if(!y || !m) {
+		alert('날짜를 선택하세요.');
+		return;
+	}
+	
+	let query = "year=" +y+ "&month=" +m;
+	location.href = "${pageContext.request.contextPath}/myInsa/workRecord?" +query;
+}
+</script>
+
 
 <div class="left-side-bar">
     <ul>
@@ -21,6 +36,7 @@
 			<a href="${pageContext.request.contextPath}/myInsa/insaCard">&nbsp;인사기록카드</a> 
 			<a href="${pageContext.request.contextPath}/myInsa/workRecord">&nbsp;내 출근 기록</a> 
 			<a href="#">&nbsp;내 휴가 기록</a>
+			<a href="${pageContext.request.contextPath}/myInsa/organization">&nbsp;조직도</a>
 		</li>
 		<c:choose>
         <c:when test="${sessionScope.member.dept_no >= 60 && sessionScope.member.dept_no <= 70}">
@@ -31,7 +47,6 @@
                 <a href="${pageContext.request.contextPath}/insaManage/workList">&nbsp;근태관리</a>
                 <a href="#">&nbsp;휴가관리</a>
                 <a href="#">&nbsp;휴가설정</a>
-                <a href="#">&nbsp;조직도</a>
             </li>
         </c:when>
         <c:otherwise>
@@ -71,25 +86,28 @@
 					</div>
 				
 				<div class="worktime-select">
-						<select>
-							<option value="">2021년</option>
-							<option value="">2022년</option>
-							<option value="">2023년</option>
+						<select id="select-year" name="year" class="year">
+							<option value="" disabled="disabled">년도</option>
+							<c:forEach var="y" begin="${currentYear-5}" end="${currentYear}">
+								<option value="${y}" ${year==y?"selected='selected'" : "" }>${y}년</option>
+							</c:forEach>
 						</select>
-						<select>
-							<option value="">1월</option>
-							<option value="">2월</option>
-							<option value="">3월</option>
-							<option value="">4월</option>
-							<option value="">5월</option>
-							<option value="">6월</option>
-							<option value="">7월</option>
-							<option value="">8월</option>
-							<option value="">9월</option>
-							<option value="">10월</option>
-							<option value="">11월</option>
-							<option value="">12월</option>
+						<select id="select-month" name="month" class="month">
+							<option value="" disabled="disabled">월</option>
+							<option value="01" ${month=="01" ? "selected='selected'" : ""}>1월</option>
+							<option value="02" ${month=="02" ? "selected='selected'" : ""}>2월</option>
+							<option value="03" ${month=="03" ? "selected='selected'" : ""}>3월</option>
+							<option value="04" ${month=="04" ? "selected='selected'" : ""}>4월</option>
+							<option value="05" ${month=="05" ? "selected='selected'" : ""}>5월</option>
+							<option value="06" ${month=="06" ? "selected='selected'" : ""}>6월</option>
+						 	<option value="07" ${month=="07" ? "selected='selected'" : ""}>7월</option>
+							<option value="08" ${month=="08" ? "selected='selected'" : ""}>8월</option>
+							<option value="09" ${month=="09" ? "selected='selected'" : ""}>9월</option>
+							<option value="10" ${month=="10" ? "selected='selected'" : ""}>10월</option>
+							<option value="11" ${month=="11" ? "selected='selected'" : ""}>11월</option>
+							<option value="12" ${month=="12" ? "selected='selected'" : ""}>12월</option>
 						</select>
+						<button type="button" class="work-search-btn" onclick="searchDate();">검색</button>
 					</div>
 					
 					<div class="calendar-worktime">

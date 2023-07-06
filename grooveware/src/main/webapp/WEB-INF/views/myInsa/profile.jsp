@@ -21,6 +21,7 @@
 			<a href="${pageContext.request.contextPath}/myInsa/insaCard">&nbsp;인사기록카드</a> 
 			<a href="${pageContext.request.contextPath}/myInsa/workRecord">&nbsp;내 출근 기록</a> 
 			<a href="#">&nbsp;내 휴가 기록</a>
+			<a href="${pageContext.request.contextPath}/myInsa/organization">&nbsp;조직도</a>
 		</li>
 		<c:choose>
         <c:when test="${sessionScope.member.dept_no >= 60 && sessionScope.member.dept_no <= 70}">
@@ -31,7 +32,6 @@
                 <a href="${pageContext.request.contextPath}/insaManage/workList">&nbsp;근태관리</a>
                 <a href="#">&nbsp;휴가관리</a>
                 <a href="#">&nbsp;휴가설정</a>
-                <a href="#">&nbsp;조직도</a>
             </li>
         </c:when>
         <c:otherwise>

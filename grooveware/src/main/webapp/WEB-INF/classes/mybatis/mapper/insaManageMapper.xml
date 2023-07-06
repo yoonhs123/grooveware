@@ -103,6 +103,9 @@
 			<if test="keyword != null and keyword != '' ">
 				<include refid="where-list"/>
 			</if>
+			<if test="emp_status != 3">
+				AND emp_status = #{emp_status}
+			</if>
 		</where>
 	</select>
 	
@@ -138,10 +141,14 @@
 			  JOIN emp_history eh ON e.emp_no = eh.emp_no
 			  JOIN dept d ON eh.dept_no = d.dept_no
 			  JOIN pos p ON eh.pos_no = p.pos_no
-			) t WHERE rank = 1
+			) t 
 		<where>
+			AND rank = 1
 			<if test="keyword!=null and keyword!='' ">
 				<include refid="where-list"/>
+			</if>
+			<if test="emp_status != 3">
+				AND emp_status = #{emp_status}
 			</if>
 		</where>
 		ORDER BY emp_status, emp_join_date DESC
@@ -354,14 +361,17 @@
             JOIN dept d ON eh.dept_no = d.dept_no
             JOIN pos p ON eh.pos_no = p.pos_no
             JOIN worktime_recode wr ON e.emp_no = wr.emp_no
-            WHERE TO_CHAR(wr.work_starttime, 'YYYY') = TO_CHAR(SYSDATE, 'YYYY')
+            WHERE TO_CHAR(wr.work_starttime, 'YYYY') = #{work_starttime}
         ) t
         JOIN worktime_recode wr ON t.emp_no = wr.emp_no
-        WHERE t.rank = 1 	
-        	AND TO_CHAR(wr.work_starttime, 'YYYY') = TO_CHAR(SYSDATE, 'YYYY')
         <where>
-			<if test="keyword!=null and keyword!='' ">
+        	AND t.rank = 1 
+        	AND TO_CHAR(wr.work_starttime, 'YYYY') = #{work_starttime}
+			<if test="keyword != null and keyword != '' ">
 				<include refid="where-list"/>
+			</if>
+			<if test="work_starttime != null">
+				AND TO_CHAR(work_starttime, 'YYYY') = #{work_starttime}
 			</if>
 		</where>
 		GROUP BY t.emp_no, t.emp_name, t.dept_name, t.pos_name, t.work_year, t.work_month

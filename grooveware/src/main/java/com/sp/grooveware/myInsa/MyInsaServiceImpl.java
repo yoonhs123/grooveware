@@ -148,6 +148,22 @@ public class MyInsaServiceImpl implements MyInsaService {
 		
 		return list;
 	}
+
+	
+	@Override
+	public List<MyInsa> listDept(Map<String, Object> map) {
+		List<MyInsa> list = null;
+		
+		try {
+			list = dao.selectList("myInsa.listDept", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return list;
+	}
+	
+	
 	
 	
 	

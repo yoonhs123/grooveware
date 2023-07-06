@@ -132,3 +132,43 @@
 	float: left; 
 	font-size:15px;
 }
+
+.worktime-select {
+	display: flex;
+  	align-items: center;
+}
+
+.year,
+.month {
+  padding: 4px;
+  border: 1px solid #c1c1c1;
+  border-radius: 4px;
+  background-color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  margin: 20px 0 15px 0;
+  margin-right: 10px;
+  width: 90px;
+}
+
+.worktime-select select:focus {
+	outline: none;
+}
+
+.worktime-select select option:first-child {
+  background-color: #eee;
+}
+
+.work-search-btn {
+	height: 35px;
+	width : 55px;
+	border-radius: 5px;
+    padding: 5px 10px;
+    background-color: #eaeaea; 
+    color: #404040;
+    border: none;
+    cursor: pointer;
+    font-weight: 550;
+    margin: 0 3px;
+    margin: 20px 0 15px 0;
+}

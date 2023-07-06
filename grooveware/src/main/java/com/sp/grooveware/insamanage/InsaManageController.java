@@ -3,6 +3,7 @@ package com.sp.grooveware.insamanage;
 import java.io.File;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,6 +36,7 @@ public class InsaManageController {
 	public String insaMemberManage(@RequestParam(value= "page", defaultValue= "1") int current_page, 
 			@RequestParam(defaultValue = "all") String condition,
 			@RequestParam(defaultValue = "") String keyword,
+			@RequestParam(defaultValue = "3") int emp_status,
 			HttpServletRequest req,
 			HttpSession session,
 			Model model) throws Exception {
@@ -55,6 +57,7 @@ public class InsaManageController {
 		map.put("keyword", keyword);
 		map.put("condition", condition);
 		map.put("emp_no", info.getEmp_no());
+		map.put("emp_status", emp_status);
 		
 		dataCount = service.dataCount(map);
 		if(dataCount != 0) {
@@ -73,11 +76,11 @@ public class InsaManageController {
 		
 		List<InsaManage> list = service.listinsaMember(map);
 		
-		String query = "";
+		String query = "emp_status=" +emp_status;
 		String listUrl = cp+ "/insaManage/list";
 		
 		if(keyword.length() != 0) {
-			query = "condition=" +condition+ "&keyword=" + URLEncoder.encode(keyword, "utf-8");
+			query = "&condition=" +condition+ "&keyword=" + URLEncoder.encode(keyword, "utf-8");
 		}
 		
 		if(query.length() != 0) {
@@ -94,6 +97,7 @@ public class InsaManageController {
 		model.addAttribute("paging", paging);
 		model.addAttribute("condition", condition);
 		model.addAttribute("keyword", keyword);
+		model.addAttribute("emp_status", emp_status);
 		
 		return ".insaManage.list";
 	}
@@ -268,7 +272,9 @@ public class InsaManageController {
 	}
 	
 	@RequestMapping(value = "workList", method = RequestMethod.GET)
-	public String workList(@RequestParam(value= "page", defaultValue= "1") int current_page, 
+	public String workList(
+			@RequestParam(required =  false) String year,
+			@RequestParam(value= "page", defaultValue= "1") int current_page, 
 			@RequestParam(defaultValue = "all") String condition,
 			@RequestParam(defaultValue = "") String keyword,
 			HttpServletRequest req,
@@ -277,6 +283,14 @@ public class InsaManageController {
 		
 		String cp = req.getContextPath();
 		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		Calendar cal = Calendar.getInstance();
+		int currentYear = cal.get(Calendar.YEAR);
+		
+		String date = null;
+		if(year == null) {
+			year = String.format("%04d", cal.get(Calendar.YEAR));
+		}
+		date = year;
 		
 		int size = 10;
 		int total_page = 0;
@@ -291,6 +305,7 @@ public class InsaManageController {
 		map.put("keyword", keyword);
 		map.put("condition", condition);
 		map.put("emp_no", info.getEmp_no());
+		map.put("work_starttime", date);
 		
 		workDataCount = service.workDataCount(map);
 		System.out.println("workDataCount: " +workDataCount);
@@ -335,6 +350,8 @@ public class InsaManageController {
 		model.addAttribute("paging", paging);
 		model.addAttribute("condition", condition);
 		model.addAttribute("keyword", keyword);
+		model.addAttribute("currentYear", currentYear);
+		model.addAttribute("year", year);
 		
 		return ".insaManage.workList";
 	}

@@ -80,7 +80,7 @@
 					<div class="profile-picture border-radius">
 						<div style="height: 100%">
 							<div style="width: 100%; margin-bottom: 10px;" align="center">${dto.emp_no}</div>
-							<div class="insa-image">
+							<div class="insa-image" style="width: 90%; height: 50%;">
 							<img src="${pageContext.request.contextPath}/uploads/insaManage/${dto.emp_picture}">
 							</div>
 						</div>

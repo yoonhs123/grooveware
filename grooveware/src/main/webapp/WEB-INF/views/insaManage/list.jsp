@@ -117,6 +117,7 @@ $(function() {
 			<a href="${pageContext.request.contextPath}/myInsa/insaCard">&nbsp;인사기록카드</a> 
 			<a href="${pageContext.request.contextPath}/myInsa/workRecord">&nbsp;내 출근 기록</a> 
 			<a href="#">&nbsp;내 휴가 기록</a>
+			<a href="${pageContext.request.contextPath}/myInsa/organization">&nbsp;조직도</a>
 		</li>
 		<c:choose>
         <c:when test="${sessionScope.member.dept_no >= 60 && sessionScope.member.dept_no <= 70}">
@@ -127,7 +128,6 @@ $(function() {
                 <a href="${pageContext.request.contextPath}/insaManage/workList">&nbsp;근태관리</a>
                 <a href="#">&nbsp;휴가관리</a>
                 <a href="#">&nbsp;휴가설정</a>
-                <a href="#">&nbsp;조직도</a>
             </li>
         </c:when>
         <c:otherwise>
@@ -139,10 +139,30 @@ $(function() {
    <div class="right-contentbody">
    		<div class="board-insaManage-home">
    			<div class="title_container">
-   				<table class="table" style="margin-bottom: 20px">
+   				<table class="insa-list-tab">
    					<tr>
-   						<td class="title"> <h2><i class="bi bi-person-fill"></i>사원 관리</h2>
+   						<td class="title"> <h1><i class="bi bi-person-fill"></i>사원 관리</h1></td>
    					</tr>
+   					<tr>
+   						<td>
+   							<div class="box-insa insa">
+								<button class="insa-button insa-button-zz ${emp_status==3?'btnInsaActive':''}"
+									onclick="location.href='${pageContext.request.contextPath}/insaManage/list?emp_status=3';">전 사원</button>
+									
+								<button class="insa-button insa-button-zz ${emp_status==0?'btnInsaActive':''}"
+									onclick="location.href='${pageContext.request.contextPath}/insaManage/list?emp_status=0';">재직 사원</button> 
+									
+								<button class="insa-button insa-button-zz ${emp_status==1?'btnInsaActive':''}"
+									onclick="location.href='${pageContext.request.contextPath}/insaManage/list?emp_status=1';">휴직 사원</button>
+									
+								<button class="insa-button insa-button-zz ${emp_status==2?'btnInsaActive':''}"
+									onclick="location.href='${pageContext.request.contextPath}/insaManage/list?emp_status=2';">퇴직 사원</button>  							
+   							</div>
+   						</td>
+   					</tr>
+   				</table>
+   				
+   				<table class="table" style="margin-bottom: 20px">
    					<tr class="table">
    						<td align="left" width="50%">
    							${dataCount}개(${page}/${total_page} 페이지)
@@ -157,6 +177,7 @@ $(function() {
 									<option value="pos_name"  ${condition == "pos_name" ? "selected='selected'" : 	""} > 직위 </option>
 								</select>
 								<input type="text" name="keyword" value="${keyword}" class="insaManageHome">
+								<input type="hidden" name="emp_status" value="${emp_status}"> 
 								<button type="button" class="btn-insaManage-home" onclick="searchList()">검색</button>
 							</form>
 						</td>

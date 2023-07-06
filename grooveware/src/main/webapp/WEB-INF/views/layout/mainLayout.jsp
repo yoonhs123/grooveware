@@ -13,6 +13,7 @@
 	
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/vendor/jquery/css/jquery-ui.min.css" type="text/css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/vendor/fontawesome/css/all.min.css" type="text/css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/vendor/Highcharts/code/css/all.min.css" type="text/css">
 	
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/main.css" type="text/css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/insaInfo.css" type="text/css">
@@ -47,6 +48,11 @@
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/vendor/fullcalendar5/lib/locales-all.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/dateUtil.js"></script>
 	
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/vendor/Highcharts/code/highcharts.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/vendor/Highcharts/code/modules/sankey.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/vendor/Highcharts/code/modules/organization.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/vendor/Highcharts/code/modules/exporting.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/vendor/Highcharts/code/modules/accessibility.js"></script>
 	
 </head>
 
