@@ -62,7 +62,7 @@
     <div class="title_container">
         <table class="table" style="margin-bottom: 20px;">
             <tr>
-                <td class="title"><i class="fa-regular fa-comments"></i>&nbsp;<span>그루비&nbsp;톡</span></td>
+                <td class="title">&nbsp;<span>&nbsp;그루비&nbsp;톡</span></td>
             </tr>
         </table>
     </div>
@@ -83,7 +83,7 @@
     
 		<div class="chat-right">	
 			<div style="margin-top: 10px;">
-				<p style="padding: 5px 0; font-weight: 600;">
+				<p style="padding: 5px 0; font-weight: 600; color:white;">
 					<i class="fa-solid fa-angles-right"></i> 접속자 리스트</p>
 			</div>
 			<div class="chat-connection-list"></div>
