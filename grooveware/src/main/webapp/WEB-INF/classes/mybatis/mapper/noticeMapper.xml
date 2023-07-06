@@ -116,6 +116,7 @@
     <delete id="deleteNotice" parameterType="Long">
       DELETE from notice 
       WHERE noti_id= #{noti_id}
+      AND #{dept_no} = 60
     </delete>
     
     

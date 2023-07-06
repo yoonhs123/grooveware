@@ -8,7 +8,21 @@
  
  function sendNotice() {
 	  const f = document.noticeForm;
+	  let str;
 	  
+	  str = f.noti_title.value.trim();
+	    if(!str) {
+	        alert("제목을 입력하세요. ");
+	        f.subject.focus();
+	        return false;
+	    }
+	    
+	    str = f.noti_content.value;
+		if( !str || str === "<p><br></p>" ) {
+	        alert("내용을 입력하세요. ");
+	        f.content.focus();
+	        return false;
+	    }
 	  
 	  f.action = "${pageContext.request.contextPath}/notice/${gubun}/${mode}";
 	  f.submit();

@@ -21,9 +21,8 @@ function searchList() {
 	const f = document.searchForm;
 	f.submit();
 }
-  
-  
-function   
+ 
+
  
 </script>
 <div class="left-side-bar">

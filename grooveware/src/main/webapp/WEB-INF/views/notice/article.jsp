@@ -4,17 +4,23 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
  <script type="text/javascript">
- <c:if test="${sessionScope.member.emp_no == dto.emp_no}">
+ <script type="text/javascript">
+ <c:if test="${sessionScope.member.dept_no != 60}">
  function deleteNotice() {
- 	let query = "noti_id=${dto.noti_id}&${query}";
- 	let url = "${pageContext.request.contextPath}/notice/${gubun}/delete?" + query;
-
- 	if(confirm(" 삭제 하시겠습니까 ? ")) {
- 		location.href = url;
- 	}
+   alert("관리자만 삭제 가능합니다.");
  }
  </c:if>
- </script>
+ 
+ function noticeAlert() {
+   var message = "${message}";
+   if (message !== "") {
+     alert(message);
+     history.back();
+   }
+ }
+ noticeAlert();
+</script>
+
 
 
 <div class="left-side-bar">

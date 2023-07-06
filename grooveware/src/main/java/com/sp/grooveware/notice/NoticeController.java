@@ -257,11 +257,20 @@ public class NoticeController {
 			@PathVariable String gubun,
 			@RequestParam long noti_id,
 			@RequestParam String page,
+			Model model,
+			HttpServletResponse resp,
 			@RequestParam(defaultValue = "all") String condition,
 			@RequestParam(defaultValue = "") String keyword,
 			HttpSession session) throws Exception {
 		SessionInfo info = (SessionInfo) session.getAttribute("member");
 
+		if (info.getDept_no() != 60) {
+			
+		        // DEPT_NO가 60이 아닌 경우 삭제 작업을 수행하지 않고,리스트 페이지로 이동
+			  model.addAttribute("message", "관리자만 삭제 가능합니다.");
+		       return "redirect:/notice/"+gubun+"/list";
+		        
+		}
 		keyword = URLDecoder.decode(keyword, "utf-8");
 		String query = "page=" + page;
 		if (keyword.length() != 0) {
@@ -275,7 +284,8 @@ public class NoticeController {
 
 		return "redirect:/notice/"+gubun+"/list?" + query;
 	}
-
+ 
+	
 	
 	
 	@GetMapping(value = "download")
