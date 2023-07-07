@@ -115,7 +115,7 @@ input[type=checkbox], input[type=radio] { vertical-align: middle; }
 			</tr>
 			<tr>
 				<td colspan="2">
-					첨부
+					첨부 : ${dto.original_filename}
 					<c:if test="${dto.save_filename}">
 						<a href="${pageContext.request.contextPath}/notice/${gubun}/download.do?num=${dto.noti_id}">${dto.save_filename}</a>
 					</c:if>

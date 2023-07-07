@@ -57,8 +57,8 @@ function searchList() {
 				<div class="title_container">
 				<table class="table" style="margin-bottom: 20px;">
 					<tr>
-						<td class="title" > <h3><i class="fa-regular fa-clipboard"></i> ${gubun=="dept"? dept_name :"사내" } 공지사항</h3> 
-						</td>
+						<td class="title" ><h3>&nbsp;<span>|</span>&nbsp;${gubun=="dept"? dept_name :"사내" } 공지사항</h3>
+						</td> 
 					</tr>
 				</table>
 				

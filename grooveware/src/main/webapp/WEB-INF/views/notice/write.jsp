@@ -86,7 +86,7 @@ input[type=checkbox], input[type=radio] { vertical-align: middle; }
   <div class="right-contentbody">
   <div class="notice-list">
 	<div class="title">
-	    <h3><i class="fa-regular fa-clipboard"></i> ${gubun=="dept"? dept_name :"사내" } 공지사항</h3>
+	    <h3>&nbsp;<span>|</span>&nbsp;${gubun=="dept"? dept_name :"사내" } 공지사항</h3>
 	</div>
 
 	<form name="noticeForm" method="post"  enctype="multipart/form-data"  >
