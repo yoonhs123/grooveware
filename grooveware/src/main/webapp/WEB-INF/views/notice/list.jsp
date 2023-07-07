@@ -30,6 +30,14 @@ textarea.form-control { height: 170px; resize : none; }
 
 textarea:focus, input:focus { outline: none; }
 input[type=checkbox], input[type=radio] { vertical-align: middle; }
+
+.n_title {
+   
+    border-bottom: none;
+
+}
+
+
 </style>
 
 <script type="text/javascript">
@@ -57,7 +65,12 @@ function searchList() {
 				<div class="title_container">
 				<table class="table" style="margin-bottom: 20px;">
 					<tr>
-						<td class="title" ><h3>&nbsp;<span>|</span>&nbsp;${gubun=="dept"? dept_name :"사내" } 공지사항</h3>
+						<td class="title" > <h2>
+                &nbsp;&nbsp;  <i class="fa-solid fa-pen-to-square"></i>
+               ${gubun == "dept" ? dept_name : "사내"} 공지사항
+               </h2>
+
+               
 						</td> 
 					</tr>
 				</table>
@@ -80,16 +93,16 @@ function searchList() {
 						    	<button type="button" class="btn-notice" onclick="location.href='${pageContext.request.contextPath}/notice/${gubun}/write';">등록하기</button>
 							</form>
 							<div style="margin-top: 10px;">
-					       	1개(1/1 페이지)
+					      ${dataCount}개(${page}/${total_page} 페이지)
 							</div>
 						</td>
 					</tr>
 				</table>
 
 			
-			<table class="table table-border table-list" >
-				<thead >
-					<tr>
+			<table class="table table-border table-list">
+				<thead style= " border-bottom: none;">
+					<tr class = "n_title">
 						<th width="70"> 번호 </th>
 						<th> 제목 </th>
 						<th width="100"> 작성자 </th>					
