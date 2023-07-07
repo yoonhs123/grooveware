@@ -73,13 +73,12 @@ public class calendarController {
 		SessionInfo info=(SessionInfo)session.getAttribute("member");
 		
 		try {
-			
 			if(dto.getCategory_num() == 0) {
 				dto.setColor("#5882FA");
 			} else if(dto.getCategory_num() == 1) {
-				dto.setColor("#FA5858");
+				dto.setColor("#91CC75");
 			} else {
-				dto.setColor("#AC58FA");
+				dto.setColor("#EE6666");
 			}
 			
 			dto.setEmp_no(info.getEmp_no());

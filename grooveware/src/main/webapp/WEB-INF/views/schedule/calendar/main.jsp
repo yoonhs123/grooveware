@@ -5,7 +5,6 @@
 <style>
 /* Generic styles */
 .modal-content {
-    background-color: #f7f7f7;
     border-radius: 5px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
@@ -39,32 +38,9 @@
 
 
 
-/* Button styles */
-.btn {
-    margin: 5px;
-    border: none;
-    transition: all 0.3s ease;
-}
 
-.btn-outline-primary {
-    background-color: #007bff;
-    color: #fff;
-}
 
-.btn-outline-primary:hover {
-    background-color: #0056b3;
-    color: #fff;
-}
 
-.btn-outline-danger {
-    background-color: #dc3545;
-    color: #fff;
-}
-
-.btn-outline-danger:hover {
-    background-color: #c82333;
-    color: #fff;
-}
 
 .text-end {
     text-align: right;
@@ -110,9 +86,11 @@
 <div class="modal" id="myDialogModal" tabindex="-1" aria-labelledby="myDialogModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
+			<div style="width: 100%; height: 100%;">
+				    	<button type="button" class="arch-close" onclick="closeModal();">&times;</button>
+			</div>
 			<div class="modal-header">
 				<h2 class="modal-title" id="myDialogModalLabel">일정 상세 보기</h2>
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
 			<div class="modal-body ">
 				<table class="table">
@@ -161,10 +139,8 @@
 				<table class="table table-borderless">
 					<tr>
 						<td class="text-end">
-							<c:if test="${sessionScope.member.dept_no == '61' || sessionScope.member.dept_no == '62' }">
 								<button type="button" class="btn btn-outline-primary btnScheduleUpdate">일정 수정</button>
 				    			<button type="button" class="btn btn-outline-danger btnScheduleDelete">일정 삭제</button>
-							</c:if>
 						</td>
 					</tr>
 				</table>
@@ -439,6 +415,9 @@ function updateDrag(calEvent) {
 	ajaxFun(url, "post", query, "json", fn);
 }
 
+function closeModal() {
+	document.getElementById("myDialogModal").style.display = "none";
+}
 </script>
 		
 
