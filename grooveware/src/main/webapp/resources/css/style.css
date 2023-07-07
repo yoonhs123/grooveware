@@ -20,6 +20,7 @@ tr.hover:hover { cursor: pointer; background: #f5fffa; }
 .border-bottom1 { border-bottom: 1px solid #ced4da; }
 .border-bottom2 { border-bottom: 2px solid #212529; }
 
+
 /* text */
 .text-left { text-align: left; }
 .text-right { text-align: right; } 	
