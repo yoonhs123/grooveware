@@ -3,19 +3,36 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+<style>
+/* form */
+.form-control {
+	border: 1px solid #999; border-radius: 4px; background-color: #fff;
+	padding: 5px 5px; 
+	font-family: "맑은 고딕", 나눔고딕, 돋움, sans-serif;
+	vertical-align: baseline;
+}
+.form-control[readonly] { background-color:#f8f9fa; }
+
+textarea.form-control { height: 170px; resize : none; }
+
+.form-select2 {
+	border: 1px solid #999; border-radius: 4px; background-color: #fff;
+	padding: 4px 5px; 
+	font-family: "맑은 고딕", 나눔고딕, 돋움, sans-serif;
+	vertical-align: baseline;
+}
+.form-select2[readonly] { background-color:#f8f9fa; }
+
+.form-check-input { width: 1em; height: 1em; vertical-align: middle; background-color: #fff; border: 1px solid rgba(0,0,0,.25); margin-top: 7px; margin-bottom: 7px; }
+.form-check-input:checked { background-color: #0d6efd; border-color: #0d6efd; }
+.form-check-input[type=checkbox] { border-radius: 0.25em; }
+.form-check-label { cursor: pointer; vertical-align: middle; margin-top: 7px; margin-bottom: 7px; }
+
+textarea:focus, input:focus { outline: none; }
+input[type=checkbox], input[type=radio] { vertical-align: middle; }
+</style>
+
 <script type="text/javascript">
-window.addEventListener("load", function(){
-	let page = ${page};
-	let pageSize = ${size};
-	let dataCount = ${dataCount};
-	let url = "${listUrl}";
-
-	let total_page = pageCount(dataCount, pageSize);
-	let paging = pagingUrl(page, total_page, url);
-
-	document.querySelector(".dataCount").innerHTML = dataCount + "개 (" + page + "/" + total_page + " 페이지)";
-	document.querySelector(".page-navigation").innerHTML = dataCount == 0 ? "등록된 게시물이 없습니다." : paging;
-}, false);
 
 function searchList() {
 	const f = document.searchForm;
@@ -29,11 +46,10 @@ function searchList() {
       
         <ul>
             <li>
-                <a href="${pageContext.request.contextPath}/notice/all/list">회사 공지사항</a>
+                <a href="${pageContext.request.contextPath}/notice/all/list">사내 공지사항</a>
                 <a href="${pageContext.request.contextPath}/notice/dept/list">${dept_name} 공지사항</a>
             <li>
         </ul>
-       <hr>
 </div>
     
 		<div class="right-contentbody">
@@ -41,7 +57,7 @@ function searchList() {
 				<div class="title_container">
 				<table class="table" style="margin-bottom: 20px;">
 					<tr>
-						<td class="title" > <h3><span>|</span> ${gubun=="dept"? dept_name :"회사" } 공지사항</h3> 
+						<td class="title" > <h3><i class="fa-regular fa-clipboard"></i> ${gubun=="dept"? dept_name :"사내" } 공지사항</h3> 
 						</td>
 					</tr>
 				</table>
@@ -52,7 +68,7 @@ function searchList() {
 					<tr>	
 						<td align="right">
 							<form name="searchForm" action="${pageContext.request.contextPath}/notice/${gubun}/list" method="post">
-								<select name="condition" class="form-select">
+								<select name="condition" class="form-select2">
 									<option value="all"  ${condition == "all" ? "selected='selected'" : ""} >제목+내용</option>
 									<option value="name"  ${condition == "name" ? "selected='selected'" : ""} >작성자</option>
 									<option value="reg_date"  ${condition == "reg_date" ? "selected='selected'" : ""} >등록일</option>
@@ -63,6 +79,9 @@ function searchList() {
 								<button type="button" class="btn-notice" onclick="searchList();">검색</button>
 						    	<button type="button" class="btn-notice" onclick="location.href='${pageContext.request.contextPath}/notice/${gubun}/write';">등록하기</button>
 							</form>
+							<div style="margin-top: 10px;">
+					       	1개(1/1 페이지)
+							</div>
 						</td>
 					</tr>
 				</table>
@@ -84,10 +103,10 @@ function searchList() {
 					<c:forEach var="dto"  items="${list}" varStatus="status">
 						<tr>					
 							<td>${dataCount - (page-1) * size - status.index}</td>
-							<td>
+							<td align="left">
 								<a href="${articleUrl}&noti_id=${dto.noti_id}">${dto.noti_title}</a>
 							</td>
-							<td>${dto.emp_name}</td>
+							<td>관리자</td>
 							<td>${dto.noti_regdate}</td>
 							<td>${dto.noti_hitcount}</td>
 							<td>
