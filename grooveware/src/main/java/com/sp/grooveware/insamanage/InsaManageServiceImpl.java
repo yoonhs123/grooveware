@@ -273,6 +273,19 @@ public class InsaManageServiceImpl implements InsaManageService  {
 	}
 	
 	@Override
+	public List<InsaManage> readWorkTime(Map<String, Object> map, long emp_no) {
+		List<InsaManage> list = null;
+		
+		try {
+			list = dao.selectList("insaManage.listWorkRecord", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+
+	@Override
 	public InsaManage getWork(long emp_no) {
 		InsaManage dto = null;
 		
@@ -283,7 +296,8 @@ public class InsaManageServiceImpl implements InsaManageService  {
 		}
 		return dto;
 	}
-
+	
+	
 	@Override
 	public List<InsaManage> posHistoryList(long emp_no) {
 		List<InsaManage> list = null;
@@ -302,6 +316,19 @@ public class InsaManageServiceImpl implements InsaManageService  {
 		
 		try {
 			list = dao.selectList("insaManage.deptHistoryList", emp_no);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+
+	@Override
+	public List<InsaManage> holidayMemberList(Map<String, Object> map) {
+		List<InsaManage> list = null;
+		
+		try {
+			list = dao.selectList("insaManage.listholidayMember", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

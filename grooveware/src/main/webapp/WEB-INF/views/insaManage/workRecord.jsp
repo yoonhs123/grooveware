@@ -140,4 +140,3 @@ function searchDate() {
 				</div>
 			</div>
 		</div>
-

@@ -54,8 +54,8 @@ function sendOk() {
                 <a href="${pageContext.request.contextPath}/insaManage/list">인사관리</a>
                 <a href="${pageContext.request.contextPath}/insaManage/list">&nbsp;사원관리</a>
                 <a href="${pageContext.request.contextPath}/insaManage/workList">&nbsp;근태관리</a>
-                <a href="#">&nbsp;휴가관리</a>
-                <a href="#">&nbsp;휴가설정</a>
+                <a href="${pageContext.request.contextPath}/insaManage/holidayList">&nbsp;휴가관리</a>
+                <a href="${pageContext.request.contextPath}/insaManage/holidaySetting">&nbsp;휴가설정</a>
             </li>
         </c:when>
         <c:otherwise>

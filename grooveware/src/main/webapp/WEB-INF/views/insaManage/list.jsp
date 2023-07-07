@@ -126,8 +126,8 @@ $(function() {
                 <a href="${pageContext.request.contextPath}/insaManage/list">인사관리</a>
                 <a href="${pageContext.request.contextPath}/insaManage/list">&nbsp;사원관리</a>
                 <a href="${pageContext.request.contextPath}/insaManage/workList">&nbsp;근태관리</a>
-                <a href="#">&nbsp;휴가관리</a>
-                <a href="#">&nbsp;휴가설정</a>
+                <a href="${pageContext.request.contextPath}/insaManage/holidayList">&nbsp;휴가관리</a>
+                <a href="${pageContext.request.contextPath}/insaManage/holidaySetting">&nbsp;휴가설정</a>
             </li>
         </c:when>
         <c:otherwise>
@@ -141,7 +141,7 @@ $(function() {
    			<div class="title_container">
    				<table class="insa-list-tab">
    					<tr>
-   						<td class="title"> <h1><i class="bi bi-person-fill"></i>사원 관리</h1></td>
+   						<td class="title"> <h2><i class="bi bi-person-fill"></i>| 사원 관리</h2></td>
    					</tr>
    					<tr>
    						<td>
@@ -203,7 +203,7 @@ $(function() {
    					
    					<tbody>
    						<c:forEach var="dto" items="${list}" varStatus="status">
-   							<tr class="insa-home-td">
+   							<tr class="insa-home2-td">
    							<td> ${dataCount - (page-1) * size - status.index} </td>
    							<td> ${dto.emp_no} </td>
    							<td> ${dto.emp_name} </td>

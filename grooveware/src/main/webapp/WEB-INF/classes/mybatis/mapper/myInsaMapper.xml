@@ -71,7 +71,7 @@
 			TO_CHAR(work_starttime, 'MM/DD') work_day, 
 			TO_CHAR(work_starttime, 'HH24:MI') work_starttime, 
 			TO_CHAR(work_endtime, 'HH24:MI') work_endtime, work_status 
-		FROM worktime_recode 
+		FROM worktime_recode
 		<where>
 			AND emp_no = #{emp_no}
 			<if test="work_starttime != null">
@@ -84,14 +84,15 @@
 	
 	<!-- 출근일, 지각일, 결근일 구하기 -->
 	<select id="workCount" parameterType="Long" resultType="com.sp.grooveware.myInsa.MyInsa">
-		SELECT EXTRACT(YEAR FROM work_starttime) AS work_year,
-	        COUNT(CASE WHEN work_status = 0 THEN 1 END) AS work_Count,
-	        COUNT(CASE WHEN work_status = 1 THEN 1 END) AS workLate_Count,
-	        COUNT(CASE WHEN work_status = 2 THEN 1 END) AS workAbsence_Count,
-	       	COUNT(CASE WHEN work_status = 3 THEN 1 END) AS workLateEarly_Count 
-	    FROM worktime_recode
-	    WHERE emp_no = #{emp_no}
-	    GROUP BY EXTRACT(YEAR FROM work_starttime)
+		SELECT EXTRACT(YEAR FROM wr.work_starttime) AS work_year, e.emp_name,
+	        COUNT(CASE WHEN wr.work_status = 0 THEN 1 END) AS work_Count,
+	        COUNT(CASE WHEN wr.work_status = 1 THEN 1 END) AS workLate_Count,
+	        COUNT(CASE WHEN wr.work_status = 2 THEN 1 END) AS workAbsence_Count,
+	       	COUNT(CASE WHEN wr.work_status = 3 THEN 1 END) AS workLateEarly_Count 
+	    FROM worktime_recode wr
+	    JOIN emp e ON e.emp_no = wr.emp_no
+	    WHERE wr.emp_no = #{emp_no}
+	    GROUP BY EXTRACT(YEAR FROM wr.work_starttime), e.emp_name
 	</select>
 	
 	
@@ -114,13 +115,20 @@
 	</select>
 	
 	<!-- 조직도 부서 리스트 -->
-	<select id="listDept" parameterType="Long" resultType="com.sp.grooveware.myInsa.MyInsa">
+	<select id="listDept" resultType="com.sp.grooveware.myInsa.MyInsa">
+	<!-- 
 		SELECT dept_no, dept_name, dept_status, top_dept_no 
         FROM dept
         WHERE dept_status = 0
         START WITH top_dept_no IS NULL
         CONNECT BY PRIOR dept_no = top_dept_no
         ORDER BY dept_no
+     -->
+		SELECT d.dept_no, d.dept_name, d.dept_status, NVL(d.top_dept_no, 0) top_dept_no, d2.dept_name top_dept_name
+        FROM dept d
+        JOIN dept d2 ON d2.dept_no = d.top_dept_no
+        WHERE d.dept_status = 0
+        ORDER BY top_dept_no   
 	</select>
 	 
 </mapper>

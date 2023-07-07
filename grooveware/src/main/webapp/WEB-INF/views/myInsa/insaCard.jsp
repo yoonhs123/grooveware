@@ -31,8 +31,8 @@ $(function() {
                 <a href="${pageContext.request.contextPath}/insaManage/list">인사관리</a>
                 <a href="${pageContext.request.contextPath}/insaManage/list">&nbsp;사원관리</a>
                 <a href="${pageContext.request.contextPath}/insaManage/workList">&nbsp;근태관리</a>
-                <a href="#">&nbsp;휴가관리</a>
-                <a href="#">&nbsp;휴가설정</a>
+                <a href="${pageContext.request.contextPath}/insaManage/holidayList">&nbsp;휴가관리</a>
+                <a href="${pageContext.request.contextPath}/insaManage/holidaySetting">&nbsp;휴가설정</a>
             </li>
         </c:when>
         <c:otherwise>
@@ -43,7 +43,7 @@ $(function() {
 </div>
 
 <div class="right-contentbody">
-	<h1  style="margin-bottom: 3%">내 인사 기록 카드</h1>
+	<h2 style="margin-bottom: 3%">|&nbsp;'${dto.emp_name}'님의 인사 기록 카드</h2>
 	<table class="insa-info-table">
 		<tbody>
 			<tr>
@@ -62,7 +62,7 @@ $(function() {
 				<td class="main-text">입사일 </td>
 				<td>
 					 ${dto.emp_join_date}
-					 [ <span class="work-year">${dto.annual_leave} 년차</span> ]
+					 [ <span>${dto.annual_leave} 년차</span> ]
 				</td>
 			</tr>
 		</tbody>

@@ -356,11 +356,121 @@ public class InsaManageController {
 		return ".insaManage.workList";
 	}
 	
-	
-	@RequestMapping("holidayList")
-	public String holidayList() throws Exception {
-		return ".insaManage.holidayList";
+	@RequestMapping(value="workRecord")
+	public String workRecordArticle(
+			@RequestParam long emp_no,
+			@RequestParam(required = false) String year,
+			@RequestParam(required = false) String month,
+			@RequestParam(defaultValue = "all") String condition,
+			@RequestParam(defaultValue = "") String keyword,
+			Model model) throws Exception {
+		
+		 Calendar cal = Calendar.getInstance();
+		 int currentYear = cal.get(Calendar.YEAR);
+		 
+		 String date = null;
+		 if(year == null || month == null) {
+			 year = String.format("%04d", cal.get(Calendar.YEAR));
+			 month = String.format("%02d", cal.get(Calendar.MONTH) + 1);
+		 }
+		 date = year + month;
+			 
+		 
+		 Map<String, Object> map = new HashMap<String, Object>();
+		 map.put("keyword", keyword);
+		 map.put("condition", condition);
+		 map.put("emp_no", emp_no);
+		 map.put("work_starttime", date);
+		 
+		List<InsaManage> list = service.readWorkTime(map, emp_no);
+		 
+		InsaManage dto = service.getWork(emp_no);
+		 
+		model.addAttribute("list", list);
+		model.addAttribute("condition", condition);
+		model.addAttribute("keyword", keyword);
+		model.addAttribute("dto", dto);
+		model.addAttribute("currentYear", currentYear);
+		model.addAttribute("year", year);
+		model.addAttribute("month", month);
+		
+		return ".insaManage.workRecord";
 	}
 	
 	
+	@RequestMapping(value =  "holidayList", method = RequestMethod.GET)
+	public String holidayList(@RequestParam(value= "page", defaultValue= "1") int current_page, 
+			@RequestParam(defaultValue = "all") String condition,
+			@RequestParam(defaultValue = "") String keyword,
+			@RequestParam(defaultValue = "3") int emp_status,
+			HttpServletRequest req,
+			HttpSession session,
+			Model model) throws Exception {
+		
+		String cp = req.getContextPath();
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		
+		int size = 10;
+		int total_page = 0;
+		int dataCount = 0;
+		
+		if(req.getMethod().equalsIgnoreCase("GET")) {
+			keyword = URLDecoder.decode(keyword, "utf-8");
+		}
+		
+		// 전체 페이지 수
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("keyword", keyword);
+		map.put("condition", condition);
+		map.put("emp_no", info.getEmp_no());
+		map.put("emp_status", emp_status);
+		
+		dataCount = service.dataCount(map);
+		if(dataCount != 0) {
+			total_page = myUtil.pageCount(dataCount, size);
+		}
+		
+		if(total_page < current_page ) {
+			current_page = total_page;
+		}
+		
+		int offset = (current_page - 1) * size;
+		if(offset < 0) offset = 0;
+		
+		map.put("offset", offset);
+		map.put("size", size);
+		
+		
+		List<InsaManage> list = service.holidayMemberList(map);
+		
+		String query = "emp_status=" +emp_status;
+		String listUrl = cp+ "/insaManage/holidayList";
+		
+		if(keyword.length() != 0) {
+			query = "&condition=" +condition+ "&keyword=" + URLEncoder.encode(keyword, "utf-8");
+		}
+		
+		if(query.length() != 0) {
+			listUrl = listUrl + "?"+ query;
+		}
+		
+		String paging = myUtil.paging(current_page, total_page, listUrl);
+		
+		model.addAttribute("list", list);
+		model.addAttribute("page", current_page);
+		model.addAttribute("dataCount", dataCount);
+		model.addAttribute("size", size);
+		model.addAttribute("total_page", total_page);
+		model.addAttribute("paging", paging);
+		model.addAttribute("condition", condition);
+		model.addAttribute("keyword", keyword);
+		model.addAttribute("emp_status", emp_status);
+		
+		return ".insaManage.holidayList";
+	}
+	
+	@RequestMapping("holidaySetting")
+	public String holidaySetting() throws Exception {
+		return ".insaManage.holidaySetting";
+	}
 }

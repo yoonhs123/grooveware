@@ -30,8 +30,8 @@
                 <a href="${pageContext.request.contextPath}/insaManage/list">인사관리</a>
                 <a href="${pageContext.request.contextPath}/insaManage/list">&nbsp;사원관리</a>
                 <a href="${pageContext.request.contextPath}/insaManage/workList">&nbsp;근태관리</a>
-                <a href="#">&nbsp;휴가관리</a>
-                <a href="#">&nbsp;휴가설정</a>
+                <a href="${pageContext.request.contextPath}/insaManage/holidayList">&nbsp;휴가관리</a>
+                <a href="${pageContext.request.contextPath}/insaManage/holidaySetting">&nbsp;휴가설정</a>
             </li>
         </c:when>
         <c:otherwise>
@@ -43,7 +43,7 @@
 
 
 <div class="right-contentbody">
-	<h1 style="margin-bottom: 3%">&nbsp;내 인사 정보</h1>
+	<h2 style="margin-bottom: 3%">|&nbsp;'${dto.emp_name}'님의 인사 정보</h2>
 	<div class="div-container">
 	<div class="div-left">
 		<div class="div-top">

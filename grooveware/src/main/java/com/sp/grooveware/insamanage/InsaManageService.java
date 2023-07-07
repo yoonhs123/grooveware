@@ -53,9 +53,15 @@ public interface InsaManageService {
 	public int workDataCount(Map<String, Object> map);
 	// 사원 근태 계산
 	public InsaManage getWork(long emp_no);
+	// 사원 근태 상세
+	public List<InsaManage> readWorkTime(Map<String, Object> map, long emp_no);
+	
 	
 	// PosHistoryList 
 	public List<InsaManage> posHistoryList(long emp_no);
 	// DeptHistoryList
 	public List<InsaManage> deptHistoryList(long emp_no);
+	
+	// 휴가 사원 리스트
+	public List<InsaManage> holidayMemberList(Map<String, Object> map);
 }

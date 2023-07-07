@@ -4,8 +4,9 @@ import java.util.List;
 import java.util.Map;
 
 public interface MyInsaService {
-	// insaCard
+	// 사원 연차
 	public int getAnnualLeave(long emp_no);
+	// insaCard
 	public MyInsa readInsaCard(long emp_no);
 	
 	// profile
@@ -26,5 +27,5 @@ public interface MyInsaService {
 	
 	
 	// 부서 리스트
-	public List<MyInsa> listDept(Map<String, Object> map);
+	public List<MyInsa> listDept();
 }

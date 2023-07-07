@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sp.grooveware.common.MyUtil;
 import com.sp.grooveware.member.SessionInfo;
@@ -101,7 +102,7 @@ public class MyInsaController {
 		return "redirect:/myInsa/profile";
 	}
 
-	@RequestMapping(value="workRecord", method = RequestMethod.GET)
+	@RequestMapping(value="workRecord")
 	public String workRecordArticle(
 			@RequestParam(required = false) String year,
 			@RequestParam(required = false) String month,
@@ -131,7 +132,6 @@ public class MyInsaController {
 		 
 		 List<MyInsa> list = myInsaService.readWorkTime(map, info.getEmp_no());
 		 
-		 
 		 MyInsa dto = myInsaService.getWork(info.getEmp_no());
 		 
 		model.addAttribute("list", list);
@@ -142,22 +142,26 @@ public class MyInsaController {
 		model.addAttribute("year", year);
 		model.addAttribute("month", month);
 		
-		
 		return ".myInsa.workRecord";
 	}
 	
 	@RequestMapping(value = "organization", method = RequestMethod.GET)
-	public String Article(Model model) throws Exception {
+	public String organization() throws Exception {
 		
-		Map<String, Object> map = new HashMap<String, Object>();
-		
-		List<MyInsa> list = myInsaService.listDept(map);
-		
-		
-		model.addAttribute("list", list);
 		return ".myInsa.organization";
 	}
 	
-	
-	
+	@RequestMapping(value = "organizationItem", method = RequestMethod.GET)
+	@ResponseBody
+	public Map<String, Object> organizationItem() throws Exception {
+		
+		Map<String, Object> model = new HashMap<String, Object>();
+		
+		List<MyInsa> list = myInsaService.listDept();
+		
+		model.put("list", list);
+		
+		return model;
+	}
+
 }

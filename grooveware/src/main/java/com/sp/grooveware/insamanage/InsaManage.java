@@ -59,6 +59,7 @@ public class InsaManage {
 	private String annual_year;
 	private int annual_count;
 	private int annual_use;
+	private int annual_remain;
 
 	
 	public String getAnnual_year() {
@@ -325,6 +326,12 @@ public class InsaManage {
 	}
 	public void setWork_YearMonth(String work_YearMonth) {
 		this.work_YearMonth = work_YearMonth;
+	}
+	public int getAnnual_remain() {
+		return annual_remain;
+	}
+	public void setAnnual_remain(int annual_remain) {
+		this.annual_remain = annual_remain;
 	}
 	
 }

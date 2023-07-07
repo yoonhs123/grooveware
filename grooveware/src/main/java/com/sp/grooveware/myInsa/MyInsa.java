@@ -17,6 +17,7 @@ public class MyInsa {
 	private String emp_zip;
 	private String emp_addr1;
 	private String emp_addr2;
+	private String top_dept_name;
 	
 	private MultipartFile selectFile;
 	
@@ -259,5 +260,11 @@ public class MyInsa {
 	}
 	public void setTop_dept_no(long top_dept_no) {
 		this.top_dept_no = top_dept_no;
+	}
+	public String getTop_dept_name() {
+		return top_dept_name;
+	}
+	public void setTop_dept_name(String top_dept_name) {
+		this.top_dept_name = top_dept_name;
 	}
 }

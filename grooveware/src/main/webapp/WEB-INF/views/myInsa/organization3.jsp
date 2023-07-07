@@ -22,8 +22,8 @@
                 <a href="${pageContext.request.contextPath}/insaManage/list">인사관리</a>
                 <a href="${pageContext.request.contextPath}/insaManage/list">&nbsp;사원관리</a>
                 <a href="${pageContext.request.contextPath}/insaManage/workList">&nbsp;근태관리</a>
-                <a href="${pageContext.request.contextPath}/insaManage/holidayList">&nbsp;휴가관리</a>
-                <a href="${pageContext.request.contextPath}/insaManage/holidaySetting">&nbsp;휴가설정</a>
+                <a href="#">&nbsp;휴가관리</a>
+                <a href="#">&nbsp;휴가설정</a>
             </li>
         </c:when>
         <c:otherwise>
@@ -53,17 +53,20 @@ $(function(){
 	let url = "${pageContext.request.contextPath}/myInsa/organizationItem";
 	
 	$.getJSON(url, function(data){
-		let trees = [['우리그룹', 'GROOVEWARE'], ['GROOVEWARE', '대표이사']];
-		let nodes = [{id: '우리그룹'}, {id: 'GROOVEWARE'}];
+		//let trees = [['우리그룹', 'GROOVEWARE'], ['GROOVEWARE', '1']];
+		//let nodes = [{id: '우리그룹'}, {id: 'GROOVEWARE'}];
+		let trees = [['우리그룹', '0'], ['0', '1']];
+		let nodes = [{id: '우리그룹'}, {id: '0', title: 'GROOVEWARE'}];
 		
 		for(let i = 0; i < data.list.length; i++) {
 			let item = data.list[i];
 			
-			let top_dept_name = item.top_dept_name;
+			let no = String(item.dept_no);
+			let top_no = String(item.top_dept_no);
 			let name = item.dept_name;
 			
-			let tree = [top_dept_name, name];
-			let node = {id:name};
+			let tree = [top_no, no];
+			let node = {id:no, title:name};
 			
 			trees.push(tree);
 			nodes.push(node);
@@ -74,7 +77,7 @@ $(function(){
 
 		Highcharts.chart('container', {
 		    chart: {
-		        height: 650,
+		        height: 600,
 		        inverted: true
 		    },
 
@@ -97,32 +100,30 @@ $(function(){
 		        data: trees,
 		        levels: [{
 		            level: 0,
-		            color: '#0E2954',
+		            color: 'silver',
 		            dataLabels: {
-		                color: 'white'
+		                color: 'black'
 		            },
-		            height: 100,
-		            nodeWidth: 500
+		            height: 25
 		        }, {
 		            level: 1,
-		            color: '#1F6E8C',
+		            color: 'silver',
 		            dataLabels: {
-		                color: ''
+		                color: 'black'
 		            },
-		            height: 100,
-		            nodeWidth: 120
+		            height: 25
 		        }, {
 		            level: 2,
-		            color: '#2E8A99'
+		            color: '#980104'
 		        }, {
 		            level: 4,
-		            color: '#84A7A1'
+		            color: '#359154'
 		        }],
 		        nodes: nodes,
 		        colorByPoint: false,
-		        color: '#A2FF86',
+		        color: '#007ad0',
 		        dataLabels: {
-		            color: ''
+		            color: 'white'
 		        },
 		        borderColor: 'white',
 		        nodeWidth: 65
@@ -132,8 +133,8 @@ $(function(){
 		    },
 		    exporting: {
 		        allowHTML: true,
-		        sourceWidth: 1500,
-		        sourceHeight: 800
+		        sourceWidth: 800,
+		        sourceHeight: 600
 		    }
 
 		});		

@@ -13,7 +13,7 @@
 	
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/vendor/jquery/css/jquery-ui.min.css" type="text/css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/vendor/fontawesome/css/all.min.css" type="text/css">
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/vendor/Highcharts/code/css/all.min.css" type="text/css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/vendor/Highcharts/code/css/highcharts.css" type="text/css">
 	
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/main.css" type="text/css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/insaInfo.css" type="text/css">

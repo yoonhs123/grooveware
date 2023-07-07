@@ -20,8 +20,8 @@
                 <a href="${pageContext.request.contextPath}/insaManage/list">인사관리</a>
                 <a href="${pageContext.request.contextPath}/insaManage/list">&nbsp;사원관리</a>
                 <a href="${pageContext.request.contextPath}/insaManage/workList">&nbsp;근태관리</a>
-                <a href="#">&nbsp;휴가관리</a>
-                <a href="#">&nbsp;휴가설정</a>
+                <a href="${pageContext.request.contextPath}/insaManage/holidayList">&nbsp;휴가관리</a>
+                <a href="${pageContext.request.contextPath}/insaManage/holidaySetting">&nbsp;휴가설정</a>
             </li>
         </c:when>
         <c:otherwise>
@@ -37,16 +37,15 @@
 		<div class="title_container">
 			<div class="title-holidaylist">
 				<h2>
-					<i class="bi bi-person-fill"></i>연차휴가 현황
+					<i class="bi bi-person-fill"></i> | 연차휴가 현황
 				</h2>
 			</div>
-			<span> <select class="select-year">
+			<select class="select-year">
 					<option value="">2020년</option>
 					<option value="">2021년</option>
 					<option value="">2022년</option>
 					<option value="">2023년</option>
 			</select>
-			</span>
 			<div class="search" align="right">
 				<form name="searchForm" action="${pageContext.request.contextPath}/insaManage/list" method="post">
 					<select name="condition" class="form-select">
@@ -67,33 +66,35 @@
 						<th class="holidayManage-emp-no">사원번호</th>
 						<th class="holidayManage-name">성명</th>
 						<th class="holidayManage-pos">부서</th>
+						<th class="holidayManage-pos">직위</th>
 						<th class="holidayManage-startday">입사일 / 근속연수</th>
-						<th class="holidayManage-standard">기준일</th>
-						<th class="holidayManage-range">기간</th>
-						<th class="holidayManage-use">연차 사용</th>
-						<th class="holidayManage-no-use">연차 미사용</th>
+						<th class="holidayManage-use">부여된 연차</th>
+						<th class="holidayManage-use">사용한 연차</th>
+						<th class="holidayManage-no-use">남은 연차</th>
 						<th class="holidayManage-add">대체 연차</th>
 					</tr>
 				</thead>
 
 				<tbody>
 					<!-- 누른 행의 사원번호와 일치하는 사원의 개인 근태 내역 -->
+					<c:forEach var="dto" items="${list}" varStatus="status">
 					<tr onclick="location-href='#'" class="insa-home-td">
-						<td>00000001</td>
-						<td>김부장</td>
-						<td>인사팀</td>
-						<td>2011-06-08 <span class="work-year">5년</span>
+						<td>${dto.emp_no}</td>
+						<td>${dto.emp_name}</td>
+						<td>${dto.dept_name}</td>
+						<td> ${dto.pos_name} </td>
+						<td>${dto.emp_join_date} / <span>${dto.annual_leave}년차</span>
 						</td>
-						<td>2023-06-16</td>
-						<td>2023-01-01 ~ 2023-12-12</td>
-						<td>13일</td>
-						<td>3일</td>
+						<td>${dto.annual_count}개</td>
+						<td>${dto.annual_use}개</td>
+						<td>${dto.annual_count - dto.annual_use}개</td>
 						<td>0일</td>
 					</tr>
+					</c:forEach>
 				</tbody>
 
 			</table>
-			<div class="page-navigation">1 2 3</div>
+			<div class="page-navigation">${dataCount == 0 ? "등록된 사원이 없습니다." : paging }</div>
 
 		</div>
 	</div>

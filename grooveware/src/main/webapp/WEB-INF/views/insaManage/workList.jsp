@@ -34,8 +34,8 @@ function searchDate() {
                 <a href="${pageContext.request.contextPath}/insaManage/list">인사관리</a>
                 <a href="${pageContext.request.contextPath}/insaManage/list">&nbsp;사원관리</a>
                 <a href="${pageContext.request.contextPath}/insaManage/workList">&nbsp;근태관리</a>
-                <a href="#">&nbsp;휴가관리</a>
-                <a href="#">&nbsp;휴가설정</a>
+                <a href="${pageContext.request.contextPath}/insaManage/holidayList">&nbsp;휴가관리</a>
+                <a href="${pageContext.request.contextPath}/insaManage/holidaySetting">&nbsp;휴가설정</a>
             </li>
         </c:when>
         <c:otherwise>
@@ -94,7 +94,7 @@ function searchDate() {
 				<tbody>
 					<c:forEach var="dto" items="${list2}" varStatus="status">
 					<!-- 누른 행의 사원번호와 일치하는 사원의 개인 근태 내역 -->
-					<tr onclick="location-href='#'" class="insa-home-td">
+					<tr onclick="location.href='${pageContext.request.contextPath}/insaManage/workRecord?emp_no=${dto.emp_no}';" class="insa-home-td">
 						<td>${dto.emp_no}</td>
 						<td>${dto.emp_name}</td>
 						<td>${dto.dept_name}</td>
@@ -107,8 +107,8 @@ function searchDate() {
 					</tr>
 					</c:forEach>
 				</tbody>
-
 			</table>
+			<input type="hidden" name="emp_no" value="${dto.emp_no}">
 			<div class="page-navigation">
 				${workDataCount == 0 ? "등록된 사원이 없습니다." : paging }
 			</div>
