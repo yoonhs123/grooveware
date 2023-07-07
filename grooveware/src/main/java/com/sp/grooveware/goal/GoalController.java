@@ -52,7 +52,11 @@ public class GoalController {
     	String cp = req.getContextPath();
     	String articleUrl = cp + "/goal/article?goal_no=";
     	
+    	int dataCount = 0;
     	
+    	dataCount = service.dataCount(pj_no);
+    	
+    	model.addAttribute("dataCount", dataCount);
     	model.addAttribute("articleUrl", articleUrl);
     	model.addAttribute("pj_no", pj_no);
     	model.addAttribute("list", list);

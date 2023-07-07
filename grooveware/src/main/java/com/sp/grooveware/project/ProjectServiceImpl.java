@@ -108,6 +108,22 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 
 	@Override
+	public int readPM(Map<String, Object> map) {
+		
+		int pj_join_type = 0;
+		
+		try {
+			pj_join_type = dao.selectOne("project.readPM", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return pj_join_type;
+	}
+
+
+	
+	@Override
 	public void updateProject(Project dto, String pathname) throws Exception {
 		try {
 			String saveFilename = fileManager.doFileUpload(dto.getSelectFile(), pathname);
@@ -125,6 +141,8 @@ public class ProjectServiceImpl implements ProjectService {
 			dao.updateData("project.updateProject2", dto);
 			dao.updateData("project.updateProject3", dto);
 			
+			
+			// 멤버 수정이 없을경우. 추가안했을때
 			if(dto.getEmps() != null) {
 				
 				insertPjmember(dto);
@@ -187,6 +205,42 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 
 
+	@Override
+	public void endProject(long pj_no) throws Exception {
+		try {
+			dao.updateData("project.endProject", pj_no);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		
+	}
+
+
+	@Override
+	public void changeAccess(Project dto) throws Exception {
+		
+		try {
+			
+			for(int i=0 ; i<dto.getEmp_nos().size() ; i++) {
+				dto.setEmp_no(dto.getEmp_nos().get(i));
+				dto.setPj_join_type(dto.getPj_join_types().get(i));
+				dao.updateData("project.changeAccess", dto);
+			}
+			
+			
+
+	
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+
+	}
+
+
+
+	
 
 
 

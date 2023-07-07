@@ -134,7 +134,54 @@ div.board1 .sort_numbering {
 }
 
 
-</style>
+
+
+.pj {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  top: 10px;
+  text-align: center;
+}
+
+.no_pj_img {
+  margin-bottom: 20px;
+}
+
+.no_pj_alert {
+  font-size: 30px;
+  font-weight: bold;
+  padding: 20px;
+  color: #243A73; 
+}
+
+.no_pj_ment {	
+  font-size: 15px;
+  padding-top: 30px;
+  color: #4a587d;
+}
+
+.no_pj_button {
+  padding: 20px;
+}
+
+.no_pj_button button {
+  background-color: #c0cded; 
+  font-size: 20px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.no_pj_button button:hover {
+  background-color: #243A73; 
+}
+
+
+</style>	
 
 
 <script type="text/javascript">
@@ -155,12 +202,39 @@ function searchList() {
             <hr>
             <li>
             	<p>메뉴</p>
+            	<a href="#">&nbsp;나의 업무</a>
                 <a href="#">&nbsp;일정</a>
                 <a href="#">&nbsp;공지사항</a>
                 <a href="#">&nbsp;자료실</a>
             <li>
         </ul>
 </div>
+
+
+<c:if test="${dataCount == 0 && keyword == '' }">
+<div class="right-contentbody">
+	<div class="pj">
+		<div class="no_pj_img">
+			<p><i class="fa-solid fa-file-circle-question" style="font-size: 150px;"></i></p>
+		</div>
+		
+		<div class="no_pj_alert">
+			<p>프로젝트가 없습니다</p>
+		</div>
+		
+		<div class="no_pj_ment">
+			<p>새 프로젝트를 생성하려면 '프로젝트 생성'을 클릭하세요</p>
+		</div>
+		
+		<div class="no_pj_button">
+			<button type="button" onclick="location.href='${pageContext.request.contextPath}/project/write'">프로젝트 생성</button>
+		</div>
+	</div>
+</div>
+</c:if>
+  
+
+<c:if test="${dataCount != 0 || keyword != ''}">
    <div class="right-contentbody">
 		
 			<div class="board1">
@@ -186,7 +260,7 @@ function searchList() {
 	            	${dataCount}개(${page}/${total_page} 페이지)
 	            </div>
 			<table class="table table-border table-list" >
-				<thead >
+				<thead>
 					<tr>
 						<th class="sort_numbering"><i class="fa-solid fa-sort-down"></i></th>
 						<th width="35%;"> 프로젝트 이름 </th>
@@ -221,7 +295,7 @@ function searchList() {
 			</div>
 			
 			<div class="page-navigation" style="width: 900px; margin: 0 auto;">
-				${dataCount == 0 ? "등록된 게시물이 없습니다." : paging}
+				${dataCount == 0 ? "검색 결과가 없습니다." : paging}
 			</div>
 			
 			<div align="right">
@@ -230,4 +304,4 @@ function searchList() {
 			</div>
 
    </div>
-   
+</c:if>  

@@ -9,6 +9,8 @@ public interface GoalService {
     public List<Goal> listGoal(Map<String, Object> map);	
     public Goal readGoal(long goal_no);
     
+    public int dataCount(long pj_no);
+    
     public void updateGoal(Goal dto) throws Exception;
     public void deleteGoal(long goal_no);
     

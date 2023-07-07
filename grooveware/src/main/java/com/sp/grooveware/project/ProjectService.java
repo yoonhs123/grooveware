@@ -14,8 +14,13 @@ public interface ProjectService {
 	public List<Project> listEmp(Map<String, Object> map);
 	
 	public List<Project> readProjectmember(long pj_no);
+	public int readPM(Map<String, Object> map);
 	
 	public void insertPjmember(Project dto) throws Exception;
 	
 	public void deletePjmember(Map<String, Object> map) throws Exception;
+	
+	public void endProject(long pj_no) throws Exception;
+	
+	public void changeAccess(Project dto) throws Exception;
 }

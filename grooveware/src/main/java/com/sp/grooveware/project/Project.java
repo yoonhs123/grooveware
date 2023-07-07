@@ -32,8 +32,22 @@ public class Project {
 	private String pos_name;
 	private String dept_name;
 	
+	private List<Integer> pj_join_types;
+	private List<Long> emp_nos;
 	
 	
+	public List<Integer> getPj_join_types() {
+		return pj_join_types;
+	}
+	public void setPj_join_types(List<Integer> pj_join_types) {
+		this.pj_join_types = pj_join_types;
+	}
+	public List<Long> getEmp_nos() {
+		return emp_nos;
+	}
+	public void setEmp_nos(List<Long> emp_nos) {
+		this.emp_nos = emp_nos;
+	}
 	public String getDept_name() {
 		return dept_name;
 	}

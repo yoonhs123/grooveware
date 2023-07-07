@@ -128,6 +128,51 @@ div.board1 .sort_numbering {
 }
 
 
+.pj {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  top: 10px;
+  text-align: center;
+}
+
+.no_pj_img {
+  margin-bottom: 20px;
+}
+
+.no_pj_alert {
+  font-size: 30px;
+  font-weight: bold;
+  padding: 20px;
+  color: #243A73; 
+}
+
+.no_pj_ment {	
+  font-size: 15px;
+  padding-top: 30px;
+  color: #4a587d;
+}
+
+.no_pj_button {
+  padding: 20px;
+}
+
+.no_pj_button button {
+  background-color: #c0cded; 
+  font-size: 20px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.no_pj_button button:hover {
+  background-color: #243A73; 
+}
+
+
 </style>
 
 
@@ -149,14 +194,31 @@ function searchList() {
             <hr>
             <li>
             	<p>메뉴</p>
+                <a href="#">&nbsp;나의 업무</a>
                 <a href="#">&nbsp;일정</a>
                 <a href="#">&nbsp;공지사항</a>
                 <a href="#">&nbsp;자료실</a>
             <li>
         </ul>
 </div>
-   <div class="right-contentbody">
+
+<c:if test="${dataCount == 0}">
+<div class="right-contentbody">
+	<div class="pj">
+		<div class="no_pj_img">
+			<p><i class="fa-solid fa-file-circle-question" style="font-size: 150px;"></i></p>
+		</div>
 		
+		<div class="no_pj_alert">
+			<p>완료된 프로젝트가 없습니다</p>
+		</div>
+	</div>
+</div>
+</c:if>
+  
+
+	<c:if test="${dataCount != 0}">
+		<div class="right-contentbody">
 			<div class="board1">
 				<div class="title_container">
 						<div class="project"> <i class="fa-solid fa-toggle-off"></i> 완료된 프로젝트 </div> 
@@ -197,7 +259,7 @@ function searchList() {
 						<tr>
 							<td class="numbering">${dataCount - (page-1) * size - status.index}</td>
 							<td class="left title_left">
-								<a href="${articleUrl}&pj_no=${dto.pj_no}&size=${size}" class="text-reset">${dto.pj_name}</a>
+								<a href="${goalUrl}?pj_no=${dto.pj_no}" class="text-reset">${dto.pj_name}</a>
 							</td>
 							<td>${dto.emp_name}</td>
 							<td>${dto.pj_start_date}</td>
@@ -215,10 +277,10 @@ function searchList() {
 			</div>
 			
 			<div class="page-navigation" style="width: 900px; margin: 0 auto;">
-				${dataCount == 0 ? "등록된 게시물이 없습니다." : paging}
+				${dataCount == 0 ? "검색결과가 없습니다." : paging}
 			</div>
 			
 			</div>
-
    </div>
+</c:if>
    

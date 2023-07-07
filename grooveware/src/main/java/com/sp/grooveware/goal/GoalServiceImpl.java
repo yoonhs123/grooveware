@@ -182,6 +182,20 @@ public class GoalServiceImpl implements GoalService {
 		return list;
 	}
 
+	@Override
+	public int dataCount(long pj_no) {
+
+		int dataCount = 0;
+		
+		try {
+			dataCount = dao.selectOne("goal.dataCount", pj_no);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return dataCount;
+	}
+
 
 
 }

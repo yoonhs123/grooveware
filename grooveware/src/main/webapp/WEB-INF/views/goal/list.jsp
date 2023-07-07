@@ -4,6 +4,14 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
  
  <style type="text/css">
+ 
+.project {
+  color: #4048a8;
+  font-size: 30px;
+  font-weight : bold;
+ 
+ }
+
 .left-side-bar ul > li > a:first-child {
     font-weight: initial;
     padding-left : 30px;
@@ -16,7 +24,7 @@
     font-weight: bold;
     padding-left : 20px;
 }
-
+ 
 /* table */
 .table { width: 100%; border-spacing: 0; border-collapse: collapse; }
 .table th, .table td { padding-top: 10px; padding-bottom: 10px; }
@@ -34,6 +42,8 @@
 .table-list th, .table-list td { text-align: center; }
 .table-list td:nth-child(5n+2) {  padding-left: 5px; }
 
+
+ 
 .btn {
 	color: black;
 	border: 1px solid #999999;
@@ -44,7 +54,13 @@
 	font-size: 14px;
 	line-height: 15px;
 	background-color: white;
+	
 }
+
+.btn:hover {
+	background-color: #ccc;
+}
+
 input[type=text]{
     width: 300px;
     height: 26px;
@@ -53,25 +69,6 @@ input[type=text]{
 
 .form-select{ height: 26px; margin-right: 10px; border-radius: 4px;}
 
- 
- 
- .pjname {
- 
-  padding: 10px;
-  border-bottom: 3px solid #ccc;
-  border-top: 3px solid #ccc;
-  font-size: 30px;
-  font-weight : bold;
- 
- }
- 
- 
- 
- 
- .board1 {
-  padding: 20px;
-  border-radius: 5px;
-}
 
 .title_container {
   display: flex;
@@ -80,39 +77,7 @@ input[type=text]{
   margin-bottom: 20px;
 }
 
-.title_container h3 {
-  font-size: 24px;
-  margin: 0;
-  font-weight: bold;
-}
 
-
-
-.middle_container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.middle_container a {
-  font-size: 16px;
-  text-decoration: none;
-  color: #333;
-  padding: 5px 10px;
-  border: 1px solid #ccc;
-  border-radius: 3px;
-}
-
-.middle_container a:hover {
-  background-color: #ccc;
-}
-
-.dataCount {
-  font-size: 18px;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
 
 .table {
   width: 100%;
@@ -124,7 +89,7 @@ input[type=text]{
 .table td {
   padding: 10px;
   border-bottom: 1px solid #ccc;
-  text-align: left;
+  text-align: center;
   font-size: 16px;
 }
 
@@ -146,8 +111,92 @@ input[type=text]{
   text-decoration: none;
   color: #4048a8; 
 }
- </style>
-    
+
+
+.keyword_left {
+
+	justify-content : flex-end;
+}
+
+
+div.board1 .title_left {
+	text-align : left;
+}
+
+
+div.board1 .numbering {
+	font-size : 10px;
+	color : #BDBDBD;
+}
+
+div.board1 .sort_numbering {
+	color : #BDBDBD;
+}
+
+
+
+
+.pj {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  top: 10px;
+  text-align: center;
+}
+
+.no_pj_img {
+  margin-bottom: 20px;
+}
+
+.no_pj_alert {
+  font-size: 30px;
+  font-weight: bold;
+  padding: 20px;
+  color: #243A73; 
+}
+
+.no_pj_ment {	
+  font-size: 15px;
+  padding-top: 30px;
+  color: #4a587d;
+}
+
+.no_pj_button {
+  padding: 20px;
+}
+
+.no_pj_button button {
+  background-color: #c0cded; 
+  font-size: 20px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.no_pj_button button:hover {
+  background-color: #243A73; 
+  
+}
+
+.board-list td
+.board-list tr
+.board-list th
+ { 
+	text-align: center; 
+}
+
+.table-list td:first-child {  
+	padding-left: 20px;
+	text-align: left; 
+}
+
+}
+
+
+</style>	   
 
 <script>
 // 초기에 최상위목표빼고 다 숨기기
@@ -166,66 +215,59 @@ window.addEventListener("DOMContentLoaded", function() {
 </script>
 
 
-
-
-
-
-<script>
-// 초기에 최상위목표빼고 다 숨기기
-window.addEventListener("DOMContentLoaded", function() {
-	  var rows = document.getElementsByTagName("tr");
-	  for (var i = 0; i < rows.length; i++) {
-	    var parentValueElement = rows[i].getElementsByClassName("parent")[0];
-	    if (parentValueElement) {
-	      var parentValue = parentValueElement.value;
-	      if (parentValue !== "0") {
-	        rows[i].style.display = "none";
-	      }
-	    }
-	  }
-	});
-</script>
 
 
 
 <script>
 // 토글 클릭 이벤트 핸들러
 $(document).ready(function() {
-    $('.toggle').click(function() {
-        var depth = $(this).data('depth');
-        var goalNo = $(this).closest('tr').find('.goal_no').val();
-        var groupNo = $(this).closest('tr').find('.group_no').val();
+  $('.toggle').click(function() {
+    var depth = $(this).closest('tr').find('.depth').val();
+    var goalNo = $(this).closest('tr').find('.goal_no').val();
+    var groupNo = $(this).closest('tr').find('.group_no').val();
 
-
-        	$('.toggle').each(function() {
-                var currentDepth = $(this).data('depth');
-                var currentGroupNo = $(this).closest('tr').find('.group_no').val();
-                var currentParentGoalNo = $(this).closest('tr').find('.parent').val();
-                
-                if (currentDepth > depth && currentGroupNo === groupNo && currentParentGoalNo === goalNo) {
-                    $(this).closest('tr').toggle();
-                }
-            });
-        
-        
-
-        // 현재 토글 아이콘 변경
-        var icon = $(this).find('i');
-        if (icon.hasClass('fa-caret-down')) {
-            icon.removeClass('fa-caret-down');
-            icon.addClass('fa-caret-right');
-        } else {
-            icon.removeClass('fa-caret-right');
-            icon.addClass('fa-caret-down');
-        }
-        
-        
-    });
+    if ($(this).find('i').hasClass('fa-caret-down')) {
+      // 토글이 열려있는 경우
+      $(this).find('i').removeClass('fa-caret-down').addClass('fa-caret-right');
+      hideChildRows(depth, goalNo, groupNo);
+    } else {
+      // 토글이 닫혀있는 경우
+      $(this).find('i').removeClass('fa-caret-right').addClass('fa-caret-down');
+      showChildRows(depth, goalNo, groupNo);
+    }
+  });
 });
 
+function hideChildRows(depth, goalNo, groupNo) {
+	  $('.toggle').each(function() {
+	    var currentDepth = $(this).data('depth');
+	    var currentGroupNo = $(this).closest('tr').find('.group_no').val();
+	    var currentParentGoalNo = $(this).closest('tr').find('.parent').val();
+		
+
+	    if (currentDepth > depth && currentGroupNo === groupNo) {
+	      $(this).closest('tr').hide();
+	    }
+	    
+	    
+	    
+	  });
+	}
+
+	function showChildRows(depth, goalNo, groupNo) {
+	  $('.toggle').each(function() {
+	    var currentDepth = $(this).data('depth');
+	    var currentGroupNo = $(this).closest('tr').find('.group_no').val();
+	    var currentParentGoalNo = $(this).closest('tr').find('.parent').val();
+
+	    if (currentDepth > depth && currentGroupNo === groupNo && currentParentGoalNo === goalNo) {
+	      $(this).closest('tr').show();
+	    }
+	  });
+	}
 
 
-</script>    
+</script>      
 
 
 
@@ -242,6 +284,7 @@ $(document).ready(function() {
             <hr>
             <li>
             	<p>메뉴</p>
+            	<a href="#">&nbsp;나의 업무</a>
                 <a href="#">&nbsp;일정</a>
                 <a href="#">&nbsp;공지사항</a>
                 <a href="#">&nbsp;자료실</a>
@@ -249,32 +292,59 @@ $(document).ready(function() {
         </ul>
 </div>
 
+<c:if test="${dataCount == 0}">
+<div class="right-contentbody">
+	<div class="pj">
+		<div class="no_pj_img">
+			<p><i class="fa-solid fa-file-circle-question" style="font-size: 150px;"></i></p>
+		</div>
+		
+		<div class="no_pj_alert">
+			<p>목표가 없습니다</p>
+		</div>
+		
+		<div class="no_pj_ment">
+			<p>새 목표를 생성하려면 '새 목표 만들기'을 클릭하세요</p>
+		</div>
+		
+		<div class="no_pj_button">
+			<button type="button" onclick="location.href='${pageContext.request.contextPath}/goal/write?pj_no=${pj_no}'">새 목표 만들기</button>
+		</div>
+	</div>
+</div>
+</c:if>
+
+
+<c:if test="${dataCount != 0}">
 
 <div class="right-contentbody">
 
 <div class="board1">
 <div class="title_container">
-    <span class="pjname"><i class="fa-solid fa-list" style="color: #0a3d94;"></i>&nbsp;&nbsp;${pj_name}</span>
-
-
+	<div class="project"><i class="fa-solid fa-briefcase"></i>&nbsp;&nbsp;${pj_name}</div>
+	<div class="keyword_left">
+	</div>
 </div>
 
 <br><br>
+
 <div>
-	<div class="col-auto me-auto dataCount middle_container">
+	<div class="col-auto me-auto dataCount">
     <span>목표 목록</span>
-	<a href="${pageContext.request.contextPath}/goal/write?pj_no=${pj_no}" class="text-reset">새 목표 만들기</a>
+    <button type="button" class="btn" style="float: right" onclick="location.href='${pageContext.request.contextPath}/goal/write?pj_no=${pj_no}'">새 목표 만들기</button>
     </div>
+
+
     
-    <table class="table table-hover board-list">
+    <table class="table table-border table-list table-hover board-list">
     	<thead class="table-right">	
     		<tr>
-				<th>제목</th>
-				<th class="bw-100">시작일</th>
-				<th class="bw-100">종료일</th>
-				<th class="bw-70">달성률</th>
-				<th class="bw-70" style="text-align: right">첨부파일</th>
-				<th class="bw-70" style="text-align: right">더보기</th>
+				<th width="50%">제목</th>
+				<th>시작일</th>
+				<th>종료일</th>
+				<th>달성률</th>
+				<th>첨부파일</th>
+				<th>더보기</th>
 			</tr>
     	</thead>
     	
@@ -286,7 +356,7 @@ $(document).ready(function() {
 						<a class="toggle" data-depth="${dto.depth}">
 					    <i class="fa-solid fa-caret-right"></i>
 					    </a>
-	    				<a href="${articleUrl}${dto.goal_no}" class="text-reset">&nbsp;&nbsp;&nbsp;&nbsp;${dto.goal_name}</a>	
+	    				<a href="${taskUrl}?goal_no${dto.goal_no}" class="text-reset">&nbsp;&nbsp;&nbsp;&nbsp;${dto.goal_name}</a>	
 	    		    <input type="hidden" class="depth" value="${dto.depth}">
 	    		    <input type="hidden" class="goal_no" value="${dto.goal_no}">
 	    		    <input type="hidden" class="parent" value="${dto.parent}">
@@ -300,7 +370,7 @@ $(document).ready(function() {
 							<a href="<c:url value='/goal/download?goal_no=${dto.goal_no}'/>" class="text-reset"><i class="fa-solid fa-file-arrow-down"></i></a>
 						</c:if>
 					</td>
-	    		    <td style="text-align: right"><i class="fa-solid fa-bars"></i></td>
+	    		    <td><a href="${articleUrl}${dto.goal_no}" class="text-reset"><i class="fa-solid fa-bars"></i></a></td>
 	    		</tr>
 	   		</c:forEach>
 	   	</tbody>
@@ -310,6 +380,7 @@ $(document).ready(function() {
 
 </div>
 </div>
+</c:if>
 
 
 

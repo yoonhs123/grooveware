@@ -217,50 +217,6 @@ input[type="text"] {
 }
 
 
-
-<!-- -->
-  .modal-content {
-    border-radius: 10px;
-  }
-
-  .modal-header {
-    border-bottom: 1px solid #ced4da;
-    padding-bottom: 10px;
-  }
-
-  .modal-body {
-    padding: 20px;
-  }
-
-  .modal-title {
-    margin-bottom: 10px;
-  }
-
-  .form-group {
-    margin-bottom: 20px;
-  }
-
-  .btn_emp_find {
-    margin-top: 10px;
-  }
-
-  .emp-list {
-    height: 150px;
-    border: 1px solid black;
-    overflow-y: auto;
-    padding: 10px;
-  }
-
-  .emp-list ul {
-    padding: 0;
-    list-style: none;
-  }
-
-  .modal-footer {
-    justify-content: flex-end;
-    border-top: none;
-  }
-
   /* Added styles for project members */
   .title2 {
     width: 90%;
@@ -358,12 +314,115 @@ input[type="text"] {
     color: gray;
     display: none;
 }
-
-
  </style>
  
+ 
+<style>
+    /* 모달 스타일 */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    .modal .modal-content {
+      background-color: #f2f2f2;
+      margin: 10% auto;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      width: 50%;
+      max-height: 80%;
+      overflow-y: auto;
+    }
+
+    .modal .close {
+      color: #243A73;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .modal .close:hover,
+    .modal .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    /* 테이블 스타일 */
+    .modal table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .modal th, .modal td {
+      padding: 10px;
+      text-align: left;
+    }
+
+    .modal th {
+      background-color: #243A73;
+      color: white;
+    }
+
+
+    .modal tr:nth-child(even) {
+      background-color: #dfe2eb;
+    }
+
+    .modal td:first-child {
+    	width: 1%;
+    }
+    
+    .modal th:last-child {
+    	text-align: center;
+    }
+    
+    .modal td:last-child {
+    	text-align: center;
+    }
+    
+     /* Select 박스 스타일 */
+    .modal select {
+      padding: 5px;
+      font-size: 14px;
+      border-radius: 4px;
+      border: 1px solid #ddd;
+      background-color: #fff;
+      color: #333;
+      outline: none;
+    }
+
+    .modal select option {
+      padding: 5px;
+    }
+    
+     .modal-footer {
+    text-align: center;
+    margin-top: 20px;
+    }
+
+     .modal-footer button {
+    padding: 10px 20px;
+    font-size: 14px;
+    border-radius: 4px;
+    border: none;
+    background-color: #243A73;
+    color: white;
+    cursor: pointer;
+  }
+    
+</style>
+   
 <script type="text/javascript">
-<c:if test="${sessionScope.member.emp_no==dto.pj_creator}">
+<c:if test="${pj_join_type == 0}">
 	function deletePj() {
 	    if(confirm("프로젝트를 삭제 하시겠습니까 ? ")) {
 		    let query = "pj_no=${dto.pj_no}&${query}";
@@ -371,12 +430,40 @@ input[type="text"] {
 	    	location.href = url;
 	    }
 	}
+	
+</c:if>
+</script>
+
+
+<script type="text/javascript">
+<c:if test="${pj_join_type == 0}">
+	function endPj() {
+		if(confirm("프로젝트를 완료 하시겠습니까?")) {
+			let query = "pj_no=${dto.pj_no}&${query}";
+			let url = "${pageContext.request.contextPath}/project/endPj?" + query;
+	    	location.href = url;
+		}
+	}
+	
 </c:if>
 </script>
 
 
 
-
+<script type="text/javascript">
+<c:if test="${pj_join_type == 0}">
+function sendOk() {
+	const f = document.accessForm;	
+	
+	if( ! confirm("파일을 삭제하시겠습니까 ?") ) {
+		return;
+	}
+	
+	f.action="${pageContext.request.contextPath}/goal/${mode}";
+    f.submit();
+}
+</c:if>
+</script>
 
 
 <div class="left-side-bar">
@@ -389,6 +476,7 @@ input[type="text"] {
             <hr>
             <li>
             	<p>메뉴</p>
+            	<a href="#">&nbsp;나의 업무</a>
                 <a href="#">&nbsp;일정</a>
                 <a href="#">&nbsp;공지사항</a>
                 <a href="#">&nbsp;자료실</a>
@@ -401,6 +489,19 @@ input[type="text"] {
 	<div class="body-container">	
 		<div class="body-title pj-title">
 			<i class="fa-solid fa-clipboard-check"></i> <span>프로젝트 상세</span>
+			
+			<c:if test="${dto.pj_status == 0}">
+			<span style= "float: right; padding-right: 10px;">
+				<c:choose>
+					<c:when test="${pj_join_type == 0}">
+						<button type="button" class="btn btn-light" onclick="endPj();">마감하기</button>
+					</c:when>
+					<c:otherwise>
+						<button type="button" class="btn-disabled" disabled="disabled">마감하기</button>
+					</c:otherwise>
+				</c:choose>
+			</span>
+			</c:if>
 		</div>
 		
 		<div class="body-main">
@@ -448,10 +549,10 @@ input[type="text"] {
 						            <span class='project-member'>
 						              <i class="fa-solid fa-user-tie"></i>
 						              <label>${vo.emp_name}(${vo.pos_name}_${vo.dept_name})
-						                <c:if test="${vo.pj_member_no == dto.pj_creator}">
+						                <c:if test="${vo.pj_join_type == 0}">
 						                	&nbsp;<i style="color: #4048a8" class="fa-solid fa-star"></i>
 						                </c:if>
-										<c:if test="${vo.pj_member_no != dto.pj_creator && vo.pj_join_type == 1}">
+										<c:if test="${vo.pj_join_type == 1}">
 											&nbsp;<i style="color: #4048a8" class="fa-regular fa-star"></i>
 										</c:if>
 						              </label>
@@ -462,23 +563,12 @@ input[type="text"] {
 						    </table>
 						  </td>
 						</tr>
-				
-							
-								
-								
-				
-				
-				
-				
-				
 						
 						<tr>
 							<th class="table-light col-sm-2">첨&nbsp;&nbsp;&nbsp;&nbsp;부</th>
 							<td>
 								<c:if test="${not empty dto.saveFilename}">
-										<a href="<c:url value='/project/download?pj_no=${dto.pj_no}'/>" class="text-reset"><i class="fa-solid fa-file-arrow-down"></i>
-										${dto.originalFilename}
-										</a>
+									<a href="${pageContext.request.contextPath}/project/download?pj_no=${dto.pj_no}"><i class="fa-solid fa-file-arrow-down"></i>&nbsp;&nbsp;${dto.originalFilename}</a>
 								</c:if>
 							</td>
 						</tr>						
@@ -492,9 +582,19 @@ input[type="text"] {
 							</td>
 							
 							<td width="50%" style= "text-align: right; padding-right: 10px;">
+							<c:if test="${dto.pj_status == 0}">
 								<c:choose>
-									<c:when test="${sessionScope.member.emp_no==dto.pj_creator}">
-										<button type="button" class="btn btn-light" onclick="location.href='${pageContext.request.contextPath}/project/update?num=${dto.pj_no}&page=${page}&pj_no=${dto.pj_no}';">수정</button>
+									<c:when test="${pj_join_type == 0}">
+										<button type="button" class="btn btn-light" id="modalBtn">권한변경</button>
+									</c:when>
+									<c:otherwise>
+										<button type="button" class="btn-disabled" id="modalBtn" disabled="disabled">권한변경</button>
+									</c:otherwise>
+								</c:choose>
+								
+								<c:choose>
+									<c:when test="${pj_join_type == 0}">
+										<button type="button" class="btn btn-light" onclick="location.href='${pageContext.request.contextPath}/project/update?page=${page}&pj_no=${dto.pj_no}';">수정</button>
 									</c:when>
 									<c:otherwise>
 										<button type="button" class="btn-disabled" disabled="disabled">수정</button>
@@ -502,16 +602,150 @@ input[type="text"] {
 								</c:choose>
 								
 								<c:choose>
-						    		<c:when test="${sessionScope.member.emp_no==dto.pj_creator}">
+						    		<c:when test="${pj_join_type == 0}">
 						    			<button type="button" class="btn btn-light" onclick="deletePj();">삭제</button>
 						    		</c:when>
 						    		<c:otherwise>
 						    			<button type="button" class="btn-disabled" disabled="disabled">삭제</button>
 						    		</c:otherwise>
 						    	</c:choose>
-								</td>
+							</c:if>
+							</td>
 						</tr>
 					</table>
 				</div>
 			</div>
 		</div>
+		
+		
+		
+		
+		
+<div id="modal" class="modal">
+  <!-- 모달 내용 -->
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h3 style="color: #243A73;">사원 목록</h3>
+	<form name="accessForm" method="post">
+				
+	<table>
+		<thead>
+		    <tr>
+			    <th></th>
+			    <th>사원이름</th>
+			    <th>직위</th>
+			    <th>부서</th>
+			    <th>권한</th>
+			    <th>수정</th>
+			</tr>
+		</thead>
+		<tbody>
+	    	<c:forEach var="vo" items="${pj_member}" varStatus="status">
+	            
+				<tr>
+		        	<td>
+		        		<input type="hidden" name="emp_nos" value="${vo.emp_no}">
+		        		<c:if test="${vo.pj_join_type == 0}">
+		                	<i style="color: #4048a8" class="fa-solid fa-star"></i>
+			            </c:if>
+						<c:if test="${vo.pj_join_type == 1}">
+							<i style="color: #4048a8" class="fa-regular fa-star"></i>
+						</c:if>
+		        	</td>
+		            <td><i class="fa-solid fa-user-tie"></i>&nbsp;&nbsp;${vo.emp_name}</td>
+		            <td>${vo.pos_name}</td>
+		            <td>${vo.dept_name}</td>
+					<td>
+						<c:choose>	
+						    <c:when test="${vo.pj_join_type == 0}">PM</c:when>
+						    <c:when test="${vo.pj_join_type == 1}">매니저</c:when>
+						    <c:otherwise>일반</c:otherwise>
+						</c:choose>
+					</td>
+					<td>
+						<select name="pj_join_types">
+							<c:choose>
+								<c:when test="${vo.pj_join_type == 0}">
+									<option value="0" selected >PM</option> 
+									<option value="1">매니저</option> 
+									<option value="2">일반</option>
+								</c:when>
+								<c:when test="${vo.pj_join_type == 1}">
+									<option value="0">PM</option> 
+									<option value="1" selected >매니저</option> 
+									<option value="2">일반</option>
+								</c:when>
+								<c:otherwise>
+									<option value="0">PM</option> 
+									<option value="1">매니저</option> 
+									<option value="2" selected >일반</option>
+								</c:otherwise>
+							</c:choose>
+						</select>
+					</td>
+				</tr>
+	    	</c:forEach>
+		</tbody>
+	</table>
+	
+	<div class="modal-footer">
+		<input type="hidden" name="pj_no" value="${dto.pj_no}">
+		<input type="hidden" name="page" value="${page}">
+		<input type="hidden" name="size" value="${size}">
+		
+		<button type="button" onclick="changeOk();">변경하기</button>
+	</div>
+
+		</form>
+  </div>
+</div>
+		
+		
+		
+		
+<script type="text/javascript">
+<c:if test="${pj_join_type == 0}">
+// 모달 요소 가져오기
+	var modal = document.getElementById("modal");
+	
+	// 모달 버튼 가져오기
+	var modalBtn = document.getElementById("modalBtn");
+	
+	// 모달 닫기 버튼 가져오기
+	var closeBtn = document.getElementsByClassName("close")[0];
+
+//모달 버튼 클릭 시 모달 열기
+modalBtn.onclick = function() {
+  modal.style.display = "block";
+};
+
+// 모달 닫기 버튼 클릭 시 모달 닫기
+closeBtn.onclick = function() {
+  modal.style.display = "none";
+};
+
+// 모달 외부 클릭 시 모달 닫기
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+};
+</c:if>
+</script>
+
+
+
+<script type="text/javascript">
+<c:if test="${pj_join_type == 0}">
+function changeOk() {
+	const f = document.accessForm;	
+	
+	if( ! confirm("구성원의 권한을 변경하시겠습니까?") ) {
+		return;
+	}
+
+	f.action="${pageContext.request.contextPath}/project/access";
+    f.submit();
+}
+</c:if>
+</script>

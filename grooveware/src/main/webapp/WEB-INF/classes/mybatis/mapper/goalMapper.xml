@@ -33,7 +33,7 @@
 	
 	<!-- 목표 리스트 -->
 	<select id="listGoal" parameterType="map" resultType="com.sp.grooveware.goal.Goal">
-  		SELECT a.goal_no, pj_no, goal_name, goal_start_date, goal_end_date, goal_content, 
+  		SELECT a.goal_no, pj_no, goal_name, TO_CHAR(goal_start_date,'YYYY-MM-DD') AS goal_start_date, TO_CHAR(goal_end_date,'YYYY-MM-DD') AS goal_end_date, goal_content, 
 			goal_achv, parent, group_no, depth, order_no, saveFilename
 		FROM goal a 
 		LEFT OUTER JOIN goal_file b ON a.goal_no = b.goal_no  
@@ -125,7 +125,12 @@
 		ORDER BY e.pos_no ASC, d.dept_no ASC
 	</select>
 
-
+	<select id="dataCount" parameterType="long" resultType="Integer">
+		SELECT count(goal_no)
+		FROM goal
+		WHERE pj_no = #{pj_no}
+	</select >
+	
 	
 	
 </mapper>
