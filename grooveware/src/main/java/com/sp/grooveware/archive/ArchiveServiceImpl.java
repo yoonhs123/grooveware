@@ -91,20 +91,6 @@ public class ArchiveServiceImpl implements ArchiveService {
 	}
 
 
-	/*
-	@Override
-	public Archive getTopLevelFolders() {
-		Archive dto = null;
-
-		try {
-			dto = dao.selectOne("archive.getTopLevelFolders");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return dto;
-	}
-	*/
 
 	@Override
 	public List<Archive> getSubFolders(long folder_no) {
@@ -132,17 +118,7 @@ public class ArchiveServiceImpl implements ArchiveService {
 		return list;
 	}
 
-	@Override
-	public List<Archive> listFolder() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
-	@Override
-	public List<Archive> getSubFoldersFiles(long folder_no) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public void insertFolder(Archive dto) throws Exception {

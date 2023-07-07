@@ -11,14 +11,11 @@ public interface ArchiveService {
 	public void insertFile(Archive dto, String pathname) throws Exception;
 	public void insertFolder(Archive dto) throws Exception;
 	
-	public List<Archive> listFolder();
 	public Archive readFile(String file_no);
-	
 	
 	public long getTopLevelFolderNum(long folder_no);
 	
 	public List<Archive> getSubFolders(long folder_no);
-	public List<Archive> getSubFoldersFiles(long folder_no);
 	
 	public List<Archive> getPrivateSubFolders(long folder_no, long emp_no);
 	public List<Archive> getPrivateSubFiles(long folder_no, long emp_no);

@@ -1,6 +1,6 @@
 package com.sp.grooveware.archive;
 
-import java.io.File; 
+import java.io.File;  
 import java.io.PrintWriter;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
@@ -74,22 +74,6 @@ public class ArchiveController {
 		return "redirect:/archive/" + dto.getRoot_folder();
 	}
 	
-	
-	
-	@RequestMapping(value = "folderlist", method = RequestMethod.GET)
-	@ResponseBody
-	public Map<String, Object> folderList() {
-		List<Archive> folderList = null;
-		
-		folderList = service.listFolder();
-		
-		System.out.println(folderList.size());
-		Map<String, Object> model = new HashMap<>();
-		model.put("folderList", folderList);
-		
-		return model;
-	}
-	
 	@RequestMapping(value = "delete", method = RequestMethod.POST)
 	public String deleteFile(@RequestParam(required = false) List<String> file_no,
 			@RequestParam(required = false) List<String> folder_no,
@@ -100,8 +84,6 @@ public class ArchiveController {
 		
 		String root = session.getServletContext().getRealPath("/");
 		String pathname = root + "uploads" + File.separator + "archive";
-		System.out.println(folder_no);
-		System.out.println(file_no);
 		
 		if (folder_no != null && (file_no == null || file_no.isEmpty())) {
 	        // folder_no만 null이 아닐 때
@@ -212,10 +194,6 @@ public class ArchiveController {
 			sub_folders = service.getPrivateSubFolders(folder_no, emp_no);
 			sub_files = service.getPrivateSubFiles(folder_no, emp_no);	
 		}
-		
-		System.out.println("sub_folders" + sub_folders);
-		System.out.println("sub_files" + sub_files);
-		
 		
 		if(sub_files.isEmpty() && sub_folders.isEmpty()) {
 			msg = "하위 폴더 및 파일이 없습니다.";
