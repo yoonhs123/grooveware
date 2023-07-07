@@ -54,7 +54,8 @@ public class Approval {
 	private String annual_enddate;
 
 	// 결재권자
-	List<Long> emp_nos;
+	private List<Long> emp_nos;
+	private List<Long> history_emp_nos;
 	
 	private String emp_picture;
  
@@ -329,6 +330,14 @@ public class Approval {
 
 	public void setEmp_nos(List<Long> emp_nos) {
 		this.emp_nos = emp_nos;
+	}
+
+	public List<Long> getHistory_emp_nos() {
+		return history_emp_nos;
+	}
+
+	public void setHistory_emp_nos(List<Long> history_emp_nos) {
+		this.history_emp_nos = history_emp_nos;
 	}
 
 	 

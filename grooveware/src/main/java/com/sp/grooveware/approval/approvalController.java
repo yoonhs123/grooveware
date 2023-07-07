@@ -577,6 +577,8 @@ public class approvalController {
 	@RequestMapping(value = "update", method = RequestMethod.POST)
 	public String updateSubmit(Approval dto,
 			@RequestParam String page,
+			@RequestParam(defaultValue = "1") int doc_status, 
+
 			HttpSession session, HttpServletRequest request) throws Exception {
 
 		SessionInfo info = (SessionInfo) session.getAttribute("member");
@@ -587,11 +589,13 @@ public class approvalController {
 
 			dto.setEmp_no(info.getEmp_no());
 			service.updateDoc(dto, pathname);
+			
 		} catch (Exception e) {
 		}
 
-		return "redirect:/approval/list?page=" + page;
+		return "redirect:/approval/list?doc_status=" + doc_status+"&page=" + page;
 	}
+	
 
 	@RequestMapping(value = "updateList", method = RequestMethod.POST)
 	public String updateList(Approval dto,
