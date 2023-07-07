@@ -210,27 +210,6 @@
 														</div>
 													</span>
 												</c:when>
-												<c:otherwise>
-													<!-- 다음 추가 버튼을 눌렀을 때 -->
-													<span class='approval-member2' style='padding-left: 20px;'>
-														<span style="float: left;"> <i
-															class="fa-solid fa-chevron-right"
-															style="margin-top: 30px;"></i></span></span>
-														<span class='approval-member'>
-														<div class="img_container">
-															<img
-																src="${pageContext.request.contextPath}/resources/images/${vo.emp_picture}"
-																style="width: 100%; height: 100%;" />
-														</div> <span style="font-weight: normal; word-break: keep-all;">${vo.emp_name}</span>
-														<div style="width: 100%; float: left;">
-															<div class="text_box3">${vo.emp_name }
-															<span style="font-weight: normal;">&nbsp;${vo.pos_name }</span>
-																<div>${vo.dept_name }</div>
-															</div>
-															<div class="text_box4">&nbsp;</div>
-														</div>
-													</span>
-												</c:otherwise>
 											</c:choose>
 											<input type="hidden" name="emp_nos" value="${vo.emp_no}" />
 										</c:forEach>
@@ -394,6 +373,7 @@
 				<c:if test="${mode=='update'}">
 					<input type="hidden" name="doc_no" value="${dto.doc_no}">
 					<input type="hidden" name="page" value="${page}">
+					
 				</c:if>
 
 			</div>
@@ -525,6 +505,38 @@
 	}
 </script>
 
+
+<script type="text/javascript">
+    $(function() {
+        var mode = "${mode}"; // mode 변수를 JSP에서 가져옴
+
+        let len2 = $("#forms-receiver-list input[name=emp_nos]").length;
+        
+        console.log(len2);
+        
+        if (mode === "update") {
+            $("body").on("click", ".approval-member", function() {
+                var $approval_member = $(this);
+                var emp_nos = $approval_member.find("input[name='emp_nos']").val();
+
+                console.log(emp_nos);
+
+                var url = "${pageContext.request.contextPath}/approval/deleteMember?page=${page}&doc_no=${dto.doc_no}&emp_no=${dto.emp_no}";
+                $.post(url, { emp_nos: emp_nos }, function(data) {
+                    $approval_member.remove();
+                    
+        			len2 = len2 - 1;
+        	        console.log(len2);
+
+                }, "json");
+            });
+        }
+        
+     
+    });
+</script>
+
+
 <script>
 	function login() {
 		location.href = "${pageContext.request.contextPath}/member/login";
@@ -557,141 +569,111 @@
 	}
 
 	$(function() {
-		$(".btnReceiverDialog").click(function() {
-			$("#keyword").val("");
-			$(".dialog-receiver-list ul").empty();
+	    $(".btnReceiverDialog").click(function() {
+	        $("#keyword").val("");
+	        $(".dialog-receiver-list ul").empty();
+	        $("#myDialogModal").show();
+	    });
 
-			$("#myDialogModal").show();
-		});
+	    // 대화상자 - 사원 검색 버튼
+	    $(".btnReceiverFind").click(function() {
+	        let keyword = $("#keyword").val();
+	        if (!keyword) {
+	            $("#keyword").focus();
+	            return false;
+	        }
 
-		// 대화상자 - 사원 검색 버튼
-		$(".btnReceiverFind").click(function() {
-			let keyword = $("#keyword").val();
-			if (!keyword) {
-				$("#keyword").focus();
-				return false;
-			}
+	        let url = "${pageContext.request.contextPath}/approval/listMember";
+	        let query = "keyword=" + encodeURIComponent(keyword);
 
-			let url = "${pageContext.request.contextPath}/approval/listMember";
-			let query = "keyword=" + encodeURIComponent(keyword);
+	        const fn = function(data) {
+	            $(".dialog-receiver-list ul").empty();
+	            searchListMember(data);
+	        };
+	        ajaxFun(url, "get", query, "json", fn);
+	    });
 
-			const fn = function(data) {
-				$(".dialog-receiver-list ul").empty();
-				searchListMember(data);
+	    function searchListMember(data) {
+	        console.log(data)
+	        let s;
+	        for (let i = 0; i < data.listMember.length; i++) {
+	            let emp_name = data.listMember[i].emp_name;
+	            let emp_no = data.listMember[i].emp_no;
+	            let pos_name = data.listMember[i].pos_name;
+	            let dept_name = data.listMember[i].dept_name;
+	            let emp_picture = data.listMember[i].emp_picture;
 
-			};
-			ajaxFun(url, "get", query, "json", fn);
-		});
+	            s = "<li style='padding: 5px 0px 3px 10px'><input type='checkbox' style='margin-right: 5px;' class='form-check-input' data-emp_no='" + emp_no + "' data-emp_picture='" + emp_picture + "' title='" + emp_no + "'><span>" + emp_name + " " + pos_name + "<span>" + " (" + "</span>";
+	            s += "<span>" + dept_name + ")" + "</span></li>";
+	            $(".dialog-receiver-list ul").append(s);
+	        }
+	    }
 
-		function searchListMember(data) {
-			console.log(data)
-			let s;
-			for (let i = 0; i < data.listMember.length; i++) {
-				let emp_name = data.listMember[i].emp_name;
-				let emp_no = data.listMember[i].emp_no;
-				let pos_name = data.listMember[i].pos_name;
-				let dept_name = data.listMember[i].dept_name;
-				let emp_picture = data.listMember[i].emp_picture;
+	    // 대화상자-결재자 추가 버튼
+	    $(".btnAdd").click(function() {
+	        let len1 = $(".dialog-receiver-list ul input[type=checkbox]:checked").length;
+	        let len2 = $("#forms-receiver-list input[name=emp_nos]").length;
+	        if (len1 === 0) {
+	            alert("추가할 사람을 먼저 선택하세요.");
+	            return false;
+	        }
+	        if (len1 >= 2) {
+	            alert("결재자는 한 명만 선택하세요.");
+	            return false;
+	        }
 
-				s = "<li style='padding: 5px 0px 3px 10px' ><input type='checkbox' style='margin-right: 5px;' class='form-check-input' data-emp_no='"+emp_no+"' data-emp_picture='"+emp_picture+"' title='"+emp_no+"'><span>"
-						+ emp_name + " " + pos_name + "<span>" + " (" + "</span>";
-				s += "<span>" + dept_name + ")" + "</span></li>";
-				$(".dialog-receiver-list ul").append(s);
-			}
-		}
+	        if (len1 + len2 >= 4) {
+	            alert("결재자는 최대 3명까지만 가능합니다.");
+	            
+	            return false;
+	        }
+	        console.log(len1);
+	        console.log(len2);
 
-		// 대화상자-결재자 추가 버튼
-		$(".btnAdd").click(function() {
-			let len1 = $(".dialog-receiver-list ul input[type=checkbox]:checked").length;
-			let len2 = $("#forms-receiver-list input[name=emp_nos]").length;
-				if (len1 === 0) {
-					alert("추가할 사람을 먼저 선택하세요.");
-					return false;
-				}
-				if (len1 >= 2) {
-					alert("결재자는 한 명만 선택하세요.");
-					return false;
-				}
+	        let b = false;
+	        $(".dialog-receiver-list ul input[type=checkbox]:checked").each(function() {
+	            let emp_no = $(this).attr("data-emp_no");
+	            let emp_picture = $(this).attr("data-emp_picture") != "" ? $(this).attr("data-emp_picture") : "user.png";
+	            let emp_name = $(this).next("span").text();
+	            let pos_name = $(this).next("span").next("span").text();
+	            let dept_name = $(this).next("span").next("span").next("span").text();
 
-				if (len1 + len2 >= 4) {
-					alert("결재자는 최대 3명까지만 가능합니다.");
-					return false;
-				}
+	            $("#forms-receiver-list input[name=emp_nos]").each(function() {
+	                if ($(this).val() === emp_no) {
+	                    alert("이미 등록된 결재자입니다.");
+	                    b = true;
+	                    return false;
+	                }
+	            });
 
-				let b = false;$(".dialog-receiver-list ul input[type=checkbox]:checked").each(function() {
-						let emp_no = $(this).attr("data-emp_no");
-						let emp_picture = $(this).attr("data-emp_picture") != "" ? $(this).attr("data-emp_picture"): "user.png";
-						let emp_name = $(this).next("span").text();
-						let pos_name = $(this).next("span").next("span").text();
-						let dept_name = $(this).next("span").next("span").next("span").text();
+	            if (!b) {
+	                let s = "";
+	                s += "<span class='approval-member'>";
+	                s += "<div class='img_container'><img src='${pageContext.request.contextPath}/resources/images/" + emp_picture + "' style='width: 100%; height: 100%;'></div>";
+	                s += "<span style='font-weight: normal; word-break: keep-all;'>" + emp_name + "</span></span>";
+	                s += "<input type='hidden' name='emp_nos' value='" + emp_no + "'>";
 
-					$("#forms-receiver-list input[name=emp_nos]").each(function() {
-						if ($(this).val() === emp_no) {
-							alert("이미 등록된 결재자입니다.");
-							b = true;
-							return false;
-					}});
+	                $("#forms-receiver-list").append(s);
+	            }
+	        });
 
-				if (!b) {
-					let s = "";
-					if (len2 === 0) {
-						s += "<span class='approval-member'>";
-						// 처음 추가 버튼을 눌렀을 때
-						s += "<div class='img_container'><img src='${pageContext.request.contextPath}/resources/images/"
-								+ emp_picture+ "' style='width: 100%; height: 100%;'></div>";
-						s += "<span style='font-weight: normal; word-break: keep-all;'>"
-								+ emp_name+ "</span></span>";
-					} else {
-						// 다음 추가 버튼을 눌렀을 때
-						s += "<span class='approval-member2' style='padding-left: 20px;'>";
-						s += "<span style='float: left;'><i class='fa-solid fa-chevron-right' style='margin-top: 30px;'></i></span></span>";
-						s += "<span class='approval-member'>";
 
-						s += "<div class='img_container'><img src='${pageContext.request.contextPath}/resources/images/"
-								+ emp_picture+ "' style='width: 100%; height: 100%;'></div>";
-						s += "<span style='font-weight: normal; word-break: keep-all;'>"
-								+ emp_name+ "</span></span>";
-					}
-						s += "<input type='hidden' name='emp_nos' value='" + emp_no + "'>";
+	   
+	        $("#myDialogModal").hide();
+	    });
 
-						$("#forms-receiver-list").append(s);
-					}
-					});
+	    $(".btnClose").click(function() {
+	        $("#myDialogModal").hide();
+	    });
 
-					$("#myDialogModal").hide();
-				});
-
-		$(".btnClose").click(function() {
-			$("#myDialogModal").hide();
-		});
-
-		$("body").on("click", ".approval-member", function() {
-			if (!confirm("해당 사원을 제외 하시겠습니까?")) {
-				return false;
-			}
-
-			$(this).remove();
-
-		});
+	    $("body").on("click", ".approval-member", function() {
+	        if (!confirm("해당 사원을 제외 하시겠습니까?")) {
+	            return false;
+	        }
+ 
+	        $(this).remove();
+ 
+	    });
 	});
 </script>
-<script type="text/javascript">
 
-<c:if test="${mode=='update'}">
-$(function(){
-	$("body").on("click", ".approval-member", function(){
-		let $approval_member = $(this);			
-		let emp_nos = $approval_member.find("input[name='emp_nos']").val();
-		
-		console.log(emp_nos);
-
-		let url="${pageContext.request.contextPath}/approval/deleteMember?&page=${page}&doc_no=" + ${dto.doc_no};
-		$.post(url, {emp_nos:emp_nos}, function(data){
-			$approval_member.remove();
-		}, "json");		
-	});
-});
-</c:if>
-
-
-</script>

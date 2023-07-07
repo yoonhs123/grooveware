@@ -145,14 +145,14 @@ height: 100%;
 					</div>
 					<div style="width: 100%; float: left; ">
 						<c:forEach var="vo" items="${listApproval}" varStatus="status">
-							<div class="img_container" style="${vo.approval_status==2 ? 'border: 3px solid #0232f2;' : ''}">
+							<div class="img_container" style="color: #5c5c5c; ${vo.approval_status==2 ? 'border: 3px solid #0232f2;' : ''}">
 								<img class="imgSize"
 									src="${pageContext.request.contextPath}/resources/images/bg.png">
 							</div>
 
 							<c:if test="${!status.last}">
 								<div class="img_container3">
-									<i class="fa-solid fa-chevron-right fa-xl"  style="${vo.approval_status==2 ? 'color: #0232f2;' : ''}"></i>
+									<i class="fa-solid fa-chevron-right fa-xl"  style="color: #5c5c5c; ${vo.approval_status==2 ? 'color: #0232f2;' : ''}"></i>
 								</div>
 							</c:if>
 							<c:if test="${vo.emp_no == sessionScope.member.emp_no}">

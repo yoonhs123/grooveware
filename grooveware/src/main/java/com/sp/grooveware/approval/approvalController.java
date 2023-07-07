@@ -700,7 +700,8 @@ public class approvalController {
 	}
 	
 	@RequestMapping(value = "deleteMember")
-	public Map<String, Object> deleteFile(@RequestParam long doc_no,
+	@ResponseBody
+	public Map<String, Object> deleteMember(@RequestParam long doc_no,
 			@RequestParam long emp_no,
 			@RequestParam String page) throws Exception {
 		
