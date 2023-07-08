@@ -23,8 +23,9 @@
 }
 
 .club-write input, 
-.club-write textarea{
-  width: 100%;
+.club-write textarea
+{
+  width: 50%;
   padding: 10px;
   border: 1px solid #c1c1c1;
   border-radius: 4px;
@@ -38,6 +39,12 @@
 	text-align: center;
 	font-weight : bold;
 }
+
+.form-check-input {
+	
+     display: inline;
+}
+
 </style>
 
 <script type="text/javascript">
@@ -184,7 +191,7 @@ $(function(){
 		<div class="body-main">
 		
 			<form name="scheduleForm" method="post">
-				<table class="club-write mt-5 write-form">
+				<table class="club-write  write-form">
 					<tr class="club-write-table">
 						<td class="club-write-left col-2" scope="row">제 목</td>
 						<td>
@@ -216,11 +223,11 @@ $(function(){
 
 					<tr class="club-write-table">
 						<td class="club-write-left col-2" scope="row">종일일정</td>
-						<td class="py-3">
+						<td class="">
 							
-									<input type="checkbox" name="all_day" id="form-all_day" class="form-check-input" 
-										 value="1" ${dto.all_day == 1 ? "checked='checked' ":"" } >
-									<label class="form-check-label" for="form-all_day"> 하루종일</label>
+							<input type="checkbox" style="width: 2%;" name="all_day" id="form-all_day" class="form-check-input" 
+								 value="1" ${dto.all_day == 1 ? "checked='checked' ":"" } >
+							<label class="form-check-label" for="form-all_day"> 하루종일</label>
 								
 						</td>
 					</tr>
