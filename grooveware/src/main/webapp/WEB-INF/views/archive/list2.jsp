@@ -139,9 +139,9 @@ $("#btnDelete").click(function(){
 							<c:if test="${folder_no != '1' && folder_no != '2' }">
 								<button type="button" class="btn" onclick="location.href='${pageContext.request.contextPath}/archive/${preFolder_no}'">상위 폴더</button>
 							</c:if>
-								<button type="button" class="btn" onclick="openModal();">파일 업로드</button>
 							<c:if test="${((root_folderNum == '1' && (sessionScope.member.dept_no == '61' || sessionScope.member.dept_no == '62')) || root_folderNum == '2')}">
 								<button type="button" class="btn" onclick="openModal1();">폴더 생성</button>
+								<button type="button" class="btn" onclick="openModal();">파일 업로드</button>
 								<button type="button" class="btn" id="btnDelete">삭제</button>
 							</c:if>
 						</td>
