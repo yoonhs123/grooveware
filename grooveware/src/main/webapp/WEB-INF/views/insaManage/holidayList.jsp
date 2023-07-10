@@ -37,7 +37,7 @@
 		<div class="title_container">
 			<div class="title-holidaylist">
 				<h2>
-					<i class="bi bi-person-fill"></i> | 연차휴가 현황
+					<i class="fa-solid fa-calendar-check"></i>&nbsp; 연차휴가 현황
 				</h2>
 			</div>
 			<select class="select-year">
@@ -65,13 +65,12 @@
 					<tr class="insa-home-tr">
 						<th class="holidayManage-emp-no">사원번호</th>
 						<th class="holidayManage-name">성명</th>
-						<th class="holidayManage-pos">부서</th>
+						<th class="holidayManage-dept">부서</th>
 						<th class="holidayManage-pos">직위</th>
 						<th class="holidayManage-startday">입사일 / 근속연수</th>
 						<th class="holidayManage-use">부여된 연차</th>
 						<th class="holidayManage-use">사용한 연차</th>
 						<th class="holidayManage-no-use">남은 연차</th>
-						<th class="holidayManage-add">대체 연차</th>
 					</tr>
 				</thead>
 
@@ -88,7 +87,6 @@
 						<td>${dto.annual_count}개</td>
 						<td>${dto.annual_use}개</td>
 						<td>${dto.annual_count - dto.annual_use}개</td>
-						<td>0일</td>
 					</tr>
 					</c:forEach>
 				</tbody>

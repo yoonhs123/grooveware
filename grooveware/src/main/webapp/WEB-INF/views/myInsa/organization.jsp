@@ -35,7 +35,7 @@
 
 <div class="right-contentbody">
 	<div>
-	<h1 style="padding-left: 50px;"> <i class="fa-solid fa-network-wired"></i> 조직도</h1>
+	<h2 style="padding-left: 50px;"> <i class="fa-solid fa-network-wired"></i> 조직도</h2>
 	</div>
 	
 	<div>
@@ -53,8 +53,8 @@ $(function(){
 	let url = "${pageContext.request.contextPath}/myInsa/organizationItem";
 	
 	$.getJSON(url, function(data){
-		let trees = [['우리그룹', 'GROOVEWARE'], ['GROOVEWARE', '대표이사']];
-		let nodes = [{id: '우리그룹'}, {id: 'GROOVEWARE'}];
+		let trees = [['GROOVEWARE', '이사회'], ['이사회', '대표이사']];
+		let nodes = [{id: 'GROOVEWARE'}, {id: '이사회'}];
 		
 		for(let i = 0; i < data.list.length; i++) {
 			let item = data.list[i];
@@ -74,7 +74,7 @@ $(function(){
 
 		Highcharts.chart('container', {
 		    chart: {
-		        height: 650,
+		        height: 550,
 		        inverted: true
 		    },
 
@@ -107,22 +107,22 @@ $(function(){
 		            level: 1,
 		            color: '#1F6E8C',
 		            dataLabels: {
-		                color: ''
+		                color: 'white'
 		            },
 		            height: 100,
 		            nodeWidth: 120
 		        }, {
 		            level: 2,
-		            color: '#2E8A99'
+		            color: '#068FFF'
 		        }, {
 		            level: 4,
-		            color: '#84A7A1'
+		            color: '#4E4FEB'
 		        }],
 		        nodes: nodes,
 		        colorByPoint: false,
-		        color: '#A2FF86',
+		        color: '#4E4FEB',
 		        dataLabels: {
-		            color: ''
+		            color: 'white'
 		        },
 		        borderColor: 'white',
 		        nodeWidth: 65

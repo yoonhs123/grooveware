@@ -4,7 +4,7 @@
 /* board */
 .board-insaManage-home { width: 100%; }
 
-.table-list thead > tr { background: #f8f9fa; }
+.table-list thead > tr { background: #F2F2F2; }
 .table-list th, .table-list td { text-align: center; }
 
 .btn-insaManage-home {
@@ -29,8 +29,8 @@
 }
 
 .insa-home-tr {
-	border-bottom: 2px solid #ced4da;
-	border-top: 2px solid #ced4da;
+	border-bottom: 1px solid #ced4da;
+	border-top: 2px solid #212529;
 }
 
 .insa-home-td {
@@ -58,15 +58,21 @@
 
 
 .btn-insaManage-add {
-	color: black;
 	border: 1px solid #999999;
 	padding: 5px 10px;
 	border-radius: 4px;
-	font-weight: 500;
-	cursor: pointer;
+	font-weight: 450;
 	font-size: 14px;
 	line-height: 15px;
-	background-color: white;
+	height: 35px;
+	width : 100px;
+	border-radius: 5px;
+    background-color: #243A73; 
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin: 0 3px;
+    margin: 20px 0 15px 0;
 }
 
 .title_container {
@@ -190,4 +196,8 @@
 .title-name {
 	font-weight: bold;
 	font-size: large;
+}
+
+.page-dataCount {
+	font-size: 20px;
 }

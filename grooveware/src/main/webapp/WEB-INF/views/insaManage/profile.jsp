@@ -13,64 +13,6 @@
 </style>
    
    	<div class="modal-content-profile">
-   	<!-- 
-   		<div style="display : flex;">
-			<table style="width: 99%;">
-				<tr>
-					<td align="center">${dto.emp_no}</td>
-				</tr>
-				<tr>
-					<td>
-					<div class="profile-ficture border-radius" >
-						<div style="width: 100px; height: 80px; border: 1px solid red;">
-							<img src="${pageContext.request.contextPath}/uploads/insaManage/${dto.emp_picture}"> 
-						</div> 
-					</div>
-					</td>
-				</tr>
-			</table>
-			
-			<div class="profile-content1 border-radius">
-				<table class="profile-content1-table">
-					<tr>
-						<td>이름</td>
-						<td>${dto.emp_name}</td>
-						<td>부서</td>
-						<td>${dto.dept_name}</td>
-						
-					</tr>
-					
-					<tr>
-						<td>이메일</td>
-						<td>${dto.emp_email}</td>
-						<td>직급</td>
-						<td>${dto.pos_name}</td>
-					</tr>
-					<tr>
-						<td>입사일</td>
-						<td>${dto.emp_join_date} 입사</td>
-						<td>사원상태</td>
-						<td>
-							${dto.emp_status==0?"재직":(dto.emp_status==1?"휴직":"퇴사")}
-						</td>
-					</tr>
-					<tr>
-						<td>주소</td>
-						<td>
-							<span> [${dto.emp_zip}] </span> 
-							<span> ${dto.emp_addr1} </span> 
-							<span> ${dto.emp_addr2} </span>
-						</td>
-						<td>전화번호</td>
-						<td>${dto.emp_tel}</td>
-					</tr>
-					
-				</table>
-				
-
-			</div>
-		</div>
-	-->
 	<div class="div-container2">
 	<div class="div-left2">
 		<div class="div-top2">
@@ -80,7 +22,7 @@
 					<div class="profile-picture border-radius">
 						<div style="height: 100%">
 							<div class="insa-image" style="width: 90%; height: 90%;">
-							<img src="${pageContext.request.contextPath}/uploads/insaManage/${dto.emp_picture}">
+							<img src="${pageContext.request.contextPath}/uploads/insaManage/${dto.emp_picture}" style="width: 100%; height: 85%;">
 							</div>
 							<div style="width: 100%; margin-bottom: 10px;" align="center">${dto.emp_no}</div>
 						</div>
@@ -118,7 +60,7 @@
 	<div class="profile-content1 div-right2" style="flex-direction: row;">
 		<table class="profile-content1-table">
 			<tr>
-				<td><h3> | 인적사항 </h3></td>
+				<td style="width: 25%;"><h3> | 인적사항 </h3></td>
 			</tr>
 			<tr>
 				<th class="th-left">이름</th>

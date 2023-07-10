@@ -19,8 +19,17 @@
 	margin-top: 5%;
 }
 
+..total-worktime th {
+	border-bottom: 2px solid #212529;
+}
+
 .total-worktime td {
 	border-bottom: 1px solid #ced4da;
+}
+
+.work-record-border {
+	border-bottom: 2px solid #ced4da;
+	border-top: 2px slid #ced4da;
 }
 
 .calendar-worktime {

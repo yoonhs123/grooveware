@@ -128,9 +128,15 @@ function sendOk() {
 				<td>${dto.emp_rrn}</td>
 			</tr>
 			<tr>
+				<th class="th-left">비밀번호</th>
+				<td>
+					<input type="text" id="emp_pwd" name="emp_pwd" placeholder="재 설정할 비밀번호를 입력하세요." style="width: 200px; height : 30px;">
+				</td>
+			</tr>
+			<tr>
 				<th class="th-left">사진</th>
 				<td>
-					<input type="file" id="photo" name="selectFile" accept="image/*" value="${dto.emp_picture}" style="width: 200px; height : 30px;">
+					<input type="file" id="photo" name="selectFile" accept="image/*" value="${dto.emp_picture}" style="width: 100%; height: 85%;">
 				</td>
 			</tr>
 			<tr>

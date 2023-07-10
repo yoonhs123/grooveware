@@ -24,6 +24,7 @@
 
 .my-insa {
 	border-bottom: 1px solid #ced4da;
+	border-top: 2px solid #212529;
 }
 
 .geuntae-info-table, .dpMove-info-table{
@@ -80,4 +81,53 @@
 
 .insateam {
 	display: none;	
+}
+
+.pwd-check-h3 {
+	font-size: 20px;
+    margin-top: 0;
+}
+
+.pwd-check-name {
+	width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+.pwd-check-pwd {
+	width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+.check-pwd-btn {
+	background-color: #4CAF50;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.check-pwd-btn:hover {
+	background-color: #45a049;
+}
+
+.pwd-check-p {
+	margin-top: 10px;
+    font-size: 14px;
+}
+
+.pwd-check {
+	border: 1px solid black;
+	text-align: center;
 }

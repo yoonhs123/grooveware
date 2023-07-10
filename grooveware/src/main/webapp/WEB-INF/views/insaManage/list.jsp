@@ -141,7 +141,7 @@ $(function() {
    			<div class="title_container">
    				<table class="insa-list-tab">
    					<tr>
-   						<td class="title"> <h2><i class="bi bi-person-fill"></i>| 사원 관리</h2></td>
+   						<td class="title"> <h2><i class="fa-solid fa-users-gear"></i>&nbsp; 사원 관리</h2></td>
    					</tr>
    					<tr>
    						<td>
@@ -164,25 +164,25 @@ $(function() {
    				
    				<table class="table" style="margin-bottom: 20px">
    					<tr class="table">
-   						<td align="left" width="50%">
+   						<td align="left" width="50%" class="page-dataCount">
    							${dataCount}개(${page}/${total_page} 페이지)
    						</td>
    						<td align="right">
    							<form name="searchForm" action="${pageContext.request.contextPath}/insaManage/list" method="post">
-								<select name="condition" class="form-select">
+								<select name="condition" class="emp-list-select">
 									<option value="all"  ${condition == "all" ? "selected='selected'" : ""} > 전체 </option>
 									<option value="emp_no"  ${condition == "emp_no" ? "selected='selected'" : ""} > 사원번호 </option>
 									<option value="emp_name"  ${condition == "emp_name" ? "selected='selected'" : ""} > 사원이름 </option>
 									<option value="dept_name"  ${condition == "dept_name" ? "selected='selected'" : 	""} > 부서 </option>
 									<option value="pos_name"  ${condition == "pos_name" ? "selected='selected'" : 	""} > 직위 </option>
 								</select>
-								<input type="text" name="keyword" value="${keyword}" class="insaManageHome">
+								<input type="text" name="keyword" value="${keyword}" class="emp-list-search">
 								<input type="hidden" name="emp_status" value="${emp_status}"> 
-								<button type="button" class="btn-insaManage-home" onclick="searchList()">검색</button>
+								<button type="button" class="work-search-btn" onclick="searchList()">검색</button>
 							</form>
 						</td>
 						<td class="emp-add" align="right">
-							<button class="btn-insaManage-add" id="openModalBtn" onclick="location.href='${pageContext.request.contextPath}/insaManage/write';">사원등록</button>
+							<button class="btn-insaManage-add" id="openModalBtn" onclick="location.href='${pageContext.request.contextPath}/insaManage/write';"><i class="fa-solid fa-user-plus"></i>&nbsp;사원등록</button>
 						</td>
    					</tr>
    				</table>
@@ -218,8 +218,7 @@ $(function() {
 							  <div class="more">
 							    <div class="more-menu">
 							      <h3 class="dropdown-menu">
-							        <i class="bi bi-three-dots-vertical"></i>
-							        +
+							        <i class="fa-solid fa-plus"></i>
 							      </h3>
 							      <div class="dropdown-content">
 							      	<a onclick="location.href='${pageContext.request.contextPath}/insaManage/updateEmpHistory?emp_no=${dto.emp_no}&page=${page}';">직위/부서 이동</a>

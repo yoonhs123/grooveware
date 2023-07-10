@@ -31,7 +31,7 @@
 	
 	<!-- 인사관리 -->
 	<select id="readProfile2" parameterType="long" resultType="com.sp.grooveware.myInsa.MyInsa">
-		SELECT e.emp_no, e.emp_name, e.emp_email, e.emp_tel,
+		SELECT e.emp_no, e.emp_pwd, e.emp_name, e.emp_email, e.emp_tel,
 				d.dept_name, p.pos_name,
 				SUBSTR(emp_rrn, 1, 6) emp_rrn,
 				TO_CHAR(e.emp_join_date, 'YYYY-MM-DD') emp_join_date, emp_picture,
@@ -52,7 +52,7 @@
 	<!-- 사원 정보 update -->
 	<update id="updateProfile" parameterType="com.sp.grooveware.myInsa.MyInsa">
 		UPDATE emp 
-		SET emp_email = #{emp_email},
+		SET emp_email = #{emp_email}, emp_pwd = #{emp_pwd},
 			emp_tel = #{emp_tel}, emp_zip = #{emp_zip}, emp_addr1 = #{emp_addr1}, emp_addr2 = #{emp_addr2},
 			emp_picture = #{emp_picture}
 		WHERE emp_no = #{emp_no}

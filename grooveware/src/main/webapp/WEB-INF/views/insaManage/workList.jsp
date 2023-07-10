@@ -49,9 +49,9 @@ function searchDate() {
 
 	<div class="board-emp-list">
 		<div class="title_container-emp-list">
-			<h1>
-				<i class="bi bi-person-fill"></i>근태관리
-			</h1>
+			<h2>
+				<i class="fa-solid fa-briefcase"></i>&nbsp;근태관리
+			</h2>
 			<table class="table emp-list-1">
 				<tr>
 					<td class="title-emp-list">
@@ -71,7 +71,7 @@ function searchDate() {
 								<option value="m_name" ${condition == "m_name" ? "selected='selected'" : ""}>이름</option>
 								<option value="job_name" ${condition == "job_name" ? "selected='selected'" : 	""}>직위</option>
 							</select> <input type="text" name="keyword" value="${keyword}" class="emp-list-search">
-							<button type="button" class="btn-emp-list" onclick="searchList();">검색</button>
+							<button type="button" class="work-search-btn" onclick="searchList();">검색</button>
 						</form>
 					</td>
 				</tr>
@@ -81,7 +81,7 @@ function searchDate() {
 					<tr class="insa-home-tr">
 						<th class="emp-list-empNo">사원번호</th>
 						<th class="emp-list-name">성명</th>
-						<th class="emp-list-team" style="width: 10%">부서</th>
+						<th class="emp-list-team">부서</th>
 						<th class="emp-list-posi">직위</th>
 						<th class="emp-list-work">정상출근</th>
 						<th class="emp-list-late">지각</th>

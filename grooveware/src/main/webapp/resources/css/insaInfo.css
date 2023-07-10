@@ -69,6 +69,7 @@
 .div-bottom2 {
 	flex: 5;
 	border: 1px solid #ced4da;
+	border-radius: 5px;
 }
 
 .profile-picture {

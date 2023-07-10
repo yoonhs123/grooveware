@@ -4,7 +4,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class MyInsa {
 	private long emp_no;
-	private long emp_pwd;
+	private String emp_pwd;
 	private String emp_name;
 	private String emp_rrn;
 	private String emp_email;
@@ -103,10 +103,10 @@ public class MyInsa {
 	public void setEmp_no(long emp_no) {
 		this.emp_no = emp_no;
 	}
-	public long getEmp_pwd() {
+	public String getEmp_pwd() {
 		return emp_pwd;
 	}
-	public void setEmp_pwd(long emp_pwd) {
+	public void setEmp_pwd(String emp_pwd) {
 		this.emp_pwd = emp_pwd;
 	}
 	public String getEmp_name() {

@@ -13,12 +13,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.sp.grooveware.common.MyUtil;
 import com.sp.grooveware.member.SessionInfo;
@@ -71,7 +70,38 @@ public class MyInsaController {
 		return ".myInsa.insaCard";
 	}
 	
-	@GetMapping("profileUpdate")
+	@RequestMapping(value = "pwd", method = RequestMethod.GET)
+	public String pwdForm(Model model) {
+		return ".myInsa.pwd";
+	}
+	
+	@RequestMapping(value = "pwd", method = RequestMethod.POST)
+	public String pwdSubmit(@RequestParam String emp_pwd,
+			final RedirectAttributes reAttr,
+			HttpSession session,
+			Model model) {
+		
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		
+		MyInsa dto = myInsaService.readProfile(info.getEmp_no());
+		if(dto == null) {
+			session.invalidate();
+			return "redirect:/";
+		}
+		if(!dto.getEmp_pwd().equals(emp_pwd)) {
+			model.addAttribute("profileUpdate");
+			model.addAttribute("message", "패스워드가 일치하지않습니다.");
+			return ".myInsa.pwd";
+		}
+		
+		model.addAttribute("dto", dto);
+		model.addAttribute("profileUpdate");
+		
+		return ".myInsa.profileUpdate";
+	}
+	
+	/*
+	@RequestMapping(value = "profileUpdate", method = RequestMethod.GET)
 	public String profileUpdateForm(@RequestParam long emp_no,
 			HttpSession session,
 			Model model) throws Exception {
@@ -88,9 +118,13 @@ public class MyInsaController {
 			
 		return ".myInsa.profileUpdate";
 	}
+	*/
 	
-	@PostMapping("profileUpdate")
-	public String profileUpdateSubmit(MyInsa dto, HttpSession session) throws Exception {
+	@RequestMapping(value = "profileUpdate", method = RequestMethod.POST)
+	public String profileUpdateSubmit(MyInsa dto, 
+			HttpSession session,
+			final RedirectAttributes reAttr,
+			Model model) throws Exception {
 		String root = session.getServletContext().getRealPath("/");
 		String path = root + "uploads" + File.separator+ "insaManage";
 		
@@ -98,6 +132,12 @@ public class MyInsaController {
 			myInsaService.profileUpdate(dto, path);
 		} catch (Exception e) {
 		}
+		
+		StringBuilder sb = new StringBuilder();
+		sb.append(dto.getEmp_name()+ "님의 개인정보가 정상적으로 변경되었습니다.<br>");
+		
+		reAttr.addFlashAttribute("title", "회원 정보 수정");
+		reAttr.addFlashAttribute("message", sb.toString());
 		
 		return "redirect:/myInsa/profile";
 	}

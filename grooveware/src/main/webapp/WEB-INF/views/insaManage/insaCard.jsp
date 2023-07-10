@@ -67,7 +67,7 @@ $(function(){
 </div>
 
 <div class="right-contentbody">
-	<div class="insacard-next"><h2>|&nbsp;${dto.emp_name}님 인사기록카드</h2></div>
+	<div class="insacard-next"><h2><i class="fa-solid fa-address-card"></i>&nbsp;${dto.emp_name}님 인사기록카드</h2></div>
 	<table class="insa-info-table">
 		<tbody>
 			<tr>

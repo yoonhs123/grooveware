@@ -43,7 +43,7 @@
 
 
 <div class="right-contentbody">
-	<h2 style="margin-bottom: 3%">|&nbsp;'${dto.emp_name}'님의 인사 정보</h2>
+	<h2 style="margin-bottom: 3%"><i class="fa-solid fa-user-tie"></i>&nbsp;'${dto.emp_name}'님의 인사 정보</h2>
 	<div class="div-container">
 	<div class="div-left">
 		<div class="div-top">
@@ -53,7 +53,7 @@
 					<div class="profile-picture border-radius">
 						<div style="height: 100%">
 							<div class="insa-image" align="center">
-							<img src="${pageContext.request.contextPath}/uploads/insaManage/${dto.emp_picture}">
+							<img src="${pageContext.request.contextPath}/uploads/insaManage/${dto.emp_picture}" style="width: 100%; height: 85%;">
 							</div>
 							<div style="width: 100%; margin-bottom: 10px;" align="center">${dto.emp_no}</div>
 						</div>
@@ -122,7 +122,7 @@
 			</tr>
 			<tr>
 				<td colspan="2" style="width: 100%;" align="right">
-					<button type="button" onclick="location.href='${pageContext.request.contextPath}/myInsa/profileUpdate?emp_no=${dto.emp_no}';" class="btn">수정하기</button>
+					<button type="button" onclick="location.href='${pageContext.request.contextPath}/myInsa/pwd';" class="btn">수정하기</button>
 				</td>
 			</tr>
 		</table>

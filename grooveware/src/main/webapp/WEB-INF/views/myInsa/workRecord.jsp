@@ -60,8 +60,8 @@ function searchDate() {
 <div class="right-contentbody">
 			<div class="board">
 				<div class="main-container" style="width: 100%;">
-					<h2><i class="bi bi-person-fill"></i>| ${dto.emp_name}님 출근 현황</h2>
-					<div class="total-worktime" style="">
+					<h2><i class="fa-solid fa-briefcase"></i>&nbsp;${dto.emp_name}님 출근 현황</h2>
+					<div class="total-worktime">
 						<table class="table table-border table-list total-worktime" style="padding:30px 0px 0px 30px; border: 2px solid #ced4da">
 							<tr style="border-bottom: 2px solid #ced4da">
 								<th width="14%">연차휴가</th>
@@ -113,7 +113,7 @@ function searchDate() {
 					<div class="calendar-worktime">
 						<table class="table table-form total-worktime" style="border: 2px solid #ced4da">
 							<thead>
-								<tr style="border-bottom: 2px solid #ced4da">
+								<tr class="work-record-border">
 									<th style="width: 25%">날짜</th>
 									<th style="width: 25%">출근</th>
 									<th style="width: 25%">퇴근</th>

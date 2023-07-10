@@ -43,7 +43,7 @@ $(function() {
 </div>
 
 <div class="right-contentbody">
-	<h2 style="margin-bottom: 3%">|&nbsp;'${dto.emp_name}'님의 인사 기록 카드</h2>
+	<h2 style="margin-bottom: 3%"><i class="fa-solid fa-address-card"></i>&nbsp;&nbsp;'${dto.emp_name}'님 인사 기록 카드</h2>
 	<table class="insa-info-table">
 		<tbody>
 			<tr>
@@ -125,12 +125,14 @@ $(function() {
 	<div class="title-name">| 상벌관리</div>
 	<table class="dpMove-info-table">
 		<tr class="my-insa">
-			<td>발령일자</td>
-			<td>소속회사</td>
-			<td>발령분류</td>
-			<td>변경사항</td>
+			<td>상벌일자</td>
+			<td>상벌구분</td>
+			<td>상벌명</td>
+			<td>상벌내용</td>
+			<td>상벌권자</td>
 		</tr>
 		<tr>
+			<td>2023/06/04</td>
 			<td>?</td>
 			<td>?</td>
 			<td>?</td>
