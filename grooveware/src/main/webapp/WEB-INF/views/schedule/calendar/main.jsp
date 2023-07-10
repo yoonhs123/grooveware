@@ -52,7 +52,9 @@
 	margin-bottom: 7px;
 }
 
-
+#all { accent-color: #5882FA; }
+#department { accent-color: #EE6666; }
+#individual { accent-color: #91CC75; }
 
 .text-end {
     text-align: center;
@@ -80,13 +82,13 @@
 						
 						<div class="category-list">
 							  <input class="category-item" type="checkbox" id="all" name="option" value="0" checked='checked'>
-							  <hr style="border: 3px solid #5882FA;">
+							 
 							  <label for="all">전사</label>
 							  <input class="category-item" type="checkbox" id="department" name="option" value="${sessionScope.member.dept_no}" checked='checked'>
-							  <hr style="border: 3px solid #EE6666;">
+							 
 							  <label for="department">부서</label>
 							  <input class="category-item" type="checkbox" id="individual" name="option" value="1" checked='checked'>
-							  <hr style="border: 3px solid #91CC75;">
+							
 							  <label for="individual">개인</label>
 						 </div>
 					</div>	
