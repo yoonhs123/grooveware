@@ -37,7 +37,7 @@ public class TaskController {
     @Autowired
     private FileManager fileManager;
     
-    @RequestMapping(value = "/listsend")
+    @RequestMapping(value = "/listreceive")
     public String list(@RequestParam(value = "page", defaultValue = "1") int current_page,
     		@RequestParam(defaultValue = "task_name") String condition,
     		@RequestParam(defaultValue = "") String keyword,
@@ -60,10 +60,6 @@ public class TaskController {
     	map.put("condition", condition);
     	map.put("keyword", keyword);
     	map.put("login_emp", info.getEmp_no());    	
-    	
-    	// 카테고리 (진행중, 완료)
-		int category = 0;	// 진행
-		map.put("category", category);
 		
 		dataCount = service.dataCount(map);
 		if (dataCount != 0) {
@@ -110,7 +106,7 @@ public class TaskController {
 		model.addAttribute("condition", condition);
 		model.addAttribute("keyword", keyword);
 		
-    	return ".goal.listsend";
+    	return ".goal.listreceive";
     }
     	
     

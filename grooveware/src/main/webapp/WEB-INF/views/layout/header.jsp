@@ -28,12 +28,14 @@
          
          <li><a href="${pageContext.request.contextPath}/approval/list">전자결재</a></li>
          <li><a href="${pageContext.request.contextPath}/myInsa/profile">인사정보</a></li>
-         <li><a href="${pageContext.request.contextPath}/project/list" class="new-taskCount">프로젝트</a></li>
+         <li><a href="${pageContext.request.contextPath}/project/list">프로젝트</a></li>
          <li><a href="${pageContext.request.contextPath}/schedule/calendar/main">일정관리</a></li> 
          <li><a href="${pageContext.request.contextPath}/club/list">그루비룸</a></li>
          <li><a href="${pageContext.request.contextPath}/notice/all/list">공지사항</a></li>
          <li><a href="${pageContext.request.contextPath}/archive/1">자료실</a></li>
          <li>
+         	<a href="#" class="new-taskCount"></a>
+         	&nbsp;&nbsp;&nbsp;&nbsp;
             <a href="${pageContext.request.contextPath}/address/list" title="메신저"><i class="fa-brands fa-facebook-messenger"></i></a>
              &nbsp;&nbsp;&nbsp;&nbsp;
          	<a href="${pageContext.request.contextPath}/member/logout" title="로그아웃"><i class="fa-solid fa-arrow-right-from-bracket"></i></a>
@@ -64,24 +66,15 @@
 				,dataType:"json"
 				,success:function(data) {
 					var newCount = parseInt(data.newCount);
-					
 					if(newCount !== 0) {
-						var count = 0;
-					    var interval = setInterval(function() {
-					        if (count % 2 === 0) {
-					            $(".new-taskCount").css("color", "red");
-					        } else {
-					            $(".new-taskCount").css("color", "");
-					        }
-
-					        count++;
-
-					        if (count === 6) { // 깜빡이는 횟수 (3번 깜빡이기 위해 6번 반복)
-					            clearInterval(interval);
-					        }
-					    }, 500); // 깜빡이는 간격 (500ms)
+						s = '<i class="fa-regular fa-bell"></i>';
+						$(".new-taskCount").html(s);
+						$(".new-taskCount").attr("title", "새로운 업무요청이 있습니다")
+						return false;
 					}
+					
 				}
+					
 				,error:function(jqXHR) {
 					if(timer != null) {
 						clearInterval(timer);

@@ -208,21 +208,34 @@ function searchList() {
         </ul>
 </div>
 
+<c:if test="${dataCount == 0 && keyword == '' }">
+<div class="right-contentbody">
+	<div class="pj">
+		<div class="no_pj_img">
+			<p><i class="fa-solid fa-file-circle-question" style="font-size: 150px;"></i></p>
+		</div>
+		
+		<div class="no_pj_alert">
+			<p>요청받은 업무가 없습니다.</p>
+		</div>
+		
+	</div>
+</div>
+</c:if>
 
 
+<c:if test="${dataCount != 0 || keyword != ''}">
    <div class="right-contentbody">
 		
 			<div class="board1">
 				<div class="title_container">
-						<div class="project"><h2><i class="fa-solid fa-toggle-on"></i> 진행중인 프로젝트 </h2></div>
+						<div class="project"><h2><i class="fa-solid fa-toggle-on"></i> 요청받은 업무 </h2></div>
 						<div class="keyword_left">
 							<form name="searchForm" action="${pageContext.request.contextPath}/project/list" method="post">
 								<select name="condition" class="form-select">
-									<option value="pj_name"  ${condition == "pj_name" ? "selected='selected'" : ""} >프로젝트 이름</option>
-									<option value="pj_creator"  ${condition == "pj_creator" ? "selected='selected'" : ""} >PM</option>
-									<option value="client_name"  ${condition == "client_name" ? "selected='selected'" : ""} >클라이언트</option>
-									<option value="pj_start_date"  ${condition == "pj_start_date" ? "selected='selected'" : ""} >시작일</option>
-									<option value="pj_end_date"  ${condition == "pj_end_date" ? "selected='selected'" : ""} >종료일</option>
+									<option value="task_name"  ${condition == "task_name" ? "selected='selected'" : ""} >업무 이름</option>
+									<option value="task_manager"  ${condition == "task_manager" ? "selected='selected'" : ""} >요청자</option>
+									<option value="goal_name"  ${condition == "goal_name" ? "selected='selected'" : ""} >목표 이름</option>
 								</select>
 								<input type="text" name="keyword" value="${keyword}" class="form-control">
 								<button type="button" class="btn" onclick="searchList();">검색</button> 	
@@ -238,12 +251,11 @@ function searchList() {
 				<thead >
 					<tr>
 						<th class="sort_numbering"><i class="fa-solid fa-sort-down"></i></th>
-						<th width="35%;"> 프로젝트 이름 </th>
-						<th> PM </th>
+						<th width="35%;"> 업무 이름 </th>
+						<th> 요청자 </th>
 						<th> 시작일 </th>
 						<th> 종료일 </th>
 						<th> 파일 </th>
-						<th> 기획서 </th>
 					</tr>
 				</thead>
 				
@@ -252,7 +264,7 @@ function searchList() {
 						<tr>
 							<td class="numbering">${dataCount - (page-1) * size - status.index}</td>
 							<td class="left title_left">
-								<a href="${goalUrl}?pj_no=${dto.pj_no}" class="text-reset">${dto.pj_name}</a>
+								<a href="${article}?pj_no=${dto.pj_no}" class="text-reset">${dto.pj_name}</a>
 							</td>
 							<td>${dto.emp_name}</td>
 							<td>${dto.pj_start_date}</td>
@@ -279,3 +291,4 @@ function searchList() {
 			</div>
 
    </div>
+</c:if>

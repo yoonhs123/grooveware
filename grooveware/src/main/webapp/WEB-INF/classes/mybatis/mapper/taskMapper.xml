@@ -47,7 +47,7 @@
 	
 	<!-- 로그인한 아이디가 요청받은 업무리스트 -->
 	<select id="listTask" parameterType="map" resultType="com.sp.grooveware.task.Task">
-	SELECT a.emp_no, b.dept_name, c.emp_name, d.pos_name, task_name, task_content, TO_CHAR(pj_start_date, 'YYYY-MM-DD') AS task_start_date, TO_CHAR(task_end_date, 'YYYY-MM-DD') AS task_end_date
+	SELECT a.emp_no, b.dept_name, c.emp_name, d.pos_name, task_name, task_content, TO_CHAR(task_start_date, 'YYYY-MM-DD') AS task_start_date, TO_CHAR(task_end_date, 'YYYY-MM-DD') AS task_end_date
 		FROM (
 		    SELECT x.emp_no, x.history_no, x.dept_no, x.pos_no FROM emp_history x
 		    LEFT OUTER JOIN emp_history y ON x.emp_no = y.emp_no AND x.history_no &lt; y.history_no
@@ -62,6 +62,37 @@
 		</where>
 	</select>
 
+	<sql id="where-list">
+		<choose>
+			<when test="condition == 'task_name' ">
+			   ( INSTR(task_name, #{keyword}) &gt; 0 )
+			</when>
+			<when test="condition == 'task_manager' ">
+			   ( INSTR(task_manager, #{keyword}) &gt; 0 )
+			</when>
+			<when test="condition == 'goal_name' ">
+			   ( INSTR(goal_name, #{keyword}) &gt; 0 )
+			</when>
+			<otherwise>
+			    INSTR(${condition}, #{keyword}) &gt; 0
+			</otherwise>
+		</choose>
+	</sql>
+	
+	
+	<!-- 글 개수 -->
+	<select id="dataCount" parameterType="map" resultType="Integer">
+		SELECT count(a.task_no)
+		FROM task_member a
+		LEFT OUTER JOIN task b ON a.task_no = b.task_no
+		LEFT OUTER JOIN goal c ON b.goal_no = c.goal_no
+		<where>
+			task_member_no = #{login_emp}
+			<if test="keyword!=null and keyword!='' ">
+				AND <include refid="where-list"/>
+			</if>
+		</where>   
+	</select>
 
 	
 </mapper>
