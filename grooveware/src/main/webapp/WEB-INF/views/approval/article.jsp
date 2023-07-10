@@ -147,7 +147,7 @@ height: 100%;
 						<c:forEach var="vo" items="${listApproval}" varStatus="status">
 							<div class="img_container" style="color: #5c5c5c; ${vo.approval_status==2 ? 'border: 3px solid #0232f2;' : ''}">
 								<img class="imgSize"
-									src="${pageContext.request.contextPath}/resources/images/bg.png">
+									src="${pageContext.request.contextPath}/resources/images/user.png">
 							</div>
 
 							<c:if test="${!status.last}">

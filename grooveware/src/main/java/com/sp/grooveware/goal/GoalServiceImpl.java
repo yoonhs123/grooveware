@@ -30,6 +30,9 @@ public class GoalServiceImpl implements GoalService {
 			
 			dao.insertData("goal.insertGoal1",dto);
 			
+			dao.insertData("goal.defaultInsert", dto);
+			
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
@@ -55,6 +58,8 @@ public class GoalServiceImpl implements GoalService {
 			dao.updateData("goal.updateOrderno",map);
 			
 			dao.insertData("goal.insertGoal2", dto);
+			
+			dao.insertData("goal.defaultInsert", dto);
 		
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -76,16 +81,100 @@ public class GoalServiceImpl implements GoalService {
 		
 		return list;
 	}
+	
 
 	@Override
-	public void updateGoal(Goal dto) throws Exception {
-		// TODO Auto-generated method stub
+	public void updateGoal(Goal dto, String pathname) throws Exception {
+		try {
+			String saveFilename = fileManager.doFileUpload(dto.getSelectFile(), pathname);
+			
+			if (saveFilename != null) {
+				if (dto.getSaveFilename() != null && dto.getSaveFilename().length() !=0) {
+					fileManager.doFileDelete(dto.getSaveFilename(), pathname);
+				}
+			
+				dto.setSaveFilename(saveFilename);
+				dto.setOriginalFilename(dto.getSelectFile().getOriginalFilename());
+			}
+			
+			dao.updateData("goal.updateGoal1", dto);
+			dao.updateData("goal.updateGoal2", dto);
+			
+			// 멤버 수정이 없을경우. 추가안했을때
+			if(dto.getEmps() != null) {
+				
+				insertGoalmember(dto);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
 		
 	}
 
+
+	
 	@Override
-	public void deleteGoal(long goal_no) {
-		// TODO Auto-generated method stub
+	public void insertGoalmember(Goal dto) throws Exception {
+		try {
+			dao.insertData("goal.insertGoalmember", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		
+	}
+
+
+
+
+	
+
+	@Override
+	public void deleteGoal(long pj_no, long goal_no, long emp_no, String pathname) throws Exception{
+		try {
+			Goal dto = readGoal(goal_no);
+			
+			int qualify = 0;
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("pj_no", pj_no);
+			map.put("login_emp", emp_no);
+			qualify = dao.selectOne("goal.readAcess", map);
+			
+			if(dto == null || !(qualify == 0 || qualify == 1) ) {
+				return;
+			}
+			
+			fileManager.doFileDelete(dto.getSaveFilename(), pathname);
+			
+			
+			// 하위 업무 삭제
+			
+			
+			// 목표 삭제
+			
+			if(dto.getDepth() == 0) {	// 최상위목표삭제
+				dao.deleteData("goal.deleteGoal1-1", goal_no);	// goal_member 테이블 삭제
+
+			} else if(dto.getDepth() == 1) {	// 상위목표삭제
+				dao.deleteData("goal.deleteGoal2-1", goal_no);	// goal_member 테이블 삭제
+				dao.deleteData("goal.deleteGoal2-2", goal_no);	// goal_member 테이블 삭제
+
+				
+			} else if(dto.getDepth() == 2) {	// 하위목표삭제
+				dao.deleteData("goal.deleteGoal3-1", goal_no);	// goal 테이블 삭제
+				
+			}
+			
+			
+			
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
 		
 	}
 
@@ -170,11 +259,11 @@ public class GoalServiceImpl implements GoalService {
 
 
 	@Override
-	public List<Goal> readGoalmember(Map<String, Object> map) {
+	public List<Goal> readGoalmember(long goal_no) {
 		List<Goal> list = null;
 		
 		try {
-			list = dao.selectList("goal.readGoalmember",map);
+			list = dao.selectList("goal.readGoalmember",goal_no);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -182,6 +271,89 @@ public class GoalServiceImpl implements GoalService {
 		return list;
 	}
 
+	@Override
+	public int dataCount(long pj_no) {
 
+		int dataCount = 0;
+		
+		try {
+			dataCount = dao.selectOne("goal.dataCount", pj_no);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return dataCount;
+	}
 
+	
+
+	@Override
+	public int readstatus(long pj_no) {
+
+		int pj_status = 0;
+		
+		try {
+			pj_status = dao.selectOne("goal.readstatus", pj_no);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return pj_status;
+	}
+	
+	
+	
+	@Override
+	public String readparentname(long num) {
+		
+		String readparentname = "";
+		
+		try {
+			readparentname = dao.selectOne("goal.readparentname", num);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return readparentname;
+	}
+
+	@Override
+	public String readprojectname(long num) {
+		
+		String readprojectname = "";
+		
+		try {
+			readprojectname = dao.selectOne("goal.readprojectname", num);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return readprojectname;
+	}
+
+	@Override
+	public int readAcess(Map<String, Object> map) {
+		
+		int qualify = 0;
+		
+		try {
+			qualify = dao.selectOne("goal.readAcess", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return qualify;
+	}
+
+	@Override
+	public void deleteGoalmember(Map<String, Object> map) throws Exception {
+		try {
+			dao.deleteData("goal.deleteGoalmember", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		
+	}
+
+	
 }

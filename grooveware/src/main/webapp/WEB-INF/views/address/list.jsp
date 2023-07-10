@@ -47,7 +47,7 @@
 
 
 		<li><a href="${pageContext.request.contextPath}/address/list">주소록</a>
-			<hr> <a href="${pageContext.request.contextPath}/address/list">&nbsp;공용 주소록</a>
+		    <a href="${pageContext.request.contextPath}/address/list">&nbsp;공용 주소록</a>
 			<a href="${pageContext.request.contextPath}/address/friendList">&nbsp;개인 주소록</a>
 			  <a href="${pageContext.request.contextPath}/chat/chat">&nbsp;메신저</a>
 		<li>
@@ -59,9 +59,9 @@
 			<table class="table" style="margin-bottom: 20px;">
 				<tr>
 					<td class="title">
-						<h3>
-							<span>|</span> 공용 주소록
-						</h3>
+						<h2>
+						  <i class="fa-solid fa-address-book"></i>&nbsp;공용 주소록
+						</h2>
 					</td>
 					<td align="right">
 						<form name="searchForm"

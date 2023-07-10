@@ -54,10 +54,11 @@
 }
 
 .right-contentbody2 {
-	width: 85%;
+	width: 75%;
 	position: absolute;
-	left: 17%;
-	padding: 0% 8%;
+	left: 28%;
+	padding: 3% 8%;
+	background: #f3f3f34a;
 }
 
 .myForm .flexBox {
@@ -154,7 +155,7 @@
 </div>
 
 
-<div class="right-contentbody">
+<div class="">
 	<div class="right-contentbody2">
 		<form name="myForm" method="post" class="myForm"
 			enctype="multipart/form-data">
@@ -168,6 +169,8 @@
 								</h2>
 							</td>
 							<td class="title" style="padding-left: 30px;">
+										
+
 								<button type="button" class="btn2"
 									onclick="location.href='${pageContext.request.contextPath}/approval/list';">${mode=='update'?'수정취소':'등록취소'}</button>
 								<button type="button" class="btn2"
@@ -194,7 +197,7 @@
 										<c:forEach var="vo" items="${listApproval}" varStatus="status">
 											<c:choose>
 												<c:when test="${not empty listApproval}">
-													<span class="approval-member"> <!-- 처음 추가 버튼을 눌렀을 때 -->
+													<span class="approval-member">  
 														<div class="img_container">
 															<img src="${pageContext.request.contextPath}/resources/images/${vo.emp_picture}"  />
 														</div> 
@@ -204,14 +207,13 @@
 																<span style="font-weight: normal;">&nbsp;${vo.pos_name }</span>
 																<div>${vo.dept_name }</div>
 															</div>
-														<input type="hidden" name="emp_nos" value="${vo.emp_no}" />
-															
 															<div class="text_box4">&nbsp;</div>
 														</div>
+														<input type="hidden" name="emp_nos" value="${vo.emp_no}" />
+														<input type="hidden" name="history_emp_nos" value="${vo.emp_no}" />
 													</span>
 												</c:when>
 											</c:choose>
-											<input type="hidden" name="emp_nos" value="${vo.emp_no}" />
 										</c:forEach>
 									</c:if>
 
@@ -356,16 +358,7 @@
 				<input type="hidden" name="doc_status" value="${dto.doc_status }">
 				<button type="button" class="btn2"
 					onclick="location.href='${pageContext.request.contextPath}/approval/list';">${mode=='update'?'수정취소':'등록취소'}</button>
-				<c:choose>
-					<c:when test="${dto.doc_status == 0}">
-						<button type="button" class="btn2"
-							onclick="javascript:location.href='${pageContext.request.contextPath}/approval/update?doc_no=${dto.doc_no}&page=${page}';">수정</button>
-					</c:when>
-					<c:otherwise>
-						<button type="button" class="btn2" disabled="disabled">수정</button>
-					</c:otherwise>
-				</c:choose>
-
+	
 				<button type="button" class="btn2"
 					onclick="submitContents(this.form, 0);">임시저장</button>
 				<button type="button" class="btn2"
@@ -493,9 +486,9 @@
 			return false;
 		}
 		
-		<c:if test="${mode=='write'}">
-		if($("#forms-emp-list input[name=emp_nos]").length === 0) {
-			alert("프로젝트 참여사원를 추가하세요. ");
+		<c:if test="${mode=='update'}">
+		if($("#forms-receiver-list input[name=emp_nos]").length === 0) {
+			alert("결재할 사원를 추가하세요. ");
 			return;
 		}
 		</c:if>
@@ -504,38 +497,6 @@
 		return true;
 	}
 </script>
-
-
-<script type="text/javascript">
-    $(function() {
-        var mode = "${mode}"; // mode 변수를 JSP에서 가져옴
-
-        let len2 = $("#forms-receiver-list input[name=emp_nos]").length;
-        
-        console.log(len2);
-        
-        if (mode === "update") {
-            $("body").on("click", ".approval-member", function() {
-                var $approval_member = $(this);
-                var emp_nos = $approval_member.find("input[name='emp_nos']").val();
-
-                console.log(emp_nos);
-
-                var url = "${pageContext.request.contextPath}/approval/deleteMember?page=${page}&doc_no=${dto.doc_no}&emp_no=${dto.emp_no}";
-                $.post(url, { emp_nos: emp_nos }, function(data) {
-                    $approval_member.remove();
-                    
-        			len2 = len2 - 1;
-        	        console.log(len2);
-
-                }, "json");
-            });
-        }
-        
-     
-    });
-</script>
-
 
 <script>
 	function login() {
@@ -627,8 +588,7 @@
 	            
 	            return false;
 	        }
-	        console.log(len1);
-	        console.log(len2);
+
 
 	        let b = false;
 	        $(".dialog-receiver-list ul input[type=checkbox]:checked").each(function() {
@@ -666,14 +626,51 @@
 	        $("#myDialogModal").hide();
 	    });
 
-	    $("body").on("click", ".approval-member", function() {
-	        if (!confirm("해당 사원을 제외 하시겠습니까?")) {
-	            return false;
-	        }
- 
-	        $(this).remove();
- 
-	    });
+	    var mode = "${mode}"; 
+        if (mode === "write") {
+        	
+		    $("body").on("click", ".approval-member", function() {
+		        if (!confirm("해당 사원을 제외 하시겠습니까?")) {
+		            return false;
+		        }
+	 
+		        $(this).remove();
+	 
+		    });
+        }
+
+        	
+	  
 	});
+</script>
+
+
+
+<script type="text/javascript">
+    $(function() {
+        var mode = "${mode}"; 
+
+        if (mode === "update") {
+            $("body").on("click", ".approval-member", function() {
+            	
+            	 if (!confirm("해당 사원을 제외 하시겠습니까?")) {
+     	            return false;
+     	         }
+            	 
+                var $approval_member = $(this);
+                var emp_nos = $approval_member.find("input[name='emp_nos']").val();
+
+                console.log(emp_nos);
+
+                var url = "${pageContext.request.contextPath}/approval/deleteMember?page=${page}&doc_no=${dto.doc_no}&emp_no="+emp_nos;
+                $.post(url, { emp_nos: emp_nos }, function(data) {
+                    $approval_member.remove();
+
+                }, "json");
+            });
+        }
+        
+     
+    });
 </script>
 

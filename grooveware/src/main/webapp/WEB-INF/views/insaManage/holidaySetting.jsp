@@ -34,7 +34,7 @@
    		<div class="board">
    			<div class="title-container">
 	   				<div class="table-title">
-	   					<div class="title">
+	   					<div class="title-h">
 	   						<h2><i class="bi bi-person-fill"></i>2023년도 개인별 휴가일 책정</h2>
 	   					</div>
 						<div class="search-insa">

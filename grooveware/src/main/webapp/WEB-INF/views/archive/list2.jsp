@@ -96,9 +96,6 @@ $("#btnDelete").click(function(){
     
 });
 
-function goBack() {
-  window.history.back();
-}
 
 
 </script>
@@ -131,19 +128,20 @@ function goBack() {
 				<div class="title_container">
 				<table class="table" style="margin-bottom: 20px;">
 					<tr>
-						<td class="title" style="width:15%"> 
-							<h3><span>|</span> 
+						<td class="title" style="width:20%">
+							<h2>
+								<i class="fa-solid fa-floppy-disk"></i>
 								${root_folderNum == '1' ? '전사 자료실' : '개인 자료실'}
-							</h3> 
+							</h2> 
 							
 						</td>
 						<td class="left" >
-							<c:if test="${folder.folder_no != 1}">
+							<c:if test="${folder_no != '1' && folder_no != '2' }">
 								<button type="button" class="btn" onclick="location.href='${pageContext.request.contextPath}/archive/${preFolder_no}'">상위 폴더</button>
 							</c:if>
-								<button type="button" class="btn" onclick="openModal();">파일 업로드</button>
 							<c:if test="${((root_folderNum == '1' && (sessionScope.member.dept_no == '61' || sessionScope.member.dept_no == '62')) || root_folderNum == '2')}">
 								<button type="button" class="btn" onclick="openModal1();">폴더 생성</button>
+								<button type="button" class="btn" onclick="openModal();">파일 업로드</button>
 								<button type="button" class="btn" id="btnDelete">삭제</button>
 							</c:if>
 						</td>
@@ -237,13 +235,15 @@ function goBack() {
 			<form name="createForm" method="post">
 			<div style="border-bottom: 1px solid #ced4da; margin-bottom: 10px;">
 			    <div style="width: 100%; height: 100%;">
-			    	<button type="button" class="arch-close" onclick="closeModal1();">&times;</button>
-			   	</div>
+				   	<div style="">폴더 생성
+				   		<button type="button" class="arch-close" onclick="closeModal1();">&times;</button>
+				   		
+				   	</div>
+			    				   	</div>
+		    </div>
 			   	
-			   	<div style="">폴더 생성</div>
 		    	<span>폴더명 :</span><input name="folder_name">
 		    	<input type="hidden" name="root_folder" value="${folder_no}">
-		    </div>
 			<div style="padding-left : 80%;">
 				<button type="button" class="btn" onclick="folder_create();">확인</button>
 			</div>			

@@ -62,7 +62,7 @@
 }
 
 #addGoalForm button:hover {
-  background-color: #c0c0c0;
+  background-color: #f2f2f2;
 }
 
 /* 하위 목표 목록을 감싸는 ul 요소에 스타일을 적용합니다. */
@@ -88,7 +88,7 @@ ul[id^="subgoal_"] li {
 }
 
 .deleteSubgoal:hover {
-  background-color: #c0c0c0;
+  background-color: #f2f2f2;
 }
 
 label {
@@ -126,7 +126,7 @@ input[type="date"] {
 }
 
 #addGoal:hover {
-  background-color: #c0c0c0;
+  background-color: #f2f2f2;
 }
  
 
@@ -228,26 +228,110 @@ input[type="date"] {
 
 
 <!-- -->
-  .modal-content {
-    border-radius: 10px;
-  }
+   /* 모달 스타일 */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.4);
+    }
 
-  .modal-header {
-    border-bottom: 1px solid #ced4da;
-    padding-bottom: 10px;
-  }
+    .modal .modal-content {
+      background-color: #f2f2f2;
+      margin: 10% auto;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      width: 30%;
+      max-height: 80%;
+      overflow-y: auto;
+    }
 
-  .modal-body {
-    padding: 20px;
-  }
+    .modal .close {
+      color: #243A73;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
 
-  .modal-title {
-    margin-bottom: 10px;
-  }
+    .modal .close:hover,
+    .modal .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
 
-  .form-group {
-    margin-bottom: 20px;
-  }
+    /* 테이블 스타일 */
+    .modal table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .modal th, .modal td {
+      padding: 10px;
+      text-align: left;
+    }
+
+    .modal th {
+      background-color: #243A73;
+      color: white;
+    }
+
+    .modal li:nth-child(odd) {
+      background-color: #dfe2eb;
+    }
+    
+    .modal td:first-child {
+    	width: 1%;
+    }
+    
+    .modal th:last-child {
+    	text-align: center;
+    }
+    
+    .modal td:last-child {
+    	text-align: center;
+    }
+    
+    .dialog-emp-list ul {
+		text-align: left;    
+    }
+
+
+     /* Select 박스 스타일 */
+    .modal select {
+      padding: 5px;
+      font-size: 14px;
+      border-radius: 4px;
+      border: 1px solid #ddd;
+      background-color: #fff;
+      color: #333;
+      outline: none;
+    }
+
+    .modal select option {
+      padding: 5px;
+    }
+    
+     .modal-footer {
+    text-align: center;
+    margin-top: 20px;
+    }
+
+     .modal-footer button {
+    padding: 10px 20px;
+    font-size: 14px;
+    border-radius: 4px;
+    border: none;
+    background-color: #243A73;
+    color: white;
+    cursor: pointer;
+   }
 
   .btn_emp_find {
     margin-top: 10px;
@@ -265,10 +349,40 @@ input[type="date"] {
     list-style: none;
   }
 
-  .modal-footer {
-    justify-content: flex-end;
-    border-top: none;
-  }
+.modal .modal-content {
+  background-color: #f2f2f2;
+  margin: 10% auto;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 30%;
+  max-height: 80%;
+  overflow-y: auto;
+}
+
+.modal th {
+  background-color: #243A73;
+  color: white;
+}
+
+.modal tr:nth-child(even) {
+  background-color: #dfe2eb;
+}
+
+.modal td {
+  padding: 10px;
+  text-align: left;
+  color: #333; /* 수정: 글씨 색상 연하게 설정 */
+}
+
+.modal .modal-body {
+  margin-bottom: 20px; /* 수정: <h3>와 modal-body 사이 거리 벌리기 */
+}
+
+.modal table {
+  width: 100%;
+  border-collapse: collapse;
+}
 
   /* Added styles for project members */
   .title2 {
@@ -309,7 +423,7 @@ input[type="date"] {
 span.project-member:hover,
 span.project-member:hover label {
   cursor: pointer;
-  background-color: #c0c0c0;
+  background-color: #f2f2f2;
 }
 
   .project-member img {
@@ -327,6 +441,8 @@ span.project-member:hover label {
 textarea {
   height : 300px;
   resize : none;
+  padding: 10px;
+  border-radius: 3px;
 }
 
 </style>
@@ -337,7 +453,7 @@ textarea {
 		if( ! confirm("파일을 삭제하시겠습니까 ?") ) {
 			return;
 		}
-		let url = "${pageContext.request.contextPath}/project/deleteFile?&page=${page}&pj_no=" + ${dto.pj_no};
+		let url = "${pageContext.request.contextPath}/project/deleteFile?page=${page}&pj_no=" + ${dto.pj_no};
 		location.href = url;
 	}
 	</c:if>
@@ -427,29 +543,25 @@ function ajaxFun(url, method, query, dataType, fn){
 
 
 		<!-- 모달 -->
-		<div id="myDialogModal" class="modal fade"  tabindex="-1" 
-		data-bs-backdrop="static" data-bs-keyboard="false"
-		aria-labelledby="myDialogModalLabel" aria-hidden="true">
+		<div id="myDialogModal" class="modal">
 		  <div class="modal-content">
-		  	<div class="modal-header">
-				<div style="border-bottom: 1px solid #ced4da; padding-bottom: 10px;"></div>
 			    <span class="close">&times;</span>		<!-- 닫기버튼(x) -->
-			</div>
+				<h3 style="color: #243A73;">구성원 추가</h3>
+			
 			<div class="modal-body">
-			    <h3 style="margin-bottom: 10px;">이름 검색</h3>
-			  	<select name="condition" id="condition" class="form-select">
+			  	<select name="condition" id="condition">
 					<option value="emp_name">사원이름</option>
 					<option value="emp_no">사번</option>
 				</select>
 			   <input type="text" name="keyword" id="keyword" placeholder="추가할 사원을 검색하세요" class="form-control" style="height: 26px;">
 		       <button type="button" class="btn btn_emp_find"> 검색 </button>		<!-- 검색버튼 -->
 									
-				<table class="table table-border table-form">
+				<table>
 					<tbody>
 						<tr>
 							<td height="50%">
-							 <div style="height: 150px; border: 1px solid black;">
-							 	<div class="border p-1 dialog-emp-list">
+							 <div>
+							 	<div class="dialog-emp-list">
 							 		<ul></ul>
 							 	</div>
 							 </div>
@@ -463,7 +575,6 @@ function ajaxFun(url, method, query, dataType, fn){
 			
 			<div class="modal-footer">
 				<button type="button" class="btn btn-primary btnAdd">추가</button>
-				<button type="button" class="btn btn-secondary btnClose">닫기</button>
 			</div>
 			
 		  </div>
@@ -492,6 +603,8 @@ function ajaxFun(url, method, query, dataType, fn){
             <hr>
             <li>
             	<p>메뉴</p>
+            	<a href="${pageContext.request.contextPath}/task/listsend">&nbsp;요청한 업무</a>
+            	<a href="${pageContext.request.contextPath}/task/listreceive">&nbsp;요청받은 업무</a>
                 <a href="#">&nbsp;일정</a>
                 <a href="#">&nbsp;공지사항</a>
                 <a href="#">&nbsp;자료실</a>
@@ -546,6 +659,7 @@ function ajaxFun(url, method, query, dataType, fn){
 
 						<tr>
 							<th>참여사원</th>
+							
 							<td>
 								<div id="forms-emp-list">
 
@@ -567,10 +681,10 @@ function ajaxFun(url, method, query, dataType, fn){
 						          </c:if>
 								
 								</div>
+								<button type="button" class="btn btn_pj_add" style="margin-top: 5px;">추가</button>
 							</td>
-							<td>
-							<button type="button" class="btn btn_pj_add" style="margin-top: 5px;">추가</button>
-							</td>
+							
+							
 						</tr>
 						
 						<tr>
@@ -686,7 +800,7 @@ $(function(){
 			let dept_name = data.listEmp[i].dept_name;
 			
 			s = "<li><input type='checkbox' class='form-check-input' data-emp_no='" + emp_no + "' title='" + emp_no+ "'> <span>" + emp_name+ "</span>"
-			s += "<span>" + " (" + pos_name + "_" + "</span>";
+			s += "<span>" + "(" + pos_name + "_" + "</span>";
 			s += "<span>" + dept_name + ")" + "</span></li>";
 			$(".dialog-emp-list ul").append(s);
 		}
@@ -750,7 +864,7 @@ $(function(){
             
             
             s = "<span class='project-member'>";
-            s += "  <img src='${pageContext.request.contextPath}/resources/images/bg.png'>";
+            s += "  <i class='fa-solid fa-user-plus'></i>";
             s += "    <label>" + emp_name + pos_name + dept_name;
             s += "    <input type='hidden' name='emps' value='" + emp_no + "'>";
             s +=  "  </label>"
@@ -804,7 +918,7 @@ $(function(){
 		
 		console.log(pj_member_no);
 		
-		let url="${pageContext.request.contextPath}/project/deleteMember?&page=${page}&pj_no=" + ${dto.pj_no};
+		let url="${pageContext.request.contextPath}/project/deleteMember?page=${page}&pj_no=" + ${dto.pj_no};
 		$.post(url, {pj_member_no:pj_member_no}, function(data){
 			$pj_member.remove();
 		}, "json");

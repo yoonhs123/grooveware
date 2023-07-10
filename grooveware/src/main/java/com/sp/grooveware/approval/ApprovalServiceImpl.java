@@ -49,7 +49,7 @@ public class ApprovalServiceImpl implements ApprovalService {
 				}
 			}
 
-			if (dto.getDoc_status() == 0) { // 임시 저장일 경우
+			if (dto.getDoc_status() == 0 ) { // 임시 저장일 경우
 			    int n = 0;
 			    for (long emp_no : dto.getEmp_nos()) {
 			        dto.setEmp_no(emp_no);
@@ -147,9 +147,8 @@ public class ApprovalServiceImpl implements ApprovalService {
 	@Override
 	public void updateDoc(Approval dto, String pathname) throws Exception {
 		try {
-			
- 
-			
+			System.out.println("--------------"+dto.getHistory_emp_nos());
+
 			dao.updateData("approval.updateDoc", dto);
 			dao.updateData("approval.updateDraft", dto);
 			
@@ -170,6 +169,34 @@ public class ApprovalServiceImpl implements ApprovalService {
 				}
 			}
 			
+			int size = 0;
+			if(dto.getHistory_emp_nos() != null) { // 이전 결재자가 존재할 경우
+				size = dto.getHistory_emp_nos().size();
+				System.out.println(size);
+				System.out.println("--------------"+dto.getHistory_emp_nos());
+			}
+			
+			int n;
+			for(int i= size; i < dto.getEmp_nos().size(); i++) {
+				// 결제라인 추가
+				
+				// 문서 상태 변경
+				if (dto.getDoc_status() == 0 ) {
+					dto.setApproval_status(0);
+				} else {
+					 dto.setApproval_status(1);
+				}
+				
+				n = i;
+				 dto.setEmp_no(dto.getEmp_nos().get(i));
+			     dto.setApproval_status_id(n);
+			     dao.insertData("approval.insertApproval", dto);
+			     
+			     
+			     System.out.println("이름:"+ dto.getEmp_name() );
+			}
+			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
@@ -188,6 +215,7 @@ public class ApprovalServiceImpl implements ApprovalService {
 		}
     }	
 	
+    // 결재 상태에 따른 approval 수정
 	@Override
 	public void updateApproval(Approval dto, String last) throws Exception {
 		try {

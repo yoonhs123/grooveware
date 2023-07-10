@@ -181,7 +181,7 @@ public class ProjectController {
 		// 페이징 처리
 		String cp = req.getContextPath();
 		String query = "size=" + size;
-		String listUrl = cp + "/project/list";
+		String listUrl = cp + "/project/listend";
 		String articleUrl = cp + "/project/article?page=" + current_page;
 		if (keyword.length() != 0) {
 			query = "condition=" + condition + "&keyword=" + URLEncoder.encode(keyword, "utf-8");
@@ -193,6 +193,8 @@ public class ProjectController {
 		
 		String paging = myUtil.paging(current_page, total_page, listUrl);
 		
+		String goalUrl = cp + "/goal/list";
+
 		
 		model.addAttribute("list", list);
 		model.addAttribute("page", current_page);
@@ -201,6 +203,7 @@ public class ProjectController {
 		model.addAttribute("total_page", total_page);
 		model.addAttribute("paging", paging);
 		model.addAttribute("articleUrl", articleUrl);
+		model.addAttribute("goalUrl", goalUrl);
 		
 		model.addAttribute("condition", condition);
 		model.addAttribute("keyword", keyword);
@@ -290,12 +293,25 @@ public class ProjectController {
 		List<Project> pj_member = service.readProjectmember(pj_no);
 		
 		
+		// 권한자 가지고 오기
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("pj_no", pj_no);
+		map.put("pj_member_no", info.getEmp_no());
+
+		
+		int pj_join_type = 0;
+				
+		pj_join_type = service.readPM(map);
+		
 		model.addAttribute("dto", dto);
 		model.addAttribute("pj_member", pj_member);
 		model.addAttribute("query", query);
 		model.addAttribute("size", size);
 		model.addAttribute("page", page);
-		
+		model.addAttribute("pj_join_type", pj_join_type);
 		
 		return ".project.article";
 	}
@@ -341,6 +357,7 @@ public class ProjectController {
 		try {
 			service.updateProject(dto, pathname);
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		
 		
@@ -391,6 +408,39 @@ public class ProjectController {
 	}
 	
 	
+	@RequestMapping(value = "deleteFile")
+	public String deleteFile(@RequestParam long pj_no,
+			@RequestParam String page,
+			HttpSession session) throws Exception {
+		SessionInfo info = (SessionInfo) session.getAttribute("member");
+		
+		String root = session.getServletContext().getRealPath("/");
+		String pathname = root + "uploads" + File.separator + "project";
+		
+		Project dto = service.readProject(pj_no);
+		if( dto == null) {
+			return "redirect:/project/list?page=" + page;
+		}
+		
+		if( !(dto.getPj_creator() == info.getEmp_no())) {
+			return "redirect:/project/list?page=" + page;
+		}
+		
+		try {
+			if(dto.getSaveFilename() != null) {
+				fileManager.doFileDelete(dto.getSaveFilename(), pathname); // 실제파일삭제
+				dto.setSaveFilename("");
+				dto.setOriginalFilename("");
+				service.updateProject(dto, pathname); // DB 테이블의 파일명 변경(삭제)
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+		return "redirect:/project/update?pj_no=" + pj_no + "&page=" + page; 
+	}
+	
 	
 	@GetMapping(value = "download")
 	public void download(@RequestParam long pj_no, 
@@ -398,7 +448,7 @@ public class ProjectController {
 			HttpSession session) throws Exception {
 	
 		String root = session.getServletContext().getRealPath("/");
-		String pathname = root + "uploads" + File.separator + "bbs";
+		String pathname = root + "uploads" + File.separator + "project";
 
 		Project dto = service.readProject(pj_no);	
 		
@@ -414,6 +464,38 @@ public class ProjectController {
 		resp.setContentType("text/html;charset=utf-8");
 		PrintWriter out = resp.getWriter();
 		out.print("<script>alert('파일 다운로드가 실패 했습니다.');history.back();</script>");
+	}
+	
+	
+	@RequestMapping(value = "endPj")
+	public String endPj(@RequestParam long pj_no,
+			@RequestParam String page) throws Exception {
+
+		try {
+			service.endProject(pj_no);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+		return "redirect:/project/list?page=" + page;
+	}
+	
+	
+	@PostMapping(value = "access")
+	public String access(Project dto,
+			@RequestParam String page,
+			@RequestParam String size,
+			Model model) {
+		
+		try {
+			service.changeAccess(dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+		return "redirect:/project/article?page=" + page + "&size=" + size + "&pj_no=" + dto.getPj_no();
 	}
 	
 	

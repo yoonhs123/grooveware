@@ -178,16 +178,6 @@ div.board1 .sort_numbering {
 }
 
 
-  .createpj {
-  padding: 10px 20px;
-    font-size: 14px;
-    border-radius: 4px;
-    border: none;
-    background-color: #243A73;
-    color: white;
-    cursor: pointer;
-  }
-
 </style>	
 
 
@@ -219,30 +209,7 @@ function searchList() {
 </div>
 
 
-<c:if test="${dataCount == 0 && keyword == '' }">
-<div class="right-contentbody">
-	<div class="pj">
-		<div class="no_pj_img">
-			<p><i class="fa-solid fa-file-circle-question" style="font-size: 150px;"></i></p>
-		</div>
-		
-		<div class="no_pj_alert">
-			<p>프로젝트가 없습니다</p>
-		</div>
-		
-		<div class="no_pj_ment">
-			<p>새 프로젝트를 생성하려면 '프로젝트 생성'을 클릭하세요</p>
-		</div>
-		
-		<div class="no_pj_button">
-			<button type="button" onclick="location.href='${pageContext.request.contextPath}/project/write'">프로젝트 생성</button>
-		</div>
-	</div>
-</div>
-</c:if>
-  
 
-<c:if test="${dataCount != 0 || keyword != ''}">
    <div class="right-contentbody">
 		
 			<div class="board1">
@@ -307,9 +274,8 @@ function searchList() {
 			</div>
 			
 			<div align="right">
-				<button type="button" class="createpj" onclick="location.href='${pageContext.request.contextPath}/project/write'">새 프로젝트 생성</button>
+				<button type="button" class="btn" onclick="location.href='${pageContext.request.contextPath}/project/write'">새 프로젝트 생성</button>
    			</div>
 			</div>
 
    </div>
-</c:if>  

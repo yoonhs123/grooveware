@@ -103,7 +103,7 @@ input[type="text"] {
   padding: 5px;
   border: 1px solid #ccc;
   border-radius: 3px;
-  width: 200px;
+  width: 400px;
 }
 
 input[type="date"] {
@@ -449,60 +449,43 @@ textarea {
 
 </style>
 
-
- 
 <script type="text/javascript">
 function sendOk() {
-    const f = document.goalinsert;
-
-    
-    if(! f.parent.value) {
-    	alert("상위 목표를 선택하세요. ")
-    	f.selectparent.focus
-    	return;
-    }
-    
-    
-    if(! f.goal_name.value) {
-    	alert("제목을 입력하세요. ")
-    	f.goal_name.focus
-    	return;
-    }
-    
-    if(! f.goal_start_date.value) {
-    	alert("시작일을 입력하세요. ")
-    	f.goal_start_date.focus
-    	return;
-    }
-    
-    
-    if(! f.goal_end_date.value) {
-    	alert("종료일을 입력하세요. ")
-    	f.goal_end_date.focus
-    	return;
-    }
-    
-    if(! f.goal_content.value) {
-    	alert("내용을 입력하세요. ")
-    	f.goal_content.focus
-    	return;
-    }
-    
-    
-    <c:if test="${mode=='write'}">
-	if($("#forms-emp-list input[name=emps]").length === 0) {
-		alert("목표 참여사원를 추가하세요. ");
-		return;
-	}
-	</c:if>
-    
-    f.action="${pageContext.request.contextPath}/goal/${mode}";
-    f.submit();
+	 const f = document.taskinsert;
+	
+	 if(! f.task_name.value) {
+	    	alert("제목을 입력하세요. ")
+	    	f.task_name.focus
+	    	return;
+	    }
+	    
+	    if(! f.task_start_date.value) {
+	    	alert("시작일을 입력하세요. ")
+	    	f.task_start_date.focus
+	    	return;
+	    }
+	    
+	    
+	    if(! f.task_end_date.value) {
+	    	alert("종료일을 입력하세요. ")
+	    	f.task_end_date.focus
+	    	return;
+	    }
+	    
+	    if(! f.task_content.value) {
+	    	alert("내용을 입력하세요. ")
+	    	f.task_content.focus
+	    	return;
+	    }
+	    
+	    f.action="${pageContext.request.contextPath}/task/${mode}";
+	    f.submit();
 }
 
 
+
 <c:if test="${mode=='update'}">
-function deleteFile(goal_no) {
+function deleteFile(task_no) {
 	if( ! confirm("파일을 삭제하시겠습니까 ?") ) {
 		return;
 	}
@@ -510,12 +493,12 @@ function deleteFile(goal_no) {
 	location.href = url;
 }
 </c:if>
-</script> 
- 
+
+
+</script>
 
 
 
- 
 <script type="text/javascript">
 function ajaxFun(url, method, query, dataType, fn) {
 	$.ajax({
@@ -547,49 +530,6 @@ function ajaxFun(url, method, query, dataType, fn) {
 
 </script>
 
-
-<!-- 모달 -->
-		<div id="myDialogModal" class="modal">
-		  <div class="modal-content">
-			    <span class="close">&times;</span>		<!-- 닫기버튼(x) -->
-				<h3 style="color: #243A73;">구성원 추가</h3>
-			
-			<div class="modal-body">
-			  	<select name="condition" id="condition">
-					<option value="pj_member">프로젝트 구성원</option>
-					<option value="emp_name">사원이름</option>
-					<option value="emp_no">사번</option>
-				</select>
-			   <input type="text" name="keyword" id="keyword" placeholder="추가할 사원을 검색하세요" class="form-control" style="height: 26px;">
-		       <button type="button" class="btn btn_emp_find"> 검색 </button>		<!-- 검색버튼 -->
-									
-				<table>
-					<tbody>
-						<tr>
-							<td height="50%">
-							 <div>
-							 	<div class="dialog-emp-list">
-							 		<ul></ul>
-							 	</div>
-							 </div>
-							</td>
-						</tr>
-						<tr>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-			
-			<div class="modal-footer">
-				<button type="button" class="btn btn-primary btnAdd">추가</button>
-			</div>
-			
-		  </div>
-		</div>    
-
-
-
-
 <div class="left-side-bar">
          <ul>
             <li>
@@ -609,116 +549,70 @@ function ajaxFun(url, method, query, dataType, fn) {
         </ul>
 </div>
 
+
 <div class="right-contentbody">
 
 	<div class="board1">
 		<div class="body-container">
 		    <div class="body-title">
-				<h2><i class="fa-solid fa-list-check"></i> 목표 추가 </h2>
+				<h2><i class="fa-solid fa-list-check"></i> 업무 요청 </h2>
 		    </div>
 		</div>
-	<br>
-			<div class="body-main">
+	
+
+		<div class="body-main">
 				
-				<form name="goalinsert" method="post" enctype="multipart/form-data">
+				<form name="taskinsert" method="post" enctype="multipart/form-data">
 				
+				<input type="hidden" name="goal_no" value="${goal_no}">
 				<input type="hidden" name="pj_no" value="${pj_no}">
-									
+				.
 					<table class="table table-border border-top2 table-form main-table">
 						<tr>
-							<th>프로젝트이름</th>
-							<td>${dto.pj_name}</td>
+							<th>목&nbsp;&nbsp;&nbsp;&nbsp;표</th>
+							<td>${goal_name}</td>
 						</tr>
 						
-						<c:if test="${mode=='write'}">
 						<tr>
-							<th>상위목표</th>
+							<th>요&nbsp;&nbsp;청&nbsp;&nbsp;자</th>
+							<td>${sessionScope.member.emp_name}(${sessionScope.member.pos_name}_${sessionScope.member.dept_name})</td>
+						</tr>
+						
+						<tr>
+							<th>담&nbsp;&nbsp;당&nbsp;&nbsp;자</th>
 							<td>
-								<select name="parent" class="form-select yoonhs-select">
-									<option value="0">최상위 목표로 설정</option>
-									<optgroup>
-									</optgroup>
-									<optgroup label="<최상위목표>">
-										<c:forEach var="vo" items="${listdepth_0}">
-								      		<option value="${vo.goal_no}"  ${dto.parent==vo.goal_no?"selected='selected'":""}>${vo.goal_name}</option>
-										</c:forEach>
-									</optgroup>
-								    <optgroup label="<상위목표>">
-								    	<c:forEach var="vo" items="${listdepth_1}">
-								      		<option value="${vo.goal_no}" ${dto.parent==vo.goal_no?"selected='selected'":""}>${vo.goal_name}</option>
-										</c:forEach>
-								    </optgroup>
-							  </select>
+								<select name="task_member_no" class="form-select yoonhs-select">
+									<c:forEach var="vo" items="${goal_member}">
+										<option value="${vo.emp_no}"  ${dto.emp_no==vo.emp_no?"selected='selected'":""}>${vo.emp_name}(${vo.pos_name}_${vo.dept_name})</option>
+									</c:forEach>
+								</select>	
 							</td>
 						</tr>
-						</c:if>
-
-						<c:if test="${mode=='update'}">
+						
 						<tr>
-							<th>상위목표</th>
-							<td>
-								<select name="parent" class="form-select yoonhs-select" disabled="disabled">
-									<option value="0">최상위 목표로 설정</option>
-									<optgroup>
-									</optgroup>
-									<optgroup label="<최상위목표>">
-										<c:forEach var="vo" items="${listdepth_0}">
-								      		<option value="${vo.goal_no}"  ${dto.parent==vo.goal_no?"selected='selected'":""}>${vo.goal_name}</option>
-										</c:forEach>
-									</optgroup>
-								    <optgroup label="<상위목표>">
-								    	<c:forEach var="vo" items="${listdepth_1}">
-								      		<option value="${vo.goal_no}" ${dto.parent==vo.goal_no?"selected='selected'":""}>${vo.goal_name}</option>
-										</c:forEach>
-								    </optgroup>
-							  </select>
-							</td>
-						</tr>
-						</c:if>
-
-						<tr>
-							<th>제&nbsp;&nbsp;&nbsp;&nbsp;목</th>
+							<th>업&nbsp;무&nbsp;&nbsp;제&nbsp;목</th>
 							<td> 
-								<input type="text" name="goal_name" maxlength="100" class="form-control" value="${dto.goal_name}">
+								<input type="text" name="task_name" maxlength="100" class="form-control" value="${dto.task_name}">
 							</td>
 						</tr>
 				
 						<tr>
 							<th>기&nbsp;&nbsp;&nbsp;&nbsp;간</th>
 							<td> 
-								<input type="date" name="goal_start_date" id="start_date_input" class="form-control" value="${dto.goal_start_date}"/> 
+								<input type="date" name="task_start_date" id="start_date_input" class="form-control" value="${dto.task_start_date}"/> 
 								<span>~</span>
-								<input type="date" name="goal_end_date" id="end_date_input" class="form-control" value="${dto.goal_end_date}"/> 
+								<input type="date" name="task_end_date" id="end_date_input" class="form-control" value="${dto.task_end_date}"/> 
 							</td>
 						</tr>
 				
 						<tr>
 							<th>내&nbsp;&nbsp;&nbsp;&nbsp;용</th>
 							<td> 
-								<textarea name="goal_content" class="form-control">${dto.goal_content}</textarea>
+								<textarea name="task_content" class="form-control">${dto.task_content}</textarea>
 							</td>
 						</tr>
 	
-						<tr>
-							<th>참여사원</th>
-							<td>
-								<div id="forms-emp-list">
-								
-								<c:if test="${mode=='update'}">
-									<c:forEach var="vo" items="${goal_member}" varStatus="status">
-							            <span class='project-member'>
-							              <i class="fa-solid fa-user-tie"></i>
-							              <label>${vo.emp_name}(${vo.pos_name}_${vo.dept_name})
-							              <input type="hidden" name="pj_member_no" value="${vo.goal_member_no}">
-							              </label>
-							            </span>
-							          </c:forEach>
-						          </c:if>
-						          
-								</div>
-								<button type="button" class="btn btn_pj_add" style="margin-top: 5px;">추가</button>
-							</td>
-						</tr>
+						
 						
 						<tr>
 							<th class="table-light col-sm-2">첨&nbsp;&nbsp;&nbsp;&nbsp;부</th>
@@ -734,7 +628,7 @@ function ajaxFun(url, method, query, dataType, fn) {
 								<td> 
 									<p class="form-control-plaintext">
 										<c:if test="${not empty dto.saveFilename}">
-											<a href="javascript:deleteFile('${dto.goal_no}');"><i class="fa-solid fa-trash"></i></a>
+											<a href="javascript:deleteFile('${dto.task_no}');"><i class="fa-solid fa-trash"></i></a>
 											${dto.originalFilename}
 										</c:if>
 										&nbsp;
@@ -749,7 +643,7 @@ function ajaxFun(url, method, query, dataType, fn) {
 							<td align="center">
 								<button type="button" class="btn btn-dark" onclick="sendOk();">${mode=='update'?'수정완료':'등록하기'}&nbsp;<i class="bi bi-check2"></i></button>
 								<button type="reset" class="btn">다시입력</button>
-								<button type="button" class="btn" onclick="location.href='${pageContext.request.contextPath}/goal/list?pj_no=${dto.pj_no}';">${mode=='update'?'수정취소':'등록취소'}&nbsp;<i class="bi bi-x"></i></button>
+								<button type="button" class="btn" onclick="location.href='${pageContext.request.contextPath}/goal/article?goal_no=${dto.goal_no}&pj_no=${dto.pj_no}';">${mode=='update'?'수정취소':'등록취소'}&nbsp;<i class="bi bi-x"></i></button>
 									<c:if test="${mode=='update'}">
 									<input type="hidden" name="pj_no" value="${dto.pj_no}">
 									<input type="hidden" name="goal_no" value="${dto.goal_no}">
@@ -762,211 +656,8 @@ function ajaxFun(url, method, query, dataType, fn) {
 					</table>
 				</form>
 			</div>
-	
-	
+
+
+
 	</div>
-
 </div>
-    
-
-
-
-    
-
-<script type="text/javascript"> 
-
-// JavaScript로 placeholder 동작 구현
-var input = document.getElementById('start_date_input');
-input.addEventListener('focus', function() {
-  this.classList.remove('placeholder-style');
-  this.placeholder = '목표시작일';
-});
-input.addEventListener('focus', function() {
-  if (!this.value) {
-    this.classList.add('placeholder-style');
-    this.placeholder = '목표시작일을 선택하세요';
-  }
-});
-
-
-var input = document.getElementById('end_date_input');
-input.addEventListener('focus', function() {
-  this.classList.remove('placeholder-style');
-  this.placeholder = '';
-});
-input.addEventListener('blur', function() {
-  if (!this.value) {
-    this.classList.add('placeholder-style');
-    this.placeholder = '목표종료일을 선택하세요';
-  }
-});
-</script> 
-
-    
-
-<script type="text/javascript"> 
-$(function(){
-	$(".btn_pj_add").click(function(){
-		$("#condition").val("pj_member");
-		$("#keyword").val("");
-		$(".dialog-emp-list ul").empty();
-		
-		$("#myDialogModal").show();
-	});
-	
-	// 대화상자 - 받는사람 검색 버튼
-	$(".btn_emp_find").click(function(){
-		let condition = $("#condition").val();
-		let keyword = $("#keyword").val();
-		if(!keyword && $("#condition").val() !== "pj_member") {
-			$("#keyword").focus();
-			return false;
-		}
-		
-		let url = "${pageContext.request.contextPath}/goal/listEmp?pj_no=${pj_no}"; 
-		let query = "condition=" + condition + "&keyword=" + encodeURIComponent(keyword);
-		
-		const fn = function(data){
-			$(".dialog-emp-list ul").empty();
-			searchListEmp(data);
-		};
-		ajaxFun(url, "get", query, "json", fn);
-	});
-	
-	function searchListEmp(data) {
-		let s;
-		for(let i=0; i<data.listEmp.length; i++) {
-			let emp_no = data.listEmp[i].emp_no;
-			let emp_name = data.listEmp[i].emp_name;
-			let pos_name = data.listEmp[i].pos_name;
-			let dept_name = data.listEmp[i].dept_name;
-			
-			s = "<li><input type='checkbox' class='form-check-input' data-emp_no='" + emp_no + "' title='" + emp_no+ "'> <span>" + emp_name+ "</span>"
-			s += "<span>" + "(" + pos_name + "_" + "</span>";
-			s += "<span>" + dept_name + ")" + "</span></li>";
-			$(".dialog-emp-list ul").append(s);
-		}
-	}
-	
-	// 대화상자-받는 사람 추가 버튼
-	$(".btnAdd").click(function(){
-		let len1 = $(".dialog-emp-list ul input[type=checkbox]:checked").length;
-		let len2 = $("#forms-emp-list input[name=emps]").length;
-		
-		if(len1 === 0) {
-			alert("추가할 사람을 먼저 선택하세요.");
-			return false;			
-		}
-		
-		var b, emp_no, emp_name, pos_name, dept_name, s;
-		let existingEmps = [];
-		let preexistingEmps = [];
-		
-		
-	
-		
-        $(".dialog-emp-list ul input[type=checkbox]:checked").each(function(){
-            emp_no = $(this).attr("data-emp_no");
-            emp_name = $(this).next("span").text();
-            pos_name = $(this).next("span").next("span").text();
-            dept_name = $(this).next("span").next("span").next("span").text();
-
-            // 중복 체크
-            let isDuplicate = false;
-            $("#forms-emp-list input[name=emps]").each(function(){
-                if($(this).val() === emp_no) {
-                    isDuplicate = true;
-                    return false;
-                }
-            });
-            
-            if(isDuplicate) {
-                existingEmps.push(emp_name); // 중복된 경우 배열에 추가
-                existingEmps.push(pos_name); // 중복된 경우 배열에 추가
-                existingEmps.push(dept_name); // 중복된 경우 배열에 추가
-                return true; // 중복된 경우 다음 사원으로 진행
-            }
-
-        	
-    		let preisDuplicate = false;
-            $("#forms-emp-list input[name=pj_member_no]").each(function(){
-                if($(this).val() === emp_no) {
-                    preisDuplicate = true;
-                    return false;
-                }
-            });
-            
-            if(preisDuplicate) {
-            	preexistingEmps.push(emp_name); // 중복된 경우 배열에 추가
-            	preexistingEmps.push(pos_name); // 중복된 경우 배열에 추가
-            	preexistingEmps.push(dept_name); // 중복된 경우 배열에 추가
-                return true; // 중복된 경우 다음 사원으로 진행
-            }
-    				
-            
-            
-            s = "<span class='project-member'>";
-            s += "  <i class='fa-solid fa-user-plus'></i>";
-            s += "    <label>" + emp_name + pos_name + dept_name;
-            s += "    <input type='hidden' name='emps' value='" + emp_no + "'>";
-            s +=  "  </label>"
-            s += "</span>"
-
-            $("#forms-emp-list").append(s);
-        });
-
-        // 중복된 emp_no가 있는 경우 알림창 표시
-        if(existingEmps.length > 0) {
-            let message = "이미 등록된 사원입니다: " + existingEmps.join(" ");
-            alert(message);
-        }
-        
-		
-        if(preexistingEmps.length > 0) {
-            let message = "기존에 등록된 사원입니다: " + preexistingEmps.join(" ");
-            alert(message);
-        }
-        
-		
-		$("#myDialogModal").hide();
-	});
-	
-	$(".btnClose").click(function(){
-		$("#myDialogModal").hide();
-	});
-	
-	$(".close").click(function(){
-		$("#myDialogModal").hide();
-	});
-	
-	
-	$("body").on("click", ".project-member", function(){
-		if(! confirm("해당 사원을 제외 하시겠습니까?")) {
-			return false;
-		}
-		$(this).remove();
-	});
-});
-</script>
-
-
-<script type="text/javascript">
-
-<c:if test="${mode=='update'}">
-$(function(){
-	$("body").on("click", ".project-member", function(){
-		let $pj_member = $(this);			
-		let pj_member_no = $pj_member.find("input[name='pj_member_no']").val();
-		
-		console.log(pj_member_no);
-		
-		let url="${pageContext.request.contextPath}/goal/deleteMember?pj_no=" + ${dto.pj_no} + "&goal_no=" + ${dto.goal_no};
-		$.post(url, {pj_member_no:pj_member_no}, function(data){
-			$pj_member.remove();
-		}, "json");
-	});
-});
-</c:if>
-
-
-</script>

@@ -200,7 +200,7 @@ $(function(){
 	</div>
 	<div class="item">
 		<div class="desc-area commuteBox1">
-			<span class="fontColor title" style="font-size: 18px;">부서 공지사항</span>
+			<span class="fontColor title" style="font-size: 18px;">${dto.noti_title}</span>
 
 			<div style="margin-top: 30px;">
 				<c:forEach var="n" begin="1" end="4">

@@ -30,10 +30,15 @@
 	    </foreach>		
 	</update>
 	
+	<insert id="defaultInsert" parameterType="com.sp.grooveware.goal.Goal">
+		insert into goal_member(goal_no, goal_member_no)
+		values (goal_seq.currval, #{login_emp})
+	</insert>
+	
 	
 	<!-- 목표 리스트 -->
 	<select id="listGoal" parameterType="map" resultType="com.sp.grooveware.goal.Goal">
-  		SELECT a.goal_no, pj_no, goal_name, goal_start_date, goal_end_date, goal_content, 
+  		SELECT a.goal_no, pj_no, goal_name, TO_CHAR(goal_start_date,'YYYY-MM-DD') AS goal_start_date, TO_CHAR(goal_end_date,'YYYY-MM-DD') AS goal_end_date, goal_content, 
 			goal_achv, parent, group_no, depth, order_no, saveFilename
 		FROM goal a 
 		LEFT OUTER JOIN goal_file b ON a.goal_no = b.goal_no  
@@ -44,25 +49,44 @@
 
 	<!-- 목표참여멤버 모달 -->
 	<select id="listEmp" parameterType="map" resultType="com.sp.grooveware.goal.Goal">
-		SELECT a.emp_no, b.dept_name, c.emp_name, d.pos_name
-		FROM (
-		    SELECT x.emp_no, x.history_no, x.dept_no, x.pos_no FROM emp_history x
-		    LEFT OUTER JOIN emp_history y ON x.emp_no = y.emp_no AND x.history_no &lt; y.history_no
-		    WHERE y.emp_no IS NULL) a
-		LEFT OUTER JOIN dept b ON a.dept_no = b.dept_no
-		LEFT OUTER JOIN emp c ON a.emp_no = c.emp_no
-		LEFT OUTER JOIN pos d ON a.pos_no = d.pos_no
-		<where>
-			emp_resign_date is null
-			<choose>
-				<when test="condition == 'emp_name' ">
-				AND	( INSTR(c.${condition}, #{keyword}) &gt; 0 )
-				</when>
-				<when test="condition == 'emp_no' ">
-				AND	( INSTR(a.${condition}, #{keyword}) &gt; 0 )
-				</when>
-			</choose>
-		</where>
+		<choose>
+			<when test="condition == 'pj_member' ">
+				SELECT a.emp_no, b.dept_name, c.emp_name, d.pos_name, e.pj_join_type
+				FROM (
+				    SELECT x.emp_no, x.history_no, x.dept_no, x.pos_no FROM emp_history x
+				    LEFT OUTER JOIN emp_history y ON x.emp_no = y.emp_no AND x.history_no &lt; y.history_no
+				    WHERE y.emp_no IS NULL) a
+				LEFT OUTER JOIN dept b ON a.dept_no = b.dept_no
+				LEFT OUTER JOIN emp c ON a.emp_no = c.emp_no
+				LEFT OUTER JOIN pos d ON a.pos_no = d.pos_no
+				LEFT OUTER JOIN pj_member e ON a.emp_no = e.pj_member_no
+				<where>
+					emp_resign_date is null	AND	( pj_no = #{pj_no} ) AND a.emp_no != #{emp_no}
+				</where>
+			</when>
+			
+			<when test="condition != 'pj_member' ">
+				SELECT a.emp_no, b.dept_name, c.emp_name, d.pos_name
+				FROM (
+				    SELECT x.emp_no, x.history_no, x.dept_no, x.pos_no FROM emp_history x
+				    LEFT OUTER JOIN emp_history y ON x.emp_no = y.emp_no AND x.history_no &lt; y.history_no
+				    WHERE y.emp_no IS NULL) a
+				LEFT OUTER JOIN dept b ON a.dept_no = b.dept_no
+				LEFT OUTER JOIN emp c ON a.emp_no = c.emp_no
+				LEFT OUTER JOIN pos d ON a.pos_no = d.pos_no
+				<where>
+					emp_resign_date is null AND a.emp_no != ${emp_no}
+					<choose>
+						<when test="condition == 'emp_name' ">
+						AND	( INSTR(c.${condition}, #{keyword}) &gt; 0 )
+						</when>
+						<when test="condition == 'emp_no' ">
+						AND	( INSTR(a.${condition}, #{keyword}) &gt; 0 )
+						</when>
+					</choose>
+				</where>
+			</when>
+		</choose>
 	</select>
 	
 	
@@ -103,15 +127,30 @@
 		where pj_no = #{pj_no}
 	</select>
 	
+	<select id="readparentname" parameterType="Long" resultType="string">
+		select goal_name
+		from goal
+		where goal_no = #{num}
+	</select>
+	
+	<select id="readprojectname" parameterType="Long" resultType="string">
+		select pj_name
+		from pj
+		where pj_no = #{num}
+	</select>
+	
+	
+	
 	<select id="readGoal" parameterType="Long" resultType="com.sp.grooveware.goal.Goal">
-		SELECT a.goal_no, pj_no, goal_name, goal_start_date, goal_end_date, goal_content, parent, saveFilename, originalFilename
+		SELECT a.goal_no, a.pj_no, c.pj_name, goal_name, TO_CHAR(goal_start_date,'YYYY-MM-DD') AS goal_start_date, TO_CHAR(goal_end_date,'YYYY-MM-DD') AS goal_end_date, goal_content, parent, group_no, depth, saveFilename, originalFilename, pj_status
 		FROM goal a
 		LEFT OUTER JOIN goal_file b ON a.goal_no = b.goal_no
+		LEFT OUTER JOIN pj c ON a.pj_no = c.pj_no
 		WHERE a.goal_no = #{goal_no}
 	</select>
 	
 	
-	<select id="readGoalmember" parameterType="map" resultType="com.sp.grooveware.goal.Goal">
+	<select id="readGoalmember" parameterType="long" resultType="com.sp.grooveware.goal.Goal">
 		SELECT b.goal_member_no, d.dept_name, c.emp_name, e.pos_name
 		FROM (
 		   SELECT x.emp_no, x.history_no, x.dept_no, x.pos_no FROM emp_history x
@@ -125,7 +164,69 @@
 		ORDER BY e.pos_no ASC, d.dept_no ASC
 	</select>
 
-
+	<select id="dataCount" parameterType="long" resultType="Integer">
+		SELECT count(goal_no)
+		FROM goal
+		WHERE pj_no = #{pj_no}
+	</select >
 	
+	<select id="readstatus" parameterType="long" resultType="Integer">
+		SELECT pj_status
+		FROM pj
+		WHERE pj_no = #{pj_no}
+	</select >
+	
+	<select id="readAcess" parameterType="map" resultType="Integer">
+		SELECT pj_join_type
+		FROM pj_member
+		WHERE pj_no = #{pj_no} AND pj_member_no = #{login_emp}
+	</select >
+	
+	
+	<update id="updateGoal1" parameterType="com.sp.grooveware.goal.Goal">
+		UPDATE goal SET goal_name=#{goal_name}, goal_content=#{goal_content}, goal_start_date=#{goal_start_date, jdbcType=DATE}, goal_end_date=#{goal_end_date, jdbcType=DATE}
+		WHERE goal_no = #{goal_no}
+	</update>
+
+	<update id="updateGoal2" parameterType="com.sp.grooveware.goal.Goal">
+		UPDATE goal_file SET saveFilename=#{saveFilename, jdbcType=VARCHAR}, originalFilename=#{originalFilename, jdbcType=VARCHAR}
+		WHERE goal_no = #{goal_no}	
+	</update>
+	
+	
+	<update id="insertGoalmember" parameterType="com.sp.grooveware.goal.Goal">
+		insert all
+		<foreach collection="emps" item="emp_no" index="index" separator=" " close="SELECT*FROM DUAL">
+	         into  goal_member(goal_no, goal_member_no)
+		 values
+	        (#{goal_no}, #{emp_no})
+	    </foreach>
+	</update>
+	
+	<delete id="deleteGoalmember" parameterType="map">
+		DELETE FROM goal_member WHERE  goal_member_no = #{goal_member_no} AND goal_no = #{goal_no}
+	</delete>
+	
+	
+	<!-- 최상위 목표 삭제 -->
+	<delete id="deleteGoal1-1" parameterType="Long">
+		DELETE FROM goal WHERE group_no = #{goal_no}
+	</delete>	
+	
+	
+	<!-- 상위목표 삭제 -->
+	<delete id="deleteGoal2-1" parameterType="Long">
+		DELETE FROM goal WHERE goal_no = #{goal_no}
+	</delete>	
+
+	<delete id="deleteGoal2-2" parameterType="Long">
+		DELETE FROM goal WHERE parent = #{goal_no}
+	</delete>	
+	
+	
+	<!-- 하위목표 삭제 -->
+	<delete id="deleteGoal3-1" parameterType="Long">
+		DELETE FROM goal WHERE goal_no = #{goal_no}
+	</delete>	
 	
 </mapper>

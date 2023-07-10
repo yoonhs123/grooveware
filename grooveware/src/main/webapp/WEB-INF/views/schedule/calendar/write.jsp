@@ -3,6 +3,49 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+<style>
+.club-write{
+  width: 100%;
+  padding: 10px;
+  margin : 10px 0;
+  border-spacing: 0;
+}
+
+.club-write td{
+  padding: 15px 15px;
+  border-top: 1.6px solid #c1c1c1;
+}
+
+.club-write-left{
+  width: 17%;
+  text-align: center;
+  background: #f6f6f6;
+}
+
+.club-write input, 
+.club-write textarea
+{
+  width: 50%;
+  padding: 10px;
+  border: 1px solid #c1c1c1;
+  border-radius: 4px;
+}
+
+.club-write textarea{
+  height: 150px;
+}
+
+.write-form tr>td:first-child {
+	text-align: center;
+	font-weight : bold;
+}
+
+.form-check-input {
+	
+     display: inline;
+}
+
+</style>
 
 <script type="text/javascript">
 function sendOk() {
@@ -142,30 +185,28 @@ $(function(){
 <div class="right-contentbody">
 			<div class="container">	
 		<div class="body-title">
-			<h3><i class="bi bi-calendar-event"></i> 일정관리 </h3>
+			<h2> 일정관리 </h2>
 		</div>
 		
 		<div class="body-main">
 		
 			<form name="scheduleForm" method="post">
-				<table class="table mt-5 write-form">
-					<tr>
-						<td class="table-light col-2" scope="row">제 목</td>
+				<table class="club-write  write-form">
+					<tr class="club-write-table">
+						<td class="club-write-left col-2" scope="row">제 목</td>
 						<td>
-							<div class="row">
-								<div class="col">
+								
 									<input type="text" name="subject" id="form-subject" class="form-control" value="${dto.subject}">
-								</div>
-							</div>
-							<small class="form-control-plaintext">* 제목은 필수 입니다.</small>
+									<small class="form-control-plaintext">&nbsp;* 제목은 필수 입니다.</small>
+								
 						</td>
 					</tr>
 
-					<tr>
-						<td class="table-light col-2" scope="row">일정분류</td>
+					<tr class="club-write-table">
+						<td class="club-write-left col-2" scope="row">일정분류</td>
 						<td>
-							<div class="row">
-								<div class="col-5">
+							
+								
 									<select name="category_num" id="form-categoryNum" class="form-select">
 										<%-- <option value="0">설정하지 않음</option> --%>
 										<c:forEach var="ct" items="${listCategory}">
@@ -176,103 +217,72 @@ $(function(){
 											</c:if>
 										</c:forEach>
 									</select>
-								</div>
-							</div>
+								
 						</td>
 					</tr>
 
-					<%-- <tr>
-						<td class="table-light col-2" scope="row">색 상</td>
-						<td>
-							<div class="row">
-								<div class="col-5">
-									<select name="color" id="form-color" class="form-select">
-										<option value="#5882FA" style="background:#5882FA;" ${dto.color=="#5882FA"?"selected='selected'":""}>파랑</option>
-										<option value="#FA5858" style="background:#FA5858;" ${dto.color=="#FA5858"?"selected='selected'":""}>녹색</option>
-										<option value="#AC58FA" style="background:#AC58FA;" ${dto.color=="#FF8000"?"selected='selected'":""}>빨강</option>
-										<option value="#F5A9BC" style="background:#F5A9BC;" ${dto.color=="#F5A9BC"?"selected='selected'":""}>주황</option>
-										<option value="tomato" style="background:tomato;" ${dto.color=="chartreuse"?"selected='selected'":""}>토마토</option>
-										<option value="magenta" style="background:magenta;" ${dto.color=="cyan"?"selected='selected'":""}>마젠타</option>
-										<option value="purple" style="background:purple;" ${dto.color=="purple"?"selected='selected'":""}>보라</option>
-										<option value="brown" style="background:brown;" ${dto.color=="brown"?"selected='selected'":""}>갈색</option>
-										<option value="navy" style="background:navy;" ${dto.color=="navy"?"selected='selected'":""}>남색</option>
-										<option value="gray" style="background:gray;" ${dto.color=="gray"?"selected='selected'":""}>회색</option>
-										<option value="black" style="background:black;" ${dto.color=="black"?"selected='selected'":""}>검정</option>
-									</select>
-								</div>
-							</div>
-						</td>
-					</tr> --%>
-
-					<tr>
-						<td class="table-light col-2" scope="row">종일일정</td>
-						<td class="py-3">
-							<div class="row">
-								<div class="col">
-									<input type="checkbox" name="all_day" id="form-all_day" class="form-check-input" 
-										 value="1" ${dto.all_day == 1 ? "checked='checked' ":"" } >
-									<label class="form-check-label" for="form-all_day"> 하루종일</label>
-								</div>
-							</div>
+					<tr class="club-write-table">
+						<td class="club-write-left col-2" scope="row">종일일정</td>
+						<td class="">
+							
+							<input type="checkbox" style="width: 2%;" name="all_day" id="form-all_day" class="form-check-input" 
+								 value="1" ${dto.all_day == 1 ? "checked='checked' ":"" } >
+							<label class="form-check-label" for="form-all_day"> 하루종일</label>
+								
 						</td>
 					</tr>
 
- 					<tr>
-						<td class="table-light col-2" scope="row">시작일자</td>
+ 					<tr class="club-write-table">
+						<td class="club-write-left col-2" scope="row">시작일자</td>
 						<td>
-							<div class="row">
-								<div class="col-5 pe-0">
+							
 									<input type="date" name="sday" id="form-sday" class="form-control" value="${dto.sday}">
-								</div>
-								<div class="col-3">
+								
+								
 									<input type="time" name="stime" id="form-stime" class="form-control" value="${dto.stime}"
 										style="display: ${dto.all_day == 1 ? 'none;':'inline-block;'}">
-								</div>
-							</div>
-							<small class="form-control-plaintext">* 시작날짜는 필수입니다.</small>
+									<small class="form-control-plaintext">&nbsp;* 시작날짜는 필수입니다.</small>
+								
+							
 						</td>
 					</tr>
 
- 					<tr>
-						<td class="table-light col-2" scope="row">종료일자</td>
+ 					<tr class="club-write-table">
+						<td class="club-write-left col-2" scope="row">종료일자</td>
 						<td>
-							<div class="row">
-								<div class="col-5 pe-0">
+							
 									<input type="date" name="eday" id="form-eday" class="form-control" value="${dto.eday}">
-								</div>
-								<div class="col-3">
+								
+							
 									<input type="time" name="etime" id="form-etime" class="form-control" value="${dto.etime}"
 										style="display: ${dto.all_day==1 ? 'none;':'inline-block;'}">
-								</div>
-							</div>
-							<small class="form-control-plaintext">종료일자는 선택사항이며, 시작일자보다 작을 수 없습니다.</small>
+									<small class="form-control-plaintext">&nbsp;* 종료일자는 선택사항이며, 시작일자보다 작을 수 없습니다.</small>
+								
 						</td>
 					</tr>
 					
-					<tr>
-						<td class="table-light col-2" scope="row">일정반복</td>
+					<tr class="club-write-table">
+						<td class="club-write-left col-2" scope="row">일정반복</td>
 						<td>
-							<div class="row">
-								<div class="col-5 pe-0">
+							
 									<select name="repeat" id="form-repeat" class="form-select">
 										<option value="0" ${dto.repeat=="0"?"selected='selected'":""}>반복안함</option>
 										<option value="1" ${dto.repeat=="1"?"selected='selected'":""}>년반복</option>
 									</select>
-								</div>
-								<div class="col-3">
+								
+								
 									<input type="text" name="repeat_cycle" id="form-repeat_cycle" maxlength="2" class="form-control"
 										style="display: ${dto.repeat==0 ? 'none;':'inline-block;'}"
 										value="${dto.repeat_cycle}"
 										placeholder="반복주기">
-								</div>
-							</div>
+								
 						</td>
 					</tr>
 
-					<tr>
-						<td class="table-light col-2" scope="row">메 모</td>
+					<tr class="club-write-table">
+						<td class="club-write-left col-2" scope="row">메 모</td>
 						<td>
-							<textarea name="memo" id="form-memo" class="form-control" style="height: 90px;">${dto.memo}</textarea>
+							<textarea name="memo" id="form-memo" class="form-control" style="height: 90px; width : 100%">${dto.memo}</textarea>
 						</td>
 					</tr>
 				</table>

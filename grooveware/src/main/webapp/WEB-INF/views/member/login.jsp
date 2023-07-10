@@ -29,7 +29,8 @@
 								계정 기억하기</span>
 						</div>
 
-						<div class="row">
+      <!-- 
+                      <div class="row">
 							<div class="borderLine">
 								<span style="font-weight: bold;">공지사항</span> <a href=""><i class="fa-solid fa-plus" style="margin-right: 5px;"></i>더보기</a>
 							</div>
@@ -47,12 +48,28 @@
 							</tbody>
 							</table>
 						</div>
+                               -->
+						<div class="row">
+							<div class="borderLine">
+							<span style="font-weight: bold;">공지사항</span>		
+							</div>
+							<table  class="row">
+							<tbody class="row bold">
+						    <tr class="noticelist">
+							<td>새롭게 단장한 그루브웨어를 소개합니다.</td>
+						   </tr>
+						   <tr class="noticelist">
+							<td>업데이트 안내.</td>
+						   </tr>
+							</tbody>
+							</table>
+						</div>
 						<div class="row box" style="font-size: 13px;">
 							<div>
 								<span>고객센터: 1577-6000</span> | <span>고객지원</span>
 							</div>
 							© GrooveWare Corp.All rights reserved.
-						</div>
+						    </div>
 					</div>
 				</div>
 			</form>
@@ -91,9 +108,8 @@
 
 <script>
 	window.onload = function() {
+	    var username = localStorage.getItem('emp_no');
+	    document.getElementById('login-userId').value = username;
+	  }
 	
-    var username = localStorage.getItem('emp_no');
- 
-    document.getElementById('login-userId').value = username;
-	}  
 </script>
