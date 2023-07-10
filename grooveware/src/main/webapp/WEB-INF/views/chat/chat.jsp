@@ -61,7 +61,10 @@
     <div class="title_container">
         <table class="table" style="margin-bottom: 20px;">
             <tr>
-                <td class="title">&nbsp;<span>&nbsp;그루비&nbsp;톡</span></td>
+              	<td class="title" > <h2>
+                &nbsp; <i class="fa-solid fa-bullhorn"></i>
+               그루비&nbsp; 톡
+               </h2>
             </tr>
         </table>
     </div>

@@ -66,9 +66,9 @@
 			<table class="table" style="margin-bottom: 20px;">
 				<tr>
 					<td class="title">
-						<h3>
-							<span>|</span> 개인 주소록
-						</h3>
+						<h2>
+						  <i class="fa-solid fa-address-book"></i>&nbsp;개인 주소록
+						</h2>
 					</td>
 					<td align="right">
 						<form name="searchForm"
