@@ -54,7 +54,6 @@
             <a href="${pageContext.request.contextPath}/chat/chat">메신저</a>
         </li>
     </ul>
-    <hr>
 </div>
 
 <div class="right-contentbody">
