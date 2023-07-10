@@ -47,7 +47,7 @@
 	
 	<!-- 로그인한 아이디가 요청받은 업무리스트 -->
 	<select id="listTask" parameterType="map" resultType="com.sp.grooveware.task.Task">
-	SELECT a.emp_no, b.dept_name, c.emp_name, d.pos_name, task_name, task_content, task_start_date, task_end_date
+	SELECT a.emp_no, b.dept_name, c.emp_name, d.pos_name, task_name, task_content, TO_CHAR(pj_start_date, 'YYYY-MM-DD') AS task_start_date, TO_CHAR(task_end_date, 'YYYY-MM-DD') AS task_end_date
 		FROM (
 		    SELECT x.emp_no, x.history_no, x.dept_no, x.pos_no FROM emp_history x
 		    LEFT OUTER JOIN emp_history y ON x.emp_no = y.emp_no AND x.history_no &lt; y.history_no
