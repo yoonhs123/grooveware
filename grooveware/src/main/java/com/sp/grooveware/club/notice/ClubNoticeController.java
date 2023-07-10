@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sp.grooveware.club.Club;
 import com.sp.grooveware.common.FileManager;
-import com.sp.grooveware.common.MyUtil;
 import com.sp.grooveware.member.SessionInfo;
 
 @Controller("club.notice.ClubNoticeController")

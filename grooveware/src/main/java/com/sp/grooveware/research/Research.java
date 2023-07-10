@@ -1,5 +1,7 @@
 package com.sp.grooveware.research;
 
+import java.util.List;
+
 public class Research {
 	// 설문조사
 	private long research_id;
@@ -16,16 +18,20 @@ public class Research {
 	private long question_no;
 	private String question_content;
 	private long question_num;
+	private long question_category;
 	
 	// 설문조사 - 객관식 옵션
 	private long answer_no;
 	private String ans_option_content;
-	private long ans_option_num;
+	private int ans_option_num;
 	
 	// 설문조사 - 실제 응답
-	private long response_no;
 	private String response_date;
 	private String response_content;
+	private int multiple_choice;
+	
+	private List<String> ans_option_contents;
+	private List<Integer> ans_option_nums;
 	
 	public long getResearch_id() {
 		return research_id;
@@ -38,6 +44,12 @@ public class Research {
 	}
 	public void setEmp_no(long emp_no) {
 		this.emp_no = emp_no;
+	}
+	public String getEmp_name() {
+		return emp_name;
+	}
+	public void setEmp_name(String emp_name) {
+		this.emp_name = emp_name;
 	}
 	public String getResearch_title() {
 		return research_title;
@@ -87,6 +99,18 @@ public class Research {
 	public void setQuestion_content(String question_content) {
 		this.question_content = question_content;
 	}
+	public long getQuestion_num() {
+		return question_num;
+	}
+	public void setQuestion_num(long question_num) {
+		this.question_num = question_num;
+	}
+	public long getQuestion_category() {
+		return question_category;
+	}
+	public void setQuestion_category(long question_category) {
+		this.question_category = question_category;
+	}
 	public long getAnswer_no() {
 		return answer_no;
 	}
@@ -99,11 +123,11 @@ public class Research {
 	public void setAns_option_content(String ans_option_content) {
 		this.ans_option_content = ans_option_content;
 	}
-	public long getResponse_no() {
-		return response_no;
+	public int getAns_option_num() {
+		return ans_option_num;
 	}
-	public void setResponse_no(long response_no) {
-		this.response_no = response_no;
+	public void setAns_option_num(int ans_option_num) {
+		this.ans_option_num = ans_option_num;
 	}
 	public String getResponse_date() {
 		return response_date;
@@ -117,22 +141,24 @@ public class Research {
 	public void setResponse_content(String response_content) {
 		this.response_content = response_content;
 	}
-	public long getQuestion_num() {
-		return question_num;
+	public List<String> getAns_option_contents() {
+		return ans_option_contents;
 	}
-	public void setQuestion_num(long question_num) {
-		this.question_num = question_num;
+	public void setAns_option_contents(List<String> ans_option_contents) {
+		this.ans_option_contents = ans_option_contents;
 	}
-	public long getAns_option_num() {
-		return ans_option_num;
+	public List<Integer> getAns_option_nums() {
+		return ans_option_nums;
 	}
-	public void setAns_option_num(long ans_option_num) {
-		this.ans_option_num = ans_option_num;
+	public void setAns_option_nums(List<Integer> ans_option_nums) {
+		this.ans_option_nums = ans_option_nums;
 	}
-	public String getEmp_name() {
-		return emp_name;
+	public int getMultiple_choice() {
+		return multiple_choice;
 	}
-	public void setEmp_name(String emp_name) {
-		this.emp_name = emp_name;
+	public void setMultiple_choice(int multiple_choice) {
+		this.multiple_choice = multiple_choice;
 	}
+	
+
 }

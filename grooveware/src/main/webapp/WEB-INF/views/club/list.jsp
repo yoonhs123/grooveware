@@ -7,7 +7,6 @@
 <style type="text/css">
 .table1 {
     width: 100%;
-    color: #404040;
 }
 .table1 td {
     padding: 5px;
@@ -17,7 +16,6 @@
     width: 100%;
     text-align: center;
 	margin: auto;
-	color: #404040;
 }
 .table2 th, .table2 td {
     padding: 10px;
@@ -25,10 +23,10 @@
 }
 .table2 th {
     padding: 10px;
-    border-top: 2px solid #c1c1c1;
-    border-bottom: 2px solid #c1c1c1;
+    border-top: 2px solid #212529;
+    border-bottom: 1.5px solid #c1c1c1;
     font-size: 16.5px;
-    background-color: #f6f6f6;
+    background-color: #f2f2f2;
 }
 img {
     width: 90px;
@@ -52,7 +50,7 @@ img {
 .search-option {
     width: 100px;
     padding-left: 5px;
-    color: #404040;
+
 }
 .search-input {
     width: 200px;
@@ -61,11 +59,10 @@ img {
 .search-button,
 .club-createbtn {
 	height: 30px;
-	border-radius: 5px;
+	border-radius: 4px;
     padding: 5px 10px;
-    background-color: #CEDDEF; 
-    color: #404040;
-    border: none;
+    background-color: #fff;
+    border: 1px solid #404040;
     cursor: pointer;
     font-weight: 600;
 }
@@ -87,7 +84,7 @@ img {
 	background-color: #eee6fc; 
 }
 .enterClub {
-	background-color: #F8E8EE; 
+	background-color: #AEDBEC; 
 }
 
 </style>
@@ -211,10 +208,17 @@ $(function(){
          <li>
          
          <li>
-             <a href="${pageContext.request.contextPath}/research/list">설문조사</a>
-             <a href="${pageContext.request.contextPath}/research/list">&nbsp;설문리스트</a>
-             <a href="#">&nbsp;진행중인 설문</a>
-             <a href="#">&nbsp;마감된 설문</a>
+             <a href="${pageContext.request.contextPath}/research/open/list">설문조사</a>
+         <c:choose>
+	   		 <c:when test="${sessionScope.member.dept_no >= 60 && sessionScope.member.dept_no <= 70}">
+	         	 <a href="${pageContext.request.contextPath}/research/researchBox">&nbsp;설문작성함</a>
+	         </c:when>
+    		<c:otherwise>
+       		  <!-- dept_no가 60~ 70 사이가 아닐 때는 두 번째 <li> 태그를 출력하지 않게 -->
+          	</c:otherwise>
+   	 	 </c:choose>
+             <a href="${pageContext.request.contextPath}/research/open/list">&nbsp;진행중인 설문</a>
+             <a href="${pageContext.request.contextPath}/research/close/list">&nbsp;마감된 설문</a>
          <li>
      </ul>
 </div>
@@ -226,7 +230,7 @@ $(function(){
 		<div class="title_container">
 		<table class="table1" style="margin-bottom: 5px;">
 			<tr>
-				<td class="title"> <h3><span>|</span> 사내 커뮤니티</h3> 
+				<td class="title"> <h2><span><i class="fa-solid fa-users"></i></span>&nbsp;사내 커뮤니티</h2> 
 				</td>
 			</tr>
 		</table>

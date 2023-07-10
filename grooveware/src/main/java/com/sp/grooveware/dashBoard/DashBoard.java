@@ -13,8 +13,7 @@ public class DashBoard {
 	private long holiday_id;
 	private String holiday_name;
 	private long annual_no;
-	private long annual_count;
-	private long annual_use;
+	private String annual_count;
 	
 	// 전자결재
 	private long doc_no;
@@ -26,6 +25,8 @@ public class DashBoard {
 	private long pj_no;
 	private String goal_name;
 	private long goal_achv;
+	private String goal_start_date;
+	private String goal_end_date;
 	
 	// 전체 공지사항 & 부서 공지사항
 	private long noti_id;
@@ -70,18 +71,13 @@ public class DashBoard {
 	public void setAnnual_no(long annual_no) {
 		this.annual_no = annual_no;
 	}
-	public long getAnnual_count() {
+	public String getAnnual_count() {
 		return annual_count;
 	}
-	public void setAnnual_count(long annual_count) {
+	public void setAnnual_count(String annual_count) {
 		this.annual_count = annual_count;
 	}
-	public long getAnnual_use() {
-		return annual_use;
-	}
-	public void setAnnual_use(long annual_use) {
-		this.annual_use = annual_use;
-	}
+
 	public long getDoc_no() {
 		return doc_no;
 	}
@@ -154,4 +150,17 @@ public class DashBoard {
 	public void setNoti_regdate(String noti_regdate) {
 		this.noti_regdate = noti_regdate;
 	}
+	public String getGoal_start_date() {
+		return goal_start_date;
+	}
+	public void setGoal_start_date(String goal_start_date) {
+		this.goal_start_date = goal_start_date;
+	}
+	public String getGoal_end_date() {
+		return goal_end_date;
+	}
+	public void setGoal_end_date(String goal_end_date) {
+		this.goal_end_date = goal_end_date;
+	}
+	
 }

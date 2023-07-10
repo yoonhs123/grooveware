@@ -3,50 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<script>
-function ajaxFun(url, method, query, dataType, fn){
-	$.ajax({
-		type:method,
-		url:url,
-		data:query,
-		dataType: dataType,
-		success: function(data){
-			fn(data);
-		},
-		beforeSend : function(jqXHR){
-			jqXHR.setRequestHeader("AJAX", true);
-		},
-		error : function(jqXHR){
-			if(jqXHR.status === 403){
-				location.href="${pageContext.request.contextPath}/member/login";
-				return false;
-			} else if(jqXHR.status === 400){
-				alert("요청 처리가 실패했습니다.");
-				return false;
-			}
-			console.log(jqXHR.responseText);
-		}
-	});
-}
 
-// 참여
-// ajax json으로 가져오기(true랑 false)
-$(function(){
-	$(".choice").click(function(){
-		let research_id = $(this).attr("data-research_id");
-		location.href = "${pageContext.request.contextPath}/research/open/"+research_id+"/choice";
-	});
-});
-
-// 결과보기
-$(function(){
-	$(".result").click(function(){
-		let research_id = $(this).attr("data-research_id");
-		location.href = "${pageContext.request.contextPath}/research/close/"+research_id+"/result";
-	});
-});
-
-</script>
 
 <div class="left-side-bar">
      <ul>
@@ -76,10 +33,15 @@ $(function(){
 			<div class="title_container">
 			<table class="table" style="margin-bottom: 20px;">
 				<tr>
-					<td class="title" > <h2><span><i class="fa-solid fa-clipboard-list"></i></span>&nbsp;<i class="fa-solid fa-clipboard-question"></i>사내 설문조사</h2> 
+					<td class="title" > <h3><span>|</span>&nbsp;사내 설문조사</h3> 
 					</td>
 					
 					<td align="right">
+						<div>
+							<button type="button" onclick="location.href='${pageContext.request.contextPath}/research/write';" 
+							style="background-color: #eeeeee; border:none; font-size:13px; padding:5px 10px; border-radius: 7px;">설문 작성</button>
+						</div>
+
 						<form name="searchForm" action="${pageContext.request.contextPath}/ " method="post">
 							<select name="condition" class="form-select">
 								<option value="all"  ${condition == "all" ? "selected='selected'" : ""} >설문조사명</option>
@@ -103,7 +65,9 @@ $(function(){
 					<th> 설문종료날짜 </th>
 					<th> 작성자 </th>
 					<th> 등록일 </th>
-					<th> 보기 </th>
+					<th> 질문등록 </th>
+					<th> 공개여부 </th>
+					<th> 상태 </th>
 				</tr>
 		</thead>
 			
@@ -116,15 +80,11 @@ $(function(){
 					<td> ${dto.research_enddate}</td>
 					<td> ${dto.emp_name} </td>
 					<td> ${dto.research_regdate} </td>
-				
-					<td>
-						<c:if test="${category=='open'}">
-							<button type="button" class="choice" data-research_id="${dto.research_id}">참여하기</button>
-						</c:if>
-						<c:if test="${category=='close'}">
-							<button type="button" class="result" data-research_id="${dto.research_id}">결과보기</button>
-						</c:if>
-					</td>
+					<td><button type="button" style="background-color: #eeeeee; border:none; font-size:13px; padding:5px 10px; border-radius: 7px;"
+								onclick="location.href='${pageContext.request.contextPath}/research/${dto.research_id}/multipleForm';" >질문 작성</button></td>
+					<td><button type="button" style="background-color: #eeeeee; border:none; font-size:13px; padding:5px 10px; border-radius: 7px;"
+								onclick="location.href='${pageContext.request.contextPath}/research/${dto.research_id}/article';" >상세</button></td>
+					<td>진행중/마감</td>
 				</tr>
 			</c:forEach>
 		</tbody>

@@ -55,7 +55,7 @@ input[type="radio"] {
     text-align: center;
   }
 
-.research-status-btn{
+.reponse-send-btn{
 	height: 32px;
 	width : 70px;
 	border-radius: 5px;
@@ -70,12 +70,21 @@ input[type="radio"] {
 </style>
 
 <script type="text/javascript">
-function updateStatus() {
-	if(confirm("설문조사를 공개하시겠습니까?")) {
-	    let url = "${pageContext.request.contextPath}/research/${research_id}/update";
-    	location.href = url;
-	}
+function sendOk(research_id) {
+    const f = document.responseForm;
+
+	let str = f.multiple_choice.value;
+    if(!str) {
+        alert("보기을 선택하세요.");
+        f.multiple_choice.focus();
+        return false;
+    }
+    alert("제출이 완료되었습니다.");
+
+	f.action = "${pageContext.request.contextPath}/research/open/"+research_id+"/choice";
+	f.submit();
 }
+
 </script>
 <div class="left-side-bar">
      <ul>
@@ -107,7 +116,7 @@ function updateStatus() {
 	    <table class="research-detail-table1" style="margin-bottom: 20px;">
 	      <tr>
 	        <td class="title">
-	          <h2><span>|</span>&nbsp;설문 상세 정보</h2>
+	          <h3><span>|</span>&nbsp;설문 상세 정보</h3>
 	        </td>
 	      </tr>
 	    </table>
@@ -137,7 +146,6 @@ function updateStatus() {
 	        <th style="border-bottom: 2px solid #c1c1c1;">공개여부</th>
 	        <td style="border-bottom: 2px solid #c1c1c1;">
 	        	${dto.research_status == 0 ?' 공개' : '비공개'}
-            	<button type="button" class="research-status-btn" onclick="updateStatus();">공개전환</button>
             </td>
 	      </tr>
 	    </table>
@@ -147,44 +155,50 @@ function updateStatus() {
 	    <table class="table2" style="margin-bottom: 20px;">
 	      <tr>
 	        <td class="title">
-	          <h2><span>|</span>&nbsp;설문 문항 정보</h2>
+	          <h3><span>|</span>&nbsp;설문 문항 정보</h3>
 	        </td>
 	      </tr>
 	    </table>
 
     <div>
 
-
-        <table class="research-Qna-Form-table">
-          <tbody class="QuestBox">
-            <tr class="rqBox">
-            	<td colspan="2" class="rqBox-title">
-             		 질문
-             	 </td>
-			</tr>
-			<tr>
-				<td colspan="2" class="rqBox-content">
-              		${dto.question_content}
-                </td>
-            </tr>
-            <tr class="rqBox-op">
-            	<td colspan="2"  class="rqBox-title">
-           			보기
-           		</td>
-           	</tr>
-
-			<c:forEach var="vo" items="${list}" varStatus="status">
-	            <tr class="rqBox-content">
-	            	<td colspan="2">
-	                  <input type="radio" name="ans_option_num" class="ans_option_num" value="${varStatus.count}">
-	                  ${vo.ans_option_content}
-					</td>
-				
+		<form name="responseForm" method="post">
+	        <table class="research-Qna-Form-table">
+	          <tbody class="QuestBox">
+	            <tr class="rqBox">
+	            	<td colspan="2" class="rqBox-title">
+	             		 질문
+	             	 </td>
+				</tr>
+				<tr>
+					<td colspan="2" class="rqBox-content">
+	              		${dto.question_no} <span>|</span> ${dto.question_content}
+	              		<input type="hidden" name="question_no" value="${dto.question_no}">
+	                </td>
 	            </tr>
-			</c:forEach>
-		
-          </tbody>
-        </table>   
+	            <tr class="rqBox-op">
+	            	<td colspan="2"  class="rqBox-title">
+	           			보기
+	           		</td>
+	           	</tr>
+	
+				<c:forEach var="vo" items="${list}" varStatus="status">
+		            <tr class="rqBox-content">
+		            	<td colspan="2">
+		                  <input type="radio" name="multiple_choice" class="multiple_choice" value="${status.count}">
+		                  ${vo.ans_option_content}
+						</td>
+					
+		            </tr>
+				</c:forEach>
+				<tr>
+					<td>
+						<button type="button" class="reponse-send-btn" onclick="sendOk('${dto.research_id}');">응답제출</button>
+					</td>
+				</tr>
+	          </tbody>
+	        </table>   
+        </form>
     </div>
   </div>
   </div>

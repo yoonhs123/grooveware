@@ -3,6 +3,33 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 ﻿
+<style>
+.btnWorkTime{
+	height: 40px;
+	width: 80px;
+    border: none;
+	border-radius: 5px;
+    padding: 5px 10px;
+    font-weight: 600;
+    color: #fff;
+    background-color: #243A73;
+    text-align: center;
+    margin: 0 30px;
+}
+.WorkTime-btn{
+    text-align: center;
+}
+.dContainer,
+.dashFont,
+.list-item {
+    color: #243A73;
+}
+
+main {
+   background : #dbe7f724;
+}
+
+</style>
 
 <script type="text/javascript">
 
@@ -62,7 +89,7 @@ $(function(){
 		let record_no = $(this).attr("data-record_no");
 		
 		let msg = "출근 하시겠습니까 ?";
-		if(record_no == "1") {
+		if(record_no != "0") {
 			msg = "퇴근 하시겠습니까 ?";
 		}
 		
@@ -83,21 +110,22 @@ $(function(){
 <div>
 <div class="dContainer">
 
-	<div class="item1">
+	<div class="item">
 		<div class="desc-area commuteBox">
 			<span class="title fontColor"></span> 
 			<div class="box-profile profile-picture">
 				<img alt="" src="">
 			</div>
 			<div class="box-profile">
-				<span> 정유진1 </span>
+				<img src="${pageContext.request.contextPath}/uploads/insaManage/${dto.emp_picture}">
+				<span> ${myInsa.emp_name} </span>
 				<br>
-				<span> 인사팀 </span> | <span> 사원 </span>
+				<span>${sessionScope.member.dept_name} </span> | <span> ${sessionScope.member.pos_name} </span>
 			</div>
 		</div>
 		<div class="desc-area commuteBox1">
 			<div class = "box-workTime">
-				<span class="title">출퇴근기록</span>
+				<span class="title">${myInsa.emp_name}님 출퇴근기록</span>
 				<br>
 				<span>날짜</span> <div class="today-layout"></div>
 				<div>
@@ -105,7 +133,8 @@ $(function(){
 					<br>
 					<span>퇴근</span> <span class="bold">${workTime.work_endtime}</span>
 					<br>
-
+				</div>
+				<div class="WorkTime-btn">
 					<button class="btnWorkTime" data-record_no="0" 
 							${empty workTime ? "" : "disabled='disabled'" }>출근하기</button>
 
@@ -119,11 +148,11 @@ $(function(){
 	<div class="item">
 		<div class="desc-area commuteBox1">
 			<div class="title-di">
-			<span> 내 휴가통계 </span>
+			<span><i class="fa-solid fa-plane"></i>&nbsp;&nbsp;내 휴가통계 &nbsp;&nbsp;<i class="fa-regular fa-square-arrow-right"></i></span>
 			</div>
 			<div>
 				<div class="list-item">
-					<div class="subfontColor">연차휴가</div>
+					<div class="dashFont">연차휴가</div>
 					<br>
 					<div>
 					<span>총 휴가일수</span>
@@ -139,46 +168,33 @@ $(function(){
 					</div>
 				</div>
 				<div class="list-item">
-					<div class="fontColor">보상휴가</div>
-					<div class="minibox">총 15일 사용 1일 잔여 14일</div>
-				</div>
-				<div class="list-item">
-					<div class="fontColor">연차휴가</div>
-					<div class="minibox">총 15일 사용 1일 잔여 14일</div>
-				</div>
-				
-					
+					<div class="dashFont">보상휴가</div>
+					<br>
+					<div>
+					<span>총 휴가일수</span>
+					<div style="display: inline-block;" align="right">15일</div>
+					</div>
+					<div>
+					<span>사용일수</span>
+					<span style="display: inline-block; text-align:right;">5일</span>
+					</div>
+					<div>
+					<span>잔여일수</span>
+					<span style="display: inline-block; text-align:right;">10일</span>
+					</div>
+				</div>					
 			</div>
 		</div>
 	</div>
-	<div class="item">
+		<div class="item">
 		<div class="desc-area commuteBox1">
-			<span class="fontColor title" style="font-size: 18px;">전자결재</span>
+			<span class="dashFont title" style="font-size: 18px;"><i class="fa-solid fa-inbox"></i>&nbsp;&nbsp;전자결재</span>
 
 			<div style="margin-top: 30px;">
-				<c:forEach var="n" begin="1" end="4">
+				<c:forEach var="appro" items="${approvalList}" varStatus="status">
 					<div class="list-item">
-						<div class="fontColor">전직원 전자결재 작성요령(결재라인 포함)</div>
-						<div  class="minibox2">
-						<span>문서 #2342345</span>
-						<span style="text-align: right;">댓글 0 최고관리자 2023.06.05</span>
-						</div>								</div>
-				</c:forEach>
-			</div>
-		</div>
-	</div>
-	<div class="item">
-		<div class="desc-area commuteBox1">
-			<span class="fontColor title" style="font-size: 18px;">프로젝트 현황</span>
-
-			<div style="margin-top: 30px;">
-				<c:forEach var="n" begin="1" end="4">
-					<div class="list-item">
-						<div class="fontColor">전직원 전자결재 작성요령(결재라인 포함)</div>
-						<div  class="minibox2">
-						<span>문서 #2342345</span>
-						<span style="text-align: right;">댓글 0 최고관리자 2023.06.05</span>
-						</div>
+						<div class="dashFont">${appro.doc_name}</div>
+						<div class="minibox">결재단계 ${appro.approval_status==1?'진행중':''} 처리기한 ${appro.draft_deadline} 기안자 ${appro.emp_name}</div>
 					</div>
 				</c:forEach>
 			</div>
@@ -186,30 +202,43 @@ $(function(){
 	</div>
 	<div class="item">
 		<div class="desc-area commuteBox1">
-			<span class="fontColor title" style="font-size: 18px;">전체 공지사항</span>
+			<span class="dashFont title" style="font-size: 18px;"><i class="fa-solid fa-paper-plane"></i>&nbsp;&nbsp;업무요청 수신함</span>
 
 			<div style="margin-top: 30px;">
-				<c:forEach var="n" begin="1" end="4">
+				<c:forEach var="listTask" items="${listTask}" varStatus="status">
 					<div class="list-item">
-						<div class="fontColor">전직원 전자결재 작성요령(결재라인 포함)</div>
-						<div class="minibox">댓글 0 최고관리자 2023.06.05</div>
+						<div class="dashFont">${listTask.task_name}</div>
+						<div class="minibox"> 업무요청자 ${listTask.emp_name} 업무마감날짜 ${listTask.task_end_date}</div>
 					</div>
 				</c:forEach>
 			</div>
 		</div>
 	</div>
+
 	<div class="item">
 		<div class="desc-area commuteBox1">
-			<span class="fontColor title" style="font-size: 18px;">${dto.noti_title}</span>
+			<span class="dashFont title" style="font-size: 18px;"><i class="fa-solid fa-bullhorn"></i>&nbsp;&nbsp;사내 공지사항</span>
 
 			<div style="margin-top: 30px;">
-				<c:forEach var="n" begin="1" end="4">
+				<c:forEach var="noti" items="${notiList}" varStatus="status">
 					<div class="list-item">
-						<div class="fontColor">전직원 전자결재 작성요령(결재라인 포함)</div>
-						<div  class="minibox2">
-						<span>문서 #2342345</span>
-						<span style="text-align: right;">댓글 0 최고관리자 2023.06.05</span>
-						</div>								
+						<div class="dashFont"><a></a> ${noti.noti_title}</div>
+						<div class="minibox">작성일 ${noti.noti_regdate} 조회수 ${noti.noti_hitcount} </div>
+					</div>
+				</c:forEach>
+			</div>
+		</div>
+	</div>
+	
+	<div class="item">
+		<div class="desc-area commuteBox1">
+			<span class="dashFont title" style="font-size: 18px;"><i class="fa-solid fa-clipboard-list"></i>&nbsp;&nbsp;${sessionScope.member.dept_name} 공지사항</span>
+
+			<div style="margin-top: 30px;">
+				<c:forEach var="deptnoti" items="${deptnotiList}" varStatus="status">
+					<div class="list-item">
+						<div class="dashFont"><a></a> ${deptnoti.noti_title}</div>
+						<div class="minibox">작성일 ${deptnoti.noti_regdate} 조회수 ${deptnoti.noti_hitcount} </div>
 					</div>
 				</c:forEach>
 			</div>

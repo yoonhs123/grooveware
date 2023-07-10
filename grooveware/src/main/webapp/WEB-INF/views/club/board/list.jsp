@@ -194,7 +194,7 @@ function searchList() {
 				<tr>
 					<td class="title"> 
 						<h3>
-							<span>|</span>&nbsp;${club.club_name}
+							<span><i class="fa-regular fa-comment-dots"></i></span>&nbsp;${club.club_name}
 						</h3> 
 					</td>
 				</tr>

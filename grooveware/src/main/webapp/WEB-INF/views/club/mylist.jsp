@@ -207,7 +207,7 @@ $(function(){
 		<div class="title_container">
 		<table class="table1" style="margin-bottom: 5px;">
 			<tr>
-				<td class="title"> <h3><span>|</span> 가입 커뮤니티</h3> 
+				<td class="title"> <h2><span><i class="fa-solid fa-users"></i></span>&nbsp;가입 커뮤니티</h2> 
 				</td>
 			</tr>
 		</table>

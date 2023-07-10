@@ -2,46 +2,145 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="research">
-	<!-- 설문 작성 -->
+	<!-- 설문 정보 등록 -->
 	<insert id="researchBox" parameterType="com.sp.grooveware.research.Research">
 		INSERT INTO research(research_id, emp_no, research_title, research_content, research_regdate, 
 							 research_startdate, research_enddate, research_status)
 		VALUES(research_seq.NEXTVAL, #{emp_no}, #{research_title}, #{research_content}, SYSDATE, 
 	    	   TO_DATE(#{research_startdate}, 'YYYY-MM-DD'), TO_DATE(#{research_enddate}, 'YYYY-MM-DD'), #{research_status})
 	</insert>
+	
+	<!-- 설문 상세 정보 보기 -->
+	<select id="readresearchBox" parameterType="Long" resultType="com.sp.grooveware.research.Research">
+		SELECT research_id, emp_no, research_title, research_content, research_regdate, research_startdate,
+			   research_enddate, research_status
+		FROM research
+		WHERE research_id=#{research_id}		
+	</select>
+	
+	<!-- 공개여부 업데이트 -->
+	<update id="upResearchStatus" parameterType="com.sp.grooveware.research.Research">
+		UPDATE research 
+		SET research_status = 0 
+		WHERE research_id=#{research_id}
+	</update>
 
-	<!-- 설문 질문 작성 -->
+	<!-- 설문 질문 등록 -->
 	<insert id="resQuestion" parameterType="com.sp.grooveware.research.Research">
-		INSERT INTO question(question_no, research_id, question_content, question_num)
-		VALUES(question_seq.NEXTVAL, research_seq.CURRVAL, #{question_content}, #{question_num})
+		INSERT INTO question(question_no, research_id, question_content, question_num, question_category)
+		VALUES(question_seq.NEXTVAL, #{research_id}, #{question_content}, #{question_num}, #{question_category})
 	</insert>
 
-	<!-- 설문 질문응답 작성 -->
+	<!-- 설문 질문에 대한 보기 등록 -->
 	<insert id="resAnsOp" parameterType="com.sp.grooveware.research.Research">
 		INSERT INTO answer_option(answer_no, question_no, ans_option_content, ans_option_num)
 		VALUES(answer_option_seq.NEXTVAL, question_seq.CURRVAL, #{ans_option_content}, #{ans_option_num})
 	</insert>
 	
-	<!-- 설문 리스트 -->
+	<sql id="where-list">
+		<if test="condition=='research_name'">
+			(INSTR(research_name),#{keyword}) &gt; 0
+		</if>
+	</sql>
+	
+	<!-- 설문 전체 리스트 : 인사팀만 볼 수 있게 하기 -->
 	<select id="listAll" parameterType="map" resultType="com.sp.grooveware.research.Research">
-		SELECT research_id, research_title, research_startdate, research_enddate, emp_no, research_regdate
-		FROM research
+		SELECT r.research_id, r.research_title, TO_CHAR(r.research_startdate,'YYYY-MM-DD') research_startdate, 
+			   TO_CHAR(r.research_enddate,'YYYY-MM-DD') research_enddate, e.emp_name, 
+			   TO_CHAR(r.research_regdate,'YYYY-MM-DD') research_regdate
+		FROM research r
+		JOIN emp e ON r.emp_no=e.emp_no
+		WHERE e.emp_no=#{emp_no}
+		<where>
+			<if test="keyword != null and keyword != '' ">
+				AND <include refid="where-list"/>
+			</if>
+		</where>
+		ORDER BY research_id DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{size} ROWS ONLY
 	</select>
 	
-	<!-- 설문 보기 : 응답하는 화면 -->
-	<select id="readResearch" parameterType="Long" resultType="com.sp.grooveware.research.Research">
-		SELECT r.research_id, r.research_title, r.research_startdate, r.research_enddate, e.emp_name, r.research_regdate,
-	           q.question_no, q.question_content, q.question_num,
+	<!-- 설문리스트 전체 개수 -->
+	<select id="dataCountResearchList" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*),0)
+		FROM research r
+		JOIN emp e ON r.emp_no=e.emp_no
+		WHERE e.emp_no=#{emp_no}
+		<where>
+			<if test="keyword != null and keyword != '' ">
+				<include refid="where-list"/>
+			</if>
+		</where>
+	</select>
+	
+	<!-- 설문 보기 : 상세 정보 및 질문-->
+	<select id="readresearchQuset" parameterType="Long" resultType="com.sp.grooveware.research.Research">
+		SELECT r.research_id, e.emp_no, r.research_title, r.research_content, TO_CHAR(r.research_startdate,'YYYY-MM-DD') research_startdate, 
+			   TO_CHAR(r.research_enddate,'YYYY-MM-DD') research_enddate,
+			   TO_CHAR(r.research_regdate,'YYYY-MM-DD') research_regdate, r.research_status,
+			   q.question_no, q.question_content, q.question_num
+		FROM research r
+		JOIN emp e ON r.emp_no=e.emp_no
+		JOIN question q ON r.research_id=q.research_id
+		WHERE r.research_id=#{research_id}		
+	</select>
+	
+	<!-- 설문 보기 : 응답하는 화면 & 공개 전으로 돌리기 전 화면 -->
+	<select id="readResearch" parameterType="map" resultType="com.sp.grooveware.research.Research">
+		SELECT r.research_id, q.question_no, q.question_content, q.question_num,
 	           ao.answer_no, ao.ans_option_content, ao.ans_option_num
 		FROM research r
 		JOIN emp e ON r.emp_no=e.emp_no
 		JOIN question q ON r.research_id=q.research_id
 		JOIN answer_option ao ON q.question_no=ao.question_no
 		WHERE r.research_id=#{research_id}
+		ORDER BY ao.ans_option_num
+		
 	</select>
+	
+	<!-- 설문 응답 : 사원 선택 -->
+	<insert id="responseResearch" parameterType="com.sp.grooveware.research.Research">
+		INSERT INTO response(question_no, emp_no, response_date, multiple_choice)
+		VALUES (#{question_no}, #{emp_no}, SYSDATE, #{multiple_choice})
+	</insert>
 	
 	<!-- 설문 보기 : 결과 화면 -->
 	
-
-
+	
+	<!-- 설문 리스트 공개 : 진행중 or 마감 -->
+	<select id="openListAll" parameterType="map" resultType="com.sp.grooveware.research.Research">
+        SELECT r.research_id, r.research_title, TO_CHAR(r.research_startdate,'YYYY-MM-DD') research_startdate, 
+        TO_CHAR(r.research_enddate,'YYYY-MM-DD') research_enddate, e.emp_name, r.research_status
+		FROM research r
+		JOIN emp e ON r.emp_no=e.emp_no
+		WHERE r.research_status=0
+		
+			<if test="category == 'open' ">
+				AND ( r.research_startdate &lt;= SYSDATE AND r.research_enddate &gt; SYSDATE )
+			</if>
+			<if test="category == 'close' ">
+				AND ( r.research_enddate &lt; SYSDATE )
+			</if>
+		
+		ORDER BY research_id DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{size} ROWS ONLY
+	</select>
+	
+	<!-- 설문리스트 전체 개수: 진행중 or 마감 -->
+	<select id="dataCountOpenList" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*),0)
+		FROM research r
+		JOIN emp e ON r.emp_no=e.emp_no
+		WHERE r.research_status=0
+		
+			<if test="category == 'open' ">
+				AND ( r.research_startdate &lt;= SYSDATE AND r.research_enddate &gt; SYSDATE )
+			</if>
+			<if test="category == 'close' ">
+				AND ( r.research_enddate &lt; SYSDATE )
+			</if>
+		
+		ORDER BY research_id DESC
+	</select>
+	
 </mapper>
