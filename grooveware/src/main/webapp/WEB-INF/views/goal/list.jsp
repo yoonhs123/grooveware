@@ -58,7 +58,7 @@
 }
 
 .btn:hover {
-	background-color: #ccc;
+	background-color: #f2f2f2;
 }
 
 input[type=text]{
@@ -135,6 +135,11 @@ div.board1 .sort_numbering {
 
 
 
+.btn-disabled {
+	background-color: #f0f0f0;
+    color: gray;
+    pointer-events: none;
+}
 
 .pj {
   display: flex;
@@ -284,7 +289,8 @@ function hideChildRows(depth, goalNo, groupNo) {
             <hr>
             <li>
             	<p>메뉴</p>
-            	<a href="#">&nbsp;나의 업무</a>
+            	<a href="${pageContext.request.contextPath}/task/listsend">&nbsp;요청한 업무</a>
+            	<a href="${pageContext.request.contextPath}/task/listreceive">&nbsp;요청받은 업무</a>
                 <a href="#">&nbsp;일정</a>
                 <a href="#">&nbsp;공지사항</a>
                 <a href="#">&nbsp;자료실</a>
@@ -307,9 +313,19 @@ function hideChildRows(depth, goalNo, groupNo) {
 			<p>새 목표를 생성하려면 '새 목표 만들기'을 클릭하세요</p>
 		</div>
 		
+		<c:if test="${ ( qualify == 0 || qualify == 1 ) && pj_status == 0}">
 		<div class="no_pj_button">
 			<button type="button" onclick="location.href='${pageContext.request.contextPath}/goal/write?pj_no=${pj_no}'">새 목표 만들기</button>
 		</div>
+		</c:if>
+		
+		<c:if test="${qualify == 2 || pj_status == 1}">
+		<div class="no_pj_button">
+			<button type="button" class="btn-disabled" disabled="disabled" onclick="location.href='${pageContext.request.contextPath}/goal/write?pj_no=${pj_no}'">새 목표 만들기</button>
+		</div>
+		</c:if>
+
+
 	</div>
 </div>
 </c:if>
@@ -330,8 +346,14 @@ function hideChildRows(depth, goalNo, groupNo) {
 
 <div>
 	<div class="col-auto me-auto dataCount">
-    <span>목표 목록</span>
-    <button type="button" class="btn" style="float: right" onclick="location.href='${pageContext.request.contextPath}/goal/write?pj_no=${pj_no}'">새 목표 만들기</button>
+	    <span>목표 목록</span>
+	    
+		<c:if test="${ ( qualify == 0 || qualify == 1 ) && pj_status == 0}">	
+	    	<button type="button" class="btn" style="float: right" onclick="location.href='${pageContext.request.contextPath}/goal/write?pj_no=${pj_no}'">새 목표 만들기</button>
+	    </c:if>
+	    <c:if test="${qualify == 2 || pj_status == 1}">
+	    	<button type="button" class="btn btn-disabled" disabled="disabled" style="float: right" onclick="location.href='${pageContext.request.contextPath}/goal/write?pj_no=${pj_no}'">새 목표 만들기</button>
+	    </c:if>
     </div>
 
 
@@ -344,7 +366,6 @@ function hideChildRows(depth, goalNo, groupNo) {
 				<th>종료일</th>
 				<th>달성률</th>
 				<th>첨부파일</th>
-				<th>더보기</th>
 			</tr>
     	</thead>
     	
@@ -356,7 +377,7 @@ function hideChildRows(depth, goalNo, groupNo) {
 						<a class="toggle" data-depth="${dto.depth}">
 					    <i class="fa-solid fa-caret-right"></i>
 					    </a>
-	    				<a href="${taskUrl}?goal_no${dto.goal_no}" class="text-reset">&nbsp;&nbsp;&nbsp;&nbsp;${dto.goal_name}</a>	
+	    				<a href="${articleUrl}${dto.goal_no}&pj_no=${pj_no}" class="text-reset">&nbsp;&nbsp;&nbsp;&nbsp;${dto.goal_name}</a>	
 	    		    <input type="hidden" class="depth" value="${dto.depth}">
 	    		    <input type="hidden" class="goal_no" value="${dto.goal_no}">
 	    		    <input type="hidden" class="parent" value="${dto.parent}">
@@ -370,7 +391,6 @@ function hideChildRows(depth, goalNo, groupNo) {
 							<a href="<c:url value='/goal/download?goal_no=${dto.goal_no}'/>" class="text-reset"><i class="fa-solid fa-file-arrow-down"></i></a>
 						</c:if>
 					</td>
-	    		    <td><a href="${articleUrl}${dto.goal_no}" class="text-reset"><i class="fa-solid fa-bars"></i></a></td>
 	    		</tr>
 	   		</c:forEach>
 	   	</tbody>

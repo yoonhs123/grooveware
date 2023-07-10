@@ -54,12 +54,16 @@
 	line-height: 15px;
 	background-color: white;
 }
-input[type=text]{
-    width: 300px;
-    height: 26px;
-    
-}
 
+
+input[type="text"] {
+  display: inline-block;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  width: 300px;
+
+}
 .form-select{ height: 26px; margin-right: 10px; border-radius: 4px;}
 
 
@@ -194,7 +198,8 @@ function searchList() {
             <hr>
             <li>
             	<p>메뉴</p>
-                <a href="#">&nbsp;나의 업무</a>
+                <a href="${pageContext.request.contextPath}/task/listsend">&nbsp;요청한 업무</a>
+            	<a href="${pageContext.request.contextPath}/task/listreceive">&nbsp;요청받은 업무</a>
                 <a href="#">&nbsp;일정</a>
                 <a href="#">&nbsp;공지사항</a>
                 <a href="#">&nbsp;자료실</a>

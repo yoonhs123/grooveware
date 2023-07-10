@@ -62,7 +62,7 @@
 }
 
 #addGoalForm button:hover {
-  background-color: #c0c0c0;
+  background-color: #f2f2f2;
 }
 
 /* 하위 목표 목록을 감싸는 ul 요소에 스타일을 적용합니다. */
@@ -88,7 +88,7 @@ ul[id^="subgoal_"] li {
 }
 
 .deleteSubgoal:hover {
-  background-color: #c0c0c0;
+  background-color: #f2f2f2;
 }
 
 label {
@@ -126,7 +126,7 @@ input[type="date"] {
 }
 
 #addGoal:hover {
-  background-color: #c0c0c0;
+  background-color: #f2f2f2;
 }
  
 
@@ -423,7 +423,7 @@ input[type="date"] {
 span.project-member:hover,
 span.project-member:hover label {
   cursor: pointer;
-  background-color: #c0c0c0;
+  background-color: #f2f2f2;
 }
 
   .project-member img {
@@ -441,6 +441,8 @@ span.project-member:hover label {
 textarea {
   height : 300px;
   resize : none;
+  padding: 10px;
+  border-radius: 3px;
 }
 
 </style>
@@ -601,7 +603,8 @@ function ajaxFun(url, method, query, dataType, fn){
             <hr>
             <li>
             	<p>메뉴</p>
-            	<a href="#">&nbsp;나의 업무</a>
+            	<a href="${pageContext.request.contextPath}/task/listsend">&nbsp;요청한 업무</a>
+            	<a href="${pageContext.request.contextPath}/task/listreceive">&nbsp;요청받은 업무</a>
                 <a href="#">&nbsp;일정</a>
                 <a href="#">&nbsp;공지사항</a>
                 <a href="#">&nbsp;자료실</a>

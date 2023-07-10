@@ -357,6 +357,7 @@ public class ProjectController {
 		try {
 			service.updateProject(dto, pathname);
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		
 		

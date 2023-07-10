@@ -181,11 +181,15 @@ public class ProjectServiceImpl implements ProjectService {
 			
 			fileManager.doFileDelete(dto.getSaveFilename(), pathname);
 			
+			
+			
+			// 프로젝트 삭제
 			dao.deleteData("project.deleteProject2", pj_no);
 			dao.deleteData("project.deleteProject3", pj_no);
 			dao.deleteData("project.deleteProject4", pj_no);
 			dao.deleteData("project.deleteProject1", pj_no);
-
+						
+						
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;

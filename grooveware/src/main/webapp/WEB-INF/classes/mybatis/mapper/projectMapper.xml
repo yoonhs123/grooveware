@@ -200,5 +200,14 @@
 	</update>
 	
 	
+	<!-- 삭제 할려고 하위 목표번호 조회 -->
+	<select id="selectGoal" parameterType="long" resultType="long">
+		SELECT goal_no
+		FROM goal
+		WHERE pj_no = #{pj_no}
+	</select>
+	
+	
+	
 
 </mapper>

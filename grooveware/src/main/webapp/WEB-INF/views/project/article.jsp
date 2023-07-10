@@ -60,7 +60,7 @@
 }
 
 #addGoalForm button:hover {
-  background-color: #c0c0c0;
+  background-color: #f2f2f2;
 }
 
 /* 하위 목표 목록을 감싸는 ul 요소에 스타일을 적용합니다. */
@@ -86,7 +86,7 @@ ul[id^="subgoal_"] li {
 }
 
 .deleteSubgoal:hover {
-  background-color: #c0c0c0;
+  background-color: #f2f2f2;
 }
 
 label {
@@ -116,7 +116,7 @@ input[type="text"] {
 }
 
 #addGoal:hover {
-  background-color: #c0c0c0;
+  background-color: #f2f2f2;
 }
  
 
@@ -168,6 +168,7 @@ input[type="text"] {
 .table-category thead tr>th {
 	color:  #787878;
 	padding: 10px 0;
+	background: #f2f2f2
 }
 
 .table-category tbody>tr, .table-category tfoot>tr {
@@ -276,6 +277,7 @@ input[type="text"] {
   border-right: 2px solid #e9e9e9;
   padding: 10px;
   width: 100px;
+  background: #f2f2f2;
 }
 
 .main-table tr td:nth-child(2) {
@@ -424,7 +426,7 @@ input[type="text"] {
 <script type="text/javascript">
 <c:if test="${pj_join_type == 0}">
 	function deletePj() {
-	    if(confirm("프로젝트를 삭제 하시겠습니까 ? ")) {
+	    if(confirm("삭제하면 하위 목표까지 삭제됩니다. 프로젝트를 삭제 하시겠습니까 ? ")) {
 		    let query = "pj_no=${dto.pj_no}&${query}";
 		    let url = "${pageContext.request.contextPath}/project/delete?" + query;
 	    	location.href = url;
@@ -449,23 +451,6 @@ input[type="text"] {
 </script>
 
 
-
-<script type="text/javascript">
-<c:if test="${pj_join_type == 0}">
-function sendOk() {
-	const f = document.accessForm;	
-	
-	if( ! confirm("파일을 삭제하시겠습니까 ?") ) {
-		return;
-	}
-	
-	f.action="${pageContext.request.contextPath}/goal/${mode}";
-    f.submit();
-}
-</c:if>
-</script>
-
-
 <div class="left-side-bar">
          <ul>
             <li>
@@ -476,7 +461,8 @@ function sendOk() {
             <hr>
             <li>
             	<p>메뉴</p>
-            	<a href="#">&nbsp;나의 업무</a>
+            	<a href="${pageContext.request.contextPath}/task/listsend">&nbsp;요청한 업무</a>
+            	<a href="${pageContext.request.contextPath}/task/listreceive">&nbsp;요청받은 업무</a>
                 <a href="#">&nbsp;일정</a>
                 <a href="#">&nbsp;공지사항</a>
                 <a href="#">&nbsp;자료실</a>

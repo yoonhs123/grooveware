@@ -28,7 +28,10 @@
          
          <li><a href="${pageContext.request.contextPath}/approval/list">전자결재</a></li>
          <li><a href="${pageContext.request.contextPath}/myInsa/profile">인사정보</a></li>
-         <li><a href="${pageContext.request.contextPath}/project/list">프로젝트</a></li>
+         <li><a href="${pageContext.request.contextPath}/project/list">프로젝트&nbsp;&nbsp;
+				<span class="new-taskCount" style="font-size: 6px;"></span>
+         	</a>
+         </li>
          <li><a href="${pageContext.request.contextPath}/schedule/calendar/main">일정관리</a></li> 
          <li><a href="${pageContext.request.contextPath}/club/list">그루비룸</a></li>
          <li><a href="${pageContext.request.contextPath}/notice/all/list">공지사항</a></li>
@@ -41,3 +44,53 @@
       </ul>
 </header>
 
+
+
+<script type="text/javascript">
+	$(function(){
+		var isLogin = "${not empty sessionScope.member ? 'true':'false'}";
+		var timer = null;
+		
+		if(isLogin === "true") {
+			newTaskCount();
+			// timer = setInterval("newTaskCount();", 1000 * 60 * 10); // 10분 후, 10분에 한번씩 실행
+		}
+		
+		function newTaskCount() {
+			var url = "${pageContext.request.contextPath}/task/newTaskCount";
+			var query = "tmp=" + new Date().getTime();
+			
+			$.ajax({
+				type:"get"
+				,url:url
+				,data:query
+				,dataType:"json"
+				,success:function(data) {
+					var newCount = parseInt(data.newCount);
+					if(newCount === 0) {
+						$(".new-taskCount").hide();
+						return false;
+					}
+					if(newCount >= 10) {
+						$(".new-taskCount").text("9+");
+					} else {
+						$(".new-taskCount").text(newCount);
+					}
+				}
+				,error:function(jqXHR) {
+					if(timer != null) {
+						clearInterval(timer);
+						timer = null;
+					}
+					console.log(jqXHR.responseText);
+				}
+			});
+		}
+	});
+</script>
+	
+	
+	
+	
+	
+	

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="task">
+
+	<select id="readGoalname" parameterType="Long" resultType="string">
+		select goal_name
+		from goal
+		where goal_no = #{goal_no}
+	</select>
+
+
+	<select id="listGoalmember" parameterType="long" resultType="com.sp.grooveware.goal.Goal">
+		SELECT a.emp_no, b.dept_name, c.emp_name, d.pos_name
+				FROM (
+				    SELECT x.emp_no, x.history_no, x.dept_no, x.pos_no FROM emp_history x
+				    LEFT OUTER JOIN emp_history y ON x.emp_no = y.emp_no AND x.history_no &lt; y.history_no
+				    WHERE y.emp_no IS NULL) a
+				LEFT OUTER JOIN dept b ON a.dept_no = b.dept_no
+				LEFT OUTER JOIN emp c ON a.emp_no = c.emp_no
+				LEFT OUTER JOIN pos d ON a.pos_no = d.pos_no
+				LEFT OUTER JOIN goal_member e ON a.emp_no = e.goal_member_no
+		WHERE emp_resign_date is null AND goal_no = #{goal_no} AND a.emp_no != #{login_emp}		
+	</select>
+	
+
+</mapper>
+
+

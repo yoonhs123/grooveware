@@ -18,6 +18,10 @@ public class Goal {
     private int depth;
     private int order_no;
     
+    private int pj_status;
+    private int pj_join_type;
+    private long login_emp;
+    
     private long goal_member_no;
     
 	private long emp_no;
@@ -32,6 +36,24 @@ public class Goal {
 	
 	
 	
+	public long getLogin_emp() {
+		return login_emp;
+	}
+	public void setLogin_emp(long login_emp) {
+		this.login_emp = login_emp;
+	}
+	public int getPj_join_type() {
+		return pj_join_type;
+	}
+	public void setPj_join_type(int pj_join_type) {
+		this.pj_join_type = pj_join_type;
+	}
+	public int getPj_status() {
+		return pj_status;
+	}
+	public void setPj_status(int pj_status) {
+		this.pj_status = pj_status;
+	}
 	public long getGoal_member_no() {
 		return goal_member_no;
 	}
