@@ -10,7 +10,7 @@ public class Task {
 	private String task_end_date;
 	private long goal_no;
 	private String goal_name;
-	private String task_manager;		// 업무요청하는사람(로그인아이디)
+	private long task_manager;		// 업무요청하는사람(로그인아이디)
 	
 	private String task_comment;
 	private long task_member_no;	// 업무요청받는사람
@@ -20,7 +20,37 @@ public class Task {
 	private String originalFilename;
 	private MultipartFile selectFile;
 	
+	private String dept_name;
+	private String emp_name;
+	private String pos_name;
+	private long emp_no;
 	
+	
+	
+	public String getDept_name() {
+		return dept_name;
+	}
+	public void setDept_name(String dept_name) {
+		this.dept_name = dept_name;
+	}
+	public String getEmp_name() {
+		return emp_name;
+	}
+	public void setEmp_name(String emp_name) {
+		this.emp_name = emp_name;
+	}
+	public String getPos_name() {
+		return pos_name;
+	}
+	public void setPos_name(String pos_name) {
+		this.pos_name = pos_name;
+	}
+	public long getEmp_no() {
+		return emp_no;
+	}
+	public void setEmp_no(long emp_no) {
+		this.emp_no = emp_no;
+	}
 	public long getTask_no() {
 		return task_no;
 	}
@@ -63,10 +93,10 @@ public class Task {
 	public void setGoal_name(String goal_name) {
 		this.goal_name = goal_name;
 	}
-	public String getTask_manager() {
+	public long getTask_manager() {
 		return task_manager;
 	}
-	public void setTask_manager(String task_manager) {
+	public void setTask_manager(long task_manager) {
 		this.task_manager = task_manager;
 	}
 	public String getTask_comment() {

@@ -178,6 +178,16 @@ div.board1 .sort_numbering {
 }
 
 
+  .createpj {
+  padding: 10px 20px;
+    font-size: 14px;
+    border-radius: 4px;
+    border: none;
+    background-color: #243A73;
+    color: white;
+    cursor: pointer;
+  }
+
 </style>	
 
 
@@ -297,7 +307,7 @@ function searchList() {
 			</div>
 			
 			<div align="right">
-				<button type="button" class="btn" onclick="location.href='${pageContext.request.contextPath}/project/write'">새 프로젝트 생성</button>
+				<button type="button" class="createpj" onclick="location.href='${pageContext.request.contextPath}/project/write'">새 프로젝트 생성</button>
    			</div>
 			</div>
 

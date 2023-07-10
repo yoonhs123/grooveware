@@ -4,12 +4,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <style type="text/css">
-.project {
-  color: #4048a8;
-  font-size: 30px;
-  font-weight : bold;
- 
- }
 
 .left-side-bar ul > li > a:first-child {
     font-weight: initial;
@@ -226,7 +220,7 @@ function searchList() {
 		<div class="right-contentbody">
 			<div class="board1">
 				<div class="title_container">
-						<div class="project"> <i class="fa-solid fa-toggle-off"></i> 완료된 프로젝트 </div> 
+						<div class="project"> <h2><i class="fa-solid fa-toggle-off"></i> 완료된 프로젝트 </h2></div> 
 						<div class="keyword_left">
 							<form name="searchForm" action="${pageContext.request.contextPath}/project/listend" method="post">
 								<select name="condition" class="form-select">

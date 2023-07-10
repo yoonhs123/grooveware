@@ -264,8 +264,6 @@ input[type="text"] {
 
 .pj-title {
  padding-bottom : 10px; 
- font-size: 30px; 
- font-weight: bold;"
 }
 
 .table {
@@ -474,7 +472,7 @@ input[type="text"] {
 <div class="right-contentbody">
 	<div class="body-container">	
 		<div class="body-title pj-title">
-			<i class="fa-solid fa-clipboard-check"></i> <span>프로젝트 상세</span>
+			<h2><i class="fa-solid fa-clipboard-check"></i> 프로젝트 상세 </h2>
 			
 			<c:if test="${dto.pj_status == 0}">
 			<span style= "float: right; padding-right: 10px;">
@@ -489,6 +487,8 @@ input[type="text"] {
 			</span>
 			</c:if>
 		</div>
+		
+		<br><br>
 		
 		<div class="body-main">
 					<table class="table table-border border-top2 table-form main-table">

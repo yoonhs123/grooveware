@@ -264,8 +264,6 @@ input[type="text"] {
 
 .pj-title {
  padding-bottom : 10px; 
- font-size: 30px; 
- font-weight: bold;"
 }
 
 .table {
@@ -468,9 +466,9 @@ function deleteGoal() {
 <div class="right-contentbody">
 	<div class="body-container">	
 		<div class="body-title pj-title">
-			<i class="fa-solid fa-clipboard-check"></i> <span>${dto.goal_name}</span>
+			<h2><i class="fa-solid fa-clipboard-check"></i> ${dto.goal_name} </h2>
 			<div align="right">
-				<button type="button" class="btn createtask" onclick="location.href='${pageContext.request.contextPath}/task/write?goal_no=${dto.goal_no}'">업무요청</button>
+				<button type="button" class="btn createtask" onclick="location.href='${pageContext.request.contextPath}/task/write?goal_no=${dto.goal_no}&pj_no=${dto.pj_no}'">업무요청</button>
    			</div>
 		</div>
 		

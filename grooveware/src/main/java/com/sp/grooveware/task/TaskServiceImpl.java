@@ -19,7 +19,20 @@ public class TaskServiceImpl implements TaskService{
 
 	@Override
 	public void insertTask(Task dto, String pathname) throws Exception {
-		// TODO Auto-generated method stub
+		try {
+			String saveFilename = fileManager.doFileUpload(dto.getSelectFile(), pathname);
+			if (saveFilename != null) {
+				dto.setSaveFilename(saveFilename);
+				dto.setOriginalFilename(dto.getSelectFile().getOriginalFilename());
+			}
+			
+			dao.insertData("task.insertTask", dto);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		
 		
 	}
 
@@ -44,6 +57,49 @@ public class TaskServiceImpl implements TaskService{
 		
 		try {
 			list = dao.selectList("task.listGoalmember", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+
+	
+	// 알림표시
+	@Override
+	public int newTaskCount(long emp_no) {
+		int result = 0;
+		
+		try {
+			result = dao.selectOne("task.newTaskCount", emp_no);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+
+	
+	@Override
+	public int dataCount(Map<String, Object> map) {
+
+		int dataCount = 0;
+		
+		try {
+			dataCount = dao.selectOne("goal.dataCount", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return dataCount;
+	}
+
+	@Override
+	public List<Task> listTask(Map<String, Object> map) {
+		List<Task> list = null;
+		
+		try {
+			list = dao.selectList("task.listTask", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

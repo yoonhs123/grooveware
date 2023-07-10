@@ -3,6 +3,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="task">
 
+	<update id="insertTask" parameterType="com.sp.grooveware.task.Task">
+		insert all
+		into task(task_no, task_name, task_content, task_start_date, task_end_date, task_manager, goal_no)
+		 values (task_seq.nextval, #{task_name}, #{task_content}, #{task_start_date}, #{task_end_date}, #{task_manager}, #{goal_no})
+		into task_file(task_file_no, task_no, saveFilename, originalFilename)
+		 values (task_file_seq.nextval, task_seq.currval, #{saveFilename, jdbcType=VARCHAR}, #{originalFilename, jdbcType=VARCHAR})
+	    into task_member(task_no, task_member_no, task_percent)
+		 values (task_seq.currval, #{task_member_no}, 0)
+		select*from dual
+	</update>	
+
+
 	<select id="readGoalname" parameterType="Long" resultType="string">
 		select goal_name
 		from goal
@@ -10,7 +22,7 @@
 	</select>
 
 
-	<select id="listGoalmember" parameterType="long" resultType="com.sp.grooveware.goal.Goal">
+	<select id="listGoalmember" parameterType="long" resultType="com.sp.grooveware.task.Task">
 		SELECT a.emp_no, b.dept_name, c.emp_name, d.pos_name
 				FROM (
 				    SELECT x.emp_no, x.history_no, x.dept_no, x.pos_no FROM emp_history x
@@ -23,7 +35,35 @@
 		WHERE emp_resign_date is null AND goal_no = #{goal_no} AND a.emp_no != #{login_emp}		
 	</select>
 	
+	<!-- 새로운 업무 개수 -->
+	<select id="newTaskCount" parameterType="long" resultType="Integer">
+		SELECT NVL(COUNT(*), 0)
+		FROM task_member
+		WHERE identify IS NULL AND task_member_no=#{emp_no}
+	</select>
+	
+	<!-- 업무를 확인상태로 변경 -->
+	
+	
+	<!-- 로그인한 아이디가 요청받은 업무리스트 -->
+	<select id="listTask" parameterType="map" resultType="com.sp.grooveware.task.Task">
+	SELECT a.emp_no, b.dept_name, c.emp_name, d.pos_name, task_name, task_content, task_start_date, task_end_date
+		FROM (
+		    SELECT x.emp_no, x.history_no, x.dept_no, x.pos_no FROM emp_history x
+		    LEFT OUTER JOIN emp_history y ON x.emp_no = y.emp_no AND x.history_no &lt; y.history_no
+		    WHERE y.emp_no IS NULL) a
+		LEFT OUTER JOIN dept b ON a.dept_no = b.dept_no
+		LEFT OUTER JOIN emp c ON a.emp_no = c.emp_no
+		LEFT OUTER JOIN pos d ON a.pos_no = d.pos_no
+		RIGHT OUTER JOIN task e ON a.emp_no = e.task_manager
+        left outer join task_member f ON e.task_no = f.task_no 
+        <where>
+			emp_resign_date is null AND task_member_no = #{login_emp}
+		</where>
+	</select>
 
+
+	
 </mapper>
 
 

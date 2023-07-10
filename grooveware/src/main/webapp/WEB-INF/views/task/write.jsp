@@ -449,7 +449,86 @@ textarea {
 
 </style>
 
+<script type="text/javascript">
+function sendOk() {
+	 const f = document.taskinsert;
+	
+	 if(! f.task_name.value) {
+	    	alert("제목을 입력하세요. ")
+	    	f.task_name.focus
+	    	return;
+	    }
+	    
+	    if(! f.task_start_date.value) {
+	    	alert("시작일을 입력하세요. ")
+	    	f.task_start_date.focus
+	    	return;
+	    }
+	    
+	    
+	    if(! f.task_end_date.value) {
+	    	alert("종료일을 입력하세요. ")
+	    	f.task_end_date.focus
+	    	return;
+	    }
+	    
+	    if(! f.task_content.value) {
+	    	alert("내용을 입력하세요. ")
+	    	f.task_content.focus
+	    	return;
+	    }
+	    
+	    f.action="${pageContext.request.contextPath}/task/${mode}";
+	    f.submit();
+}
 
+
+
+<c:if test="${mode=='update'}">
+function deleteFile(task_no) {
+	if( ! confirm("파일을 삭제하시겠습니까 ?") ) {
+		return;
+	}
+	let url = "${pageContext.request.contextPath}/goal/deleteFile?pj_no=${dto.pj_no}&goal_no=${dto.goal_no}";
+	location.href = url;
+}
+</c:if>
+
+
+</script>
+
+
+
+<script type="text/javascript">
+function ajaxFun(url, method, query, dataType, fn) {
+	$.ajax({
+		type:method,
+		url:url,
+		data:query,
+		dataType:dataType,
+		success:function(data) {
+			fn(data);
+		},
+		beforeSend:function(jqXHR) {
+			jqXHR.setRequestHeader("AJAX", true);
+		},
+		error:function(jqXHR) {
+			if(jqXHR.status === 403) {
+				login();
+				return false;
+			} else if(jqXHR.status === 400) {
+				alert("요청 처리가 실패했습니다.");
+				return false;
+			}
+	    	
+			console.log(jqXHR.responseText);
+		}
+	});
+}
+
+
+
+</script>
 
 <div class="left-side-bar">
          <ul>
@@ -480,14 +559,14 @@ textarea {
 		    </div>
 		</div>
 	
-	<br>
 
 		<div class="body-main">
 				
-				<form name="goalinsert" method="post" enctype="multipart/form-data">
+				<form name="taskinsert" method="post" enctype="multipart/form-data">
 				
-				<input type="hidden" name="task_manager" value="${sessionScope.member.emp_no}">
-									
+				<input type="hidden" name="goal_no" value="${goal_no}">
+				<input type="hidden" name="pj_no" value="${pj_no}">
+				.
 					<table class="table table-border border-top2 table-form main-table">
 						<tr>
 							<th>목&nbsp;&nbsp;&nbsp;&nbsp;표</th>
@@ -513,23 +592,23 @@ textarea {
 						<tr>
 							<th>업&nbsp;무&nbsp;&nbsp;제&nbsp;목</th>
 							<td> 
-								<input type="text" name="goal_name" maxlength="100" class="form-control" value="${dto.goal_name}">
+								<input type="text" name="task_name" maxlength="100" class="form-control" value="${dto.task_name}">
 							</td>
 						</tr>
 				
 						<tr>
 							<th>기&nbsp;&nbsp;&nbsp;&nbsp;간</th>
 							<td> 
-								<input type="date" name="goal_start_date" id="start_date_input" class="form-control" value="${dto.goal_start_date}"/> 
+								<input type="date" name="task_start_date" id="start_date_input" class="form-control" value="${dto.task_start_date}"/> 
 								<span>~</span>
-								<input type="date" name="goal_end_date" id="end_date_input" class="form-control" value="${dto.goal_end_date}"/> 
+								<input type="date" name="task_end_date" id="end_date_input" class="form-control" value="${dto.task_end_date}"/> 
 							</td>
 						</tr>
 				
 						<tr>
 							<th>내&nbsp;&nbsp;&nbsp;&nbsp;용</th>
 							<td> 
-								<textarea name="goal_content" class="form-control">${dto.goal_content}</textarea>
+								<textarea name="task_content" class="form-control">${dto.task_content}</textarea>
 							</td>
 						</tr>
 	
@@ -549,7 +628,7 @@ textarea {
 								<td> 
 									<p class="form-control-plaintext">
 										<c:if test="${not empty dto.saveFilename}">
-											<a href="javascript:deleteFile('${dto.goal_no}');"><i class="fa-solid fa-trash"></i></a>
+											<a href="javascript:deleteFile('${dto.task_no}');"><i class="fa-solid fa-trash"></i></a>
 											${dto.originalFilename}
 										</c:if>
 										&nbsp;
@@ -564,7 +643,7 @@ textarea {
 							<td align="center">
 								<button type="button" class="btn btn-dark" onclick="sendOk();">${mode=='update'?'수정완료':'등록하기'}&nbsp;<i class="bi bi-check2"></i></button>
 								<button type="reset" class="btn">다시입력</button>
-								<button type="button" class="btn" onclick="location.href='${pageContext.request.contextPath}/goal/list?pj_no=${dto.pj_no}';">${mode=='update'?'수정취소':'등록취소'}&nbsp;<i class="bi bi-x"></i></button>
+								<button type="button" class="btn" onclick="location.href='${pageContext.request.contextPath}/goal/article?goal_no=${dto.goal_no}&pj_no=${dto.pj_no}';">${mode=='update'?'수정취소':'등록취소'}&nbsp;<i class="bi bi-x"></i></button>
 									<c:if test="${mode=='update'}">
 									<input type="hidden" name="pj_no" value="${dto.pj_no}">
 									<input type="hidden" name="goal_no" value="${dto.goal_no}">

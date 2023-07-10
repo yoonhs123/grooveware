@@ -5,12 +5,6 @@
  
  <style type="text/css">
  
-.project {
-  color: #4048a8;
-  font-size: 30px;
-  font-weight : bold;
- 
- }
 
 .left-side-bar ul > li > a:first-child {
     font-weight: initial;
@@ -198,7 +192,16 @@ div.board1 .sort_numbering {
 	text-align: left; 
 }
 
-}
+
+  .creategoal {
+  padding: 10px 20px;
+    font-size: 14px;
+    border-radius: 4px;
+    border: none;
+    background-color: #243A73;
+    color: white;
+    cursor: pointer;
+  }
 
 
 </style>	   
@@ -337,26 +340,24 @@ function hideChildRows(depth, goalNo, groupNo) {
 
 <div class="board1">
 <div class="title_container">
-	<div class="project"><i class="fa-solid fa-briefcase"></i>&nbsp;&nbsp;${pj_name}</div>
+	<div class="project"><h2><i class="fa-solid fa-briefcase"></i> ${pj_name} </h2></div>
 	<div class="keyword_left">
 	</div>
 </div>
 
-<br><br>
 
 <div>
 	<div class="col-auto me-auto dataCount">
-	    <span>목표 목록</span>
 	    
 		<c:if test="${ ( qualify == 0 || qualify == 1 ) && pj_status == 0}">	
-	    	<button type="button" class="btn" style="float: right" onclick="location.href='${pageContext.request.contextPath}/goal/write?pj_no=${pj_no}'">새 목표 만들기</button>
+	    	<button type="button" class="creategoal" style="float: right" onclick="location.href='${pageContext.request.contextPath}/goal/write?pj_no=${pj_no}'">새 목표 만들기</button>
 	    </c:if>
 	    <c:if test="${qualify == 2 || pj_status == 1}">
-	    	<button type="button" class="btn btn-disabled" disabled="disabled" style="float: right" onclick="location.href='${pageContext.request.contextPath}/goal/write?pj_no=${pj_no}'">새 목표 만들기</button>
+	    	<button type="button" class="btn-disabled creategoal" disabled="disabled" style="float: right" onclick="location.href='${pageContext.request.contextPath}/goal/write?pj_no=${pj_no}'">새 목표 만들기</button>
 	    </c:if>
     </div>
 
-
+	<br><br>
     
     <table class="table table-border table-list table-hover board-list">
     	<thead class="table-right">	
