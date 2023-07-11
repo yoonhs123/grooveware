@@ -107,6 +107,11 @@ $(function() {
 	});
 });
 	
+function searchList() {
+	const f = document.searchForm;
+	f.submit();
+}
+	
 </script>
 
 <div class="left-side-bar">
@@ -173,8 +178,8 @@ $(function() {
 									<option value="all"  ${condition == "all" ? "selected='selected'" : ""} > 전체 </option>
 									<option value="emp_no"  ${condition == "emp_no" ? "selected='selected'" : ""} > 사원번호 </option>
 									<option value="emp_name"  ${condition == "emp_name" ? "selected='selected'" : ""} > 사원이름 </option>
-									<option value="dept_name"  ${condition == "dept_name" ? "selected='selected'" : 	""} > 부서 </option>
-									<option value="pos_name"  ${condition == "pos_name" ? "selected='selected'" : 	""} > 직위 </option>
+									<option value="dept_name"  ${condition == "dept_name" ? "selected='selected'" : 	""} > 부서이름 </option>
+									<option value="pos_name"  ${condition == "pos_name" ? "selected='selected'" : 	""} > 직위이름 </option>
 								</select>
 								<input type="text" name="keyword" value="${keyword}" class="emp-list-search">
 								<input type="hidden" name="emp_status" value="${emp_status}"> 
@@ -234,6 +239,7 @@ $(function() {
 							        	<button style="margin: 5px" type="button" class="btn btnUpdateStatus" data-emp_status="2" data-emp_no="${dto.emp_no}"><i class="bi bi-person-x-fill"></i> 퇴사 </button>
 							        </c:if>
 							        <input type="hidden" name="emp_no" value="${dto.emp_no}">
+							        <input type="hidden" name="emp_status" value="${dto.emp_status}">
 							        <input type="hidden" name="page" value="${page}">
 							      </div>
 							    </div>

@@ -32,7 +32,7 @@ public class InsaManageController {
 	@Qualifier("myUtilGeneral")
 	private MyUtil myUtil;
 	
-	@RequestMapping(value= "list", method = RequestMethod.GET)
+	@RequestMapping(value= "list")
 	public String insaMemberManage(@RequestParam(value= "page", defaultValue= "1") int current_page, 
 			@RequestParam(defaultValue = "all") String condition,
 			@RequestParam(defaultValue = "") String keyword,
