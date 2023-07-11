@@ -8,13 +8,16 @@
 	height: 40px;
 	width: 80px;
     border: none;
-	border-radius: 5px;
+	border-radius: 30px;
     padding: 5px 10px;
     font-weight: 600;
     color: #fff;
     background-color: #243A73;
     text-align: center;
-    margin: 0 30px;
+    margin: 0 15px;
+}
+.btnWorkTime:disabled {
+  background: #ccc;
 }
 .WorkTime-btn{
     text-align: center;
@@ -29,6 +32,90 @@ main {
    background : #dbe7f724;
 }
 
+.appro-status-btn{
+	height: 22px;
+	width: 60px;
+	padding: 1.5px 7px;
+    border: none;
+	border-radius: 5px;
+    font-weight: 500;
+    color: #fff;
+    background-color: #91CC75;
+    text-align: center;
+}
+.appro-status-dis{
+	display: inline-block;
+	float : left;
+}
+.dash-list{
+    border-bottom: 1px solid silver;
+    padding: 12px;
+    position: relative;
+    font-weight: 600;
+}
+
+.dash-list-title{
+    position: relative;
+    font-weight: 600;
+}
+
+.task-dept-btn{
+	height: 22px;
+	width: 92px;
+	padding: 1.5px 7px;
+    border: none;
+	border-radius: 5px;
+    font-weight: 500;
+    color: #fff;
+    background-color: #FAC858;
+    text-align: center;	
+}
+
+.noti-list-btn{
+	height: 22px;
+	width: 50px;
+	padding: 1.5px 7px;
+    border: none;
+	border-radius: 5px;
+    font-weight: 500;
+    color: #fff;
+    background-color: #EE6666;
+    text-align: center;	
+    font-size: 12px;
+}
+
+.box-profile{
+	
+}
+.profile-btn{
+	height: 22px;
+	width: 40px;
+	padding: 1.5px 5px;
+    border: none;
+	border-radius: 5px;
+    font-weight: 500;
+    color: #fff;
+    background-color: #73C0DE;
+    text-align: center;	
+    font-size: 12px;
+}
+
+.item>.desc-area{
+	margin: 20px;
+}
+
+.dContainer > .profile-item {
+	cursor: pointer;
+	border: 1px solid #d3d3d3;
+	height: 100%;
+	flex-direction: column;
+	justify-content: space-between;
+	border-radius: 5px;
+	background-color: white;
+	word-wrap: break-word;
+	box-shadow: 0 3px 3px rgba(0,0,0,0.2);
+	padding: 20px;
+}
 </style>
 
 <script type="text/javascript">
@@ -110,31 +197,33 @@ $(function(){
 <div>
 <div class="dContainer">
 
-	<div class="item">
+	<div class="profile-item">
 		<div class="desc-area commuteBox">
 			<span class="title fontColor"></span> 
-			<div class="box-profile profile-picture">
-				<img alt="" src="">
+			<div class="box-profile profile-picture" style="text-align:center; padding: 12px;">
+				
+				<img src="${pageContext.request.contextPath}/uploads/insaManage/${myInsa.emp_picture}">
 			</div>
-			<div class="box-profile">
-				<img src="${pageContext.request.contextPath}/uploads/insaManage/${dto.emp_picture}">
-				<span> ${myInsa.emp_name} </span>
-				<br>
-				<span>${sessionScope.member.dept_name} </span> | <span> ${sessionScope.member.pos_name} </span>
+			<div class="box-profile" style="padding: 15px 12px;">
+				<div style="text-align:center; margin: 5px 0; font-size: 18px; font-weight: 600;"> ${myInsa.emp_name} 님 </div>
+				<div style="text-align:left; margin: 5px 0; font-size: 14px;"> ${sessionScope.member.dept_name} | ${sessionScope.member.pos_name} </div>
+				<div style="text-align:left; margin: 5px 0; font-size: 14px;"> 사원번호 | ${sessionScope.member.emp_no} </div>
 			</div>
 		</div>
-		<div class="desc-area commuteBox1">
-			<div class = "box-workTime">
-				<span class="title">${myInsa.emp_name}님 출퇴근기록</span>
+		<div class="desc-area commuteBox" >
+			<div class = "box-workTime" style="width:100%; padding: 15px 12px; border-top: 1px solid silver;">
+				<span style="font-weight: bold; font-size: 20px;">출퇴근기록</span>
 				<br>
-				<span>날짜</span> <div class="today-layout"></div>
 				<div>
-					<span>출근</span> <span class="bold">${workTime.work_starttime}</span>
-					<br>
-					<span>퇴근</span> <span class="bold">${workTime.work_endtime}</span>
-					<br>
+				<div class="today-layout" style="text-align: center; font-size: 22px; padding: 9px 0; font-weight: 500;"></div>
 				</div>
-				<div class="WorkTime-btn">
+				<div style="clear:both;"></div>
+				<div style="text-align: center; font-size: 19px; padding: 9px 0; font-weight: bold;">
+					<span>출근</span>&nbsp;&nbsp;<span>${workTime.work_starttime}</span>
+					&nbsp;&nbsp;
+					<span>퇴근</span>&nbsp;&nbsp;<span>${workTime.work_endtime}</span>
+				</div>
+				<div class="WorkTime-btn"style="padding: 9px 0;">
 					<button class="btnWorkTime" data-record_no="0" 
 							${empty workTime ? "" : "disabled='disabled'" }>출근하기</button>
 
@@ -148,39 +237,45 @@ $(function(){
 	<div class="item">
 		<div class="desc-area commuteBox1">
 			<div class="title-di">
-			<span><i class="fa-solid fa-plane"></i>&nbsp;&nbsp;내 휴가통계 &nbsp;&nbsp;<i class="fa-regular fa-square-arrow-right"></i></span>
+			<span><i class="fa-solid fa-plane"></i>&nbsp;&nbsp;내 휴가통계 &nbsp;&nbsp;</span>
 			</div>
 			<div>
 				<div class="list-item">
-					<div class="dashFont">연차휴가</div>
-					<br>
+					<div class="dash-list-title">연차휴가</div>
+				</div>
+				<div class="list-item" style="padding : 10px 20px;">
 					<div>
-					<span>총 휴가일수</span>
-					<div style="display: inline-block;" align="right">15일</div>
+					<span style="float: left; letter-spacing: 0.5px;">총 휴가일수</span>
+					<span style="float: right; letter-spacing: 0.5px;">15일</span>
 					</div>
+					
 					<div>
-					<span>사용일수</span>
-					<span style="display: inline-block; text-align:right;">5일</span>
+					<span style="float: left; letter-spacing: 0.5px;">사용일수</span>
+					<span style="float: right; letter-spacing: 0.5px;">5일</span>
 					</div>
+					
 					<div>
-					<span>잔여일수</span>
-					<span style="display: inline-block; text-align:right;">10일</span>
+					<span style="float: left; letter-spacing: 0.5px;">잔여일수</span>
+					<span style="float: right; letter-spacing: 0.5px;">10일</span>
 					</div>
 				</div>
 				<div class="list-item">
-					<div class="dashFont">보상휴가</div>
-					<br>
+					<div class="dash-list-title">보상휴가</div>
+				</div>
+				<div class="list-item" style="padding : 10px 20px;">
 					<div>
-					<span>총 휴가일수</span>
-					<div style="display: inline-block;" align="right">15일</div>
+					<span style="float: left; letter-spacing: 0.5px;">총 휴가일수</span>
+					<span style="float: right; letter-spacing: 0.5px;">15일</span>
 					</div>
+					
 					<div>
-					<span>사용일수</span>
-					<span style="display: inline-block; text-align:right;">5일</span>
+					<span style="float: left; letter-spacing: 0.5px;">사용일수</span>
+					<span style="float: right; letter-spacing: 0.5px;">5일</span>
 					</div>
+					
 					<div>
-					<span>잔여일수</span>
-					<span style="display: inline-block; text-align:right;">10일</span>
+					<span style="float: left; letter-spacing: 0.5px;">잔여일수</span>
+					<span style="float: right; letter-spacing: 0.5px;">10일</span>
 					</div>
 				</div>					
 			</div>
@@ -188,13 +283,16 @@ $(function(){
 	</div>
 		<div class="item">
 		<div class="desc-area commuteBox1">
-			<span class="dashFont title" style="font-size: 18px;"><i class="fa-solid fa-inbox"></i>&nbsp;&nbsp;전자결재</span>
-
-			<div style="margin-top: 30px;">
+			<div class="title-di">
+			<span class="dashFont" style="font-size: 18px; text-align: left; float: left;"><i class="fa-solid fa-inbox"></i>&nbsp;&nbsp;전자결재</span> 
+			<span style="text-align: right; float: right;"><i class="fa-solid fa-bars-staggered"></i></span>
+			</div>
+			<div class="dash-list-item" style="border-top: 1px solid silver;">
 				<c:forEach var="appro" items="${approvalList}" varStatus="status">
-					<div class="list-item">
-						<div class="dashFont">${appro.doc_name}</div>
-						<div class="minibox">결재단계 ${appro.approval_status==1?'진행중':''} 처리기한 ${appro.draft_deadline} 기안자 ${appro.emp_name}</div>
+					<div class="dash-list">
+						<span>${appro.doc_name}</span>&nbsp;
+						<button class="appro-status-btn">${appro.approval_status==1?'진행중':''}</button>
+						<div class="minibox"> 기안자 ${appro.emp_name} | 처리기한 ${appro.draft_deadline} </div>
 					</div>
 				</c:forEach>
 			</div>
@@ -202,13 +300,16 @@ $(function(){
 	</div>
 	<div class="item">
 		<div class="desc-area commuteBox1">
-			<span class="dashFont title" style="font-size: 18px;"><i class="fa-solid fa-paper-plane"></i>&nbsp;&nbsp;업무요청 수신함</span>
-
-			<div style="margin-top: 30px;">
+			<div class="title-di">
+			<span class="dashFont" style="font-size: 18px; text-align: left; float: left;"><i class="fa-solid fa-paper-plane"></i>&nbsp;&nbsp;업무요청 수신함</span>
+			<span style="text-align: right; float: right;"><i class="fa-solid fa-bars-staggered"></i></span>
+			</div>
+			<div class="dash-list-item" style="border-top: 1px solid silver;">
 				<c:forEach var="listTask" items="${listTask}" varStatus="status">
-					<div class="list-item">
-						<div class="dashFont">${listTask.task_name}</div>
-						<div class="minibox"> 업무요청자 ${listTask.emp_name} 업무마감날짜 ${listTask.task_end_date}</div>
+					<div class="dash-list">
+						<span>${listTask.task_name}</span>&nbsp;
+						<button class="task-dept-btn">${listTask.dept_name}</button>
+						<div class="minibox"> 요청자 ${listTask.emp_name} | 마감기한 ${listTask.task_end_date}</div>
 					</div>
 				</c:forEach>
 			</div>
@@ -217,13 +318,16 @@ $(function(){
 
 	<div class="item">
 		<div class="desc-area commuteBox1">
-			<span class="dashFont title" style="font-size: 18px;"><i class="fa-solid fa-bullhorn"></i>&nbsp;&nbsp;사내 공지사항</span>
-
-			<div style="margin-top: 30px;">
+			<div class="title-di">
+			<span class="dashFont" style="font-size: 18px; text-align: left; float: left;"><i class="fa-solid fa-bullhorn"></i>&nbsp;&nbsp;사내 공지사항</span>
+			<span style="text-align: right; float: right;"><i class="fa-solid fa-bars-staggered"></i></span>
+			</div>
+			<div class="dash-list-item" style="border-top: 1px solid silver;">
 				<c:forEach var="noti" items="${notiList}" varStatus="status">
-					<div class="list-item">
-						<div class="dashFont"><a></a> ${noti.noti_title}</div>
-						<div class="minibox">작성일 ${noti.noti_regdate} 조회수 ${noti.noti_hitcount} </div>
+					<div class="dash-list">
+						<span>${noti.noti_title}</span>&nbsp;
+						<button class="noti-list-btn">NEW</button>
+						<div class="minibox">작성자 ${noti.emp_name} | 작성일 ${noti.noti_regdate} </div>
 					</div>
 				</c:forEach>
 			</div>
@@ -232,13 +336,16 @@ $(function(){
 	
 	<div class="item">
 		<div class="desc-area commuteBox1">
-			<span class="dashFont title" style="font-size: 18px;"><i class="fa-solid fa-clipboard-list"></i>&nbsp;&nbsp;${sessionScope.member.dept_name} 공지사항</span>
-
-			<div style="margin-top: 30px;">
+			<div class="title-di">
+			<span class="dashFont" style="font-size: 18px; text-align: left; float: left;"><i class="fa-solid fa-clipboard-list"></i>&nbsp;&nbsp;${sessionScope.member.dept_name} 공지사항</span>
+			<span style="dtext-align: right; float: right;"><i class="fa-solid fa-bars-staggered"></i></span>
+			</div>
+			<div class="dash-list-item" style="border-top: 1px solid silver;">
 				<c:forEach var="deptnoti" items="${deptnotiList}" varStatus="status">
-					<div class="list-item">
-						<div class="dashFont"><a></a> ${deptnoti.noti_title}</div>
-						<div class="minibox">작성일 ${deptnoti.noti_regdate} 조회수 ${deptnoti.noti_hitcount} </div>
+					<div class="dash-list">
+						<span>${deptnoti.noti_title}</span>&nbsp;
+						<button class="noti-list-btn">NEW</button>
+						<div class="minibox">작성자 ${deptnoti.emp_name} | 작성일 ${deptnoti.noti_regdate} </div>
 					</div>
 				</c:forEach>
 			</div>
