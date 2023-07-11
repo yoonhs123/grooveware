@@ -4,61 +4,181 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <style>
-.modal {
-	display: none;
-	position: fixed;
-	z-index: 1;
-	left: 0;
-	top: 0;
-	width: 100%;
-	height: 100%;
-	overflow: auto;
-	background-color: rgba(0, 0, 0, 0.5);
+   /* 모달 스타일 */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 999999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    .modal .modal-content {
+      background-color: #f2f2f2;
+      margin: 10% auto;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      width: 30%;
+      max-height: 80%;
+      overflow-y: auto;
+    }
+
+    .modal .close {
+      color: #243A73;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .modal .close:hover,
+    .modal .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    /* 테이블 스타일 */
+    .modal table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .modal th, .modal td {
+      text-align: left;
+    }
+
+    .modal th {
+      background-color: #243A73;
+      color: white;
+    }
+
+    .modal li:nth-child(odd) {
+      background-color: #dfe2eb;
+    }
+    
+    .modal td:first-child {
+    	width: 1%;
+    }
+    
+    .modal th:last-child {
+    	text-align: center;
+    }
+    
+    .modal td:last-child {
+    	text-align: center;
+    }
+    
+    .dialog-emp-list ul {
+		text-align: left;    
+    }
+
+
+     /* Select 박스 스타일 */
+    .modal select {
+      padding: 5px;
+      font-size: 14px;
+      border-radius: 4px;
+      border: 1px solid #ddd;
+      background-color: #fff;
+      color: #333;
+      outline: none;
+    }
+
+    .modal select option {
+      padding: 5px;
+    }
+    
+     .modal-footer {
+    text-align: center;
+    margin-top: 20px;
+    }
+
+     .modal-footer button {
+    padding: 10px 20px;
+    font-size: 14px;
+    border-radius: 4px;
+    border: none;
+    background-color: #243A73;
+    color: white;
+    cursor: pointer;
+   }
+
+  .btn_emp_find {
+    margin-top: 10px;
+  }
+
+  .emp-list {
+    height: 150px;
+    border: 1px solid black;
+    overflow-y: auto;
+    padding: 10px;
+  }
+
+  .emp-list ul {
+    padding: 0;
+    list-style: none;
+  }
+
+.modal .modal-content {
+  background-color: #f2f2f2;
+  margin: 10% auto;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 30%;
+  max-height: 80%;
+  overflow-y: auto;
 }
 
-.modal-content {
-	background-color: #fefefe;
-	margin: 15% 50%;
-	padding: 20px;
-	border: 1px solid #888;
-	width: 30%;
-	border-radius: 4px
+.modal th {
+  background-color: #243A73;
+  color: white;
 }
 
-.close {
-	color: #aaa;
-	float: right;
-	font-size: 28px;
-	font-weight: bold;
+.modal tr:nth-child(even) {
+  background-color: #dfe2eb;
 }
 
-.close:hover, .close:focus {
-	color: black;
-	text-decoration: none;
-	cursor: pointer;
+.modal td {
+  text-align: left;
+  color: #333; /* 수정: 글씨 색상 연하게 설정 */
 }
 
-.winnerList-container {
-	display: grid;
-	grid-gap: 5px;
-	grid-template-columns: repeat(4, auto);
+.modal .modal-body {
+  margin-bottom: 20px; /* 수정: <h3>와 modal-body 사이 거리 벌리기 */
 }
 
-.winnerList-container .item {
-	border: 1px solid #333;
-	border-radius: 3px;
-	padding: 5px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
+.modal table {
+  width: 100%;
+  border-collapse: collapse;
 }
+
+.btnReceiverFind{
+    height: 30px;
+    margin-left: 5px;
+}
+
+.dialog-receiver-list{
+	text-align: left;   
+	height: 150px; 
+	border: 1px solid #8b8b8b; 
+	background:white; 
+	border-radius: 4px;
+	overflow-y: scroll;
+}
+
 
 .right-contentbody2 {
 	width: 75%;
 	position: absolute;
 	left: 28%;
 	padding: 3% 8%;
-	background: #f3f3f34a;
+	background: #dbe7f724;
 }
 
 .myForm .flexBox {
@@ -93,7 +213,6 @@
 	width: 100%;
 	height: 100%;
 }
-
 </style>
 
 
@@ -113,9 +232,11 @@
             <li>
                 <a>문서함</a>
                 <a href="${pageContext.request.contextPath}/approval/list?doc_status=1">&nbsp;내 문서</a>
-                <a href="#">&nbsp;부서 문서</a>
+                <c:if test="${sessionScope.member.pos_no== 2}">
+                <a href="${pageContext.request.contextPath}/approval/deptList">&nbsp;부서 문서</a>
+                </c:if>
                 <a href="${pageContext.request.contextPath}/approval/list?doc_status=0">&nbsp;임시보관 문서</a>
-                <a href="${pageContext.request.contextPath}/approval/listImportant?important=1">&nbsp;중요 문서</a>
+                <a href="${pageContext.request.contextPath}/approval/importantList?important=1">&nbsp;중요 문서</a>
             <li>
             
             
@@ -167,16 +288,6 @@
 								<h2>
 									<span>|</span> 기안서
 								</h2>
-							</td>
-							<td class="title" style="padding-left: 30px;">
-										
-
-								<button type="button" class="btn2"
-									onclick="location.href='${pageContext.request.contextPath}/approval/list';">${mode=='update'?'수정취소':'등록취소'}</button>
-								<button type="button" class="btn2"
-									onclick="submitContents(this.form, 0);">임시저장</button>
-								<button type="button" class="btn2"
-									onclick="submitContents(this.form, 1);">제출</button>
 							</td>
 						</tr>
 					</table>
@@ -416,37 +527,32 @@
 <div id="myDialogModal" class="modal">
 	<div class="modal-content">
 		<form name="nameForm" method="post">
-			<div style="border-bottom: 1px solid #ced4da; padding-bottom: 10px;">
-				<button type="button" class="btn btnClose" style="float: right;">
+			<div style="padding-bottom: 10px;">
 					<span class="close">&times;</span>
-				</button>
-				<h3 style="margin-bottom: 20px;">이름 검색</h3>
-				<input type="text" name="keyword" id="keyword"
-					placeholder="이름을 입력하세요" class="form-control" style="height: 26px;">
+				<h3 style="margin-bottom: 20px; color: #243A73;">사원 검색</h3>
+				<input type="text" name="keyword" id="keyword" class="apInput"
+					placeholder="사원을 검색하세요" class="form-control" style="height: 30px; padding: 5px;">
 				<button type="button" class="btn btnReceiverFind">검색</button>
 			</div>
-			<table class="table table-border table-form">
+			<table>
 				<tbody>
 					<tr>
 						<td height="50%">
-							<div
-								style="height: 150px; border: 1px solid black; border-radius: 4px"
-								class="dialog-receiver-list">
+							<div class="dialog-receiver-list">
 								<ul></ul>
 							</div>
 						</td>
 					</tr>
-					<tr>
-						<td align="right">
-							<button type="button" class="btn btnAdd">추가</button>
-							<button type="button" class="btn btnClose">닫기</button>
-						</td>
-					</tr>
 				</tbody>
 			</table>
+				<div class="modal-footer">
+					<button type="button" class="btn btnAdd">추가</button>
+				</div>
 		</form>
 	</div>
 </div>
+
+
 
 <script type="text/javascript">
 	<c:if test="${mode=='update'}">
@@ -553,10 +659,10 @@
 	        };
 	        ajaxFun(url, "get", query, "json", fn);
 	    });
-
 	    function searchListMember(data) {
-	        console.log(data)
+	        console.log(data);
 	        let s;
+	        let radioGroupName = "memberRadio"; // 그룹 이름 
 	        for (let i = 0; i < data.listMember.length; i++) {
 	            let emp_name = data.listMember[i].emp_name;
 	            let emp_no = data.listMember[i].emp_no;
@@ -564,24 +670,20 @@
 	            let dept_name = data.listMember[i].dept_name;
 	            let emp_picture = data.listMember[i].emp_picture;
 
-	            s = "<li style='padding: 5px 0px 3px 10px'><input type='checkbox' style='margin-right: 5px;' class='form-check-input' data-emp_no='" + emp_no + "' data-emp_picture='" + emp_picture + "' title='" + emp_no + "'><span>" + emp_name + " " + pos_name + "<span>" + " (" + "</span>";
+	            s = "<li style='padding: 5px 0px 3px 10px'><input type='radio' style='margin-right: 5px;' class='form-check-input' data-emp_no='" + emp_no + "' data-emp_picture='" + emp_picture + "' title='" + emp_no + "' name='" + radioGroupName + "'><span>" + emp_name + " " + pos_name + "<span>" + " (" + "</span>";
 	            s += "<span>" + dept_name + ")" + "</span></li>";
 	            $(".dialog-receiver-list ul").append(s);
 	        }
 	    }
-
 	    // 대화상자-결재자 추가 버튼
 	    $(".btnAdd").click(function() {
-	        let len1 = $(".dialog-receiver-list ul input[type=checkbox]:checked").length;
+	        let len1 = $(".dialog-receiver-list ul input[type=radio]:checked").length;
 	        let len2 = $("#forms-receiver-list input[name=emp_nos]").length;
 	        if (len1 === 0) {
-	            alert("추가할 사람을 먼저 선택하세요.");
+	            alert("결재자를 선택하세요.");
 	            return false;
 	        }
-	        if (len1 >= 2) {
-	            alert("결재자는 한 명만 선택하세요.");
-	            return false;
-	        }
+
 
 	        if (len1 + len2 >= 4) {
 	            alert("결재자는 최대 3명까지만 가능합니다.");
@@ -591,7 +693,7 @@
 
 
 	        let b = false;
-	        $(".dialog-receiver-list ul input[type=checkbox]:checked").each(function() {
+	        $(".dialog-receiver-list ul input[type=radio]:checked").each(function() {
 	            let emp_no = $(this).attr("data-emp_no");
 	            let emp_picture = $(this).attr("data-emp_picture") != "" ? $(this).attr("data-emp_picture") : "user.png";
 	            let emp_name = $(this).next("span").text();
@@ -605,16 +707,29 @@
 	                    return false;
 	                }
 	            });
-
+ 
 	            if (!b) {
-	                let s = "";
-	                s += "<span class='approval-member'>";
-	                s += "<div class='img_container'><img src='${pageContext.request.contextPath}/resources/images/" + emp_picture + "' style='width: 100%; height: 100%;'></div>";
-	                s += "<span style='font-weight: normal; word-break: keep-all;'>" + emp_name + "</span></span>";
-	                s += "<input type='hidden' name='emp_nos' value='" + emp_no + "'>";
+			    	  let s = "";
+			    	  if (len2 === 0) {
+			    	  s += "<span class='approval-member'>";
+			    	    // 처음 추가 버튼을 눌렀을 때
+			    	    s += "<div class='img_container'><img src='${pageContext.request.contextPath}/resources/images/" + emp_picture + "' style='width: 100%; height: 100%;'></div>";
+			    	    s += "<span style='font-weight: normal; word-break: keep-all;'>" + emp_name + "</span></span>";
+			    	  } else {
+			    	    // 다음 추가 버튼을 눌렀을 때
+			    	    s += "<span style='float: left;'><i class='fa-solid fa-chevron-right fa-xl' style='margin-top: 30px;'></i></span>";
+				    	s += "<span class='approval-member' style=' margin-left: 30px;'>";
 
-	                $("#forms-receiver-list").append(s);
-	            }
+			    	    s += "<div class='img_container'><img src='${pageContext.request.contextPath}/resources/images/" + emp_picture + "' style='width: 100%; height: 100%;'></div>";
+			    	    s += "<span style='font-weight: normal; word-break: keep-all;'>" + emp_name + "</span></span>";
+			    	  }
+			    	  s += "<input type='hidden' name='emp_nos' value='" + emp_no + "'>";
+
+			    	  $("#forms-receiver-list").append(s);
+			    	  
+			    	  console.log(emp_picture);
+			    	  
+			    }	   
 	        });
 
 
@@ -622,24 +737,27 @@
 	        $("#myDialogModal").hide();
 	    });
 
-	    $(".btnClose").click(function() {
+	    $(".close").click(function() {
 	        $("#myDialogModal").hide();
 	    });
 
 	    var mode = "${mode}"; 
-        if (mode === "write") {
-        	
-		    $("body").on("click", ".approval-member", function() {
-		        if (!confirm("해당 사원을 제외 하시겠습니까?")) {
-		            return false;
-		        }
-	 
-		        $(this).remove();
-	 
-		    });
-        }
-
-        	
+	    if (mode === "write") {
+	        $("body").on("click", ".approval-member", function() {
+	            if (!confirm("해당 사원을 제외 하시겠습니까?")) {
+	                return false;
+	            }
+	         
+	            // 해당 사원 요소와 관련된 아이콘 요소를 모두 삭제
+	            $(this).prevAll(".fa-chevron-right").remove();
+	            $(this).next(".fa-chevron-right").remove();
+	            $(this).prev("span").remove(); // 사원 요소 앞의 <span> 태그도 함께 삭제
+	            $(this).nextAll("input[name='emp_nos']").remove(); // 관련된 hidden 요소 삭제
+	            $(this).remove();
+	        });
+	    }
+	    
+	    
 	  
 	});
 </script>

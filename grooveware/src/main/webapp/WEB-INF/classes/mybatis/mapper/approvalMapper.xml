@@ -75,6 +75,32 @@
 	  </where>
 	</select>
 	
+	<!-- deptList 글 개수 -->
+	<select id="deptDataCount" parameterType="map" resultType="Integer">
+	SELECT COUNT(*)
+	FROM doc d
+		LEFT OUTER JOIN draft dr ON d.doc_no = dr.doc_no
+		LEFT OUTER JOIN (
+		    SELECT x.emp_no, x.history_no, x.dept_no
+		    FROM emp_history x
+		    LEFT JOIN emp_history y ON x.emp_no = y.emp_no AND x.history_no &lt; y.history_no
+		    WHERE y.emp_no IS NULL
+		) b ON d.emp_no = b.emp_no
+		LEFT OUTER JOIN dept c ON b.dept_no = c.dept_no
+		LEFT OUTER JOIN emp e ON b.emp_no = e.emp_no
+		LEFT OUTER JOIN approval a ON d.doc_no = a.doc_no
+		LEFT OUTER JOIN dept c2 ON a.emp_no = c2.emp_no
+		LEFT OUTER JOIN emp d2 ON a.emp_no = d2.emp_no
+	<where>
+		<if test="keyword != null and keyword != ''">
+	      <include refid="where-list"/>
+	    </if>	  
+	    <if test="deptName != null and deptName != ''">
+            doc_status &gt; 0  AND (INSTR(c.dept_name, #{deptName}) &gt; 0 OR INSTR(c2.dept_name, #{deptName}) &gt; 0)
+        </if>
+	  </where>
+	</select>
+	
 	<!-- doc, draft 테이블 리스트 -->
 	<select id="listDoc" parameterType="map" resultType="com.sp.grooveware.approval.Approval">
 	  SELECT d.doc_no, doc_name, TO_CHAR(draft_date, 'YYYY-MM-DD') AS draft_date, TO_CHAR(draft_deadline, 'YYYY-MM-DD') AS draft_deadline, approval_step, TO_CHAR(approval_finaldate, 'YYYY-MM-DD') AS approval_finaldate,
@@ -102,8 +128,8 @@
 	  OFFSET #{offset} ROWS FETCH FIRST #{size} ROWS ONLY
 	</select>
 	
-	<!--listImportant-->
-	<select id="listImportant" parameterType="map" resultType="com.sp.grooveware.approval.Approval">
+	<!--importantList-->
+	<select id="importantList" parameterType="map" resultType="com.sp.grooveware.approval.Approval">
 	  SELECT d.doc_no, doc_name, TO_CHAR(draft_date, 'YYYY-MM-DD') AS draft_date, TO_CHAR(draft_deadline, 'YYYY-MM-DD') AS draft_deadline, approval_step, TO_CHAR(approval_finaldate, 'YYYY-MM-DD') AS approval_finaldate,
 	    TO_CHAR(submit_date, 'YYYY-MM-DD') AS submit_date, doc_status, urgent, important, is_visible, emp_no,
 	    dr.draft_category, dr.draft_content
@@ -124,7 +150,43 @@
 	  OFFSET #{offset} ROWS FETCH FIRST #{size} ROWS ONLY
 	</select>
 	
-
+	<!--deptList-->
+	<select id="deptList" parameterType="map" resultType="com.sp.grooveware.approval.Approval">
+	SELECT d.doc_no, d.doc_name, e.emp_name AS doc_emp_name, c.dept_name AS doc_dept_name, d.emp_no AS doc_emp_no,
+	       TO_CHAR(d.draft_date, 'YYYY-MM-DD') AS draft_date,
+	       d.approval_step, d.approval_finaldate, d.submit_date, d.doc_status, d.urgent, d.important,
+	       dr.draft_category,
+	       MAX(b.emp_no) AS approval_dept_emp_no, MAX(c2.dept_name) AS approval_dept_name, MAX(d2.emp_name) AS approval_emp_name,
+	       NULL AS approval_pos_name
+	FROM doc d
+	LEFT OUTER JOIN draft dr ON d.doc_no = dr.doc_no
+	LEFT OUTER JOIN (
+	    SELECT x.emp_no, x.history_no, x.dept_no
+	    FROM emp_history x
+	    LEFT JOIN emp_history y ON x.emp_no = y.emp_no AND x.history_no &lt; y.history_no
+	    WHERE y.emp_no IS NULL
+	) b ON d.emp_no = b.emp_no
+	LEFT OUTER JOIN dept c ON b.dept_no = c.dept_no
+	LEFT OUTER JOIN emp e ON b.emp_no = e.emp_no
+	LEFT OUTER JOIN approval a ON d.doc_no = a.doc_no
+	LEFT OUTER JOIN dept c2 ON a.emp_no = c2.emp_no
+	LEFT OUTER JOIN emp d2 ON a.emp_no = d2.emp_no
+	  <where>
+		<if test="keyword != null and keyword != ''">
+	      <include refid="where-list"/>
+	    </if>	  
+	    <if test="deptName != null and deptName != ''">
+            doc_status &gt; 0  AND (INSTR(c.dept_name, #{deptName}) &gt; 0 OR INSTR(c2.dept_name, #{deptName}) &gt; 0)
+        </if>
+	  </where>
+	GROUP BY d.doc_no, d.doc_name, e.emp_name, c.dept_name, d.emp_no, d.draft_date, d.draft_deadline,
+	         d.approval_step, d.approval_finaldate, d.submit_date, d.doc_status, d.urgent, d.important, d.is_visible,
+	         dr.draft_category
+	         
+	order by doc_no DESC	  
+	OFFSET #{offset} ROWS FETCH FIRST #{size} ROWS ONLY
+	</select>
+	
 	<!-- doc, draft 테이블 글보기 -->
 	<select id="readDoc" parameterType="Long" resultType="com.sp.grooveware.approval.Approval">
 

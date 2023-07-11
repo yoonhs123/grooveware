@@ -9,6 +9,13 @@
 .table-border tbody > tr { border-bottom: 1px solid #ced4da; }
 .table-border tfoot > tr { border-bottom: 1px solid #ced4da; }
 .td-border td { border: 1px solid #ced4da; }
+.table-list thead > tr { background: #f2f2f2; }
+.table-border tbody > tr { border-bottom: 1px solid #ced4da; }
+
+.table th {
+  font-weight: bold;
+  background-color: #f2f2f2;
+}
 
 /* board */
 .board1 { width: 100%; margin-bottom: 50px; }
@@ -31,6 +38,14 @@
 	font-size: 16px;
 	font-weight: bold;
 	padding: 13px 0px 0px 10px;
+	
+}
+
+.title-text {
+	font-size: 16px;
+	font-weight: bold;
+	padding: 13px 0px 0px 0px;
+	width: 15%;
 	
 }
 
@@ -103,7 +118,7 @@
 .line_container {
 	width: 100%;
 	height: 150px;
-	border: 1px solid #c1c1c1;
+	border: 1px solid #b1b1b1;
 	border-radius: 5px;
 	padding: 12px 60px;
 	background-color: white;
@@ -112,7 +127,7 @@
 .line_container2 {
 	width: 100%;
 	min-height: 800px;
-	border: 1px solid #c1c1c1;
+	border: 1px solid #b1b1b1;
 	border-radius: 5px;
 	background-color: white;
 	padding: 40px 60px;
@@ -121,7 +136,7 @@
 .line_container3 {
 	width: 100%;
 	height: 150px;
-	border: 1px solid #c1c1c1;
+	border: 1px solid #b1b1b1;
 	border-radius: 5px;
 	background-color: white;
 	padding: 40px 60px;
@@ -130,7 +145,7 @@
 .file_container {
 	width: 100%;
 	height: 250px;
-	border: 1px solid #c1c1c1;
+	border: 1px solid #b1b1b1;
 	border-radius: 5px;
 	padding: 12px 60px;
 	background-color: white;
@@ -139,7 +154,7 @@
 .file_container2 {
 	width: 100%;
 	height: 150px;
-	border: 1px solid #c1c1c1;
+	border: 1px solid #b1b1b1;
 	border-radius: 5px;
 	padding: 12px 30px;
 	background-color: white;
@@ -152,6 +167,60 @@
 	border-radius: 5px;
 	padding: 12px 60px;
 	background-color: white;
+}
+
+.line_container_in {
+	width: 100%;
+	height: 150px;
+	border: 1px solid #b1b1b1;
+	border-radius: 5px;
+	padding: 12px 60px;
+	background-color: #dbe7f724;
+}
+
+.line_container2_in {
+	width: 100%;
+	min-height: 800px;
+	border: 1px solid #b1b1b1;
+	border-radius: 5px;
+	background-color: #dbe7f724;
+	padding: 40px 60px;
+}
+
+.line_container3_in {
+	width: 100%;
+	height: 150px;
+	border: 1px solid #b1b1b1;
+	border-radius: 5px;
+	background-color: #dbe7f724;
+	padding: 40px 60px;
+}
+
+.file_container_in {
+	width: 100%;
+	height: 250px;
+	border: 1px solid #b1b1b1;
+	border-radius: 5px;
+	padding: 12px 60px;
+	background-color: #dbe7f724;
+}
+
+.file_container2_in {
+	width: 100%;
+	height: 150px;
+	border: 1px solid #b1b1b1;
+	border-radius: 5px;
+	padding: 12px 30px;
+	background-color: #dbe7f724;
+}
+
+.file_container3_in {
+	width: 100%;
+	height: 150px;
+	border: 1px solid #c1c1c1;
+	border-radius: 5px;
+	padding: 12px 60px;
+	background-color: #dbe7f724;
 }
 
 .myForm input {
@@ -179,6 +248,7 @@
  
  
  .ap_pBox > input{font-size: 15px;}
+ 
 .img_container {
 	background: #BDBDBD;
 	width: 49px;
@@ -204,8 +274,8 @@
 }
 .img_container4 {
 	background: #BDBDBD;
-	width: 40px;
-	height: 35px;
+	width: 49px;
+	height: 45px;
 	float: left;
 	border-radius: 70%;
 	overflow: hidden;
@@ -215,8 +285,7 @@
 .text_box3 {
 	float: left;
     margin-right: 55px;
-    padding-left: 10px;
-    width: 100px;
+    width: 110px;
     font-weight: normal;
 }
 
@@ -259,7 +328,7 @@
 
 .confirm {
 	display: flex;
-    justify-content: center;
+    justify-content: right;
 }
 
 
@@ -390,4 +459,12 @@
 .myForm label{	font-weight: bold; }
 .myForm span{	font-weight: bold; }
 
-.form-select{ height: 23px;}
+.form-select-ap{ height: 26px; width: 80px; margin-right: 10px; border-radius: 4px;}
+
+.apInput{
+    height: 30px;
+    margin-right: 5px;
+    border-radius: 5px;
+    border: 1px solid #8b8b8b;
+    outline: none;
+}

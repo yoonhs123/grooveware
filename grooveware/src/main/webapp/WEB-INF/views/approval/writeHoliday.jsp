@@ -357,14 +357,6 @@ function searchList() {
 									<span>|</span> 연차휴가
 								</h2>
 							</td>
-							<td class="title" style="padding-left: 30px;">
-								<button type="button" class="btn2"
-									onclick="location.href='${pageContext.request.contextPath}/approval/list';">${mode=='update'?'수정취소':'등록취소'}</button>
-								<button type="button" class="btn2"
-									onclick="submitContents(this.form, 0);">임시저장</button>
-								<button type="button" class="btn2"
-									onclick="submitContents(this.form, 1);">제출</button>
-							</td>
 						</tr>
 					</table>
 				</div>

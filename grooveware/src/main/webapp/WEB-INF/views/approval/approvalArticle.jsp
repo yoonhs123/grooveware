@@ -53,6 +53,18 @@
 width: 100%;
 height: 100%;
 }
+
+
+  .apBtn {
+  padding: 10px 20px;
+    font-size: 14px;
+    border-radius: 4px;
+    border: none;
+    background-color: #243A73;
+    color: white;
+    cursor: pointer;
+  }
+
 </style>
 
 
@@ -138,9 +150,11 @@ $(function() {
             <li>
                 <a>문서함</a>
                 <a href="${pageContext.request.contextPath}/approval/list?doc_status=1">&nbsp;내 문서</a>
-                <a href="#">&nbsp;부서 문서</a>
+                <c:if test="${sessionScope.member.pos_no== 2}">
+                <a href="${pageContext.request.contextPath}/approval/deptList">&nbsp;부서 문서</a>
+                </c:if>
                 <a href="${pageContext.request.contextPath}/approval/list?doc_status=0">&nbsp;임시보관 문서</a>
-                <a href="${pageContext.request.contextPath}/approval/listImportant?important=1">&nbsp;중요 문서</a>
+                <a href="${pageContext.request.contextPath}/approval/importantList?important=1">&nbsp;중요 문서</a>
             <li>
             
             
@@ -167,20 +181,13 @@ $(function() {
 								<span>|</span> 기안서
 							</h2>
 						</td>
-						<td class="title">
-							<c:if
-								test="${pre_state==2 && current_state !=2}">
-								<button type="button" class="btn2"
-									onclick="submitContents(${dto.doc_no}, 2);">결재</button>
-								<button type="button" class="btn2 btnApprovalDialog">반려</button>
-							</c:if></td>
 					</tr>
 				</table>
 				<input type="hidden" name="approval_status"
 					value="${dto.approval_status }">
 
 			</div>
-			<div class="line_container" style="height: 200px;">
+			<div class="line_container_in" style="height: 200px;">
 				<div class="table" style="margin-bottom: 15px;">
 					<div>
 						<div class="title" style="float: left; width: 100%;">
@@ -188,33 +195,30 @@ $(function() {
 						</div>
 
 					</div>
-					<div style="width: 100%; float: left; padding-left: 20px;">
+					<div style="width: 100%; float: left; ">
 						<c:forEach var="vo" items="${listApproval}" varStatus="status">
-							<div class="img_container" style="color: #5c5c5c;${vo.approval_status==2 ? 'border: 3px solid #0232f2;' : ''}">
-								<img class="imgSize"
-									src="${pageContext.request.contextPath}/resources/images/bg.png"><i class="fa-solid fa-circle-check"></i>
-							</div>
-
-							<c:if test="${!status.last}">
-								<div class="img_container3">
-								<i class="fa-solid fa-chevron-right fa-xl" style="color: #5c5c5c;${vo.approval_status==2 ? 'color: #0232f2;' : ''}"></i>
-								</div>
-							</c:if>
-							<c:if test="${vo.emp_no == sessionScope.member.emp_no}">
-
-								<input type="hidden" name="approval_status_id"
-									value="${vo.approval_status_id}">
-								<input type="hidden" name="approval_total_step"
-									value="${listApproval.size()}">
-							</c:if>
+						    <c:set var="imgPath" value="${pageContext.request.contextPath}/resources/images/${vo.emp_picture}" />
+						    <div class="img_container" style="color: #5c5c5c; ${vo.approval_status==2 ? 'border: 4px solid #2196F3;' : ''}">
+						        <img class="imgSize" src="${imgPath}">
+						    </div>
+						
+						    <c:if test="${!status.last}">
+						        <div class="img_container3">
+						            <i class="fa-solid fa-chevron-right fa-xl" style="color: #5c5c5c; ${vo.approval_status==2 ? 'color: #2196F3;' : ''}"></i>
+						        </div>
+						    </c:if>
+						    <c:if test="${vo.emp_no == sessionScope.member.emp_no}">
+						        <input type="hidden" name="approval_status_id" value="${vo.approval_status_id}">
+						        <input type="hidden" name="approval_total_step" value="${listApproval.size()}">
+						    </c:if>
 						</c:forEach>
 					</div>
 
-					<div
-						style="width: 100%; float: left; margin-left: 5px; text-align: center;">
+
+					<div style="width: 100%; float: left; ">
 						<c:forEach var="vo" items="${listApproval}">
-							<div class="text_box3">${vo.emp_name }
-								<span style="font-weight: normal;">&nbsp;${vo.pos_name }</span>
+							<div class="text_box3">${vo.emp_name }<span
+									style="font-weight: normal;">&nbsp;${vo.pos_name }</span>
 								<div>${vo.dept_name }</div>
 							</div>
 						</c:forEach>
@@ -226,7 +230,7 @@ $(function() {
 			</div>
 		</div>
 		<div class="board3">
-			<div class="line_container2">
+			<div class="line_container2_in">
 				<div>
 
 					<div>
@@ -329,18 +333,18 @@ $(function() {
 					<label>내용 </label>
 				</div>
 				<div
-					style="padding: 15px; height: 400px; width: 100%; border: 1px solid gray; margin-top: 50px; border-radius: 4px;">${dto.draft_content}</div>
+					style="padding: 15px; height: 400px; width: 100%; border: 1px solid gray; margin-top: 50px; border-radius: 4px; background: white;">${dto.draft_content}</div>
 			</div>
 		</div>
 		<div class="board1">
-			<div class="file_container">
+			<div class="file_container_in">
 				<div class="title3">
 					<span> 첨부파일</span>
 				</div>
 				<div class="">
 					<div class="table table-border table-form">
 						<div
-							style="padding: 15px; height: 150px; width: 100%; border: 1px solid gray; border-radius: 4px;">
+							style="padding: 15px; height: 150px; width: 100%; border: 1px solid #747474; border-radius: 4px; background: white;">
 							<c:forEach var="vo" items="${listFile}">
 								<div>
 									<a
@@ -355,9 +359,9 @@ $(function() {
 		</div>
 		<c:if test="${ current_state == 3}">
 			<div class="board1">
-				<div class="file_container">
+				<div class="file_container_in">
 					<div class="title3">
-						<span> 코멘트</span>
+						<span> 반려사유</span>
 					</div>
 					<div class="">
 						<div class="table table-border table-form">
@@ -374,12 +378,12 @@ $(function() {
 			</div>
 		</c:if>
 
-		<div class="board4 confirm">
+		<div class="confirm">
 			<c:if
 				test="${pre_state==2 && state.doc_status!=3 && state.doc_status!=4}">
-				<button type="button" class="btn2"
+				<button type="button" class="apBtn" style="margin-right: 20px;"
 					onclick="submitContents(${dto.doc_no}, 2);">결재</button>
-				<button type="button" class="btn2 btnApprovalDialog">반려</button>
+				<button type="button" class="apBtn btnApprovalDialog">반려</button>
 			</c:if>
 		</div>
 	</div>

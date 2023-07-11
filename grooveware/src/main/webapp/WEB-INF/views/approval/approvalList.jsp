@@ -6,30 +6,6 @@
  
 <style type="text/css">
  
-/* table */
-.table { width: 100%; border-spacing: 0; border-collapse: collapse; }
-.table th, .table td { padding-top: 10px; padding-bottom: 10px; }
-
-.table-border thead > tr { border-top: 2px solid #212529; border-bottom: 1px solid #ced4da;  }
-.table-border tbody > tr { border-bottom: 1px solid #ced4da; }
-.table-border tfoot > tr { border-bottom: 1px solid #ced4da; }
-.td-border td { border: 1px solid #ced4da; }
-
-/* board */
-
-.title { font-size: 20px; font-weight: bold; padding: 13px 0; }
-
-.table-list thead > tr { background: #f8f9fa; }
-.table-list th, .table-list td { text-align: center; }
-.table-list td:nth-child(5n+2) {  padding-left: 5px; }
-
-.table-list .num { width: 60px; color: #787878; }
-.table-list .subject { color: #787878; }
-.table-list .name { width: 100px; color: #787878; }
-.table-list .date { width: 100px; color: #787878; }
-.table-list .hit { width: 70px; color: #787878; }
-
- 
 .btn {
 	color: black;
 	border: 1px solid #999999;
@@ -41,14 +17,11 @@
 	line-height: 15px;
 	background-color: white;
 }
-input[type=text]{
-    width: 300px;
+ 
+input[type=text] {
+    width: 200px;
     height: 26px;
-    
 }
-
-.form-select{ height: 26px; margin-right: 10px; border-radius: 4px;}
-
 </style>
 
 <script type="text/javascript">
@@ -89,20 +62,22 @@ $(function() {
 		</li>  
         
             <li>
-                <a href="">문서함</a>
+                <a>문서함</a>
                 <a href="${pageContext.request.contextPath}/approval/list?doc_status=1">&nbsp;내 문서</a>
-                <a href="#">&nbsp;부서 문서</a>
+                <c:if test="${sessionScope.member.pos_no== 2}">
+                <a href="${pageContext.request.contextPath}/approval/deptList">&nbsp;부서 문서</a>
+                </c:if>
                 <a href="${pageContext.request.contextPath}/approval/list?doc_status=0">&nbsp;임시보관 문서</a>
-                <a href="#">&nbsp;중요 문서</a>
+                <a href="${pageContext.request.contextPath}/approval/importantList?important=1">&nbsp;중요 문서</a>
             <li>
             
             
             <li>
-                <a href="#">결재함</a>
-<a href="${pageContext.request.contextPath}/approval/approvalListByStatus/1">&nbsp;대기문서</a>
-<a href="${pageContext.request.contextPath}/approval/approvalListByStatus/2">&nbsp;진행중 문서</a>
-<a href="${pageContext.request.contextPath}/approval/approvalListByStatus/3">&nbsp;반려문서</a>
-<a href="${pageContext.request.contextPath}/approval/approvalListByStatus/4">&nbsp;완료문서</a>
+                <a>결재함</a>
+				<a href="${pageContext.request.contextPath}/approval/approvalListByStatus/1">&nbsp;대기문서</a>
+				<a href="${pageContext.request.contextPath}/approval/approvalListByStatus/2">&nbsp;진행중 문서</a>
+				<a href="${pageContext.request.contextPath}/approval/approvalListByStatus/3">&nbsp;반려문서</a>
+				<a href="${pageContext.request.contextPath}/approval/approvalListByStatus/4">&nbsp;완료문서</a>
             <li>
         </ul>
     </div>
@@ -112,8 +87,8 @@ $(function() {
 				<div class="title_container">
 				<table class="table" style="margin-bottom: 20px;">
 					<tr>
-						<td class="title" > 
-							<h3><span>|</span> 
+						<td class="title-text" > 
+							<h2><span><i class="fa-solid fa-file-signature"></i></span> 
 								<c:choose>
 								  <c:when test="${doc_status == 0}">
 								    임시보관
@@ -136,19 +111,19 @@ $(function() {
 							  
 								   						  
 								</c:choose>
-							</h3> 
+							</h2> 
 						</td>
 						<td align="right">
 							<form name="searchForm" action="${pageContext.request.contextPath}/ " method="post">
-								<select name="condition" class="form-select">
+								<select name="condition" class="form-select-ap">
 									<option value="all"  ${condition == "all" ? "selected='selected'" : ""} >제목+내용</option>
 									<option value="name"  ${condition == "name" ? "selected='selected'" : ""} >기안자</option>
 									<option value="reg_date"  ${condition == "reg_date" ? "selected='selected'" : ""} >등록일</option>
 									<option value="subject"  ${condition == "subject" ? "selected='selected'" : ""} >제목</option>
 									<option value="content"  ${condition == "content" ? "selected='selected'" : ""} >내용</option>
 								</select>
-								<input type="text" name="keyword" value="${keyword}" class="form-control">
-								<button type="button" class="btn" onclick="searchList();">검색</button>
+								<input type="text" name="keyword" value="${keyword}" class="form-control apInput">
+								<button type="button" class="btn" onclick="searchList();"  style="margin-left: 3px;">검색</button>
 								<input type="hidden" name="condition" value="${condition}">
 								<input type="hidden" name="keyword" value="${keyword}">			
 								<input type="hidden" name="size" value="${size}">
@@ -158,7 +133,8 @@ $(function() {
 					</tr>
 				</table>
 			 </div>
-			<div>
+			<div> 
+
 			<table class="table table-border table-list" >
 				<thead >
 					<tr>

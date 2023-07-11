@@ -93,9 +93,11 @@ height: 100%;
             <li>
                 <a>문서함</a>
                 <a href="${pageContext.request.contextPath}/approval/list?doc_status=1">&nbsp;내 문서</a>
-                <a href="#">&nbsp;부서 문서</a>
+                <c:if test="${sessionScope.member.pos_no== 2}">
+                <a href="${pageContext.request.contextPath}/approval/deptList">&nbsp;부서 문서</a>
+                </c:if>
                 <a href="${pageContext.request.contextPath}/approval/list?doc_status=0">&nbsp;임시보관 문서</a>
-                <a href="${pageContext.request.contextPath}/approval/listImportant?important=1">&nbsp;중요 문서</a>
+                <a href="${pageContext.request.contextPath}/approval/importantList?important=1">&nbsp;중요 문서</a>
             <li>
             
             
@@ -123,19 +125,10 @@ height: 100%;
 								<span>|</span> 기안서
 							</h2>
 						</td>
-						<td class="title"><c:if test="${dto.doc_status == 0 }">
-								<button type="button" class="btn2"
-									onclick="javascript:location.href='${pageContext.request.contextPath}/approval/update?doc_no=${dto.doc_no}&page=${page}';">수정</button>
-								<button type="button" class="btn2" onclick="deleteOk(); ">삭제</button>
-
-							</c:if>
-							<button type="button" class="btn2"
-								onclick="location.href='${pageContext.request.contextPath}/approval/list?doc_status=${doc_status}&${query}';">목록</button>
-						</td>
 					</tr>
 				</table>
 			</div>
-			<div class="line_container" style="height: 200px;">
+			<div class="line_container_in" style="height: 200px;">
 				<div class="table" style="margin-bottom: 15px;">
 					<div>
 						<div class="title" style="float: left; width: 100%;">
@@ -145,23 +138,20 @@ height: 100%;
 					</div>
 					<div style="width: 100%; float: left; ">
 						<c:forEach var="vo" items="${listApproval}" varStatus="status">
-							<div class="img_container" style="color: #5c5c5c; ${vo.approval_status==2 ? 'border: 3px solid #0232f2;' : ''}">
-								<img class="imgSize"
-									src="${pageContext.request.contextPath}/resources/images/user.png">
-							</div>
-
-							<c:if test="${!status.last}">
-								<div class="img_container3">
-									<i class="fa-solid fa-chevron-right fa-xl"  style="color: #5c5c5c; ${vo.approval_status==2 ? 'color: #0232f2;' : ''}"></i>
-								</div>
-							</c:if>
-							<c:if test="${vo.emp_no == sessionScope.member.emp_no}">
-
-								<input type="hidden" name="approval_status_id"
-									value="${vo.approval_status_id}">
-								<input type="hidden" name="approval_total_step"
-									value="${listApproval.size()}">
-							</c:if>
+						    <c:set var="imgPath" value="${pageContext.request.contextPath}/resources/images/${vo.emp_picture}" />
+						    <div class="img_container" style="color: #5c5c5c; ${vo.approval_status==2 ? 'border: 4px solid #2196F3;' : ''}">
+						        <img class="imgSize" src="${imgPath}">
+						    </div>
+						
+						    <c:if test="${!status.last}">
+						        <div class="img_container3">
+						            <i class="fa-solid fa-chevron-right fa-xl" style="color: #5c5c5c; ${vo.approval_status==2 ? 'color: #2196F3;' : ''}"></i>
+						        </div>
+						    </c:if>
+						    <c:if test="${vo.emp_no == sessionScope.member.emp_no}">
+						        <input type="hidden" name="approval_status_id" value="${vo.approval_status_id}">
+						        <input type="hidden" name="approval_total_step" value="${listApproval.size()}">
+						    </c:if>
 						</c:forEach>
 					</div>
 
@@ -181,7 +171,7 @@ height: 100%;
 			</div>
 		</div>
 		<div class="board3">
-			<div class="line_container2">
+			<div class="line_container2_in">
 				<div>
 					<div>
 						<div>
@@ -263,18 +253,17 @@ height: 100%;
 					<label>내용 </label>
 				</div>
 				<div
-					style="padding: 15px; height: 400px; width: 100%; border: 1px solid gray; margin-top: 50px; border-radius: 4px;">${dto.draft_content}</div>
+					style="padding: 15px; height: 400px; width: 100%; border: 1px solid gray; margin-top: 50px; border-radius: 4px; background: white;">${dto.draft_content}</div>
 			</div>
 		</div>
 		<div class="board1">
-			<div class="file_container">
+			<div class="file_container_in">
 				<div class="title3">
 					<span> 첨부파일</span>
 				</div>
-				<div class="">
 					<div class="table table-border table-form">
 						<div
-							style="padding: 15px; height: 150px; width: 100%; border: 1px solid gray; border-radius: 4px;">
+							style="padding: 15px; height: 150px; width: 100%; border: 1px solid #747474; border-radius: 4px; background: white;">
 							<c:forEach var="vo" items="${listFile}">
 								<div>
 									<a
@@ -284,15 +273,14 @@ height: 100%;
 							</c:forEach>
 						</div>
 					</div>
-				</div>
 			</div>
 		</div>
 		
 <c:if test="${dto.doc_status == 4}">
   <div class="board1">
-    <div class="file_container">
+    <div class="file_container_in">
       <div class="title3">
-        <span>코멘트</span>
+        <span>반려사유</span>
       </div>
       <div class="table table-border table-form">
         <c:forEach var="vo" items="${rejectList}">
