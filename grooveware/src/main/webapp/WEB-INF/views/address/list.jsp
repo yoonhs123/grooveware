@@ -2,7 +2,19 @@
 <%@ page trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<style>
+.n_button {
+    height: 30px;
+    border-radius: 5px;
+    padding: 5px 10px;
+    background-color: #CEDDEF;
+    color: #404040;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+}
 
+</style>
 
 <script type="text/javascript">
 	//검색
@@ -44,14 +56,20 @@
 <div class="left-side-bar">
 
 	<ul>
-
-
-		<li><a href="${pageContext.request.contextPath}/address/list">주소록</a>
+		<li>
+		    <a href="${pageContext.request.contextPath}/address/list">주소록</a>
 		    <a href="${pageContext.request.contextPath}/address/list">&nbsp;공용 주소록</a>
 			<a href="${pageContext.request.contextPath}/address/friendList">&nbsp;개인 주소록</a>
-			  <a href="${pageContext.request.contextPath}/chat/chat">&nbsp;메신저</a>
 		<li>
 	</ul>
+	
+	<ul>
+	    <li>
+		  <a href="${pageContext.request.contextPath}/chat/chat">&nbsp;메신저</a>
+	      <a href="${pageContext.request.contextPath}/chat/chat">&nbsp;사내 메신저</a>
+	      <a href="${pageContext.request.contextPath}/chat/chat">&nbsp;개인 메신저</a>
+	</ul>
+	
 </div>
 <div class="right-contentbody">
 	<div class="board">
@@ -79,7 +97,7 @@
 										${condition == "emp_name" ? "selected='selected'" : ""}>이름</option>
 								</select> <input type="text" name="keyword" value="${keyword}"
 									class="addInput" placeholder="검색어를 입력하세요">
-								<button type="button" class="btn" onclick="searchList();">검색</button>
+								<button type="button" class="n_button" onclick="searchList();">검색</button>
 							</div>
 						</form>
 					</td>
@@ -87,8 +105,8 @@
 			</table>
 			<div class="address-button">
 				
-				<button type="button" class="btn btnSelectAll" data-select="0">전체선택</button>
-				<button type="button" class="btn" onclick="moveToAddressBook();">내 주소록 이동</button>
+				<button type="button" class="n_button btnSelectAll" data-select="0">전체선택</button>
+				<button type="button" class="n_button" onclick="moveToAddressBook();">내 주소록 이동</button>
 			</div>
 		</div>
 

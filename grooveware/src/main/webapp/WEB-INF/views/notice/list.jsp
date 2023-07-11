@@ -37,6 +37,16 @@ input[type=checkbox], input[type=radio] { vertical-align: middle; }
 
 }
 
+.n_button {
+    height: 30px;
+    border-radius: 5px;
+    padding: 5px 10px;
+    background-color: #CEDDEF;
+    color: #404040;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+}
 
 </style>
 
@@ -98,6 +108,7 @@ function searchList() {
 						</td>
 					</tr>
 				</table>
+				
 
 			
 			<table class="table table-border table-list">

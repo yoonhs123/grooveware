@@ -45,15 +45,27 @@
     margin-right: 3px;
     margin-bottom: 5px;
 }
+
+
+
 </style>
 
 <div class="left-side-bar">
-    <ul>
-        <li>
-            <a href="${pageContext.request.contextPath}/address/list">주소록</a>
-            <a href="${pageContext.request.contextPath}/chat/chat">메신저</a>
-        </li>
-    </ul>
+    
+	<ul>
+		<li>
+		    <a href="${pageContext.request.contextPath}/address/list">주소록</a>
+		    <a href="${pageContext.request.contextPath}/address/list">&nbsp;공용 주소록</a>
+			<a href="${pageContext.request.contextPath}/address/friendList">&nbsp;개인 주소록</a>
+		<li>
+	</ul>
+	
+	<ul>
+	    <li>
+		  <a href="${pageContext.request.contextPath}/chat/chat">&nbsp;메신저</a>
+	      <a href="${pageContext.request.contextPath}/chat/chat">&nbsp;사내 메신저</a>
+	      <a href="${pageContext.request.contextPath}/chat/chat">&nbsp;개인 메신저</a>
+	</ul>
 </div>
 
 <div class="right-contentbody">
