@@ -68,15 +68,16 @@ function sendOk() {
 <div class="right-contentbody">
 	<div class="div-container">
 	
-	<div class="div-left">
-		<div class="div-top">
+	<div class="div-left3">
+		<div class="div-top3">
 		<table style="width: 100%; height: 100%;">
 			<tr>
 				<td>
 					<div class="profile-picture border-radius">
 						<div style="height: 100%">
-							<div class="insa-image" style="border: 1px solid black;">
-							<img src="${pageContext.request.contextPath}/uploads/insaManage/${dto.emp_picture}">
+							<div class="insa-image">
+							<img src="${pageContext.request.contextPath}/uploads/insaManage/${dto.emp_picture}"
+							 style="width: 100%; height: 80%;">
 							</div>
 							<div style="width: 100%; margin-bottom: 10px;" align="center">${dto.emp_no}</div>
 						</div>
@@ -86,7 +87,7 @@ function sendOk() {
 		</table>
 		</div>
 		
-		<div class="div-bottom">
+		<div class="div-bottom3">
 		<table style="width: 100%;" class="profile-picture border-radius">
 				<tr>
 					<th class="th-left">부서</th>
@@ -108,7 +109,7 @@ function sendOk() {
 		</div>
 	</div>
 	
-		<div class="profile-content1 div-right" style="flex-direction: row;">
+		<div class="profile-content1 div-right3" style="flex-direction: row;">
 		<form name="insaProfileForm" method="post" enctype="multipart/form-data">
 		<table class="profile-content1-table">
 			<tr>

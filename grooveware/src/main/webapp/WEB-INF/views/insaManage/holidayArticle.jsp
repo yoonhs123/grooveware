@@ -60,25 +60,25 @@ function searchDate() {
 <div class="right-contentbody">
 			<div class="board">
 				<div class="main-container" style="width: 100%;">
-					<h2><i class="fa-solid fa-briefcase"></i>&nbsp; ${dto.emp_name}님 출근 현황</h2>
+					<h2><i class="fa-solid fa-briefcase"></i>&nbsp; 님 출근 현황</h2>
 					<div class="total-worktime" style="">
 						<table class="table table-border table-list total-worktime" style="padding:30px 0px 0px 30px; border: 2px solid #ced4da">
 							<tr style="border-bottom: 2px solid #ced4da">
 								<th width="14%">연차휴가</th>
-								<th width="14%">정상출근</th>
-								<th width="14%">지각</th>
-								<th width="14%">결근</th>
-								<th width="14%">조퇴</th>
-								<th width="14%">유급사용</th>
-								<th width="14%">무급사용</th>
+								<th width="14%">병가</th>
+								<th width="14%">보건휴가</th>
+								<th width="14%">교육</th>
+								<th width="14%">출산휴가</th>
+								<th width="14%">육아휴직</th>
+								<th width="14%">대체휴가</th>
 							</tr>
 
 							<tr>
 								<td>0일</td>
-								<td>${dto.work_Count}일</td>
-								<td>${dto.workLate_Count}일</td>
-								<td>${dto.workAbsence_Count}일</td>
-								<td>${dto.workLateEarly_Count}일</td>
+								<td>2일</td>
+								<td>0일</td>
+								<td>0일</td>
+								<td>0일</td>
 								<td>0일</td>
 								<td>0일</td>
 							</tr>
@@ -114,23 +114,29 @@ function searchDate() {
 						<table class="table table-form total-worktime" style="border: 2px solid #ced4da">
 							<thead>
 								<tr class="work-record-border">
-									<th style="width: 25%">날짜</th>
-									<th style="width: 25%">출근</th>
-									<th style="width: 25%">퇴근</th>
+									<th style="width: 25%">휴가명</th>
+									<th style="width: 25%">휴가 시작일</th>
+									<th style="width: 25%">휴가 종료일</th>
 									<th style="width: 25%">비고</th>
 								</tr>
 							</thead>
 							<tbody style="text-align: center;">
-								<c:forEach var="dto" items="${list}" varStatus="status">
-									<tr>
-									<td>${dto.work_day}</td>
-									<td>${dto.work_starttime}</td>
-									<td>${dto.work_endtime}</td>
+								<tr>
+									<td>병가</td>
+									<td>2023/06/07</td>
+									<td>2023/06/08</td>
 									<td>
-										${dto.work_status == 0 ? "정상출근" : (dto.work_status == 1 ? "지각" : (dto.work_status == 2 ? "결근" : (dto.work_status == 3 ? "조퇴" : "" )))}
+										유급휴가
 									</td>
 								</tr>
-								</c:forEach>
+								<tr>
+									<td>포상휴가</td>
+									<td>2023/05/01</td>
+									<td>2023/05/04</td>
+									<td>
+										유급휴가
+									</td>
+								</tr>
 							</tbody>
 						</table>
 

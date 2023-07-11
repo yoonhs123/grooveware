@@ -133,10 +133,10 @@ $(function() {
 		</tr>
 		<tr>
 			<td>2023/06/04</td>
-			<td>?</td>
-			<td>?</td>
-			<td>?</td>
-			<td>?</td>
+			<td>벌점</td>
+			<td>지각</td>
+			<td>잦은 지각</td>
+			<td>이재용(대표이사)</td>
 		</tr>
 	</table>
 

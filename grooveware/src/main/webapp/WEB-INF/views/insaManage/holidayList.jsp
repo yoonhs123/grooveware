@@ -77,7 +77,7 @@
 				<tbody>
 					<!-- 누른 행의 사원번호와 일치하는 사원의 개인 근태 내역 -->
 					<c:forEach var="dto" items="${list}" varStatus="status">
-					<tr onclick="location-href='#'" class="insa-home-td">
+					<tr onclick="location.href='${pageContext.request.contextPath}/insaManage/holidayArticle';" class="insa-home-td">
 						<td>${dto.emp_no}</td>
 						<td>${dto.emp_name}</td>
 						<td>${dto.dept_name}</td>
