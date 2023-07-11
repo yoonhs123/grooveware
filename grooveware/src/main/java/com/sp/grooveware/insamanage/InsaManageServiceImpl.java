@@ -57,7 +57,7 @@ public class InsaManageServiceImpl implements InsaManageService  {
 				
 				dto.setEmp_save_filename(empsavaFilename);
 				dto.setEmp_original_filename(empsavaFilename);
-				
+				System.out.println("검색"+empsavaFilename);
 				dto.setHistory_no(seq);
 				
 				dao.insertData("insaManage.insertEmp", dto);
