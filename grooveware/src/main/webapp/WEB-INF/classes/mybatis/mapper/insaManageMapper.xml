@@ -11,10 +11,11 @@
 	
 	<insert id="insertEmp" parameterType="com.sp.grooveware.insamanage.InsaManage">
 		INSERT INTO emp_reg(emp_name, emp_rrn, emp_email, emp_tel, 
-				emp_join_date, emp_picture, emp_zip, emp_addr1, emp_addr2)
+				emp_join_date, emp_save_filename, emp_original_filename, emp_zip, emp_addr1, emp_addr2)
 		VALUES (#{emp_name}, #{emp_rrn}, #{emp_email}, 
 				#{emp_tel}, 
-				TO_DATE(#{emp_join_date}, 'YYYY-MM-DD'), #{emp_picture, jdbcType=VARCHAR},
+				TO_DATE(#{emp_join_date}, 'YYYY-MM-DD'), #{emp_save_filename, jdbcType=VARCHAR},
+				#{emp_original_filename, jdbcType=VARCHAR},
 				#{emp_zip, jdbcType=VARCHAR}, #{emp_addr1, jdbcType=VARCHAR}, #{emp_addr2, jdbcType=VARCHAR})
 	</insert>
 	
@@ -162,7 +163,7 @@
 		SELECT e.emp_no, e.emp_name, e.emp_email, e.emp_tel, 
 				d.dept_name, p.pos_name,
 				SUBSTR(emp_rrn, 1, 6) emp_rrn,
-				TO_CHAR(e.emp_join_date, 'YYYY-MM-DD') emp_join_date, emp_picture,
+				TO_CHAR(e.emp_join_date, 'YYYY-MM-DD') emp_join_date, emp_save_filename, emp_original_filename, 
 				emp_zip, emp_addr1, emp_addr2
 		FROM emp e
 		JOIN (
@@ -382,7 +383,7 @@
 	
 	<!-- 근태관리 dataCount -->
 	<select id="workDataCount" parameterType="map" resultType="Integer">
-		SELECT COUNT(*)
+		SELECT COUNT(DISTINCT emp_no)
 		FROM worktime_recode
 		WHERE emp_no = #{emp_no}
 		<where>
@@ -419,7 +420,8 @@
 	        COUNT(CASE WHEN wr.work_status = 0 THEN 1 END) AS work_Count,
 	        COUNT(CASE WHEN wr.work_status = 1 THEN 1 END) AS workLate_Count,
 	        COUNT(CASE WHEN wr.work_status = 2 THEN 1 END) AS workAbsence_Count,
-	       	COUNT(CASE WHEN wr.work_status = 3 THEN 1 END) AS workLateEarly_Count 
+	       	COUNT(CASE WHEN wr.work_status = 3 THEN 1 END) AS workLateEarly_Count,
+	       	COUNT(CASE WHEN wr.work_status = 4 THEN 1 END) AS workHoliday_Count
 	    FROM worktime_recode wr
 	    JOIN emp e ON e.emp_no = wr.emp_no
 	    WHERE wr.emp_no = #{emp_no}
@@ -443,6 +445,18 @@
               ELSE 32
             END
 	</update>
+	
+	
+	<select id="holidayDataCount" parameterType="map" resultType="Integer">
+		SELECT COUNT(DISTINCT emp_no)
+		FROM emp_annual
+		WHERE emp_no = #{emp_no}
+		<where>
+			<if test="keyword != null and keyword != '' ">
+				<include refid="where-list"/>
+			</if>
+		</where>
+	</select>
 	
 	
 	<!-- 휴가 관리 리스트 -->

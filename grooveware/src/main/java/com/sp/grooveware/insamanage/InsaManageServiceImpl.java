@@ -51,10 +51,12 @@ public class InsaManageServiceImpl implements InsaManageService  {
 		try {
 
 			long seq = dao.selectOne("insaManage.seq");
-			String savaFilename = fileManager.doFileUpload(dto.getSelectFile(), pathname);
+			String empsavaFilename = fileManager.doFileUpload(dto.getSelectFile(), pathname);
 			
-			if(savaFilename != null) {
-				dto.setEmp_picture(savaFilename);
+			if(empsavaFilename != null) {
+				
+				dto.setEmp_save_filename(empsavaFilename);
+				dto.setEmp_original_filename(empsavaFilename);
 				
 				dto.setHistory_no(seq);
 				

@@ -53,7 +53,7 @@
 					<div class="profile-picture border-radius">
 						<div style="height: 100%">
 							<div class="insa-image" align="center">
-							<img src="${pageContext.request.contextPath}/uploads/insaManage/${dto.emp_picture}" style="width: 100%; height: 85%;">
+							<img src="${pageContext.request.contextPath}/uploads/insaManage/${dto.emp_save_filename}" style="width: 100%; height: 85%;">
 							</div>
 							<div style="width: 100%; margin-bottom: 10px;" align="center">${dto.emp_no}</div>
 						</div>

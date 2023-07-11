@@ -66,13 +66,14 @@ public class MyInsaServiceImpl implements MyInsaService {
 	@Override
 	public void profileUpdate(MyInsa dto, String pathname) throws Exception {
 		try {
-			String emp_picture = fileManager.doFileUpload(dto.getSelectFile(), pathname);
-			if(emp_picture != null) {
-				if(dto.getEmp_picture() != null && dto.getEmp_picture().length() != 0) {
-					fileManager.doFileDelete(dto.getEmp_picture(), pathname);
+			String empsaveFilename = fileManager.doFileUpload(dto.getSelectFile(), pathname);
+			if(empsaveFilename != null) {
+				if(dto.getEmp_save_filename() != null && dto.getEmp_save_filename().length() != 0) {
+					fileManager.doFileDelete(dto.getEmp_save_filename(), pathname);
 				}
 				
-				dto.setEmp_picture(emp_picture);
+				dto.setEmp_save_filename(empsaveFilename);
+				dto.setEmp_original_filename(dto.getSelectFile().getOriginalFilename());
 			}
 			
 			dao.updateData("myInsa.updateProfile", dto);

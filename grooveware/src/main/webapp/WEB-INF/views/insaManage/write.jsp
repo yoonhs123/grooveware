@@ -222,7 +222,7 @@ $(function(){
 				<tr>
 					<th><label for="photo">사진</label></th>
 					<td>
-						<input type="file" id="photo" name="selectFile" accept="image/*" value="${dto.emp_picture}" style="width: 200px; height : 30px;">
+						<input type="file" id="photo" name="selectFile" accept="image/*"  style="width: 200px; height : 30px;">
 					</td>
 				</tr>
 				<tr>

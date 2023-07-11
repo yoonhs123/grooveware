@@ -48,15 +48,15 @@
 			</select>
 			<div class="search" align="right">
 				<form name="searchForm" action="${pageContext.request.contextPath}/insaManage/list" method="post">
-					<select name="condition" class="form-select">
+					<select name="condition" class="emp-list-select">
 						<option value="all"  ${condition == "all" ? "selected='selected'" : ""} > 전체 </option>
 						<option value="emp_no"  ${condition == "emp_no" ? "selected='selected'" : ""} > 사원번호 </option>
 						<option value="emp_name"  ${condition == "emp_name" ? "selected='selected'" : ""} > 사원이름 </option>
 						<option value="dept_name"  ${condition == "dept_name" ? "selected='selected'" : 	""} > 부서 </option>
 						<option value="pos_name"  ${condition == "pos_name" ? "selected='selected'" : 	""} > 직위 </option>
 					</select>
-					<input type="text" name="keyword" value="${keyword}" class="insaManageHome">
-					<button type="button" class="btn-insaManage-home" onclick="searchList()">검색</button>
+					<input type="text" name="keyword" value="${keyword}" class="emp-list-search">
+					<button type="button" class="work-search-btn" onclick="searchList()">검색</button>
 				</form>
 			</div>
 

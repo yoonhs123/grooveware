@@ -13,12 +13,13 @@ public class MyInsa {
 	private String emp_join_date;
 	private String emp_resign_date;
 	private long emp_status;
-	private String emp_picture;
 	private String emp_zip;
 	private String emp_addr1;
 	private String emp_addr2;
 	private String top_dept_name;
 	
+	private String emp_save_filename;
+	private String emp_original_filename;
 	private MultipartFile selectFile;
 	
 	// 연차
@@ -157,11 +158,20 @@ public class MyInsa {
 	public void setEmp_status(long emp_status) {
 		this.emp_status = emp_status;
 	}
-	public String getEmp_picture() {
-		return emp_picture;
+	
+	
+
+	public String getEmp_save_filename() {
+		return emp_save_filename;
 	}
-	public void setEmp_picture(String emp_picture) {
-		this.emp_picture = emp_picture;
+	public void setEmp_save_filename(String emp_save_filename) {
+		this.emp_save_filename = emp_save_filename;
+	}
+	public String getEmp_original_filename() {
+		return emp_original_filename;
+	}
+	public void setEmp_original_filename(String emp_original_filename) {
+		this.emp_original_filename = emp_original_filename;
 	}
 	public int getAnnual_leave() {
 		return annual_leave;

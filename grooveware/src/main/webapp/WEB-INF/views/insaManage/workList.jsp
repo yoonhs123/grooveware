@@ -103,7 +103,7 @@ function searchDate() {
 						<td>${dto.workLate_Count}</td>
 						<td>${dto.workAbsence_Count}</td>
 						<td>${dto.workLateEarly_Count}</td>
-						<td>아직안함 </td>
+						<td>${dto.workHoliday_Count}</td>
 					</tr>
 					</c:forEach>
 				</tbody>
