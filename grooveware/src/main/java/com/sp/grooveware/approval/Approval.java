@@ -58,16 +58,16 @@ public class Approval {
 	private List<Long> emp_nos;
 	private List<Long> history_emp_nos;
 	
-	private String emp_picture;
+	private String emp_original_filename;
  
 	
-	public String getEmp_picture() {
-		return emp_picture;
+ 
+	public String getEmp_original_filename() {
+		return emp_original_filename;
 	}
-
-	public void setEmp_picture(String emp_picture) {
-		this.emp_picture = emp_picture;
-	}	
+	public void setEmp_original_filename(String emp_original_filename) {
+		this.emp_original_filename = emp_original_filename;
+	}
 	public String getEmp_name() {
 		return emp_name;
 	}

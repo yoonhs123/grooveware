@@ -99,8 +99,8 @@ $(function() {
 				<div class="title_container">
 				<table class="table" style="margin-bottom: 20px;">
 					<tr>
-						<td class="title-text" > 
-							<h2><span><i class="fa-solid fa-file-signature"></i></span> 
+						<td class="title" > 
+							<h2><i class="fa-solid fa-file-signature"></i> 
 								<c:choose>
 								  <c:when test="${doc_status == 0}">
 								    임시보관

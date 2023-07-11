@@ -87,7 +87,7 @@ $(function() {
 				<div class="title_container">
 				<table class="table" style="margin-bottom: 20px;">
 					<tr>
-						<td class="title-text" > 
+						<td class="title" > 
 							<h2><span><i class="fa-solid fa-file-signature"></i></span> 
 								<c:choose>
 								  <c:when test="${doc_status == 0}">

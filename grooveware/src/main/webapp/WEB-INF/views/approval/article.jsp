@@ -138,13 +138,13 @@ height: 100%;
 					</div>
 					<div style="width: 100%; float: left; ">
 						<c:forEach var="vo" items="${listApproval}" varStatus="status">
-						    <c:set var="imgPath" value="${pageContext.request.contextPath}/resources/images/${vo.emp_picture}" />
+						    <c:set var="imgPath" value="${pageContext.request.contextPath}/resources/images/${vo.emp_original_filename}" />
 						    <div class="img_container" style="color: #5c5c5c; ${vo.approval_status==2 ? 'border: 4px solid #2196F3;' : ''}">
 						        <img class="imgSize" src="${imgPath}">
 						    </div>
 						
 						    <c:if test="${!status.last}">
-						        <div class="img_container3">
+						        <div class="img_container3" style="margin-top: 30px;">
 						            <i class="fa-solid fa-chevron-right fa-xl" style="color: #5c5c5c; ${vo.approval_status==2 ? 'color: #2196F3;' : ''}"></i>
 						        </div>
 						    </c:if>
@@ -298,11 +298,11 @@ height: 100%;
 
 		<div class="board4 confirm">
 			<c:if test="${dto.doc_status == 0 }">
-				<button type="button" class="btn2"
+				<button type="button"  class="apBtn" style="margin-right: 20px;"
 					onclick="javascript:location.href='${pageContext.request.contextPath}/approval/update?doc_no=${dto.doc_no}&page=${page}';">수정</button>
-				<button type="button" class="btn2" onclick="deleteOk(); ">삭제</button>
+				<button type="button"  class="apBtn" style="margin-right: 20px;" onclick="deleteOk(); ">삭제</button>
 			</c:if>
-			<button type="button" class="btn2"
+			<button type="button"  class="apBtn" 
 				onclick="location.href='${pageContext.request.contextPath}/approval/list?doc_status=${doc_status}&${query}';">목록</button>
 			<c:if test="${mode=='update'}">
 				<input type="hidden" name="doc_no" value="${dto.doc_no}">

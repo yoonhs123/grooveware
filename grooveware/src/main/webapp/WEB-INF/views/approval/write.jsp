@@ -213,6 +213,21 @@
 	width: 100%;
 	height: 100%;
 }
+
+.apBtn2 {
+    padding: 10px 20px;
+    font-size: 14px;
+    border-radius: 4px;
+    border: none;
+    background-color: #243A73;
+    color: white;
+    cursor: pointer;
+}
+
+label {
+font-size: 18px;
+}
+
 </style>
 
 
@@ -284,7 +299,7 @@
 				<div class="title_container">
 					<table class="table" style="margin-bottom: 20px;">
 						<tr>
-							<td class="title2" width="15%">
+							<td class="title" width="15%">
 								<h2>
 									<span>|</span> 기안서
 								</h2>
@@ -295,13 +310,13 @@
 				<div class="line_container" style="height: 200px;">
 					<div class="table" style="margin-bottom: 15px;">
 						<div>
-							<div class="title" style="float: left; width: 100%;">
+							<div class="title" style="float: left; width: 100%; font-size: 22px;">
 								<span>결재라인</span>
 							</div>
 						</div>
 							<div style="width: 100%; float: left;">
 								<div id="forms-receiver-list">
-									<button type="button" class=" btn btnReceiverDialog"
+									<button type="button" class="apBtn2 btnReceiverDialog"
 										style="margin-top: 30px;">추가</button>
 
 									<c:if test="${mode=='update'}">
@@ -439,7 +454,7 @@
 				<div class="file_container">
 					<div>
 						<div class="title3">
-							<span> 첨부파일</span>
+							<label> 첨부파일</label>
 						</div>
 					</div>
 					<div class="file_container2">
@@ -467,12 +482,12 @@
 
 			<div class="board4 confirm">
 				<input type="hidden" name="doc_status" value="${dto.doc_status }">
-				<button type="button" class="btn2"
+				<button type="button"  class="apBtn" style="margin-right: 20px;"
 					onclick="location.href='${pageContext.request.contextPath}/approval/list';">${mode=='update'?'수정취소':'등록취소'}</button>
 	
-				<button type="button" class="btn2"
+				<button type="button"  class="apBtn" style="margin-right: 20px;"
 					onclick="submitContents(this.form, 0);">임시저장</button>
-				<button type="button" class="btn2"
+				<button type="button"  class="apBtn" 
 					onclick="submitContents(this.form, 1);">제출</button>
 				<c:if test="${mode=='update'}">
 					<input type="hidden" name="doc_no" value="${dto.doc_no}">
@@ -517,7 +532,7 @@
 
 	function setDefaultFont() {
 		var sDefaultFont = '돋움 ';
-		var nFontSize = 12;
+		var nFontSize = 16;
 		oEditors.getById["ir1"].setDefaultFont(sDefaultFont, nFontSize);
 	}
 </script>
@@ -668,7 +683,7 @@
 	            let emp_no = data.listMember[i].emp_no;
 	            let pos_name = data.listMember[i].pos_name;
 	            let dept_name = data.listMember[i].dept_name;
-	            let emp_picture = data.listMember[i].emp_picture;
+	            let emp_picture = data.listMember[i].emp_original_filename;
 
 	            s = "<li style='padding: 5px 0px 3px 10px'><input type='radio' style='margin-right: 5px;' class='form-check-input' data-emp_no='" + emp_no + "' data-emp_picture='" + emp_picture + "' title='" + emp_no + "' name='" + radioGroupName + "'><span>" + emp_name + " " + pos_name + "<span>" + " (" + "</span>";
 	            s += "<span>" + dept_name + ")" + "</span></li>";
@@ -717,7 +732,7 @@
 			    	    s += "<span style='font-weight: normal; word-break: keep-all;'>" + emp_name + "</span></span>";
 			    	  } else {
 			    	    // 다음 추가 버튼을 눌렀을 때
-			    	    s += "<span style='float: left;'><i class='fa-solid fa-chevron-right fa-xl' style='margin-top: 30px;'></i></span>";
+			    	    s += "<span style='float: left; margin-top: 35px;'><i class='fa-solid fa-chevron-right fa-xl'></i></span>";
 				    	s += "<span class='approval-member' style=' margin-left: 30px;'>";
 
 			    	    s += "<div class='img_container'><img src='${pageContext.request.contextPath}/resources/images/" + emp_picture + "' style='width: 100%; height: 100%;'></div>";

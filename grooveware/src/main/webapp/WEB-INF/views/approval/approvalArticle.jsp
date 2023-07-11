@@ -55,7 +55,7 @@ height: 100%;
 }
 
 
-  .apBtn {
+.apBtn {
   padding: 10px 20px;
     font-size: 14px;
     border-radius: 4px;
@@ -197,13 +197,13 @@ $(function() {
 					</div>
 					<div style="width: 100%; float: left; ">
 						<c:forEach var="vo" items="${listApproval}" varStatus="status">
-						    <c:set var="imgPath" value="${pageContext.request.contextPath}/resources/images/${vo.emp_picture}" />
+						    <c:set var="imgPath" value="${pageContext.request.contextPath}/resources/images/${vo.emp_original_filename}" />
 						    <div class="img_container" style="color: #5c5c5c; ${vo.approval_status==2 ? 'border: 4px solid #2196F3;' : ''}">
 						        <img class="imgSize" src="${imgPath}">
 						    </div>
 						
 						    <c:if test="${!status.last}">
-						        <div class="img_container3">
+						        <div class="img_container3" style="margin-top: 30px;">
 						            <i class="fa-solid fa-chevron-right fa-xl" style="color: #5c5c5c; ${vo.approval_status==2 ? 'color: #2196F3;' : ''}"></i>
 						        </div>
 						    </c:if>
@@ -378,9 +378,8 @@ $(function() {
 			</div>
 		</c:if>
 
-		<div class="confirm">
-			<c:if
-				test="${pre_state==2 && state.doc_status!=3 && state.doc_status!=4}">
+		<div class="board4 confirm">
+			<c:if test="${pre_state==2 && state.doc_status!=3 && state.doc_status!=4}">
 				<button type="button" class="apBtn" style="margin-right: 20px;"
 					onclick="submitContents(${dto.doc_no}, 2);">결재</button>
 				<button type="button" class="apBtn btnApprovalDialog">반려</button>
