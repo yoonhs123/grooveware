@@ -325,7 +325,7 @@ font-size: 18px;
 												<c:when test="${not empty listApproval}">
 													<span class="approval-member">  
 														<div class="img_container">
-															<img src="${pageContext.request.contextPath}/resources/images/${vo.emp_picture}"  />
+															<img src="${pageContext.request.contextPath}/resources/images/${vo.emp_original_filename}"  />
 														</div> 
 														<span style="font-weight: normal; word-break: keep-all;"></span>
 														<div style="width: 100%; float: left;">
@@ -683,9 +683,9 @@ font-size: 18px;
 	            let emp_no = data.listMember[i].emp_no;
 	            let pos_name = data.listMember[i].pos_name;
 	            let dept_name = data.listMember[i].dept_name;
-	            let emp_picture = data.listMember[i].emp_original_filename;
+	            let emp_original_filename = data.listMember[i].emp_original_filename;
 
-	            s = "<li style='padding: 5px 0px 3px 10px'><input type='radio' style='margin-right: 5px;' class='form-check-input' data-emp_no='" + emp_no + "' data-emp_picture='" + emp_picture + "' title='" + emp_no + "' name='" + radioGroupName + "'><span>" + emp_name + " " + pos_name + "<span>" + " (" + "</span>";
+	            s = "<li style='padding: 5px 0px 3px 10px'><input type='radio' style='margin-right: 5px;' class='form-check-input' data-emp_no='" + emp_no + "' data-emp_original_filename='" + emp_original_filename + "' title='" + emp_no + "' name='" + radioGroupName + "'><span>" + emp_name + " " + pos_name + "<span>" + " (" + "</span>";
 	            s += "<span>" + dept_name + ")" + "</span></li>";
 	            $(".dialog-receiver-list ul").append(s);
 	        }
@@ -710,7 +710,7 @@ font-size: 18px;
 	        let b = false;
 	        $(".dialog-receiver-list ul input[type=radio]:checked").each(function() {
 	            let emp_no = $(this).attr("data-emp_no");
-	            let emp_picture = $(this).attr("data-emp_picture") != "" ? $(this).attr("data-emp_picture") : "user.png";
+	            let emp_original_filename = $(this).attr("data-emp_original_filename") != "" ? $(this).attr("data-emp_original_filename") : "user.png";
 	            let emp_name = $(this).next("span").text();
 	            let pos_name = $(this).next("span").next("span").text();
 	            let dept_name = $(this).next("span").next("span").next("span").text();
@@ -728,21 +728,21 @@ font-size: 18px;
 			    	  if (len2 === 0) {
 			    	  s += "<span class='approval-member'>";
 			    	    // 처음 추가 버튼을 눌렀을 때
-			    	    s += "<div class='img_container'><img src='${pageContext.request.contextPath}/resources/images/" + emp_picture + "' style='width: 100%; height: 100%;'></div>";
+			    	    s += "<div class='img_container'><img src='${pageContext.request.contextPath}/resources/images/" + emp_original_filename + "' style='width: 100%; height: 100%;'></div>";
 			    	    s += "<span style='font-weight: normal; word-break: keep-all;'>" + emp_name + "</span></span>";
 			    	  } else {
 			    	    // 다음 추가 버튼을 눌렀을 때
 			    	    s += "<span style='float: left; margin-top: 35px;'><i class='fa-solid fa-chevron-right fa-xl'></i></span>";
 				    	s += "<span class='approval-member' style=' margin-left: 30px;'>";
 
-			    	    s += "<div class='img_container'><img src='${pageContext.request.contextPath}/resources/images/" + emp_picture + "' style='width: 100%; height: 100%;'></div>";
+			    	    s += "<div class='img_container'><img src='${pageContext.request.contextPath}/resources/images/" + emp_original_filename + "' style='width: 100%; height: 100%;'></div>";
 			    	    s += "<span style='font-weight: normal; word-break: keep-all;'>" + emp_name + "</span></span>";
 			    	  }
 			    	  s += "<input type='hidden' name='emp_nos' value='" + emp_no + "'>";
 
 			    	  $("#forms-receiver-list").append(s);
 			    	  
-			    	  console.log(emp_picture);
+			    	  console.log(emp_original_filename);
 			    	  
 			    }	   
 	        });
