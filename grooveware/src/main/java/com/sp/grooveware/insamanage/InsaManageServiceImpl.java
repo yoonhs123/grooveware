@@ -324,6 +324,18 @@ public class InsaManageServiceImpl implements InsaManageService  {
 		
 		return list;
 	}
+	
+	@Override
+	public int holidayCount(Map<String, Object> map) {
+		int result = 0;
+		
+		try {
+			result = dao.selectOne("insaManage.holidayDataCount", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
 
 	@Override
 	public List<InsaManage> holidayMemberList(Map<String, Object> map) {
@@ -337,11 +349,4 @@ public class InsaManageServiceImpl implements InsaManageService  {
 		
 		return list;
 	}
-
-	
-	
-	
-
-
-
 }

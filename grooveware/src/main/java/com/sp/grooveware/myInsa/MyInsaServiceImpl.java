@@ -164,8 +164,4 @@ public class MyInsaServiceImpl implements MyInsaService {
 		return list;
 	}
 	
-	
-	
-	
-	
 }

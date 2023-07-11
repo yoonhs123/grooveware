@@ -62,6 +62,9 @@ public interface InsaManageService {
 	// DeptHistoryList
 	public List<InsaManage> deptHistoryList(long emp_no);
 	
+	
+	// 휴가 직원 count
+	public int holidayCount(Map<String, Object> map);
 	// 휴가 사원 리스트
 	public List<InsaManage> holidayMemberList(Map<String, Object> map);
 }

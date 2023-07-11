@@ -425,7 +425,7 @@ public class InsaManageController {
 		map.put("emp_no", info.getEmp_no());
 		map.put("emp_status", emp_status);
 		
-		dataCount = service.dataCount(map);
+		dataCount = service.holidayCount(map);
 		if(dataCount != 0) {
 			total_page = myUtil.pageCount(dataCount, size);
 		}
