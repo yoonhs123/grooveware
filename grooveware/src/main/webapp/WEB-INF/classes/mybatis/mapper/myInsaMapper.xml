@@ -54,7 +54,7 @@
 		UPDATE emp 
 		SET emp_email = #{emp_email}, emp_pwd = #{emp_pwd},
 			emp_tel = #{emp_tel}, emp_zip = #{emp_zip}, emp_addr1 = #{emp_addr1}, emp_addr2 = #{emp_addr2},
-			emp_picture = #{emp_picture}
+			emp_picture = #{emp_picture, jdbcType=VARCHAR}
 		WHERE emp_no = #{emp_no}
 	</update>
 	

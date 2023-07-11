@@ -3,6 +3,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="address">
 
+
 	<!-- parameterType 입력된 값 전달용  -->
 	<!-- resultType은 쿼리 실행 결과를 매핑 -->
 	<sql id="where-list">

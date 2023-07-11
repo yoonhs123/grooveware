@@ -14,7 +14,7 @@
 				emp_join_date, emp_picture, emp_zip, emp_addr1, emp_addr2)
 		VALUES (#{emp_name}, #{emp_rrn}, #{emp_email}, 
 				#{emp_tel}, 
-				TO_DATE(#{emp_join_date}, 'YYYY-MM-DD'), #{emp_picture},
+				TO_DATE(#{emp_join_date}, 'YYYY-MM-DD'), #{emp_picture, jdbcType=VARCHAR},
 				#{emp_zip, jdbcType=VARCHAR}, #{emp_addr1, jdbcType=VARCHAR}, #{emp_addr2, jdbcType=VARCHAR})
 	</insert>
 	
