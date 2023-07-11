@@ -21,8 +21,8 @@
 	</insert>
 	
 	<insert id="insertDraftFile" parameterType="com.sp.grooveware.approval.Approval">
-		INSERT INTO draft_file (doc_no, file_no, save_filename, emp_original_filename)
-		VALUES (#{doc_no}, draft_file_seq.NEXTVAL, #{save_filename, jdbcType=VARCHAR}, #{emp_original_filename, jdbcType=VARCHAR})
+		INSERT INTO draft_file (doc_no, file_no, save_filename, emp_save_filename)
+		VALUES (#{doc_no}, draft_file_seq.NEXTVAL, #{save_filename, jdbcType=VARCHAR}, #{emp_save_filename, jdbcType=VARCHAR})
 	</insert>
 	
 	<insert id="insertApproval" parameterType="com.sp.grooveware.approval.Approval">
@@ -264,7 +264,7 @@
 	<select id="listApproval" parameterType="Long" resultType="com.sp.grooveware.approval.Approval">
 		
 		SELECT a.doc_no, a.emp_no, a.approval_status_id, a.approval_status, a.approval_date, a.reject_reason,
-		       b.emp_no, c.dept_name, d.emp_name, e.pos_name, emp_original_filename
+		       b.emp_no, c.dept_name, d.emp_name, e.pos_name, emp_save_filename
 		FROM approval a
 		LEFT OUTER JOIN (
 		  SELECT x.emp_no, x.history_no, x.dept_no, x.pos_no
@@ -366,14 +366,14 @@
  
 	<!-- 파일 리스트-->
 	<select id="listFile" parameterType="Long" resultType="com.sp.grooveware.approval.Approval">
-		SELECT file_no, doc_no, save_filename, emp_original_filename
+		SELECT file_no, doc_no, save_filename, emp_save_filename
 		FROM draft_file
 		WHERE doc_no = #{doc_no}    
 	</select>	
 	
 	<!-- 파일 읽기 -->
 	<select id="readFile" parameterType="Long" resultType="com.sp.grooveware.approval.Approval">
-		SELECT file_no, doc_no, save_filename, emp_original_filename
+		SELECT file_no, doc_no, save_filename, emp_save_filename
 		FROM draft_file
 		WHERE file_no = #{file_no}    
 	</select>	
@@ -387,7 +387,7 @@
 
 	<!-- 결재라인 리스트 -->
 	<select id="listMember" parameterType="map" resultType="com.sp.grooveware.approval.Approval">
-      SELECT a.emp_no, b.dept_name, c.emp_name, d.pos_name, NVL(emp_original_filename, '') emp_original_filename
+      SELECT a.emp_no, b.dept_name, c.emp_name, d.pos_name, NVL(emp_save_filename, '') emp_save_filename
       FROM (
           SELECT x.emp_no, x.history_no, x.dept_no, x.pos_no FROM emp_history x
           LEFT OUTER JOIN emp_history y ON x.emp_no = y.emp_no AND x.history_no &lt; y.history_no

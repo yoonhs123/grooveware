@@ -138,7 +138,7 @@ height: 100%;
 					</div>
 					<div style="width: 100%; float: left; ">
 						<c:forEach var="vo" items="${listApproval}" varStatus="status">
-						    <c:set var="imgPath" value="${pageContext.request.contextPath}/resources/images/${vo.emp_original_filename}" />
+						    <c:set var="imgPath" value="${pageContext.request.contextPath}/resources/images/${vo.emp_save_filename}" />
 						    <div class="img_container" style="color: #5c5c5c; ${vo.approval_status==2 ? 'border: 4px solid #2196F3;' : ''}">
 						        <img class="imgSize" src="${imgPath}">
 						    </div>
