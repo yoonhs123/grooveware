@@ -484,5 +484,9 @@
 		OFFSET #{offset} ROWS FETCH FIRST #{size} ROWS ONLY
 	</select>
 	
+	<insert id="insertDept" parameterType="com.sp.grooveware.insamanage.InsaManage">
+	
+	</insert>
+	
 	
 </mapper>

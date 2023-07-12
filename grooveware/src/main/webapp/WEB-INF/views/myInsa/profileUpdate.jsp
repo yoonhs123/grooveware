@@ -136,7 +136,9 @@ function sendOk() {
 			<tr>
 				<th class="th-left">사진</th>
 				<td>
-					<input type="file" id="emp_save_filename" name="selectFile" accept="image/*" style="width: 100%; height: 85%;">
+					<input type="file" id="emp_save_filename" name="selectFile" accept="image/*" 
+						value="${dto.emp_save_filename}"
+						style="width: 100%; height: 85%;">
 				</td>
 			</tr>
 			<tr>

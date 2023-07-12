@@ -16,7 +16,6 @@
 .main-menu > li:hover > ul {
 		display:block;
 	}
-  
 </style>
 
 <header> 
