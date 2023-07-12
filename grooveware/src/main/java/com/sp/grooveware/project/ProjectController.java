@@ -98,7 +98,7 @@ public class ProjectController {
 		String listUrl = cp + "/project/list";
 		String articleUrl = cp + "/project/article?page=" + current_page;
 		if (keyword.length() != 0) {
-			query += "condition=" + condition + "&keyword=" + URLEncoder.encode(keyword, "utf-8");
+			query += "&condition=" + condition + "&keyword=" + URLEncoder.encode(keyword, "utf-8");
 		}
 		
 		listUrl += "?" + query;
@@ -184,7 +184,7 @@ public class ProjectController {
 		String listUrl = cp + "/project/listend";
 		String articleUrl = cp + "/project/article?page=" + current_page;
 		if (keyword.length() != 0) {
-			query = "condition=" + condition + "&keyword=" + URLEncoder.encode(keyword, "utf-8");
+			query = "&condition=" + condition + "&keyword=" + URLEncoder.encode(keyword, "utf-8");
 		}
 		
 		listUrl += "?" + query;
@@ -231,7 +231,7 @@ public class ProjectController {
 			dto.setPj_creator(info.getEmp_no());
 			service.insertProject(dto, pathname);
 		} catch (Exception e) {
-
+			e.printStackTrace();
 		}
 		return "redirect:/project/list";
 	}

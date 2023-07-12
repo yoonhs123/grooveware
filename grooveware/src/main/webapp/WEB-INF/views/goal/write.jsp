@@ -385,6 +385,22 @@ input[type="date"] {
   border-collapse: collapse;
 }
 
+
+.btn_emp_find{
+    height: 30px;
+    margin-left: 5px;
+}
+
+.dialog-emp-list{
+	text-align: left;   
+	height: 150px; 
+	border: 1px solid #8b8b8b; 
+	background:white; 
+	border-radius: 4px;
+	overflow-y: scroll;
+}
+
+
   /* Added styles for project members */
   .title2 {
     width: 90%;
@@ -438,6 +454,10 @@ span.project-member:hover label {
   padding: 10px;
   width: 150px;
 }  
+  
+.main-table tr td {
+  padding: 10px;
+}  
 
 textarea {
   height : 300px;
@@ -446,7 +466,13 @@ textarea {
   border-radius: 3px;
 }
 
+.main-table tr td {
+  padding: 10px;
+}  
 
+.dialog-emp-list {
+	padding : 15px;
+}
 </style>
 
 

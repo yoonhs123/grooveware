@@ -25,8 +25,16 @@ public class Task {
 	private String pos_name;
 	private long emp_no;
 	
+	private int identify;
 	
 	
+	
+	public int getIdentify() {
+		return identify;
+	}
+	public void setIdentify(int identify) {
+		this.identify = identify;
+	}
 	public String getDept_name() {
 		return dept_name;
 	}

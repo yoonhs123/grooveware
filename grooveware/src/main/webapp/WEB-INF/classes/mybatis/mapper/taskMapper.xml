@@ -9,8 +9,8 @@
 		 values (task_seq.nextval, #{task_name}, #{task_content}, #{task_start_date}, #{task_end_date}, #{task_manager}, #{goal_no})
 		into task_file(task_file_no, task_no, saveFilename, originalFilename)
 		 values (task_file_seq.nextval, task_seq.currval, #{saveFilename, jdbcType=VARCHAR}, #{originalFilename, jdbcType=VARCHAR})
-	    into task_member(task_no, task_member_no, task_percent)
-		 values (task_seq.currval, #{task_member_no}, 0)
+	    into task_member(task_no, task_member_no)
+		 values (task_seq.currval, #{task_member_no})
 		select*from dual
 	</update>	
 
@@ -42,12 +42,10 @@
 		WHERE identify IS NULL AND task_member_no=#{emp_no}
 	</select>
 	
-	<!-- 업무를 확인상태로 변경 -->
-	
-	
 	<!-- 로그인한 아이디가 요청받은 업무리스트 -->
 	<select id="listTask" parameterType="map" resultType="com.sp.grooveware.task.Task">
-	SELECT a.emp_no, b.dept_name, c.emp_name, d.pos_name, task_name, task_content, TO_CHAR(task_start_date, 'YYYY-MM-DD') AS task_start_date, TO_CHAR(task_end_date, 'YYYY-MM-DD') AS task_end_date
+	SELECT a.emp_no, b.dept_name, c.emp_name, d.pos_name, h.goal_name, e.task_name, f.task_no, task_manager, task_content, task_comment, TO_CHAR(task_start_date, 'YYYY-MM-DD') AS task_start_date, TO_CHAR(task_end_date, 'YYYY-MM-DD') AS task_end_date
+        ,g.saveFilename, g.originalFilename, identify
 		FROM (
 		    SELECT x.emp_no, x.history_no, x.dept_no, x.pos_no FROM emp_history x
 		    LEFT OUTER JOIN emp_history y ON x.emp_no = y.emp_no AND x.history_no &lt; y.history_no
@@ -57,21 +55,64 @@
 		LEFT OUTER JOIN pos d ON a.pos_no = d.pos_no
 		RIGHT OUTER JOIN task e ON a.emp_no = e.task_manager
         left outer join task_member f ON e.task_no = f.task_no 
+        LEFT OUTER JOIN task_file g ON e.task_no = g.task_no
+        LEFT OUTER JOIN goal h ON e.goal_no = h.goal_no
         <where>
 			emp_resign_date is null AND task_member_no = #{login_emp}
+			<if test="keyword!=null and keyword!='' ">
+			  AND <include refid="where-list"/>
+			</if>
 		</where>
+		ORDER BY CASE WHEN identify IS NULL THEN 0 ELSE 1 END, identify, f.task_no DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{size} ROWS ONLY
 	</select>
+	
+	<!-- 로그인한 아이디가 요청한 업무리스트 -->
+	<select id="listTask1" parameterType="map" resultType="com.sp.grooveware.task.Task">
+	SELECT a.emp_no, b.dept_name, c.emp_name, d.pos_name, h.goal_name, f.task_name, f.task_no, task_manager, task_content, task_comment, TO_CHAR(task_start_date, 'YYYY-MM-DD') AS task_start_date, TO_CHAR(task_end_date, 'YYYY-MM-DD') AS task_end_date
+        ,g.saveFilename, g.originalFilename, identify
+		FROM (
+		    SELECT x.emp_no, x.history_no, x.dept_no, x.pos_no FROM emp_history x
+		    LEFT OUTER JOIN emp_history y ON x.emp_no = y.emp_no AND x.history_no &lt; y.history_no
+		    WHERE y.emp_no IS NULL) a
+		LEFT OUTER JOIN dept b ON a.dept_no = b.dept_no
+		LEFT OUTER JOIN emp c ON a.emp_no = c.emp_no
+		LEFT OUTER JOIN pos d ON a.pos_no = d.pos_no
+		right OUTER JOIN task_member e ON a.emp_no = e.task_member_no
+        left outer join task f ON e.task_no = f.task_no 
+        LEFT OUTER JOIN task_file g ON e.task_no = g.task_no
+        LEFT OUTER JOIN goal h ON f.goal_no = h.goal_no
+        <where>
+			emp_resign_date is null AND task_manager = #{login_emp}
+			<if test="keyword!=null and keyword!='' ">
+			  AND <include refid="where-list"/>
+			</if>
+		</where>
+		ORDER BY CASE WHEN identify IS NULL THEN 0 ELSE 1 END, identify, f.task_no DESC
+		OFFSET #{offset} ROWS FETCH FIRST #{size} ROWS ONLY
+	</select>
+	
+	
 
 	<sql id="where-list">
 		<choose>
 			<when test="condition == 'task_name' ">
 			   ( INSTR(task_name, #{keyword}) &gt; 0 )
 			</when>
-			<when test="condition == 'task_manager' ">
-			   ( INSTR(task_manager, #{keyword}) &gt; 0 )
-			</when>
 			<when test="condition == 'goal_name' ">
 			   ( INSTR(goal_name, #{keyword}) &gt; 0 )
+			</when>
+			<when test="condition == 'doing' ">
+			   ( identify IS NULL AND INSTR(task_name, #{keyword}) &gt; 0)
+			</when>
+			<when test="condition == 'finish' ">
+			   ( identify = 1 AND INSTR(task_name, #{keyword}) &gt; 0)
+			</when>
+			<when test="condition == 'task_manager' ">
+			   ( INSTR(emp_name, #{keyword}) &gt; 0 )
+			</when>
+			<when test="condition == 'task_member' ">
+			   ( INSTR(emp_name, #{keyword}) &gt; 0 )
 			</when>
 			<otherwise>
 			    INSTR(${condition}, #{keyword}) &gt; 0
@@ -86,6 +127,7 @@
 		FROM task_member a
 		LEFT OUTER JOIN task b ON a.task_no = b.task_no
 		LEFT OUTER JOIN goal c ON b.goal_no = c.goal_no
+		RIGHT OUTER JOIN emp d ON b.task_manager = d.emp_no
 		<where>
 			task_member_no = #{login_emp}
 			<if test="keyword!=null and keyword!='' ">
@@ -94,6 +136,68 @@
 		</where>   
 	</select>
 
+	
+	<select id="dataCount1" parameterType="map" resultType="Integer">
+		SELECT count(a.task_no)
+		FROM task_member a
+		LEFT OUTER JOIN task b ON a.task_no = b.task_no
+		LEFT OUTER JOIN goal c ON b.goal_no = c.goal_no
+		RIGHT OUTER JOIN emp d ON a.task_member_no = d.emp_no
+		<where>
+			task_manager = #{login_emp}
+			<if test="keyword!=null and keyword!='' ">
+				AND <include refid="where-list"/>
+			</if>
+		</where>  
+	</select>
+
+
+	<select id="readTask" parameterType="Long" resultType="com.sp.grooveware.task.Task">
+		SELECT a.emp_no, b.dept_name, c.emp_name, d.pos_name, f.task_no, task_name, task_content, TO_CHAR(task_start_date, 'YYYY-MM-DD') AS task_start_date, TO_CHAR(task_end_date, 'YYYY-MM-DD') AS task_end_date, task_manager, goal_name, task_comment, task_member_no
+			,g.saveFilename, g.originalFilename, identify
+		FROM (
+		    SELECT x.emp_no, x.history_no, x.dept_no, x.pos_no FROM emp_history x
+		    LEFT OUTER JOIN emp_history y ON x.emp_no = y.emp_no AND x.history_no &lt; y.history_no
+		    WHERE y.emp_no IS NULL) a
+		LEFT OUTER JOIN dept b ON a.dept_no = b.dept_no
+		LEFT OUTER JOIN emp c ON a.emp_no = c.emp_no
+		LEFT OUTER JOIN pos d ON a.pos_no = d.pos_no   
+		RIGHT OUTER JOIN task e ON e.task_manager = a.emp_no 
+		LEFT OUTER JOIN task_member f ON e.task_no = f.task_no
+		LEFT OUTER JOIN task_file g ON e.task_no = g.task_no
+		LEFT OUTER JOIN goal h ON e.goal_no = h.goal_no
+		WHERE f.task_no = #{task_no}
+	</select>
+	
+	<select id="readTask1" parameterType="Long" resultType="com.sp.grooveware.task.Task">
+		SELECT a.emp_no, b.dept_name, c.emp_name, d.pos_name, f.task_no, task_name, task_content, TO_CHAR(task_start_date, 'YYYY-MM-DD') AS task_start_date, TO_CHAR(task_end_date, 'YYYY-MM-DD') AS task_end_date, task_manager, goal_name, task_comment, task_member_no
+			,g.saveFilename, g.originalFilename, identify
+		FROM (
+		    SELECT x.emp_no, x.history_no, x.dept_no, x.pos_no FROM emp_history x
+		    LEFT OUTER JOIN emp_history y ON x.emp_no = y.emp_no AND x.history_no &lt; y.history_no
+		    WHERE y.emp_no IS NULL) a
+		LEFT OUTER JOIN dept b ON a.dept_no = b.dept_no
+		LEFT OUTER JOIN emp c ON a.emp_no = c.emp_no
+		LEFT OUTER JOIN pos d ON a.pos_no = d.pos_no   
+		right OUTER JOIN task_member e ON a.emp_no = e.task_member_no
+        left outer join task f ON e.task_no = f.task_no 
+		LEFT OUTER JOIN task_file g ON e.task_no = g.task_no
+		LEFT OUTER JOIN goal h ON f.goal_no = h.goal_no
+		WHERE f.task_no = #{task_no}
+	</select>
+	
+	
+	<!-- 업무를 확인상태로 변경 -->
+	<update id="updateTaskCount" parameterType="com.sp.grooveware.task.Task">
+		UPDATE task_member SET identify = 1 
+		WHERE task_no = #{task_no} AND task_member_no = #{task_member_no}
+	</update>
+		
+	<update id="submitTask" parameterType="com.sp.grooveware.task.Task">
+		UPDATE task_member SET task_comment = #{task_comment}, saveFilename=#{saveFilename, jdbcType=VARCHAR}, originalFilename=#{originalFilename, jdbcType=VARCHAR}
+		WHERE task_no = #{task_no} AND task_member_no = #{task_member_no}
+	</update>
+		
 	
 </mapper>
 

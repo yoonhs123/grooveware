@@ -2,6 +2,8 @@
 <%@ page trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 ﻿
 <style>
 .btnWorkTime{
@@ -311,7 +313,16 @@ $(function(){
 			<div class="dash-list-item" style="border-top: 1px solid silver;">
 				<c:forEach var="listTask" items="${listTask}" varStatus="status">
 					<div class="dash-list">
-						<span>${listTask.task_name}</span>&nbsp;
+						<span>
+						<c:choose>
+							<c:when test="${listTask.task_name.length() > 18}">
+								${fn:substring(listTask.task_name, 0, 18)}....
+							</c:when>
+							<c:otherwise>
+								${listTask.task_name}
+							</c:otherwise>
+						</c:choose>
+						</span>&nbsp;
 						<button class="task-dept-btn">${listTask.dept_name}</button>
 						<div class="minibox"> 요청자 ${listTask.emp_name} | 마감기한 ${listTask.task_end_date}</div>
 					</div>
@@ -329,7 +340,16 @@ $(function(){
 			<div class="dash-list-item" style="border-top: 1px solid silver;">
 				<c:forEach var="noti" items="${notiList}" varStatus="status">
 					<div class="dash-list">
-						<span>${noti.noti_title}</span>&nbsp;
+						<span>
+						<c:choose>
+							<c:when test="${noti.noti_title.length() > 22}">
+								${fn:substring(noti.noti_title, 0, 22)}....
+							</c:when>
+							<c:otherwise>
+								${noti.noti_title}
+							</c:otherwise>
+						</c:choose>
+						</span>&nbsp;
 						<button class="noti-list-btn">NEW</button>
 						<div class="minibox">작성자 관리자 | 작성일 ${noti.noti_regdate} </div>
 					</div>

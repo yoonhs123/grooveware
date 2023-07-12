@@ -229,4 +229,37 @@
 		DELETE FROM goal WHERE goal_no = #{goal_no}
 	</delete>	
 	
+	<!-- 업무 리스트 -->
+	<select id="readTask" parameterType="long" resultType="com.sp.grooveware.task.Task">
+	SELECT a.emp_no, b.dept_name, c.emp_name, d.pos_name, h.goal_name, f.task_name, f.task_no, task_manager, task_content, task_comment, TO_CHAR(task_start_date, 'YYYY-MM-DD') AS task_start_date, TO_CHAR(task_end_date, 'YYYY-MM-DD') AS task_end_date
+        ,e.saveFilename, e.originalFilename, identify, f.goal_no
+		FROM (
+		    SELECT x.emp_no, x.history_no, x.dept_no, x.pos_no FROM emp_history x
+		    LEFT OUTER JOIN emp_history y ON x.emp_no = y.emp_no AND x.history_no &lt; y.history_no
+		    WHERE y.emp_no IS NULL) a
+		LEFT OUTER JOIN dept b ON a.dept_no = b.dept_no
+		LEFT OUTER JOIN emp c ON a.emp_no = c.emp_no
+		LEFT OUTER JOIN pos d ON a.pos_no = d.pos_no
+		right OUTER JOIN task_member e ON a.emp_no = e.task_member_no
+        left outer join task f ON e.task_no = f.task_no 
+        LEFT OUTER JOIN task_file g ON e.task_no = g.task_no
+        LEFT OUTER JOIN goal h ON f.goal_no = h.goal_no
+		<where>
+			emp_resign_date is null AND f.goal_no = #{goal_no}
+		</where>
+	</select>
+	
+	<select id="taskCount" parameterType="long" resultType="Integer">
+		SELECT count(task_no)
+		FROM task
+		WHERE goal_no = #{goal_no}
+	</select >
+	
+	<select id="finishCount" parameterType="long" resultType="Integer">
+		SELECT count(a.task_no)
+		FROM task a
+		LEFT OUTER JOIN task_member b ON a.task_no = b.task_no
+		WHERE goal_no = #{goal_no} AND identify = 1
+	</select >
+	
 </mapper>

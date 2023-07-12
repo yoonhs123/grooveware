@@ -203,6 +203,9 @@ div.board1 .sort_numbering {
     cursor: pointer;
   }
 
+.main-table tr td {
+  padding: 10px;
+}  
 
 </style>	   
 

@@ -3,6 +3,8 @@ package com.sp.grooveware.goal;
 import java.util.List;
 import java.util.Map;
 
+import com.sp.grooveware.task.Task;
+
 public interface GoalService {
     public void insertGoal1(Goal dto, String pathname) throws Exception;
     public void insertGoal2(Goal dto, String pathname) throws Exception;
@@ -34,4 +36,8 @@ public interface GoalService {
     public int readAcess(Map<String, Object> map);
 
     public List<Goal> readGoalmember(long goal_no);
+
+    public List<Task> readTaskmember(long goal_no);
+    public int taskCount(long goal_no);
+    public int finishCount(long goal_no);
 }

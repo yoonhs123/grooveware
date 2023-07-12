@@ -170,6 +170,9 @@ div.board1 .sort_numbering {
   background-color: #243A73; 
 }
 
+.main-table tr td {
+  padding: 10px;
+}  
 
 </style>
 

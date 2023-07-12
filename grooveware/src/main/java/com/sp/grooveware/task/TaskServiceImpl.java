@@ -86,7 +86,7 @@ public class TaskServiceImpl implements TaskService{
 		int dataCount = 0;
 		
 		try {
-			dataCount = dao.selectOne("goal.dataCount", map);
+			dataCount = dao.selectOne("task.dataCount", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -94,6 +94,23 @@ public class TaskServiceImpl implements TaskService{
 		return dataCount;
 	}
 
+	
+	@Override
+	public int dataCount1(Map<String, Object> map) {
+		int dataCount = 0;
+		
+		try {
+			dataCount = dao.selectOne("task.dataCount1", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return dataCount;
+	}
+
+	
+	
+	
 	@Override
 	public List<Task> listTask(Map<String, Object> map) {
 		List<Task> list = null;
@@ -105,6 +122,69 @@ public class TaskServiceImpl implements TaskService{
 		}
 		
 		return list;
+	}
+
+	@Override
+	public List<Task> listTask1(Map<String, Object> map) {
+		List<Task> list = null;
+		
+		try {
+			list = dao.selectList("task.listTask1", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+
+	@Override
+	public Task readTask(long task_no) {
+		Task dto = null;
+		
+		try {
+			dto = dao.selectOne("task.readTask", task_no);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return dto;
+	}
+
+	@Override
+	public Task readTask1(long task_no) {
+	Task dto = null;
+		
+		try {
+			dto = dao.selectOne("task.readTask1", task_no);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return dto;
+	}
+
+	@Override
+	public void submitTask(Task dto, String pathname) throws Exception {
+		try {
+			String saveFilename = fileManager.doFileUpload(dto.getSelectFile(), pathname);
+			
+			if (saveFilename != null) {
+				if (dto.getSaveFilename() != null && dto.getSaveFilename().length() !=0) {
+					fileManager.doFileDelete(dto.getSaveFilename(), pathname);
+				}
+				
+				dto.setSaveFilename(saveFilename);
+				dto.setOriginalFilename(dto.getSelectFile().getOriginalFilename());
+			}
+			
+			dao.updateData("task.updateTaskCount", dto);
+			dao.updateData("task.submitTask", dto);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		
 	}
 
 	

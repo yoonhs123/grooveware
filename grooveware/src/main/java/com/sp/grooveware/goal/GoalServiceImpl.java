@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.sp.grooveware.common.FileManager;
 import com.sp.grooveware.common.dao.CommonDAO;
+import com.sp.grooveware.task.Task;
 
 @Service("goal.goalService")
 public class GoalServiceImpl implements GoalService {
@@ -271,6 +272,21 @@ public class GoalServiceImpl implements GoalService {
 		return list;
 	}
 
+
+	@Override
+	public List<Task> readTaskmember(long goal_no) {
+		List<Task> list = null;
+		
+		try {
+			list = dao.selectList("goal.readTask", goal_no);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+
+	
 	@Override
 	public int dataCount(long pj_no) {
 
@@ -353,6 +369,33 @@ public class GoalServiceImpl implements GoalService {
 			throw e;
 		}
 		
+	}
+
+	@Override
+	public int taskCount(long goal_no) {
+		int taskCount = 0;
+		
+		try {
+			taskCount = dao.selectOne("goal.taskCount", goal_no);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return taskCount;
+		
+	}
+
+	@Override
+	public int finishCount(long goal_no) {
+		int finishCount = 0;
+		
+		try {
+			finishCount = dao.selectOne("goal.finishCount", goal_no);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return finishCount;
 	}
 
 	

@@ -2,6 +2,7 @@
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <style type="text/css">
  
@@ -177,6 +178,11 @@ div.board1 .sort_numbering {
   background-color: #243A73; 
 }
 
+.main-table tr td {
+  padding: 10px;
+}  
+
+
 
 </style>	
 
@@ -231,15 +237,15 @@ function searchList() {
 				<div class="title_container">
 						<div class="project"><h2><i class="fa-solid fa-toggle-on"></i> 요청받은 업무 </h2></div>
 						<div class="keyword_left">
-							<form name="searchForm" action="${pageContext.request.contextPath}/project/list" method="post">
+							<form name="searchForm" action="${pageContext.request.contextPath}/task/listreceive" method="post">
 								<select name="condition" class="form-select">
 									<option value="task_name"  ${condition == "task_name" ? "selected='selected'" : ""} >업무 이름</option>
+									<option value="doing"  ${condition == "doing" ? "selected='selected'" : ""} >진행중인 업무</option>
+									<option value="finish"  ${condition == "finish" ? "selected='selected'" : ""} >완료된 업무</option>
 									<option value="task_manager"  ${condition == "task_manager" ? "selected='selected'" : ""} >요청자</option>
-									<option value="goal_name"  ${condition == "goal_name" ? "selected='selected'" : ""} >목표 이름</option>
 								</select>
 								<input type="text" name="keyword" value="${keyword}" class="form-control">
 								<button type="button" class="btn" onclick="searchList();">검색</button> 	
-							<%-- 	<input type="hidden" name="size" value="${size}"> 	--%>
 							</form>
 						</div>
 			 </div>
@@ -251,10 +257,12 @@ function searchList() {
 				<thead >
 					<tr>
 						<th class="sort_numbering"><i class="fa-solid fa-sort-down"></i></th>
-						<th width="35%;"> 업무 이름 </th>
+						<th width="20%;"> 업무 이름 </th>
+						<th width="20%;"> 해당 목표 </th>	
 						<th> 요청자 </th>
 						<th> 시작일 </th>
 						<th> 종료일 </th>
+						<th> 진행상태 </th>
 						<th> 파일 </th>
 					</tr>
 				</thead>
@@ -264,17 +272,55 @@ function searchList() {
 						<tr>
 							<td class="numbering">${dataCount - (page-1) * size - status.index}</td>
 							<td class="left title_left">
-								<a href="${article}?pj_no=${dto.pj_no}" class="text-reset">${dto.pj_name}</a>
-							</td>
-							<td>${dto.emp_name}</td>
-							<td>${dto.pj_start_date}</td>
-							<td>${dto.pj_end_date}</td>
-							<td>
-								<c:if test="${not empty dto.saveFilename}">
-									<a href="<c:url value='/project/download?pj_no=${dto.pj_no}'/>" class="text-reset"><i class="fa-solid fa-file-arrow-down"></i></a>
+								<c:if test="${dto.identify == ''}">
+									<c:choose>
+										<c:when test="${dto.task_name.length() > 15}">
+											<a href="${articleUrl}&task_no=${dto.task_no}" class="text-reset" style="font-weight: bold;">
+												${fn:substring(dto.task_name, 0, 15)}....
+											</a>
+										</c:when>
+										<c:otherwise>
+											<a href="${articleUrl}&task_no=${dto.task_no}" class="text-reset" style="font-weight: bold;">
+												${dto.task_name};
+											</a>
+										</c:otherwise>
+									</c:choose>
+								</c:if>
+								
+								<c:if test="${dto.identify != ''}">
+									<c:choose>
+										<c:when test="${dto.task_name.length() > 15}">
+											<a href="${articleUrl}&task_no=${dto.task_no}" class="text-reset">
+												${fn:substring(dto.task_name, 0, 15)}....
+											</a>
+										</c:when>
+										<c:otherwise>
+											<a href="${articleUrl}&task_no=${dto.task_no}" class="text-reset">
+												${dto.task_name}
+											</a>
+										</c:otherwise>
+									</c:choose>
 								</c:if>
 							</td>
-							<td><a href="${articleUrl}&pj_no=${dto.pj_no}" class="text-reset"><i class="fa-solid fa-newspaper"></i></a></td>						
+							<td>
+								<c:choose>
+										<c:when test="${dto.goal_name.length() > 15}">
+												${fn:substring(dto.goal_name, 0, 15)}....
+										</c:when>
+										<c:otherwise>
+												${dto.goal_name}
+										</c:otherwise>
+								</c:choose>
+							</td>
+							<td>${dto.emp_name}(${dto.pos_name}_${dto.dept_name})</td>
+							<td>${dto.task_start_date}</td>
+							<td>${dto.task_end_date}</td>
+							<td>${dto.identify == "" ? "진행중" : "완료" }</td>						
+							<td>
+								<c:if test="${not empty dto.saveFilename}">
+									<a href="<c:url value='/task/download?task_no=${dto.task_no}'/>" class="text-reset"><i class="fa-solid fa-file-arrow-down"></i></a>
+								</c:if>
+							</td>
 						</tr>
 					</c:forEach>
 				</tbody>
@@ -285,9 +331,6 @@ function searchList() {
 				${dataCount == 0 ? "검색 결과가 없습니다." : paging}
 			</div>
 			
-			<div align="right">
-				<button type="button" class="btn" onclick="location.href='${pageContext.request.contextPath}/project/write'">새 프로젝트 생성</button>
-   			</div>
 			</div>
 
    </div>

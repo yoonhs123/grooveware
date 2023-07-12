@@ -418,6 +418,10 @@ input[type="text"] {
     color: white;
     cursor: pointer;
   }
+  
+  .main-table tr td {
+  padding: 10px;
+}  
     
 </style>
    

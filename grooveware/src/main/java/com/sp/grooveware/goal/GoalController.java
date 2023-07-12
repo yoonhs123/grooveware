@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sp.grooveware.common.FileManager;
 import com.sp.grooveware.member.SessionInfo;
+import com.sp.grooveware.task.Task;
 
 @Controller("goal.goalController")
 @RequestMapping("/goal/*")
@@ -211,7 +212,10 @@ public class GoalController {
 		int pj_status = 0;
     	pj_status = service.readstatus(pj_no);
     	
+    	List<Task> task = service.readTaskmember(goal_no);
     	
+    	int taskCount = service.taskCount(goal_no);
+    	int finishCount = service.finishCount(goal_no);
     	
     	model.addAttribute("pj_status", pj_status);
 		model.addAttribute("dto", dto);
@@ -219,7 +223,9 @@ public class GoalController {
 		model.addAttribute("pj_name", pj_name);
 		model.addAttribute("parent_name", parent_name);
 		model.addAttribute("qualify", qualify);
-		
+		model.addAttribute("task", task);
+		model.addAttribute("taskCount", taskCount);
+		model.addAttribute("finishCount", finishCount);
     	
     	return ".goal.article";
     }

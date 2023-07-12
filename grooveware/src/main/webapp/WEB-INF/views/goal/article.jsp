@@ -2,6 +2,8 @@
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 
  <style type="text/css">
  .left-side-bar ul > li > a:first-child {
@@ -428,7 +430,41 @@ input[type="text"] {
     color: white;
     cursor: pointer;
   }
-    
+  
+  .main-table tr td {
+  padding: 10px;
+}  
+
+.table-list {
+	border-collapse: collapse;
+	width: 100%;
+}
+
+
+  .table-list th,
+  .table-list td {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  
+.table-list th { 
+	text-align: center; 
+	padding : 0;
+}
+	
+ .table-list td { 
+	padding-left : 20px;
+}
+
+  .table-list tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+
+.table-list thead tr th{
+ background-color: #ddd;
+}
+
 </style>
 
 <script type="text/javascript">
@@ -490,15 +526,73 @@ function deleteGoal() {
 				
 						<tr>
 							<th>업&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;무</th>
-							<td> 
-								${''}
+							<td width="100%;"> 
+								<table class="table-list">
+									<thead style="background-color: #ddd">
+										<tr>
+											<th width="25%">업무이름</th>
+											<th width="20%">담당자</th>
+											<th width="13%">기간</th>
+											<th width="25%">코멘트</th>
+											<th width="10%">진행상태</th>
+											<th width="7%">파일</th>
+										</tr>
+									</thead>
+									<tbody>
+										<c:forEach var="yoon" items="${task}" varStatus="status">
+											<tr>													
+
+											<td class="left title_left" width="25%" style="text-align: left;">
+												<c:choose>
+													<c:when test="${yoon.task_name.length() > 15}">
+														${fn:substring(yoon.task_name, 0, 15)}....
+													</c:when>
+													<c:otherwise>
+														${yoon.task_name}
+													</c:otherwise>
+												</c:choose>
+											</td>
+
+											<td width="20%">${yoon.emp_name}<br>(${yoon.pos_name}_${yoon.dept_name})</td>
+
+											<td width="13%">${yoon.task_start_date} ~ <br>${yoon.task_end_date}</td>
+
+											<td class="left title_left" width="25%">
+												<c:choose>
+													<c:when test="${yoon.task_comment.length() > 15}">
+														${fn:substring(yoon.task_comment, 0, 15)}....
+													</c:when>
+													<c:otherwise>
+														${yoon.task_comment}
+													</c:otherwise>
+												</c:choose>
+											</td>
+
+											<td width="10%">
+												<c:if test="${yoon.identify == ''}">
+													진행중
+												</c:if>
+												<c:if test="${yoon.identify == 1}">
+													완료
+												</c:if>
+											</td>
+
+											<td width="7%">
+												<c:if test="${not empty yoon.saveFilename}">
+													<a href="${pageContext.request.contextPath}/task/download?task_no=${yoon.task_no}"><i class="fa-solid fa-file-arrow-down"></i></a>
+												</c:if>
+											</td>
+										</tr>										
+										</c:forEach>
+									</tbody>
+								</table>
 							</td>
 						</tr>
 				
 						<tr>
 							<th>진&nbsp;&nbsp;행&nbsp;&nbsp;률</th>
 							<td> 
-								0%
+								 ${Math.floor((finishCount / taskCount) * 100)} %
 							</td>
 						</tr>
 				
