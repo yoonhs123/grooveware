@@ -128,7 +128,7 @@ height: 100%;
 					</tr>
 				</table>
 			</div>
-			<div class="line_container_in" style="height: 200px;">
+			<div class="line_container_in" style="height: 220px;">
 				<div class="table" style="margin-bottom: 15px;">
 					<div>
 						<div class="title" style="float: left; width: 100%;">
@@ -157,8 +157,8 @@ height: 100%;
 
 
 					<div style="width: 100%; float: left; ">
-						<c:forEach var="vo" items="${listApproval}">
-							<div class="text_box3">${vo.emp_name }<span
+						<c:forEach var="vo" items="${listApproval}" varStatus="loop">
+							<div class="text_box3" style="${loop.index == 0 ? 'padding-left: 10px' : ''}">${vo.emp_name }<span
 									style="font-weight: normal;">&nbsp;${vo.pos_name }</span>
 								<div>${vo.dept_name }</div>
 							</div>

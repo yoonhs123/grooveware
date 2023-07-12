@@ -251,8 +251,8 @@
  
 .img_container {
 	background: #BDBDBD;
-	width: 49px;
-	height: 45px;
+	width: 69px;
+	height: 65px;
 	float: left;
 	border-radius: 70%;
 	overflow: hidden;
@@ -284,7 +284,7 @@
 
 .text_box3 {
 	float: left;
-    margin-right: 50px;
+    margin-right: 75px;
     width: 115px;
     font-weight: normal;
 }
