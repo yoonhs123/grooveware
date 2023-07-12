@@ -47,6 +47,7 @@ public class MyInsa {
 	private long workLate_Count;
 	private long workAbsence_Count;
 	private long workLateEarly_Count;
+	private long workHoliday_Count;
 	
 	
 	public long getWork_Count() {
@@ -269,5 +270,11 @@ public class MyInsa {
 	}
 	public void setTop_dept_name(String top_dept_name) {
 		this.top_dept_name = top_dept_name;
+	}
+	public long getWorkHoliday_Count() {
+		return workHoliday_Count;
+	}
+	public void setWorkHoliday_Count(long workHoliday_Count) {
+		this.workHoliday_Count = workHoliday_Count;
 	}
 }

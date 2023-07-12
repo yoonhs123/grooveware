@@ -121,11 +121,11 @@ function searchList() {
 			<a href="${pageContext.request.contextPath}/myInsa/profile">&nbsp;인사정보</a> 
 			<a href="${pageContext.request.contextPath}/myInsa/insaCard">&nbsp;인사기록카드</a> 
 			<a href="${pageContext.request.contextPath}/myInsa/workRecord">&nbsp;내 출근 기록</a> 
-			<a href="#">&nbsp;내 휴가 기록</a>
+			<a href="${pageContext.request.contextPath}/myInsa/holidayArticle">&nbsp;내 휴가 기록</a>
 			<a href="${pageContext.request.contextPath}/myInsa/organization">&nbsp;조직도</a>
 		</li>
 		<c:choose>
-        <c:when test="${sessionScope.member.dept_no >= 60 && sessionScope.member.dept_no <= 70}">
+        <c:when test="${sessionScope.member.dept_no >= 60 && sessionScope.member.dept_no <= 70 || sessionScope.member.dept_no == 1}">
             <!-- dept_no가 60~70 사이일 때만 아래 <li> 태그들이 보이도록 처리하기 -->
             <li>
                 <a href="${pageContext.request.contextPath}/insaManage/list">인사관리</a>
@@ -146,7 +146,7 @@ function searchList() {
    			<div class="title_container">
    				<table class="insa-list-tab">
    					<tr>
-   						<td class="title"> <h2><i class="fa-solid fa-users-gear"></i>&nbsp; 사원 관리</h2></td>
+   						<td class="title"><h2><i class="fa-solid fa-users-gear"></i>&nbsp; 사원 관리</h2></td>
    					</tr>
    					<tr>
    						<td>
@@ -175,11 +175,11 @@ function searchList() {
    						<td align="right">
    							<form name="searchForm" action="${pageContext.request.contextPath}/insaManage/list" method="post">
 								<select name="condition" class="emp-list-select">
-									<option value="all"  ${condition == "all" ? "selected='selected'" : ""} > 전체 </option>
+									<option value="all"  ${condition == "all" ? "selected='selected'" : ""} > 사원번호+이름 </option>
 									<option value="emp_no"  ${condition == "emp_no" ? "selected='selected'" : ""} > 사원번호 </option>
-									<option value="emp_name"  ${condition == "emp_name" ? "selected='selected'" : ""} > 사원이름 </option>
-									<option value="dept_name"  ${condition == "dept_name" ? "selected='selected'" : 	""} > 부서이름 </option>
-									<option value="pos_name"  ${condition == "pos_name" ? "selected='selected'" : 	""} > 직위이름 </option>
+									<option value="emp_name"  ${condition == "emp_name" ? "selected='selected'" : ""} > 이름 </option>
+									<option value="dept_name"  ${condition == "dept_name" ? "selected='selected'" : ""} > 부서명 </option>
+									<option value="pos_name"  ${condition == "pos_name" ? "selected='selected'" : ""} > 직위명 </option>
 								</select>
 								<input type="text" name="keyword" value="${keyword}" class="emp-list-search">
 								<input type="hidden" name="emp_status" value="${emp_status}"> 

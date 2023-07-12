@@ -96,7 +96,8 @@
 	        COUNT(CASE WHEN wr.work_status = 0 THEN 1 END) AS work_Count,
 	        COUNT(CASE WHEN wr.work_status = 1 THEN 1 END) AS workLate_Count,
 	        COUNT(CASE WHEN wr.work_status = 2 THEN 1 END) AS workAbsence_Count,
-	       	COUNT(CASE WHEN wr.work_status = 3 THEN 1 END) AS workLateEarly_Count 
+	       	COUNT(CASE WHEN wr.work_status = 3 THEN 1 END) AS workLateEarly_Count,
+            COUNT(DECODE(wr.work_status, 3, 1)) AS workHoliday_Count
 	    FROM worktime_recode wr
 	    JOIN emp e ON e.emp_no = wr.emp_no
 	    WHERE wr.emp_no = #{emp_no}

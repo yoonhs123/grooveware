@@ -30,11 +30,11 @@ function searchList() {
 			<a href="${pageContext.request.contextPath}/myInsa/profile">&nbsp;인사정보</a> 
 			<a href="${pageContext.request.contextPath}/myInsa/insaCard">&nbsp;인사기록카드</a> 
 			<a href="${pageContext.request.contextPath}/myInsa/workRecord">&nbsp;내 출근 기록</a> 
-			<a href="#">&nbsp;내 휴가 기록</a>
+			<a href="${pageContext.request.contextPath}/myInsa/holidayArticle">&nbsp;내 휴가 기록</a>
 			<a href="${pageContext.request.contextPath}/myInsa/organization">&nbsp;조직도</a>
 		</li>
 		<c:choose>
-        <c:when test="${sessionScope.member.dept_no >= 60 && sessionScope.member.dept_no <= 70}">
+        <c:when test="${sessionScope.member.dept_no >= 60 && sessionScope.member.dept_no <= 70 || sessionScope.member.dept_no == 1}">
             <!-- dept_no가 60~70 사이일 때만 아래 <li> 태그들이 보이도록 처리하기 -->
             <li>
                 <a href="${pageContext.request.contextPath}/insaManage/list">인사관리</a>
@@ -55,9 +55,11 @@ function searchList() {
 
 	<div class="board-emp-list">
 		<div class="title_container-emp-list">
-			<h2>
-				<i class="fa-solid fa-briefcase"></i>&nbsp;근태관리
-			</h2>
+			<div class="title_container">
+				<h2>
+					<i class="fa-solid fa-briefcase"></i>&nbsp;근태관리
+				</h2>
+			</div>
 			<table class="table emp-list-1">
 				<tr>
 					<td class="title-emp-list">
@@ -71,11 +73,11 @@ function searchList() {
 					<td align="right">
 						<form name="searchForm" action="${pageContext.request.contextPath}/ " method="post">
 							<select name="condition" class="emp-list-select">
-								<option value="all" ${condition == "all" ? "selected='selected'" : ""}>이름+부서</option>
-								<option value="m_id" ${condition == "m_id" ? "selected='selected'" : ""}>사원번호</option>
-								<option value="dept_name" ${condition == "dept_name" ? "selected='selected'" : ""}>부서명</option>
-								<option value="m_name" ${condition == "m_name" ? "selected='selected'" : ""}>이름</option>
-								<option value="job_name" ${condition == "job_name" ? "selected='selected'" : 	""}>직위</option>
+								<option value="all" ${condition == "all" ? "selected='selected'" : ""}> 사원번호+이름 </option>
+								<option value="emp_no" ${condition == "emp_no" ? "selected='selected'" : ""}> 사원번호 </option>
+								<option value="emp_name" ${condition == "emp_name" ? "selected='selected'" : ""}>이름</option>
+								<option value="dept_name"  ${condition == "dept_name" ? "selected='selected'" : ""} > 부서명 </option>
+								<option value="pos_name"  ${condition == "pos_name" ? "selected='selected'" : ""} > 직위명 </option>
 							</select> <input type="text" name="keyword" value="${keyword}" class="emp-list-search">
 							<button type="button" class="work-search-btn" onclick="searchList();">검색</button>
 						</form>
@@ -105,11 +107,11 @@ function searchList() {
 						<td>${dto.emp_name}</td>
 						<td>${dto.dept_name}</td>
 						<td>${dto.pos_name}</td>
-						<td>${dto.work_Count}</td>
-						<td>${dto.workLate_Count}</td>
-						<td>${dto.workAbsence_Count}</td>
-						<td>${dto.workLateEarly_Count}</td>
-						<td>${dto.workHoliday_Count}</td>
+						<td>${dto.work_Count}일</td>
+						<td>${dto.workLate_Count}일</td>
+						<td>${dto.workAbsence_Count}일</td>
+						<td>${dto.workLateEarly_Count}일</td>
+						<td>${dto.workHoliday_Count}일</td>
 					</tr>
 					</c:forEach>
 				</tbody>

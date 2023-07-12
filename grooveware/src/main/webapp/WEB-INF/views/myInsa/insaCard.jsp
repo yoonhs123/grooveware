@@ -21,11 +21,11 @@ $(function() {
 			<a href="${pageContext.request.contextPath}/myInsa/profile">&nbsp;인사정보</a> 
 			<a href="${pageContext.request.contextPath}/myInsa/insaCard">&nbsp;인사기록카드</a> 
 			<a href="${pageContext.request.contextPath}/myInsa/workRecord">&nbsp;내 출근 기록</a> 
-			<a href="#">&nbsp;내 휴가 기록</a>
+			<a href="${pageContext.request.contextPath}/myInsa/holidayArticle">&nbsp;내 휴가 기록</a>
 			<a href="${pageContext.request.contextPath}/myInsa/organization">&nbsp;조직도</a>
 		</li>
 		<c:choose>
-        <c:when test="${sessionScope.member.dept_no >= 60 && sessionScope.member.dept_no <= 70}">
+        <c:when test="${sessionScope.member.dept_no >= 60 && sessionScope.member.dept_no <= 70 || sessionScope.member.dept_no == 1}">
             <!-- dept_no가 60~70 사이일 때만 아래 <li> 태그들이 보이도록 처리하기 -->
             <li>
                 <a href="${pageContext.request.contextPath}/insaManage/list">인사관리</a>
@@ -43,7 +43,7 @@ $(function() {
 </div>
 
 <div class="right-contentbody">
-	<h2 style="margin-bottom: 3%"><i class="fa-solid fa-address-card"></i>&nbsp;&nbsp;'${dto.emp_name}'님 인사 기록 카드</h2>
+	<h2 style="margin-bottom: 2%"><i class="fa-solid fa-address-card"></i>&nbsp;&nbsp;'${dto.emp_name}'님 인사 기록 카드</h2>
 	<table class="insa-info-table">
 		<tbody>
 			<tr>
@@ -76,7 +76,7 @@ $(function() {
 			<th style="width: 16.6%;">지각</th>
 			<th style="width: 16.6%;">결근</th>
 			<th style="width: 16.6%;">조퇴</th>
-			<th style="width: 16.6%;">연차휴가</th>
+			<th style="width: 16.6%;">휴가</th>
 		</tr>
 		<tr>
 			<td>${dto2.work_year}년</td>
@@ -84,7 +84,7 @@ $(function() {
 			<td>${dto2.workLate_Count}일</td>
 			<td>${dto2.workAbsence_Count}일</td>
 			<td>${dto2.workLateEarly_Count}일</td>
-			<td>?</td>
+			<td>${dto2.workHoliday_Count}일</td>
 		</tr>
 	</table>
 

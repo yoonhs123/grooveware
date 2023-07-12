@@ -35,11 +35,11 @@ function searchDate() {
 			<a href="${pageContext.request.contextPath}/myInsa/profile">&nbsp;인사정보</a> 
 			<a href="${pageContext.request.contextPath}/myInsa/insaCard">&nbsp;인사기록카드</a> 
 			<a href="${pageContext.request.contextPath}/myInsa/workRecord">&nbsp;내 출근 기록</a> 
-			<a href="#">&nbsp;내 휴가 기록</a>
+			<a href="${pageContext.request.contextPath}/myInsa/holidayArticle">&nbsp;내 휴가 기록</a>
 			<a href="${pageContext.request.contextPath}/myInsa/organization">&nbsp;조직도</a>
 		</li>
 		<c:choose>
-        <c:when test="${sessionScope.member.dept_no >= 60 && sessionScope.member.dept_no <= 70}">
+        <c:when test="${sessionScope.member.dept_no >= 60 && sessionScope.member.dept_no <= 70 || sessionScope.member.dept_no == 1}">
             <!-- dept_no가 60~70 사이일 때만 아래 <li> 태그들이 보이도록 처리하기 -->
             <li>
                 <a href="${pageContext.request.contextPath}/insaManage/list">인사관리</a>
@@ -60,7 +60,9 @@ function searchDate() {
 <div class="right-contentbody">
 			<div class="board">
 				<div class="main-container" style="width: 100%;">
-					<h2><i class="fa-solid fa-briefcase"></i>&nbsp; 님 출근 현황</h2>
+					<div class="title_container">
+					<h2><i class="fa-solid fa-briefcase"></i>&nbsp; '정유진'님 출근 현황</h2>
+					</div>
 					<div class="total-worktime" style="">
 						<table class="table table-border table-list total-worktime" style="padding:30px 0px 0px 30px; border: 2px solid #ced4da">
 							<tr style="border-bottom: 2px solid #ced4da">

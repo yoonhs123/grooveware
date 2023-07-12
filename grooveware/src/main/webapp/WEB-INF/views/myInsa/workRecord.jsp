@@ -35,11 +35,11 @@ function searchDate() {
 			<a href="${pageContext.request.contextPath}/myInsa/profile">&nbsp;인사정보</a> 
 			<a href="${pageContext.request.contextPath}/myInsa/insaCard">&nbsp;인사기록카드</a> 
 			<a href="${pageContext.request.contextPath}/myInsa/workRecord">&nbsp;내 출근 기록</a> 
-			<a href="#">&nbsp;내 휴가 기록</a>
+			<a href="${pageContext.request.contextPath}/myInsa/holidayArticle">&nbsp;내 휴가 기록</a>
 			<a href="${pageContext.request.contextPath}/myInsa/organization">&nbsp;조직도</a>
 		</li>
 		<c:choose>
-        <c:when test="${sessionScope.member.dept_no >= 60 && sessionScope.member.dept_no <= 70}">
+        <c:when test="${sessionScope.member.dept_no >= 60 && sessionScope.member.dept_no <= 70 || sessionScope.member.dept_no == 1}">
             <!-- dept_no가 60~70 사이일 때만 아래 <li> 태그들이 보이도록 처리하기 -->
             <li>
                 <a href="${pageContext.request.contextPath}/insaManage/list">인사관리</a>
@@ -64,21 +64,21 @@ function searchDate() {
 					<div class="total-worktime">
 						<table class="table table-border table-list total-worktime" style="padding:30px 0px 0px 30px; border: 2px solid #ced4da">
 							<tr style="border-bottom: 2px solid #ced4da">
-								<th width="14%">연차휴가</th>
 								<th width="14%">정상출근</th>
 								<th width="14%">지각</th>
 								<th width="14%">결근</th>
+								<th width="14%">휴가</th>
 								<th width="14%">조퇴</th>
 								<th width="14%">유급사용</th>
 								<th width="14%">무급사용</th>
 							</tr>
 
 							<tr>
-								<td>0일</td>
 								<td>${dto.work_Count}일</td>
 								<td>${dto.workLate_Count}일</td>
 								<td>${dto.workAbsence_Count}일</td>
 								<td>${dto.workLateEarly_Count}일</td>
+								<td>${dto.workHoliday_Count}일</td>
 								<td>0일</td>
 								<td>0일</td>
 							</tr>
@@ -127,17 +127,13 @@ function searchDate() {
 									<td>${dto.work_starttime}</td>
 									<td>${dto.work_endtime}</td>
 									<td>
-										${dto.work_status == 0 ? "정상출근" : (dto.work_status == 1 ? "지각" : (dto.work_status == 2 ? "결근" : (dto.work_status == 3 ? "조퇴" : "" )))}
+										${dto.work_status == 0 ? "정상출근" : (dto.work_status == 1 ? "지각" : (dto.work_status == 2 ? "결근" : (dto.work_status == 3 ? "조퇴" : (dto.work_status == 4 ? "휴가" : ""))))}
 									</td>
 								</tr>
 								</c:forEach>
 							</tbody>
 						</table>
-
-
 					</div>
-					
 				</div>
 			</div>
 		</div>
-

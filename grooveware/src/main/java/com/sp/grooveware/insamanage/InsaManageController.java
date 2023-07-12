@@ -398,8 +398,9 @@ public class InsaManageController {
 	}
 	
 	
-	@RequestMapping(value =  "holidayList", method = RequestMethod.GET)
+	@RequestMapping(value =  "holidayList")
 	public String holidayList(@RequestParam(value= "page", defaultValue= "1") int current_page, 
+			@RequestParam(required =  false) String year,
 			@RequestParam(defaultValue = "all") String condition,
 			@RequestParam(defaultValue = "") String keyword,
 			@RequestParam(defaultValue = "3") int emp_status,
@@ -409,10 +410,19 @@ public class InsaManageController {
 		
 		String cp = req.getContextPath();
 		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		Calendar cal = Calendar.getInstance();
 		
 		int size = 10;
 		int total_page = 0;
 		int dataCount = 0;
+		
+		int currentYear = cal.get(Calendar.YEAR);
+		
+		String date = null;
+		if(year == null) {
+			year = String.format("%04d", cal.get(Calendar.YEAR));
+		}
+		date = year;
 		
 		if(req.getMethod().equalsIgnoreCase("GET")) {
 			keyword = URLDecoder.decode(keyword, "utf-8");
@@ -424,6 +434,7 @@ public class InsaManageController {
 		map.put("condition", condition);
 		map.put("emp_no", info.getEmp_no());
 		map.put("emp_status", emp_status);
+		map.put("work_starttime", date);
 		
 		dataCount = service.holidayCount(map);
 		if(dataCount != 0) {
@@ -465,6 +476,8 @@ public class InsaManageController {
 		model.addAttribute("condition", condition);
 		model.addAttribute("keyword", keyword);
 		model.addAttribute("emp_status", emp_status);
+		model.addAttribute("currentYear", currentYear);
+		model.addAttribute("year", year);
 		
 		return ".insaManage.holidayList";
 	}

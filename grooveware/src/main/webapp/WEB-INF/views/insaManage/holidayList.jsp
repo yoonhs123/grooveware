@@ -3,6 +3,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+<script type="text/javascript">
+//검색
+function searchList() {
+	const f = document.searchForm;
+	f.submit();
+}
+</script>
+
 <div class="left-side-bar">      
     <ul>
 		<li>
@@ -10,11 +18,11 @@
 			<a href="${pageContext.request.contextPath}/myInsa/profile">&nbsp;인사정보</a> 
 			<a href="${pageContext.request.contextPath}/myInsa/insaCard">&nbsp;인사기록카드</a> 
 			<a href="${pageContext.request.contextPath}/myInsa/workRecord">&nbsp;내 출근 기록</a> 
-			<a href="#">&nbsp;내 휴가 기록</a>
+			<a href="${pageContext.request.contextPath}/myInsa/holidayArticle">&nbsp;내 휴가 기록</a>
 			<a href="${pageContext.request.contextPath}/myInsa/organization">&nbsp;조직도</a>
 		</li>
 		<c:choose>
-        <c:when test="${sessionScope.member.dept_no >= 60 && sessionScope.member.dept_no <= 70}">
+        <c:when test="${sessionScope.member.dept_no >= 60 && sessionScope.member.dept_no <= 70 || sessionScope.member.dept_no == 1}">
             <!-- dept_no가 60~70 사이일 때만 아래 <li> 태그들이 보이도록 처리하기 -->
             <li>
                 <a href="${pageContext.request.contextPath}/insaManage/list">인사관리</a>
@@ -36,29 +44,37 @@
 	<div class="board-holidayManage">
 		<div class="title_container">
 			<div class="title-holidaylist">
-				<h2>
-					<i class="fa-solid fa-calendar-check"></i>&nbsp; 연차휴가 현황
-				</h2>
+				<div class="title_container">
+					<h2>
+						<i class="fa-solid fa-calendar-check"></i>&nbsp; 연차휴가 현황
+					</h2>
+				</div>
 			</div>
-			<select class="select-year">
-					<option value="">2020년</option>
-					<option value="">2021년</option>
-					<option value="">2022년</option>
-					<option value="">2023년</option>
-			</select>
-			<div class="search" align="right">
-				<form name="searchForm" action="${pageContext.request.contextPath}/insaManage/list" method="post">
-					<select name="condition" class="emp-list-select">
-						<option value="all"  ${condition == "all" ? "selected='selected'" : ""} > 전체 </option>
-						<option value="emp_no"  ${condition == "emp_no" ? "selected='selected'" : ""} > 사원번호 </option>
-						<option value="emp_name"  ${condition == "emp_name" ? "selected='selected'" : ""} > 사원이름 </option>
-						<option value="dept_name"  ${condition == "dept_name" ? "selected='selected'" : 	""} > 부서 </option>
-						<option value="pos_name"  ${condition == "pos_name" ? "selected='selected'" : 	""} > 직위 </option>
-					</select>
-					<input type="text" name="keyword" value="${keyword}" class="emp-list-search">
-					<button type="button" class="work-search-btn" onclick="searchList()">검색</button>
-				</form>
-			</div>
+			<table class="table emp-list-1">
+				<tr>
+					<td class="title-emp-list">
+						<select id="select-year" name="year" class="year">
+								<option value="" disabled="disabled">년도</option>
+								<c:forEach var="y" begin="${currentYear-5}" end="${currentYear}">
+									<option value="${y}" ${year==y?"selected='selected'" : "" }>${y}년</option>
+								</c:forEach>
+						</select>
+						<button type="button" class="work-search-btn" onclick="searchDate();">검색</button>
+					<td align="right">
+						<form name="searchForm" action="${pageContext.request.contextPath}/ " method="post">
+							<select name="condition" class="emp-list-select">
+								<option value="all" ${condition == "all" ? "selected='selected'" : ""}> 사원번호+이름 </option>
+								<option value="emp_no" ${condition == "emp_no" ? "selected='selected'" : ""}> 사원번호 </option>
+								<option value="emp_name" ${condition == "emp_name" ? "selected='selected'" : ""}>이름</option>
+								<option value="dept_name"  ${condition == "dept_name" ? "selected='selected'" : ""} > 부서명 </option>
+								<option value="pos_name"  ${condition == "pos_name" ? "selected='selected'" : ""} > 직위명 </option>
+							</select> <input type="text" name="keyword" value="${keyword}" class="emp-list-search">
+							<button type="button" class="work-search-btn" onclick="searchList();">검색</button>
+						</form>
+					</td>
+				</tr>
+			</table>
+			
 
 			<table class="table table-list holidayManage">
 				<thead>

@@ -74,7 +74,10 @@
 		<choose>		
 			<when test="condition == 'all'">
 				( INSTR(emp_no, #{keyword}) &gt; 0
-					OR INSTR(emp_name, #{keyword}) &gt; 0 )
+					OR INSTR(emp_name, #{keyword}) &gt; 0 
+					OR INSTR(dept_name, #{keyword}) &gt; 0
+					OR INSTR(pos_name, #{keyword}) &gt; 0
+				)
 			</when>
 			<when test="condition == 'emp_no'">
 				INSTR(emp_no, #{keyword}) &gt; 0
@@ -82,10 +85,10 @@
 			<when test="condition == 'emp_name'">
 				INSTR(emp_name, #{keyword}) &gt; 0
 			</when>
-			<when test="condition == 'dept_name' ">
+			<when test="condition == 'dept_name'">
 				INSTR(dept_name, #{keyword}) &gt; 0
 			</when>
-			<when test="condition == 'pos_name' ">
+			<when test="condition == 'pos_name'">
 				INSTR(pos_name, #{keyword}) &gt; 0
 			</when>
 		</choose>
@@ -345,7 +348,8 @@
                COUNT(DECODE(wr.work_status, 0, 1)) AS work_Count,
                COUNT(DECODE(wr.work_status, 1, 1)) AS workLate_Count,
                COUNT(DECODE(wr.work_status, 2, 1)) AS workAbsence_Count,
-               COUNT(DECODE(wr.work_status, 3, 1)) AS workLateEarly_Count
+               COUNT(DECODE(wr.work_status, 3, 1)) AS workLateEarly_Count,
+               COUNT(DECODE(wr.work_status, 3, 1)) AS workHoliday_Count
         FROM (
             SELECT e.emp_no, e.emp_name, d.dept_name, p.pos_name,
                    EXTRACT(YEAR FROM wr.work_starttime) AS work_year,
@@ -379,10 +383,9 @@
 	<select id="workDataCount" parameterType="map" resultType="Integer">
 		SELECT COUNT(DISTINCT emp_no)
 		FROM worktime_recode
-		WHERE emp_no = #{emp_no}
 		<where>
 			<if test="keyword != null and keyword != '' ">
-				<include refid="where-list"/>
+				AND <include refid="where-list"/>
 			</if>
 		</where>
 	</select>
@@ -442,12 +445,11 @@
 	
 	
 	<select id="holidayDataCount" parameterType="map" resultType="Integer">
-		SELECT COUNT(DISTINCT emp_no)
+		SELECT COUNT(*)
 		FROM emp_annual
-		WHERE emp_no = #{emp_no}
 		<where>
 			<if test="keyword != null and keyword != '' ">
-				<include refid="where-list"/>
+				AND <include refid="where-list"/>
 			</if>
 		</where>
 	</select>

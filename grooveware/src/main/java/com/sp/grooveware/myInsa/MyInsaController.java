@@ -185,6 +185,26 @@ public class MyInsaController {
 		return ".myInsa.workRecord";
 	}
 	
+	@RequestMapping(value="holidayArticle")
+	public String holidayArticle(
+			@RequestParam(required = false) String year,
+			@RequestParam(required = false) String month,
+			Model model) throws Exception {
+		
+		Calendar cal = Calendar.getInstance();
+		 int currentYear = cal.get(Calendar.YEAR);
+		 
+		 if(year == null) {
+			 year = String.format("%04d", cal.get(Calendar.YEAR));
+		 }
+		 
+		 model.addAttribute("currentYear", currentYear);
+		 model.addAttribute("year", year);
+		 model.addAttribute("month", month);
+		
+		return ".myInsa.holidayArticle";
+	}
+	
 	@RequestMapping(value = "organization", method = RequestMethod.GET)
 	public String organization() throws Exception {
 		
