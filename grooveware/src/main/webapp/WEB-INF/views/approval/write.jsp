@@ -728,14 +728,14 @@ font-size: 18px;
 			    	  if (len2 === 0) {
 			    	  s += "<span class='approval-member'>";
 			    	    // 처음 추가 버튼을 눌렀을 때
-			    	    s += "<div class='img_container'><img src='${pageContext.request.contextPath}/resources/images/" + emp_save_filename + "' style='width: 100%; height: 100%;'></div>";
+			    	    s += "<div class='img_container'><img src='${pageContext.request.contextPath}/uploads/insaManage/" + emp_save_filename + "' style='width: 100%; height: 100%;'></div>";
 			    	    s += "<span style='font-weight: normal; word-break: keep-all;'>" + emp_name + "</span></span>";
 			    	  } else {
 			    	    // 다음 추가 버튼을 눌렀을 때
 			    	    s += "<span style='float: left; margin-top: 35px;'><i class='fa-solid fa-chevron-right fa-xl'></i></span>";
 				    	s += "<span class='approval-member' style=' margin-left: 30px;'>";
 
-			    	    s += "<div class='img_container'><img src='${pageContext.request.contextPath}/resources/images/" + emp_save_filename + "' style='width: 100%; height: 100%;'></div>";
+			    	    s += "<div class='img_container'><img src='${pageContext.request.contextPath}/uploads/insaManage/" + emp_save_filename + "' style='width: 100%; height: 100%;'></div>";
 			    	    s += "<span style='font-weight: normal; word-break: keep-all;'>" + emp_name + "</span></span>";
 			    	  }
 			    	  s += "<input type='hidden' name='emp_nos' value='" + emp_no + "'>";
