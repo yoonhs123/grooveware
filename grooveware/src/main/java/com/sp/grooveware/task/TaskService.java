@@ -20,6 +20,8 @@ public interface TaskService {
 	public Task readTask(long task_no);
 	public Task readTask1(long task_no);
 	
+	public Task readsendfile(long task_no);
+	
 	public void submitTask(Task dto, String pathname) throws Exception;
 	
 	public void updateTask(Task dto, String pathname) throws Exception;

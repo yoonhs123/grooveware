@@ -541,7 +541,7 @@ function deleteGoal() {
 									<tbody>
 										<c:forEach var="yoon" items="${task}" varStatus="status">
 											<tr>													
-
+											
 											<td class="left title_left" width="25%" style="text-align: left;">
 												<c:choose>
 													<c:when test="${yoon.task_name.length() > 15}">
@@ -556,7 +556,7 @@ function deleteGoal() {
 											<td width="20%">${yoon.emp_name}<br>(${yoon.pos_name}_${yoon.dept_name})</td>
 
 											<td width="13%">${yoon.task_start_date} ~ <br>${yoon.task_end_date}</td>
-
+											
 											<td class="left title_left" width="25%">
 												<c:choose>
 													<c:when test="${yoon.task_comment.length() > 15}">
@@ -579,20 +579,33 @@ function deleteGoal() {
 
 											<td width="7%">
 												<c:if test="${not empty yoon.saveFilename}">
-													<a href="${pageContext.request.contextPath}/task/download?task_no=${yoon.task_no}"><i class="fa-solid fa-file-arrow-down"></i></a>
+													<a href="${pageContext.request.contextPath}/task/download2?task_no=${yoon.task_no}"><i class="fa-solid fa-file-arrow-down"></i></a>
 												</c:if>
 											</td>
 										</tr>										
 										</c:forEach>
 									</tbody>
 								</table>
+								
+								
+								<div class="page-navigation" style="width: 900px; margin: 0 auto;">
+									${taskCount == 0 ? "등록된 없무가 없습니다." : ''}
+								</div>
+								
 							</td>
 						</tr>
 				
 						<tr>
 							<th>진&nbsp;&nbsp;행&nbsp;&nbsp;률</th>
 							<td> 
-								 ${Math.floor((finishCount / taskCount) * 100)} %
+							<c:choose>
+								<c:when test="${taskCount == 0}">
+									0%
+								</c:when>
+								<c:otherwise>
+									 ${Math.floor((finishCount / taskCount) * 100)} %
+								</c:otherwise>
+							</c:choose>
 							</td>
 						</tr>
 				

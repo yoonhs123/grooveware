@@ -511,5 +511,30 @@ public class TaskController {
 		
     }
     
+    @GetMapping(value = "download2")
+    public void download2(@RequestParam long task_no,
+    		HttpServletResponse resp,
+    		HttpSession session) throws Exception {
+    	
+    	String root = session.getServletContext().getRealPath("/");
+    	String pathname = root + "uploads" + File.separator + "task";
+    	
+    	Task dto = service.readsendfile(task_no);
+    	
+    	if (dto != null) {
+    		boolean b = fileManager.doFileDownload(dto.getSaveFilename(),
+    				dto.getOriginalFilename(), pathname, resp);
+    		
+    		if(b) {
+    			return;
+    		}
+    	}
+    	
+    	resp.setContentType("text/html;charset=utf-8");
+    	PrintWriter out = resp.getWriter();
+    	out.print("<script>alert('파일 다운로드가 실패 했습니다.');history.back();</script>");
+    	
+    }
+    
 }
 

@@ -570,7 +570,7 @@ function ajaxFun(url, method, query, dataType, fn) {
 				
 				<input type="hidden" name="goal_no" value="${goal_no}">
 				<input type="hidden" name="pj_no" value="${pj_no}">
-				.
+				
 					<table class="table table-border border-top2 table-form main-table">
 						<tr>
 							<th>목&nbsp;&nbsp;&nbsp;&nbsp;표</th>

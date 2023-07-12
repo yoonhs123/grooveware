@@ -203,6 +203,7 @@ public class TaskServiceImpl implements TaskService{
 			
 			dao.updateData("task.updateTask1", dto);
 			dao.updateData("task.updateTask2", dto);
+			dao.updateData("task.updateTask3", dto);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -223,6 +224,19 @@ public class TaskServiceImpl implements TaskService{
 		}
 		
 		return taskmember;
+	}
+
+	@Override
+	public Task readsendfile(long task_no) {
+		Task dto = null;
+		
+		try {
+			dto = dao.selectOne("task.readTask3", task_no);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return dto;
 	}
 
 	

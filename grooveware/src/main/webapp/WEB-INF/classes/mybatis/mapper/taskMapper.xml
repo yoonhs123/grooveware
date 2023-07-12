@@ -225,6 +225,25 @@
 		</where>
 	</select>
 	
+	
+	<select id="readTask3" parameterType="Long" resultType="com.sp.grooveware.task.Task">
+		SELECT a.emp_no, b.dept_name, c.emp_name, d.pos_name, f.task_no, task_name, task_content, TO_CHAR(task_start_date, 'YYYY-MM-DD') AS task_start_date, TO_CHAR(task_end_date, 'YYYY-MM-DD') AS task_end_date, task_manager, goal_name, task_comment, task_member_no
+			,f.saveFilename, f.originalFilename, identify
+		FROM (
+		    SELECT x.emp_no, x.history_no, x.dept_no, x.pos_no FROM emp_history x
+		    LEFT OUTER JOIN emp_history y ON x.emp_no = y.emp_no AND x.history_no &lt; y.history_no
+		    WHERE y.emp_no IS NULL) a
+		LEFT OUTER JOIN dept b ON a.dept_no = b.dept_no
+		LEFT OUTER JOIN emp c ON a.emp_no = c.emp_no
+		LEFT OUTER JOIN pos d ON a.pos_no = d.pos_no   
+		RIGHT OUTER JOIN task e ON e.task_manager = a.emp_no 
+		LEFT OUTER JOIN task_member f ON e.task_no = f.task_no
+		LEFT OUTER JOIN task_file g ON e.task_no = g.task_no
+		LEFT OUTER JOIN goal h ON e.goal_no = h.goal_no
+		WHERE f.task_no = #{task_no}
+	</select>
+		
+	
 </mapper>
 
 
