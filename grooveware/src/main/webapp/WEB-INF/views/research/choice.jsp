@@ -90,7 +90,7 @@ function sendOk(research_id) {
      <ul>
          <li>
              <a href="${pageContext.request.contextPath}/club/list">커뮤니티</a>
-             <a href="${pageContext.request.contextPath}/club/list">&nbsp;전체 커뮤니티</a>
+             <a href="${pageContext.request.contextPath}/club/list">&nbsp;사내 커뮤니티</a>
              <a href="${pageContext.request.contextPath}/club/mylist">&nbsp;가입 커뮤니티</a>
          <li>
          

@@ -114,7 +114,7 @@ function deleteRes(meroom_res_no) {
 <div class="right-contentbody">
 	<div class="title_container">
 		<div class="table1" style="margin-bottom: 5px;">
-			<div><h2><span>|</span>&nbsp;내 예약 현황</h2></div>
+			<div><h2><span><i class="fa-solid fa-table"></i></span>&nbsp;내 예약 현황</h2></div>
 		</div>
 	</div>
 	<div class="date-select">

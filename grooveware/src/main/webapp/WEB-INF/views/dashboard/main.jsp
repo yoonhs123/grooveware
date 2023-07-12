@@ -51,7 +51,7 @@ main {
 }
 .dash-list{
     border-bottom: 1px solid silver;
-    padding: 12px;
+    padding: 13px;
     position: relative;
     font-weight: 600;
 }
@@ -72,7 +72,7 @@ main {
 }
 .noti-list-btn{
 	height: 22px;
-	width: 50px;
+	width: 45px;
 	padding: 1.5px 7px;
     border: none;
 	border-radius: 5px;
@@ -192,16 +192,16 @@ $(function(){
 <div>
 <div class="dContainer">
 
-	<div class="profile-item">
+	<div class="profile-item item">
 		<div class="desc-area commuteBox">
 			<span class="title fontColor"></span> 
 			<div class="box-profile profile-picture-dash" style="text-align:center;">	
-				<img src="${pageContext.request.contextPath}/uploads/insaManage/${myInsa.emp_save_filename}" style="width: 80%; object-fit:cover;">
+				<img src="${pageContext.request.contextPath}/uploads/insaManage/${myInsa.emp_save_filename}" style="width: 80%; object-fit:cover; padding:15px;">
 			</div>
 			<div class="box-profile" style="padding: 15px 12px;">
-				<div style="text-align:center; margin: 5px 0; font-size: 18px; font-weight: 600;"> ${myInsa.emp_name} 님 </div>
-				<div style="text-align:left; margin: 5px 0; font-size: 14px;"> ${sessionScope.member.dept_name} | ${sessionScope.member.pos_name} </div>
-				<div style="text-align:left; margin: 5px 0; font-size: 14px;"> 사원번호 | ${sessionScope.member.emp_no} </div>
+				<div style="text-align:center; margin: 5px 0; font-size: 20px; font-weight: 600; padding: 10px 0;"> ${myInsa.emp_name}  </div>
+				<div style="text-align:left; margin: 5px 0; font-size: 16px; padding-bottom: 10px;"> ${sessionScope.member.dept_name} | ${sessionScope.member.pos_name} </div>
+				<div style="text-align:left; margin: 5px 0; font-size: 16px; padding-bottom: 10px;"> 사&nbsp;원&nbsp;번&nbsp;호 | ${sessionScope.member.emp_no} </div>
 			</div>
 		</div>
 		<div class="desc-area commuteBox" >
@@ -209,15 +209,15 @@ $(function(){
 				<span style="font-weight: bold; font-size: 20px;">출퇴근기록</span>
 				<br>
 				<div>
-				<div class="today-layout" style="text-align: center; font-size: 22px; padding: 9px 0; font-weight: 500;"></div>
+				<div class="today-layout" style="text-align: center; font-size: 22px; padding: 7px 0; font-weight: 500;"></div>
 				</div>
 				<div style="clear:both;"></div>
-				<div style="text-align: center; font-size: 19px; padding: 9px 0; font-weight: bold;">
+				<div style="text-align: center; font-size: 19px; padding: 7px 0; font-weight: bold;">
 					<span>출근</span>&nbsp;&nbsp;<span>${workTime.work_starttime}</span>
 					&nbsp;&nbsp;
 					<span>퇴근</span>&nbsp;&nbsp;<span>${workTime.work_endtime}</span>
 				</div>
-				<div class="WorkTime-btn"style="padding: 9px 0;">
+				<div class="WorkTime-btn"style="padding: 7px 0;">
 					<button class="btnWorkTime" data-record_no="0" 
 							${empty workTime ? "" : "disabled='disabled'" }>출근하기</button>
 
@@ -259,17 +259,17 @@ $(function(){
 				<div class="list-item" style="padding : 15px 20px;">
 					<div style="padding: 1.5px 0; ">
 					<span style="float: left; letter-spacing: 0.5px;">총 휴가일수</span>
-					<span style="float: right; letter-spacing: 0.5px;">15일</span>
+					<span style="float: right; letter-spacing: 0.5px;">11일</span>
 					</div>
 					
 					<div style="padding: 1.5px 0; ">
 					<span style="float: left; letter-spacing: 0.5px;">사용일수</span>
-					<span style="float: right; letter-spacing: 0.5px;">5일</span>
+					<span style="float: right; letter-spacing: 0.5px;">3일</span>
 					</div>
 					
 					<div style="padding: 1.5px 0; ">
 					<span style="float: left; letter-spacing: 0.5px;">잔여일수</span>
-					<span style="float: right; letter-spacing: 0.5px;">10일</span>
+					<span style="float: right; letter-spacing: 0.5px;">8일</span>
 					</div>
 				</div>					
 			</div>
@@ -285,8 +285,8 @@ $(function(){
 				<c:forEach var="appro" items="${approvalList}" varStatus="status">
 					<div class="dash-list">
 						<span>${appro.doc_name}</span>&nbsp;
-						<button class="appro-status-btn">${appro.approval_status==1?'진행중':''}</button>
-						<div class="minibox"> 기안자 ${appro.emp_name} | 처리기한 ${appro.draft_deadline} </div>
+						<button class="appro-status-btn">${appro.doc_status==1?'진행중':''}</button>
+						<div class="minibox"> 기안자 정유진 | 처리기한 ${appro.draft_deadline} </div>
 					</div>
 				</c:forEach>
 			</div>
@@ -301,17 +301,18 @@ $(function(){
 			<div class="dash-list-item" style="border-top: 1px solid silver;">
 				<c:forEach var="listTask" items="${listTask}" varStatus="status">
 					<div class="dash-list">
-						<span>
 						<c:choose>
 							<c:when test="${listTask.task_name.length() > 18}">
 								${fn:substring(listTask.task_name, 0, 18)}....
+								&nbsp;
+								<button class="task-dept-btn">${listTask.dept_name}</button>
 							</c:when>
 							<c:otherwise>
 								${listTask.task_name}
+								&nbsp;
+								<button class="task-dept-btn">${listTask.dept_name}</button>
 							</c:otherwise>
 						</c:choose>
-						</span>&nbsp;
-						<button class="task-dept-btn">${listTask.dept_name}</button>
 						<div class="minibox"> 요청자 ${listTask.emp_name} | 마감기한 ${listTask.task_end_date}</div>
 					</div>
 				</c:forEach>
@@ -328,7 +329,6 @@ $(function(){
 			<div class="dash-list-item" style="border-top: 1px solid silver;">
 				<c:forEach var="noti" items="${notiList}" varStatus="status">
 					<div class="dash-list">
-						<span>
 						<c:choose>
 							<c:when test="${noti.noti_title.length() > 22}">
 								${fn:substring(noti.noti_title, 0, 22)}....
@@ -341,8 +341,6 @@ $(function(){
 								<button class="noti-list-btn">NEW</button>
 							</c:otherwise>
 						</c:choose>
-						</span>&nbsp;
-						<button class="noti-list-btn">NEW</button>
 						<div class="minibox">작성자 관리자 | 작성일 ${noti.noti_regdate} </div>
 					</div>
 				</c:forEach>

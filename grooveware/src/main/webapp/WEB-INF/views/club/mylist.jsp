@@ -25,7 +25,7 @@
 }
 .table2 th {
     padding: 10px;
-    border-top: 2px solid #c1c1c1;
+    border-top: 2px solid #212529;
     border-bottom: 2px solid #c1c1c1;
     font-size: 16.5px;
     background-color: #f6f6f6;
@@ -58,14 +58,12 @@ img {
     width: 200px;
     padding: 5px 10px;
 }
-.search-button,
-.club-createbtn {
+.search-button {   
 	height: 30px;
-	border-radius: 5px;
+	border-radius: 4px;
     padding: 5px 10px;
-    background-color: #CEDDEF; 
-    color: #404040;
-    border: none;
+    background-color: #fff;
+    border: 1px solid #404040;
     cursor: pointer;
     font-weight: 600;
 }
@@ -84,12 +82,11 @@ img {
 	background-color: #eaeaea; 
 }
 .joinClub {
-	background-color: #eee6fc; 
+	background-color: #73C0DE; 
 }
 .enterClub {
-	background-color: #F8E8EE; 
+	background-color: #91CC75; 
 }
-
 </style>
 
 
@@ -192,10 +189,17 @@ $(function(){
          <li>
          
          <li>
-             <a href="${pageContext.request.contextPath}/research/list">설문조사</a>
-             <a href="${pageContext.request.contextPath}/research/list">&nbsp;설문리스트</a>
-             <a href="#">&nbsp;진행중인 설문</a>
-             <a href="#">&nbsp;마감된 설문</a>
+             <a href="${pageContext.request.contextPath}/research/open/list">설문조사</a>
+         <c:choose>
+	   		 <c:when test="${sessionScope.member.dept_no >= 60 && sessionScope.member.dept_no <= 70}">
+	         	 <a href="${pageContext.request.contextPath}/research/researchBox">&nbsp;설문작성함</a>
+	         </c:when>
+    		<c:otherwise>
+       		  <!-- dept_no가 60~ 70 사이가 아닐 때는 두 번째 <li> 태그를 출력하지 않게 -->
+          	</c:otherwise>
+   	 	 </c:choose>
+             <a href="${pageContext.request.contextPath}/research/open/list">&nbsp;진행중인 설문</a>
+             <a href="${pageContext.request.contextPath}/research/close/list">&nbsp;마감된 설문</a>
          <li>
      </ul>
 </div>

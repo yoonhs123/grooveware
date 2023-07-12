@@ -101,7 +101,16 @@
     width: 200px;
     padding: 5px 10px;
 }
-.search-button,
+.search-button {
+	height: 30px;
+	border-radius: 4px;
+    padding: 5px 10px;
+    background-color: #fff;
+    border: 1px solid #404040;
+    cursor: pointer;
+    font-weight: 600;
+}
+
 .board-createbtn {
 	height: 30px;
 	border-radius: 5px;
@@ -130,7 +139,7 @@ td.write-btn{
 }
 .club-board-table4 th {
     padding: 10px;
-    border-top: 2px solid #c1c1c1;
+    border-top: 2px solid #212529;
     border-bottom: 2px solid #c1c1c1;
     font-size: 16.5px;
     background-color: #f6f6f6;
@@ -175,15 +184,22 @@ function searchList() {
      <ul>
          <li>
              <a href="${pageContext.request.contextPath}/club/list">커뮤니티</a>
-             <a href="${pageContext.request.contextPath}/club/list">&nbsp;전체 커뮤니티</a>
+             <a href="${pageContext.request.contextPath}/club/list">&nbsp;사내 커뮤니티</a>
              <a href="${pageContext.request.contextPath}/club/mylist">&nbsp;가입 커뮤니티</a>
          <li>
-      
+         
          <li>
-             <a href="#">설문조사</a>
-             <a href="#">&nbsp;설문리스트</a>
-             <a href="#">&nbsp;진행중인 설문</a>
-             <a href="#">&nbsp;마감된 설문</a>
+             <a href="${pageContext.request.contextPath}/research/open/list">설문조사</a>
+         <c:choose>
+	   		 <c:when test="${sessionScope.member.dept_no >= 60 && sessionScope.member.dept_no <= 70}">
+	         	 <a href="${pageContext.request.contextPath}/research/researchBox">&nbsp;설문작성함</a>
+	         </c:when>
+    		<c:otherwise>
+       		  <!-- dept_no가 60~ 70 사이가 아닐 때는 두 번째 <li> 태그를 출력하지 않게 -->
+          	</c:otherwise>
+   	 	 </c:choose>
+             <a href="${pageContext.request.contextPath}/research/open/list">&nbsp;진행중인 설문</a>
+             <a href="${pageContext.request.contextPath}/research/close/list">&nbsp;마감된 설문</a>
          <li>
      </ul>
 </div>
@@ -193,9 +209,9 @@ function searchList() {
 			<table class="club-board-table1">
 				<tr>
 					<td class="title"> 
-						<h3>
+						<h2>
 							<span><i class="fa-regular fa-comment-dots"></i></span>&nbsp;${club.club_name}
-						</h3> 
+						</h2> 
 					</td>
 				</tr>
 			</table>
@@ -234,7 +250,7 @@ function searchList() {
 					<td class="write-btn">
 						<div>
 							<button type="button"  class="write-btn board-createbtn" 
-									onclick="location.href='${pageContext.request.contextPath}/club/${club_id}/board/write?board_category=${board_category}';" > 작성 </button>
+									onclick="location.href='${pageContext.request.contextPath}/club/${club_id}/board/write?board_category=${board_category}';" > 게시글 작성 </button>
 						</div>
 					</td>
 				</tr>

@@ -44,7 +44,7 @@
 }
 
 .mr-res-timetable .reservation {
-    background-color: #FAC858;
+    background-color: #73C0DE;
 }
 .mr-res-timetable .item {
   	width: 100%; height: 100%;
@@ -256,7 +256,7 @@ function resRead(meroom_res_no){
 	<div class="title_container">
 		<div class="table1" style="margin-bottom: 5px;">
 			<div>
-				<h2><span><i class="fa-solid fa-table"></i></span>&nbsp;회의실 예약 상세</h2>
+				<h2><span><i class="fa-solid fa-calendar-days"></i></span>&nbsp;회의실 예약 상세</h2>
 			</div>
 		</div>
 	</div>	

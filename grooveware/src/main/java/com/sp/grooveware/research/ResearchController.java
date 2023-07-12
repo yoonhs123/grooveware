@@ -36,7 +36,7 @@ public class ResearchController {
 		
 		SessionInfo info = (SessionInfo) session.getAttribute("member");
 		
-		int size = 5;
+		int size = 7;
 		int total_page = 0;
 		int dataCount = 0;
 		

@@ -11,6 +11,7 @@
 }
 .researchTitle {
 	margin: 10px;
+	font-weight: bold;
 }
 .researchBox-table {
 	width: 100%;
@@ -23,12 +24,27 @@
 }
 .research_title{
 	width: 100%;
+
 }
 
 input[type="radio"] {
 	width: 16px;
 	height: 16px;
 	border-radius: 50%; /* 원형으로 둥글게 표현 */
+}
+.research-create-btn,
+.research-reset-btn,
+.research-cancel-btn{
+	height: 36px;
+	width : 80px;
+	border-radius: 5px;
+    padding: 5px 10px;
+    background-color: #eaeaea; 
+    color: #404040;
+    border: none;
+    cursor: pointer;
+    font-weight: 550;
+    margin: 0 10px;
 }
 </style>
 
@@ -74,7 +90,7 @@ function sendOk(){
      <ul>
          <li>
              <a href="${pageContext.request.contextPath}/club/list">커뮤니티</a>
-             <a href="${pageContext.request.contextPath}/club/list">&nbsp;전체 커뮤니티</a>
+             <a href="${pageContext.request.contextPath}/club/list">&nbsp;사내 커뮤니티</a>
              <a href="${pageContext.request.contextPath}/club/mylist">&nbsp;가입 커뮤니티</a>
          <li>
          
@@ -99,7 +115,7 @@ function sendOk(){
 		<table class="table" style="margin-bottom: 20px;">
 			<tr>
 				<td class="title" > 
-					<h3><span>|</span>&nbsp;설문작성</h3> 
+					<h2><span><i class="fa-solid fa-pen-to-square"></i></span>&nbsp;설문작성</h2> 
 				</td>
 			</tr>
 		</table>

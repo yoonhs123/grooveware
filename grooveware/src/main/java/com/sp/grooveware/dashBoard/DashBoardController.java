@@ -11,12 +11,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sp.grooveware.approval.Approval;
 import com.sp.grooveware.approval.ApprovalService;
-import com.sp.grooveware.goal.Goal;
-import com.sp.grooveware.goal.GoalService;
 import com.sp.grooveware.member.SessionInfo;
 import com.sp.grooveware.myInsa.MyInsa;
 import com.sp.grooveware.myInsa.MyInsaService;
@@ -53,7 +50,7 @@ public class DashBoardController {
 	
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("emp_no", info.getEmp_no());
-		map.put("approval_status", 1);
+		map.put("doc_status", 1);
 		
 		map.put("dept_id", info.getDept_no());
 		map.put("offset", 0);

@@ -56,8 +56,7 @@ img {
     width: 200px;
     padding: 5px 10px;
 }
-.search-button,
-.club-createbtn {
+.search-button{
 	height: 30px;
 	border-radius: 4px;
     padding: 5px 10px;
@@ -65,6 +64,17 @@ img {
     border: 1px solid #404040;
     cursor: pointer;
     font-weight: 600;
+}
+
+.club-createbtn {
+	height: 30px;
+	border-radius: 4px;
+    padding: 5px 10px;
+    background-color: #243A73;
+    border: 1px solid #404040;
+    cursor: pointer;
+    font-weight: 600;
+    color: #fff;
 }
 
 .read,
@@ -75,16 +85,18 @@ img {
 	border-radius: 5px;
     padding: 5px 10px;
     font-weight: 600;
-    color: #404040;
 }
 .read {
 	background-color: #eaeaea; 
+	color: #404040;
 }
 .joinClub {
-	background-color: #eee6fc; 
+	background-color: #73C0DE; 
+	color: #404040;
 }
 .enterClub {
-	background-color: #AEDBEC; 
+	background-color: #91CC75; 
+	color: #404040;
 }
 
 </style>
