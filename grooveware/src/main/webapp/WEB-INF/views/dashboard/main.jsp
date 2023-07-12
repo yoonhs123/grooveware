@@ -107,7 +107,6 @@ main {
 .dContainer > .profile-item {
 	cursor: pointer;
 	border: 1px solid #d3d3d3;
-	height: 100%;
 	flex-direction: column;
 	justify-content: space-between;
 	border-radius: 5px;
