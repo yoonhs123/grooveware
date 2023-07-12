@@ -86,29 +86,31 @@ function searchList() {
 				</table>
 				
 				<div class="notice-list">
-				<table class="table">
-			
-					<tr>	
-						<td align="right">
-							<form name="searchForm" action="${pageContext.request.contextPath}/notice/${gubun}/list" method="post">
-								<select name="condition" class="form-select2">
-									<option value="all"  ${condition == "all" ? "selected='selected'" : ""} >제목+내용</option>
-									<option value="name"  ${condition == "name" ? "selected='selected'" : ""} >작성자</option>
-									<option value="reg_date"  ${condition == "reg_date" ? "selected='selected'" : ""} >등록일</option>
-									<option value="subject"  ${condition == "subject" ? "selected='selected'" : ""} >제목</option>
-									<option value="content"  ${condition == "content" ? "selected='selected'" : ""} >내용</option>
-								</select>
-								<input type="text" name="keyword" value="${keyword}" class="form-control">
-								<button type="button" class="btn-notice" onclick="searchList();">검색</button>
-						    	<button type="button" class="btn-notice" onclick="location.href='${pageContext.request.contextPath}/notice/${gubun}/write';">등록하기</button>
-							</form>
-							<div style="margin-top: 10px;">
-					      ${dataCount}개(${page}/${total_page} 페이지)
-							</div>
-						</td>
-					</tr>
-				</table>
-				
+			<table class="table">
+				<tr>	
+					<td align="right">
+						<form name="searchForm" action="${pageContext.request.contextPath}/notice/${gubun}/list" method="post">
+							<select name="condition" class="form-select2">
+								<option value="all" ${condition == "all" ? "selected='selected'" : ""} >제목+내용</option>
+								<option value="name" ${condition == "name" ? "selected='selected'" : ""} >작성자</option>
+								<option value="reg_date" ${condition == "reg_date" ? "selected='selected'" : ""} >등록일</option>
+								<option value="subject" ${condition == "subject" ? "selected='selected'" : ""} >제목</option>
+								<option value="content" ${condition == "content" ? "selected='selected'" : ""} >내용</option>
+							</select>
+							<input type="text" name="keyword" value="${keyword}" class="form-control">
+							<button type="button" class="btn-notice" onclick="searchList();">검색</button>
+							<c:if test="${sessionScope.member.dept_no == '60' || sessionScope.member.dept_no == '61' || sessionScope.member.dept_no == '62'}">
+								<button type="button" class="btn-notice" onclick="location.href='${pageContext.request.contextPath}/notice/${gubun}/write';">등록하기</button>
+							</c:if>
+						
+						</form>
+						<div style="margin-top: 10px;">
+							${dataCount}개(${page}/${total_page} 페이지)
+						</div>
+					</td>
+				</tr>
+			</table>
+							
 
 			
 			<table class="table table-border table-list">

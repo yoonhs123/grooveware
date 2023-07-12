@@ -32,22 +32,16 @@ textarea:focus, input:focus { outline: none; }
 input[type=checkbox], input[type=radio] { vertical-align: middle; }
 </style>
 
- <script type="text/javascript">
-
- <c:if test="${sessionScope.member.dept_no != 60}">
- function deleteNotice() {
-   alert("관리자만 삭제 가능합니다.");
- }
- </c:if>
- 
- function noticeAlert() {
-   var message = "${message}";
-   if (message !== "") {
-     alert(message);
-     history.back();
-   }
- }
- noticeAlert();
+<script type="text/javascript">
+	function deleteNotice() {
+		if (confirm("게시글을 삭제 하시겠습니까?")) {
+			const f = document.forms["listForm"]; 
+			if (f) { 
+				f.action = "/notice/delete"; 
+				f.submit();
+			}
+		}
+	}
 </script>
 
 <style type="text/css">
@@ -125,16 +119,18 @@ input[type=checkbox], input[type=radio] { vertical-align: middle; }
 	</table>
 	
 	<table class="table">
-		<tr>
-			<td width="50%">
-				<button type="button" class="btn-notice" onclick="javascript:location.href='${pageContext.request.contextPath}/notice/${gubun}/update?noti_id=${dto.noti_id}&page=${page}';">수정</button>
-				<button type="button" class="btn-notice" onclick="deleteNotice();">삭제</button>
-			</td>
-			<td align="right">
-				<button type="button" class="btn-notice" onclick="location.href='${pageContext.request.contextPath}/notice/${gubun}/list';">목록으로</button>
-			</td>
-		</tr>
-	</table>
+	<tr>
+		<td width="50%">
+	    <c:if test="${sessionScope.member.dept_no == '60' || sessionScope.member.dept_no == '61' || sessionScope.member.dept_no == '62'}">
+			<button type="button" class="btn-notice" onclick="javascript:location.href='${pageContext.request.contextPath}/notice/${gubun}/update?noti_id=${dto.noti_id}&page=${page}';">수정</button>
+			<button type="button" class="btn-notice" onclick="deleteNotice();">삭제</button>
+		</c:if>
+		</td>
+		<td align="right">
+			<button type="button" class="btn-notice" onclick="location.href='${pageContext.request.contextPath}/notice/${gubun}/list';">목록으로</button>
+		</td>
+	</tr>
+</table>
 </div>
 </div>
 </body>
