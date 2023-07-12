@@ -104,7 +104,7 @@ main {
 	margin: 20px;
 }
 
-.dContainer > .profile-item {
+.dContainer > .profile-picture-dash {
 	cursor: pointer;
 	border: 1px solid #d3d3d3;
 	flex-direction: column;
@@ -114,6 +114,11 @@ main {
 	word-wrap: break-word;
 	box-shadow: 0 3px 3px rgba(0,0,0,0.2);
 	padding: 20px;
+	
+	width: auto; 
+	height: auto;
+    max-width: 70px;
+    max-height: 90px;
 }
 </style>
 
@@ -199,7 +204,7 @@ $(function(){
 	<div class="profile-item">
 		<div class="desc-area commuteBox">
 			<span class="title fontColor"></span> 
-			<div class="box-profile profile-picture" style="text-align:center; padding: 12px;">
+			<div class="box-profile profile-picture-dash" style="text-align:center; padding: 12px;">
 				
 				<img src="${pageContext.request.contextPath}/uploads/insaManage/${myInsa.emp_save_filename}" style="width: 100%; height: 100%;">
 			</div>
@@ -326,7 +331,7 @@ $(function(){
 					<div class="dash-list">
 						<span>${noti.noti_title}</span>&nbsp;
 						<button class="noti-list-btn">NEW</button>
-						<div class="minibox">작성자 ${noti.emp_name} | 작성일 ${noti.noti_regdate} </div>
+						<div class="minibox">작성자 관리자 | 작성일 ${noti.noti_regdate} </div>
 					</div>
 				</c:forEach>
 			</div>
@@ -344,7 +349,7 @@ $(function(){
 					<div class="dash-list">
 						<span>${deptnoti.noti_title}</span>&nbsp;
 						<button class="noti-list-btn">NEW</button>
-						<div class="minibox">작성자 ${deptnoti.emp_name} | 작성일 ${deptnoti.noti_regdate} </div>
+						<div class="minibox">작성자 관리자 | 작성일 ${deptnoti.noti_regdate} </div>
 					</div>
 				</c:forEach>
 			</div>
