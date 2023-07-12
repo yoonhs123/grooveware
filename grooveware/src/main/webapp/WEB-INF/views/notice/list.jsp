@@ -129,7 +129,7 @@ function searchList() {
 					<c:forEach var="dto"  items="${list}" varStatus="status">
 						<tr>					
 							<td>${dataCount - (page-1) * size - status.index}</td>
-							<td align="left">
+							<td style="text-align:left;" >
 								<a href="${articleUrl}&noti_id=${dto.noti_id}">${dto.noti_title}</a>
 							</td>
 							<td>관리자</td>

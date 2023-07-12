@@ -145,7 +145,7 @@ $(function(){
 	    	return;
 	    }
 	    
-		writeToScreen("<div class='msg-right'>채팅방에 입장했습니다.</div>");
+		writeToScreen("<div class='msg-right'>그루비톡에 입장했습니다.</div>");
 	    
 	    // 서버 접속이 성공 하면 아이디와 이름을 JSON으로 서버에 전송
 	    let obj = {};
