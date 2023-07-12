@@ -79,20 +79,32 @@ $(function() {
         }
     });
     
-$("#btnDelete").click(function(){
-	let fileCnt = $("input[name=file_no]:checked").length;
-	let folderCnt = $("input[name=folder_no]:checked").length;
-	if (fileCnt + folderCnt === 0) {
-		alert("삭제할 폴더 및 파일을 선택하십쇼");
-		return;
-	}
-	       
-	if(confirm("선택한 파일을 삭제 하시겠습니까 ? ")) {
-		const f = document.listForm;
-		f.action = "${pageContext.request.contextPath}/archive/delete";
-		f.submit();
-	}
-});   
+	$("#btnDelete").click(function(){
+		let fileCnt = $("input[name=file_no]:checked").length;
+		let folderCnt = $("input[name=folder_no]:checked").length;
+		if (fileCnt + folderCnt === 0) {
+		    alert("삭제할 폴더 및 파일을 선택하십쇼");
+		    return;
+		}
+
+		let confirmMessage = "선택한 ";
+		if (fileCnt !== 0 && folderCnt !== 0) {
+		    confirmMessage += "폴더 및 파일을";
+		} else if (fileCnt === 0) {
+		    confirmMessage += "폴더를";
+		} else {
+		    confirmMessage += "파일을";
+		}
+		confirmMessage += " 삭제 하시겠습니까 ?";
+
+		if(confirm(confirmMessage)) {
+		    const f = document.listForm;
+		    f.action = "${pageContext.request.contextPath}/archive/delete";
+		    f.submit();
+		}
+		       
+		
+	});   
     
 });
 

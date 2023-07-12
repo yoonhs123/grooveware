@@ -210,7 +210,7 @@ $(function(){
 									<select name="category_num" id="form-categoryNum" class="form-select">
 										<%-- <option value="0">설정하지 않음</option> --%>
 										<c:forEach var="ct" items="${listCategory}">
-											<c:if test="${ ((sessionScope.member.dept_no == '61' || sessionScope.member.dept_no == '62') && ct.category_num == 0) 
+											<c:if test="${ ((sessionScope.member.dept_no == '60' || sessionScope.member.dept_no == '61' || sessionScope.member.dept_no == '62') && ct.category_num == 0) 
 														|| 	ct.category_num == 1 
 														|| sessionScope.member.dept_no == ct.category_num}">
 												<option value="${ct.category_num}" ${dto.category_num == ct.category_num ? "selected='selected'":""}>${ct.category}</option>

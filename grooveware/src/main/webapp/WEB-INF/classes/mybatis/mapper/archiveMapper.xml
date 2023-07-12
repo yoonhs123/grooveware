@@ -102,6 +102,7 @@
     <select id="getAllFolders" resultType="com.sp.grooveware.archive.Archive">
         SELECT folder_no, folder_name, root_folder
         FROM reference_folder
+        
     </select>
 	
 	<select id="getSubFiles" parameterType="long" resultType="com.sp.grooveware.archive.Archive">
@@ -115,12 +116,14 @@
 	    SELECT *
 	    FROM reference_folder
 	    WHERE root_folder = #{folder_no, jdbcType=BIGINT}
+	    ORDER BY reg_date DESC
 	</select>
 	
 	<select id="getPrivateSubFolders" parameterType="map" resultType="com.sp.grooveware.archive.Archive">
 	    SELECT *
 	    FROM reference_folder
 	    WHERE root_folder = #{folder_no} AND emp_no = #{emp_no}
+	    ORDER BY reg_date DESC
 	</select>
 	
 	<select id="getPrivateSubFiles" parameterType="map" resultType="com.sp.grooveware.archive.Archive">
