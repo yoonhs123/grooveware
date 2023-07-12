@@ -11,11 +11,10 @@
 	
 	<insert id="insertEmp" parameterType="com.sp.grooveware.insamanage.InsaManage">
 		INSERT INTO emp_reg(emp_name, emp_rrn, emp_email, emp_tel, 
-				emp_join_date, emp_save_filename, emp_original_filename, emp_zip, emp_addr1, emp_addr2)
+				emp_join_date, emp_save_filename, emp_zip, emp_addr1, emp_addr2)
 		VALUES (#{emp_name}, #{emp_rrn}, #{emp_email}, 
 				#{emp_tel}, 
 				TO_DATE(#{emp_join_date}, 'YYYY-MM-DD'), #{emp_save_filename, jdbcType=VARCHAR},
-				#{emp_original_filename, jdbcType=VARCHAR},
 				#{emp_zip, jdbcType=VARCHAR}, #{emp_addr1, jdbcType=VARCHAR}, #{emp_addr2, jdbcType=VARCHAR})
 	</insert>
 	
@@ -26,9 +25,6 @@
 		#{pos_no}, TO_DATE(#{pos_startdate}, 'YYYY-MM-DD'), #{dept_no}, 
 		TO_DATE(#{dept_startdate}, 'YYYY-MM-DD'))
 	</insert>
-	
-	
-	
 	
 	<!-- 상위 부서 카테고리 -->
 	<!-- 하위 부서 카테고리 -->
@@ -78,9 +74,7 @@
 		<choose>		
 			<when test="condition == 'all'">
 				( INSTR(emp_no, #{keyword}) &gt; 0
-					OR INSTR(emp_name, #{keyword}) &gt; 0
-					OR INSTR(dept_name, #{keyword}) &gt; 0
-					OR INSTR(pos_name, #{keyword}) &gt; 0 )
+					OR INSTR(emp_name, #{keyword}) &gt; 0 )
 			</when>
 			<when test="condition == 'emp_no'">
 				INSTR(emp_no, #{keyword}) &gt; 0
@@ -163,7 +157,7 @@
 		SELECT e.emp_no, e.emp_name, e.emp_email, e.emp_tel, 
 				d.dept_name, p.pos_name,
 				SUBSTR(emp_rrn, 1, 6) emp_rrn,
-				TO_CHAR(e.emp_join_date, 'YYYY-MM-DD') emp_join_date, emp_save_filename, emp_original_filename, 
+				TO_CHAR(e.emp_join_date, 'YYYY-MM-DD') emp_join_date, emp_save_filename, 
 				emp_zip, emp_addr1, emp_addr2
 		FROM emp e
 		JOIN (
@@ -369,7 +363,7 @@
         	AND t.rank = 1 
         	AND TO_CHAR(wr.work_starttime, 'YYYY') = #{work_starttime}
 			<if test="keyword != null and keyword != '' ">
-				<include refid="where-list"/>
+				AND <include refid="where-list"/>
 			</if>
 			<if test="work_starttime != null">
 				AND TO_CHAR(work_starttime, 'YYYY') = #{work_starttime}

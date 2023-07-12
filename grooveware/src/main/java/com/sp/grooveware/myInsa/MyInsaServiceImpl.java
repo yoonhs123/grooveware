@@ -71,12 +71,15 @@ public class MyInsaServiceImpl implements MyInsaService {
 				if(dto.getEmp_save_filename() != null && dto.getEmp_save_filename().length() != 0) {
 					fileManager.doFileDelete(dto.getEmp_save_filename(), pathname);
 				}
-				
 				dto.setEmp_save_filename(empsaveFilename);
-				dto.setEmp_original_filename(dto.getSelectFile().getOriginalFilename());
 			}
 			
-			dao.updateData("myInsa.updateProfile", dto);
+			if (dto.getEmp_pwd() != null && !dto.getEmp_pwd().isEmpty()) {
+		           dao.updateData("myInsa.updateProfile", dto);
+		       } else {
+		           dao.updateData("myInsa.updateProfileWithoutPwd", dto);
+		       }
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;

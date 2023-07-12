@@ -202,7 +202,7 @@ $(function(){
 			<span class="title fontColor"></span> 
 			<div class="box-profile profile-picture" style="text-align:center; padding: 12px;">
 				
-				<img src="${pageContext.request.contextPath}/uploads/insaManage/${myInsa.emp_original_filename}">
+				<img src="${pageContext.request.contextPath}/uploads/insaManage/${myInsa.emp_save_filename}">
 			</div>
 			<div class="box-profile" style="padding: 15px 12px;">
 				<div style="text-align:center; margin: 5px 0; font-size: 18px; font-weight: 600;"> ${myInsa.emp_name} 님 </div>

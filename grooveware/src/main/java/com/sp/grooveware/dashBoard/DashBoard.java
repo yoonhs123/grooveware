@@ -8,7 +8,6 @@ public class DashBoard {
 	private long emp_no;
 	private String emp_name;
 	private String emp_save_filename;
-	private String emp_original_filename;
 
 	// 휴가통계
 	private long holiday_id;
@@ -53,12 +52,6 @@ public class DashBoard {
 	}
 	public void setEmp_save_filename(String emp_save_filename) {
 		this.emp_save_filename = emp_save_filename;
-	}
-	public String getEmp_original_filename() {
-		return emp_original_filename;
-	}
-	public void setEmp_original_filename(String emp_original_filename) {
-		this.emp_original_filename = emp_original_filename;
 	}
 	public long getHoliday_id() {
 		return holiday_id;

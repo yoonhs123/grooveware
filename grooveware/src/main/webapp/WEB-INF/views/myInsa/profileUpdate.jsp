@@ -130,13 +130,13 @@ function sendOk() {
 			<tr>
 				<th class="th-left">비밀번호</th>
 				<td>
-					<input type="text" id="emp_pwd" name="emp_pwd" placeholder="재 설정할 비밀번호를 입력하세요." style="width: 200px; height : 30px;">
+					<input type="password" id="emp_pwd" name="emp_pwd" value="${dto.emp_pwd}" placeholder="재 설정할 비밀번호를 입력하세요." style="width: 200px; height : 30px;">
 				</td>
 			</tr>
 			<tr>
 				<th class="th-left">사진</th>
 				<td>
-					<input type="file" id="photo" name="selectFile" accept="image/*" value="${dto.emp_save_filename}" style="width: 100%; height: 85%;">
+					<input type="file" id="emp_save_filename" name="selectFile" accept="image/*" style="width: 100%; height: 85%;">
 				</td>
 			</tr>
 			<tr>

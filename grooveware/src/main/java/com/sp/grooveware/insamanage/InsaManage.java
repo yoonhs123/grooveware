@@ -20,7 +20,6 @@ public class InsaManage {
 	private String emp_addr2;
 	
 	private String emp_save_filename;
-	private String emp_original_filename;
 	private MultipartFile selectFile;
 	
 	// 부서, 직위
@@ -215,12 +214,6 @@ public class InsaManage {
 	}
 	public void setEmp_save_filename(String emp_save_filename) {
 		this.emp_save_filename = emp_save_filename;
-	}
-	public String getEmp_original_filename() {
-		return emp_original_filename;
-	}
-	public void setEmp_original_filename(String emp_original_filename) {
-		this.emp_original_filename = emp_original_filename;
 	}
 	public MultipartFile getSelectFile() {
 		return selectFile;

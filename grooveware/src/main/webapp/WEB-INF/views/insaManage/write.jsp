@@ -3,6 +3,38 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+<style type="text/css">
+.img-viewer {
+	cursor: pointer;
+	border: 1px solid #ccc;
+	width: 45px;
+	height: 45px;
+	border-radius: 3px;
+	background-image: url("${pageContext.request.contextPath}/resources/images/add_photo.png");
+	position: relative;
+	z-index: 9999;
+	background-repeat : no-repeat;
+	background-size : cover;
+}
+
+form input {
+	border: 1px solid #999; border-radius: 4px; background-color: #fff;
+	padding: 5px 5px; 
+	font-family: "맑은 고딕", 나눔고딕, 돋움, sans-serif;
+	vertical-align: baseline;
+}
+form select {
+	border: 1px solid #999; border-radius: 4px; background-color: #fff;
+	padding: 4px 5px; 
+	font-family: "맑은 고딕", 나눔고딕, 돋움, sans-serif;
+	vertical-align: baseline;
+}
+form input[readonly] { background-color:#f8f9fa; }
+form select[readonly] { background-color:#f8f9fa; }
+textarea:focus, input:focus { outline: none; }
+
+</style>
+
 <script type="text/javascript">
 	function sendOk() {
 	     const f = document.empForm;
@@ -81,6 +113,46 @@
 	     f.action = "${pageContext.request.contextPath}/insaManage/write";
 	     f.submit();
 	}
+	
+	$(function() {
+		let img = "${dto.emp_save_filename}";
+		if( img ) { // 수정인 경우
+			img = "${pageContext.request.contextPath}/uploads/insaManage/" + img;
+			$(".img-viewer").empty();
+			$(".img-viewer").css("background-image", "url("+img+")");
+		}
+		
+		$(".img-viewer").click(function(){
+			$("form[name=empForm] input[name=selectFile]").trigger("click"); 
+		});
+		
+		$("form[name=empForm] input[name=selectFile]").change(function(){
+			let file = this.files[0];
+			if(! file) {
+				$(".img-viewer").empty();
+				if( img ) {
+					img = "${pageContext.request.contextPath}/uploads/insaManage/" + img;
+				} else {
+					img = "${pageContext.request.contextPath}/resources/images/add_photo.png";
+				}
+				$(".img-viewer").css("background-image", "url("+img+")");
+				
+				return false;
+			}
+			
+			if(! file.type.match("image.*")) {
+				this.focus();
+				return false;
+			}
+			
+			let reader = new FileReader();
+			reader.onload = function(e) {
+				$(".img-viewer").empty();
+				$(".img-viewer").css("background-image", "url("+e.target.result+")");
+			}
+			reader.readAsDataURL(file);
+		});
+	});	
 </script>
 
 <script type="text/javascript">
@@ -111,37 +183,6 @@ function ajaxFun(url, method, query, dataType, fn) {
 	});
 }
 
-
-
-
-/*
-$(function(){
-	$("form select[name=top_dept_no]").change(function(){
-		let top_dept_no = $(this).val();
-		
-		$("form select[name=dept_no]").find('option').remove().end()
-			.append("<option value=''>:: 부서 선택 ::</option>");	
-		
-		if(! top_dept_no) {
-			return false;
-		}
-		
-		let url = "${pageContext.request.contextPath}/insaManage/listDeptSubCategory";
-		let query = "top_dept_no="+top_dept_no;
-		
-		const fn = function(data) {
-			$.each(data.listDeptSubCategory, function(index, item){
-				let dept_no = item.dept_no;
-				let dept_name = item.dept_name;
-				let s = "<option value='"+dept_no+"'>"+dept_name+"</option>";
-				$("form select[name=dept_no]").append(s);
-			});
-		};
-		ajaxFun(url, "get", query, "json", fn);
-		
-	});
-});
-*/
 </script>
 
 <div class="left-side-bar">
@@ -183,7 +224,7 @@ $(function(){
 				<tr>
 					<th><label for="name">이름</label></th>
 					<td>
-						<input type="text" id="name"  name="emp_name" value="${dto.emp_name}" placeholder="이름을 입력하세요." style="width: 200px; height : 30px;">
+						<input type="text" id="name"  name="emp_name" value="${dto.emp_name}" placeholder="이름을 입력하세요." style="width: 400px; height : 30px;">
 					</td>
 				</tr>
 				<tr>
@@ -201,28 +242,30 @@ $(function(){
 				<tr>
 					<th><label for="tel">핸드폰</label></th>
 					<td>
-						<input type="text" id="phone"  name="emp_tel" value="${dto.emp_tel}" placeholder="번호를 입력하세요.('-'포함)" style="width: 300px; height : 30px;"> 
+						<input type="text" id="phone"  name="emp_tel" value="${dto.emp_tel}" placeholder="번호를 입력하세요.('-'포함)" style="width: 400px; height : 30px;"> 
 					</td>
 				</tr>
 				<tr>
-					<th>주소</th>
+					<th>우편번호</th>
 					<td>
-						<label for="zip">우편번호</label>
-				        <div>
-				        <input type="text" id="emp_zip"  name="emp_zip" placeholder="우편번호" value="${dto.emp_zip}" readonly="readonly" style="width: 200px; height : 30px; margin-bottom:5px;">
+				        <input type="text" id="emp_zip"  name="emp_zip" placeholder="우편번호" value="${dto.emp_zip}" readonly="readonly" style="width: 290px; height : 30px; margin-bottom:5px;">
 				        <button class="btn" type="button" onclick="daumPostcode();" style="margin-left: 3px;">우편번호검색</button>
-				        </div>
-				        <label for="addr">주소</label>
-				        <div>
-				        <input type="text" id="emp_addr1" name="emp_addr1" placeholder="기본 주소" value="${dto.emp_addr1}" readonly="readonly" style="width: 300px; height : 30px;">
-				        <input type="text" id="emp_addr2" name="emp_addr2" placeholder="상세 주소" value="${dto.emp_addr2}" style="width: 200px; height : 30px;">
-				        </div>
 					</td>
 				</tr>
+				<tr>
+					<th valign="top">주소</th>
+					<td>
+				        <input type="text" id="emp_addr1" name="emp_addr1" placeholder="기본 주소" value="${dto.emp_addr1}" readonly="readonly" style="width: 400px; height : 30px;">
+				        <br>
+				        <input type="text" id="emp_addr2" name="emp_addr2" placeholder="상세 주소" value="${dto.emp_addr2}" style="width: 400px; height : 30px; margin-top: 5px;">
+					</td>
+				</tr>
+				
 				<tr>
 					<th><label for="photo">사진</label></th>
-					<td>
-						<input type="file" id="photo" name="selectFile" accept="image/*"  style="width: 200px; height : 30px;">
+					<td style="padding-top: 5px;">
+						<div class="img-viewer"></div>
+						<input type="file" id="emp_save_filename" name="selectFile" accept="image/*"  style="display: none;">
 					</td>
 				</tr>
 				<tr>

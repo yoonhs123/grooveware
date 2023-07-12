@@ -271,7 +271,7 @@ public class InsaManageController {
 		return "redirect:/insaManage/list";
 	}
 	
-	@RequestMapping(value = "workList", method = RequestMethod.GET)
+	@RequestMapping(value = "workList")
 	public String workList(
 			@RequestParam(required =  false) String year,
 			@RequestParam(value= "page", defaultValue= "1") int current_page, 

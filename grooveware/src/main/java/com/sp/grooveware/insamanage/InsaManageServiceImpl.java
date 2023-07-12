@@ -54,15 +54,12 @@ public class InsaManageServiceImpl implements InsaManageService  {
 			String empsavaFilename = fileManager.doFileUpload(dto.getSelectFile(), pathname);
 			
 			if(empsavaFilename != null) {
-				
 				dto.setEmp_save_filename(empsavaFilename);
-				dto.setEmp_original_filename(empsavaFilename);
-				System.out.println("검색"+empsavaFilename);
-				dto.setHistory_no(seq);
-				
-				dao.insertData("insaManage.insertEmp", dto);
-				dao.insertData("insaManage.insertHistory", dto);
 			}
+
+			dto.setHistory_no(seq);
+			dao.insertData("insaManage.insertEmp", dto);
+			dao.insertData("insaManage.insertHistory", dto);
 			
 		} catch (Exception e) {
 			e.printStackTrace();

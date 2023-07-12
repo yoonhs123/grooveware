@@ -15,6 +15,12 @@ function searchDate() {
 	let query = "year=" +y;
 	location.href = "${pageContext.request.contextPath}/insaManage/workList?" +query;
 }
+
+function searchList() {
+	const f = document.searchForm;
+	f.submit();
+}
+	
 </script>
 
 <div class="left-side-bar">
