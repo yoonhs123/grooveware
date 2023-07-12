@@ -307,7 +307,7 @@ font-size: 18px;
 						</tr>
 					</table>
 				</div>
-				<div class="line_container" style="height: 200px;">
+				<div class="line_container" style="height: 220px;">
 					<div class="table" style="margin-bottom: 15px;">
 						<div>
 							<div class="title" style="float: left; width: 100%; font-size: 22px;">

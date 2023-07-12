@@ -64,6 +64,159 @@ height: 100%;
     color: white;
     cursor: pointer;
   }
+   /* 모달 스타일 */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 999999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    .modal .modal-content {
+      background-color: #f2f2f2;
+      margin: 10% auto;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      width: 30%;
+      max-height: 80%;
+      overflow-y: auto;
+    }
+
+    .modal .close {
+      color: #243A73;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .modal .close:hover,
+    .modal .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    /* 테이블 스타일 */
+    .modal table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .modal th, .modal td {
+      text-align: left;
+    }
+
+    .modal th {
+      background-color: #243A73;
+      color: white;
+    }
+
+    .modal li:nth-child(odd) {
+      background-color: #dfe2eb;
+    }
+    
+    .modal td:first-child {
+    	width: 1%;
+    }
+    
+    .modal th:last-child {
+    	text-align: center;
+    }
+    
+    .modal td:last-child {
+    	text-align: center;
+    }
+    
+    .dialog-emp-list ul {
+		text-align: left;    
+    }
+
+
+     /* Select 박스 스타일 */
+    .modal select {
+      padding: 5px;
+      font-size: 14px;
+      border-radius: 4px;
+      border: 1px solid #ddd;
+      background-color: #fff;
+      color: #333;
+      outline: none;
+    }
+
+    .modal select option {
+      padding: 5px;
+    }
+    
+     .modal-footer {
+    text-align: center;
+    margin-top: 20px;
+    }
+
+     .modal-footer button {
+    padding: 10px 20px;
+    font-size: 14px;
+    border-radius: 4px;
+    border: none;
+    background-color: #243A73;
+    color: white;
+    cursor: pointer;
+   }
+
+  .btn_emp_find {
+    margin-top: 10px;
+  }
+
+  .emp-list {
+    height: 150px;
+    border: 1px solid black;
+    overflow-y: auto;
+    padding: 10px;
+  }
+
+  .emp-list ul {
+    padding: 0;
+    list-style: none;
+  }
+
+.modal .modal-content {
+  background-color: #f2f2f2;
+  margin: 10% auto;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 30%;
+  max-height: 80%;
+  overflow-y: auto;
+}
+
+.modal th {
+  background-color: #243A73;
+  color: white;
+}
+
+.modal tr:nth-child(even) {
+  background-color: #dfe2eb;
+}
+
+.modal td {
+  text-align: left;
+  color: #333; /* 수정: 글씨 색상 연하게 설정 */
+}
+
+.modal .modal-body {
+  margin-bottom: 20px; /* 수정: <h3>와 modal-body 사이 거리 벌리기 */
+}
+
+.modal table {
+  width: 100%;
+  border-collapse: collapse;
+}
 
 </style>
 
@@ -390,14 +543,12 @@ $(function() {
 
 
 <!-- 모달 -->
-<div id="update-approvalDialog" style="display: none;" class="dialog">
-	<div class="dialog-content">
+<div id="update-approvalDialog" style="display: none;" class="modal">
+	<div class="dialog-content modal-content">
 		<form name="approvalForm" method="post">
-			<div style="border-bottom: 1px solid #ced4da; padding-bottom: 10px;">
-				<button type="button" class="btn btnClose" style="float: right;">
-					<span class="close">&times;</span>
-				</button>
-				<h3 style="margin-bottom: 20px;">반려 사유</h3>
+			<div style=" padding-bottom: 10px;">
+					<span class="close btnClose">&times;</span>
+				<h3 style="margin-bottom: 20px; color: #243A73;">반려 사유</h3>
 			</div>
 			<table class="table table-border table-form">
 				<tbody>
@@ -409,15 +560,15 @@ $(function() {
 							</div>
 						</td>
 					</tr>
-					<tr>
-						<td align="right"><input type="hidden" name="doc_no"
-							value="${dto.doc_no }"> <input type="hidden"
-							name="approval_status" value="3">
-							<button type="button" class="btn btnSubmit">반려</button>
-							<button type="button" class="btn btnClose">닫기</button></td>
-					</tr>
 				</tbody>
 			</table>
+			<div class="modal-footer">
+				<input type="hidden" name="doc_no" value="${dto.doc_no }"> 
+				<input type="hidden" name="approval_status" value="3">
+				<button type="button" class="btn btnSubmit">반려</button>
+				<button type="button" class="btn btnClose">닫기</button>
+			</div>
+			
 		</form>
 	</div>
 </div>
