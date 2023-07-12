@@ -55,12 +55,10 @@ main {
     position: relative;
     font-weight: 600;
 }
-
 .dash-list-title{
     position: relative;
     font-weight: 600;
 }
-
 .task-dept-btn{
 	height: 22px;
 	width: 92px;
@@ -72,7 +70,6 @@ main {
     background-color: #FAC858;
     text-align: center;	
 }
-
 .noti-list-btn{
 	height: 22px;
 	width: 50px;
@@ -86,9 +83,6 @@ main {
     font-size: 12px;
 }
 
-.box-profile{
-	
-}
 .profile-btn{
 	height: 22px;
 	width: 40px;
@@ -201,9 +195,8 @@ $(function(){
 	<div class="profile-item">
 		<div class="desc-area commuteBox">
 			<span class="title fontColor"></span> 
-			<div class="box-profile profile-picture-dash" style="text-align:center; padding: 12px;">
-				
-				<img src="${pageContext.request.contextPath}/uploads/insaManage/${myInsa.emp_save_filename}" style="width: 80%">
+			<div class="box-profile profile-picture-dash" style="text-align:center;">	
+				<img src="${pageContext.request.contextPath}/uploads/insaManage/${myInsa.emp_save_filename}" style="width: 80%; object-fit:cover;">
 			</div>
 			<div class="box-profile" style="padding: 15px 12px;">
 				<div style="text-align:center; margin: 5px 0; font-size: 18px; font-weight: 600;"> ${myInsa.emp_name} 님 </div>
@@ -244,18 +237,18 @@ $(function(){
 				<div class="list-item">
 					<div class="dash-list-title">연차휴가</div>
 				</div>
-				<div class="list-item" style="padding : 10px 20px;">
-					<div>
+				<div class="list-item" style="padding : 15px 20px;">
+					<div style="padding: 1.5px 0;">
 					<span style="float: left; letter-spacing: 0.5px;">총 휴가일수</span>
 					<span style="float: right; letter-spacing: 0.5px;">15일</span>
 					</div>
 					
-					<div>
+					<div style="padding: 1.5px 0;">
 					<span style="float: left; letter-spacing: 0.5px;">사용일수</span>
 					<span style="float: right; letter-spacing: 0.5px;">5일</span>
 					</div>
 					
-					<div>
+					<div style="padding: 1.5px 0;">
 					<span style="float: left; letter-spacing: 0.5px;">잔여일수</span>
 					<span style="float: right; letter-spacing: 0.5px;">10일</span>
 					</div>
@@ -263,18 +256,18 @@ $(function(){
 				<div class="list-item">
 					<div class="dash-list-title">보상휴가</div>
 				</div>
-				<div class="list-item" style="padding : 10px 20px;">
-					<div>
+				<div class="list-item" style="padding : 15px 20px;">
+					<div style="padding: 1.5px 0; ">
 					<span style="float: left; letter-spacing: 0.5px;">총 휴가일수</span>
 					<span style="float: right; letter-spacing: 0.5px;">15일</span>
 					</div>
 					
-					<div>
+					<div style="padding: 1.5px 0; ">
 					<span style="float: left; letter-spacing: 0.5px;">사용일수</span>
 					<span style="float: right; letter-spacing: 0.5px;">5일</span>
 					</div>
 					
-					<div>
+					<div style="padding: 1.5px 0; ">
 					<span style="float: left; letter-spacing: 0.5px;">잔여일수</span>
 					<span style="float: right; letter-spacing: 0.5px;">10일</span>
 					</div>
@@ -339,9 +332,13 @@ $(function(){
 						<c:choose>
 							<c:when test="${noti.noti_title.length() > 22}">
 								${fn:substring(noti.noti_title, 0, 22)}....
+								&nbsp;
+								<button class="noti-list-btn">NEW</button>
 							</c:when>
 							<c:otherwise>
 								${noti.noti_title}
+								&nbsp;
+								<button class="noti-list-btn">NEW</button>
 							</c:otherwise>
 						</c:choose>
 						</span>&nbsp;
