@@ -138,9 +138,6 @@ $(function() {
 			<table class="table table-border table-list" >
 				<thead >
 					<tr>
-						<th width="5%;">
-							<input type="checkbox" name="chkAll" value="all"> 
-						</th> 
 						<th> 문서번호 </th>
 						<th> 문서종류 </th>
 						<th width="35%;"> 제목 </th>
@@ -155,9 +152,6 @@ $(function() {
 				<tbody> 
 					<c:forEach var="dto" items="${standByList}">
 						<tr>
-							<td>
-								<input type="checkbox" name="" value="">
-							</td>					
 							<td>${dto.doc_no}</td>
 							<td>${dto.draft_category == 0 ? '품의서' : '기안서'}</td>
 							<td style="text-align: left; padding: 0% 3% 0% 3%;">
@@ -181,9 +175,6 @@ $(function() {
 					</c:forEach>
 					<c:forEach var="dto" items="${progressList}">
 						<tr>
-							<td>
-								<input type="checkbox" name="" value="">
-							</td>					
 							<td>${dto.doc_no}</td>
 							<td>${dto.draft_category == 0 ? '품의서' : '기안서'}</td>
 							<td>
@@ -207,9 +198,6 @@ $(function() {
 					</c:forEach>					
 					<c:forEach var="dto" items="${sendBackList}">
 						<tr>
-							<td>
-								<input type="checkbox" name="" value="">
-							</td>					
 							<td>${dto.doc_no}</td>
 							<td>${dto.draft_category == 0 ? '품의서' : '기안서'}</td>
 							<td>
@@ -236,9 +224,6 @@ $(function() {
 					</c:forEach>	
 					<c:forEach var="dto" items="${completionList}">
 						<tr>
-							<td>
-								<input type="checkbox" name="" value="">
-							</td>					
 							<td>${dto.doc_no}</td>
 							<td>${dto.draft_category == 0 ? '품의서' : '기안서'}</td>
 							<td>

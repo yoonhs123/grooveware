@@ -55,7 +55,7 @@ public class approvalController {
 		SessionInfo info = (SessionInfo)session.getAttribute("member");
  
 		
-		int size = 5; // 한 화면에 보여주는 게시물 수
+		int size = 10; // 한 화면에 보여주는 게시물 수
 		int total_page = 0;
 		int dataCount = 0;
 

@@ -300,11 +300,13 @@
 			
 	<!-- 대기/진행중 문서 리스트  -->
 	<select id="ApprovalStepList"  parameterType="map" resultType="com.sp.grooveware.approval.Approval">
-		SELECT  d.doc_no, a.emp_no, e.emp_name, approval_status, doc_status, urgent, doc_name,  
+       SELECT  d.doc_no, a.emp_no, e.emp_name, approval_status, doc_status, urgent, doc_name,  
 					TO_CHAR(d.draft_date, 'YYYY-MM-DD') AS draft_date, TO_CHAR(d.draft_deadline, 'YYYY-MM-DD') AS draft_deadline, 
 					approval_step, TO_CHAR(d.approval_finaldate, 'YYYY-MM-DD') AS approval_finaldate, TO_CHAR(d.submit_date, 'YYYY-MM-DD') AS submit_date, important, is_visible,
-					approval_status_id, TO_CHAR(approval_date, 'YYYY-MM-DD') AS approval_date, reject_reason
+					approval_status_id, TO_CHAR(approval_date, 'YYYY-MM-DD') AS approval_date, reject_reason,
+                    dr.draft_category, dr.draft_content
 		FROM doc d
+        LEFT OUTER JOIN draft dr ON d.doc_no = dr.doc_no
 		LEFT OUTER JOIN  approval a ON  d.doc_no = a.doc_no
 		LEFT OUTER JOIN emp e ON e.emp_no = d.emp_no
 		WHERE a.emp_no = #{emp_no}  AND approval_status = #{approval_status} AND
@@ -319,8 +321,10 @@
 		SELECT  d.doc_no, a.emp_no, e.emp_name, approval_status, doc_status, urgent, doc_name,  
 					TO_CHAR(d.draft_date, 'YYYY-MM-DD') AS draft_date, TO_CHAR(d.draft_deadline, 'YYYY-MM-DD') AS draft_deadline, 
 					approval_step, TO_CHAR(d.approval_finaldate, 'YYYY-MM-DD') AS approval_finaldate, TO_CHAR(d.submit_date, 'YYYY-MM-DD') AS submit_date, important, is_visible,
-					approval_status_id, TO_CHAR(approval_date, 'YYYY-MM-DD') AS approval_date, reject_reason
+					approval_status_id, TO_CHAR(approval_date, 'YYYY-MM-DD') AS approval_date, reject_reason,
+					dr.draft_category, dr.draft_content
 		FROM doc d
+		LEFT OUTER JOIN draft dr ON d.doc_no = dr.doc_no
 		LEFT OUTER JOIN  approval a ON  d.doc_no = a.doc_no
 		LEFT OUTER JOIN emp e ON e.emp_no = d.emp_no
 		WHERE   a.emp_no = #{emp_no}  AND d.doc_no IN (SELECT doc_no FROM  doc WHERE doc_status = 4)
@@ -332,8 +336,10 @@
 		SELECT  d.doc_no, a.emp_no, e.emp_name, approval_status, doc_status, urgent, doc_name,  
 					TO_CHAR(d.draft_date, 'YYYY-MM-DD') AS draft_date, TO_CHAR(d.draft_deadline, 'YYYY-MM-DD') AS draft_deadline, 
 					approval_step, TO_CHAR(d.approval_finaldate, 'YYYY-MM-DD') AS approval_finaldate, TO_CHAR(d.submit_date, 'YYYY-MM-DD') AS submit_date, important, is_visible,
-					approval_status_id, TO_CHAR(approval_date, 'YYYY-MM-DD') AS approval_date, reject_reason
+					approval_status_id, TO_CHAR(approval_date, 'YYYY-MM-DD') AS approval_date, reject_reason,
+					dr.draft_category, dr.draft_content
 		FROM doc d
+		LEFT OUTER JOIN draft dr ON d.doc_no = dr.doc_no
 		LEFT OUTER JOIN  approval a ON  d.doc_no = a.doc_no
 		LEFT OUTER JOIN emp e ON e.emp_no = d.emp_no
 		WHERE   a.emp_no = #{emp_no}  AND d.doc_no IN (SELECT doc_no FROM  doc WHERE doc_status = 3)

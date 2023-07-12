@@ -24,8 +24,15 @@ input[type=text]{
     height: 26px;
     
 }
+div.board1 .numbering {
+	font-size : 10px;
+	color : #BDBDBD;
+}
 
-.form-select{ }
+div.board1 .sort_numbering {
+	color : #BDBDBD;
+}
+
 
 </style>
 
@@ -157,7 +164,7 @@ $(function() {
 						<th width="5%;">
 							<input type="checkbox" name="chkAll"  id="chkAll" value="all" > 
 						</th> 
-						<th> 문서번호 </th>
+						<th class="sort_numbering"> <i class="fa-solid fa-sort-down" style="vertical-align: text-top;"></i> </th>
 						<th> 문서종류 </th>
 						<th width="35%;"> 제목 </th>
 						<th> 작성자 </th>
@@ -176,12 +183,13 @@ $(function() {
 				</thead>
 				
 				<tbody> 
-					<c:forEach var="dto" items="${list}">
+					<c:forEach var="dto" items="${list}"  varStatus="status">
 						<tr>
 							<td>
-								<input type="checkbox" name="doc_no" value="${dto.doc_no}">
-							</td>					
-							<td>${dto.doc_no}</td>
+								<input type="checkbox" name="doc_no" value="${dto.doc_no}" >
+							</td>		
+							<td class="sort_numbering">${dataCount - (page-1) * size - status.index}</td>
+										
 							<td>${dto.draft_category == 0 ? '품의서' : '기안서'}</td>
 							<td style="text-align: left; padding: 0% 3% 0% 3%;">
 								<a href="${articleUrl}&doc_no=${dto.doc_no}&size=${size}">${dto.doc_name}</a>
@@ -208,12 +216,12 @@ $(function() {
 							<td>${dto.urgent == 0? '일반' : '긴급' }</td>
 						</tr>
 					</c:forEach>
-					<c:forEach var="dto" items="${deptList}">
+					<c:forEach var="dto" items="${deptList}"  varStatus="status">
 						<tr>
 							<td>
 								<input type="checkbox" name="doc_no" value="${dto.doc_no}">
 							</td>					
-							<td>${dto.doc_no}</td>
+							<td class="sort_numbering">${dataCount - (page-1) * size - status.index}</td>
 							<td>${dto.draft_category == 0 ? '품의서' : '기안서'}</td>
 							<td style="text-align: left; padding: 0% 3% 0% 3%;">
 								<a href="${articleUrl}&doc_no=${dto.doc_no}&size=${size}">${dto.doc_name}</a>
