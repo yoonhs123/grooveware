@@ -435,7 +435,39 @@ input[type="text"] {
   
 </style>
 
-
+<script type="text/javascript">
+function updateOk() {
+	<c:choose>
+		<c:when test="${page != ''}">
+			<c:choose>
+				<c:when test="${dto.identify == ''}">
+					let url = "${pageContext.request.contextPath}/task/update?goal_no=${dto.goal_no}&task_no=${dto.task_no}&page=${page}&size=${size}";
+					location.href = url;
+				</c:when>
+				<c:otherwise>
+					alert("완료된 업무는 수정할 수 없습니다.");
+					return;
+				</c:otherwise>
+			</c:choose>
+		</c:when>
+		
+		<c:otherwise>
+			<c:choose>
+				<c:when test="${dto.identify == 1}"> 
+					let url = "${pageContext.request.contextPath}/task/update?goal_no=${dto.goal_no}&task_no=${dto.task_no}";
+					location.href = url;
+				</c:when>
+			</c:choose>
+			<c:otherwise>
+				alert("완료된 업무는 수정할 수 없습니다.");
+				return;
+			</c:otherwise>
+		</c:otherwise>
+	</c:choose>			
+	
+	
+}
+</script>
 
 
 <div class="left-side-bar">
@@ -545,7 +577,14 @@ input[type="text"] {
 							
 							<td width="50%" style= "text-align: right; padding-right: 10px;">
 								<c:if test="${dto.task_manager == sessionScope.member.emp_no}">
-									<button type="button" class="btn btn-light" onclick="location.href='${pageContext.request.contextPath}/task/update?page=${page}&task_no=${dto.task_no}';">수정</button>
+									<c:choose>
+										<c:when test="${page != ''}">
+											<button type="button" class="btn btn-light" onclick="updateOk();">수정</button>
+										</c:when>
+										<c:otherwise>
+											<button type="button" class="btn btn-light" onclick="updateOk();">수정</button>
+										</c:otherwise>
+									</c:choose>								
 								</c:if>
 							</td>
 						</tr>

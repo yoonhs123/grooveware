@@ -435,6 +435,22 @@ input[type="text"] {
   
 </style>
 
+<script type="text/javascript">
+function submitOk() {
+	<c:choose>
+		<c:when test="${dto.identify == ''}">
+			let url = "${pageContext.request.contextPath}/task/submit?${query}&task_no=${dto.task_no}";
+			location.href = url;
+		</c:when>
+		<c:otherwise>
+			alert("완료된 업무입니다.");
+			return;
+		</c:otherwise>
+	</c:choose>
+}
+</script>
+
+
 
 
 
@@ -466,7 +482,7 @@ input[type="text"] {
 			<c:if test="${dto.task_member_no == sessionScope.member.emp_no}">
 			<span style= "float: right; padding-right: 10px;">
 				<c:if test="${dto.task_member_no == sessionScope.member.emp_no}">
-					<button type="button" class="submitTask" onclick="location.href='${pageContext.request.contextPath}/task/submit?${query}&task_no=${dto.task_no}'">업무제출</button>
+					<button type="button" class="submitTask" onclick="submitOk();">업무제출</button>
 				</c:if>
 			</span>
 			</c:if>

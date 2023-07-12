@@ -493,7 +493,7 @@ function deleteFile(task_no) {
 	if( ! confirm("파일을 삭제하시겠습니까 ?") ) {
 		return;
 	}
-	let url = "${pageContext.request.contextPath}/goal/deleteFile?pj_no=${dto.pj_no}&goal_no=${dto.goal_no}";
+	let url = "${pageContext.request.contextPath}/task/deleteFile?task_no=${dto.task_no}&goal_no=${goal_no}&page=${page}&size=${size}";
 	location.href = url;
 }
 </c:if>
@@ -587,7 +587,7 @@ function ajaxFun(url, method, query, dataType, fn) {
 							<td>
 								<select name="task_member_no" class="form-select yoonhs-select">
 									<c:forEach var="vo" items="${goal_member}">
-										<option value="${vo.emp_no}"  ${dto.emp_no==vo.emp_no?"selected='selected'":""}>${vo.emp_name}(${vo.pos_name}_${vo.dept_name})</option>
+										<option value="${vo.emp_no}"  ${task_member==vo.emp_no?"selected='selected'":""}>${vo.emp_name}(${vo.pos_name}_${vo.dept_name})</option>
 									</c:forEach>
 								</select>	
 							</td>
@@ -647,13 +647,15 @@ function ajaxFun(url, method, query, dataType, fn) {
 							<td align="center">
 								<button type="button" class="btn btn-dark" onclick="sendOk();">${mode=='update'?'수정완료':'등록하기'}&nbsp;<i class="bi bi-check2"></i></button>
 								<button type="reset" class="btn">다시입력</button>
-								<button type="button" class="btn" onclick="location.href='${pageContext.request.contextPath}/goal/article?goal_no=${dto.goal_no}&pj_no=${dto.pj_no}';">${mode=='update'?'수정취소':'등록취소'}&nbsp;<i class="bi bi-x"></i></button>
+								<c:if test="${mode=='write'}">
+								<button type="button" class="btn" onclick="location.href='${pageContext.request.contextPath}/goal/article?goal_no=${goal_no}&pj_no=${pj_no}';">${mode=='update'?'수정취소':'등록취소'}&nbsp;<i class="bi bi-x"></i></button>
+								</c:if>	
 									<c:if test="${mode=='update'}">
-									<input type="hidden" name="pj_no" value="${dto.pj_no}">
-									<input type="hidden" name="goal_no" value="${dto.goal_no}">
+									<input type="hidden" name="task_no" value="${task_no}">
+									<input type="hidden" name="page" value="${page}">
+									<input type="hidden" name="size" value="${size}">
 									<input type="hidden" name="saveFilename" value="${dto.saveFilename}">
 									<input type="hidden" name="originalFilename" value="${dto.originalFilename}">
-									<input type="hidden" name="page" value="${page}">
 		 							</c:if>			
 							</td>
 						</tr>

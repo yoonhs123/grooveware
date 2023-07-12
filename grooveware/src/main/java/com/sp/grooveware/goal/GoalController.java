@@ -211,7 +211,7 @@ public class GoalController {
 		
 		int pj_status = 0;
     	pj_status = service.readstatus(pj_no);
-    	
+    		
     	List<Task> task = service.readTaskmember(goal_no);
     	
     	int taskCount = service.taskCount(goal_no);

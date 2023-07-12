@@ -1,6 +1,7 @@
 package com.sp.grooveware.task;
 
 import java.io.File;
+import java.io.PrintWriter;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.HashMap;
@@ -8,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +17,12 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.sp.grooveware.common.FileManager;
 import com.sp.grooveware.common.MyUtil;
 import com.sp.grooveware.member.SessionInfo;
@@ -388,13 +390,126 @@ public class TaskController {
     	
     }
 
+    @GetMapping("update")
+    public String updateForm(@RequestParam long goal_no,
+    		@RequestParam long task_no,
+    		@RequestParam String page,
+    		@RequestParam int size,
+    		HttpSession session,
+    		Model model) throws Exception {
+    	
+    	String goal_name = service.readGoalname(goal_no);
+    	
+
+    	SessionInfo info = (SessionInfo) session.getAttribute("member");
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("login_emp", info.getEmp_no());
+		map.put("goal_no", goal_no);
+		
+    	List<Task> goal_member = service.listGoalmember(map);
+    	
+    	
+    	int task_member = service.matchTaskmember(task_no);
+    	
+    	Task dto = service.readTask(task_no);
+		
+		if(dto == null) {
+			return "redirect:/task/sendarticle?page=" + page + "&size=" + size + "&task_no=" + task_no ;
+		}
+		
+		model.addAttribute("goal_member", goal_member);
+    	model.addAttribute("goal_no", goal_no);
+    	model.addAttribute("task_no", task_no);
+    	model.addAttribute("goal_name", goal_name);
+    	model.addAttribute("mode", "update");
+    	model.addAttribute("task_member", task_member);
+    	model.addAttribute("dto", dto);
+    	model.addAttribute("page", page);
+    	model.addAttribute("size", size);
+    	
+    	
+    	return ".task.write";
+    }
     
+    @PostMapping("update")
+    public String updatesubmit(Task dto,
+    		@RequestParam long task_no,
+    		@RequestParam String page,
+    		@RequestParam int size,
+    		HttpSession session) throws Exception {
+    	
+    	String root = session.getServletContext().getRealPath("/");
+		String pathname = root + "uploads" + File.separator + "task";
+    	
+		dto.setTask_no(task_no);
+		
+		
+		try {
+			
+			service.updateTask(dto, pathname);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+    	return "redirect:/task/listsend";
+    }
     
+    @RequestMapping(value = "deleteFile")
+    public String deleteFile(@RequestParam long task_no,
+    		@RequestParam long goal_no,
+    		@RequestParam String page,
+    		@RequestParam int size,
+    		HttpSession session) throws Exception {
+    	
+    	
+    	String root = session.getServletContext().getRealPath("/");
+		String pathname = root + "uploads" + File.separator + "task";
+		
+		Task dto = service.readTask(task_no);
+		if( dto == null) {
+			return "redirect:/goal/listsend";
+		}
+		
+		try {
+			if(dto.getSaveFilename() != null) {
+				fileManager.doFileDelete(dto.getSaveFilename(), pathname); // 실제파일삭제
+				dto.setSaveFilename("");
+				dto.setOriginalFilename("");
+				service.updateTask(dto, pathname); // DB 테이블의 파일명 변경(삭제)
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    	
+		return "redirect:/task/update?goal_no=" + goal_no + "&task_no=" + task_no + "&page=" + page + "&size=" + size;
+    }
     
-    
-    
-    
-    
+    @GetMapping(value = "download")
+    public void download(@RequestParam long task_no,
+    		HttpServletResponse resp,
+    		HttpSession session) throws Exception {
+    	
+		String root = session.getServletContext().getRealPath("/");
+		String pathname = root + "uploads" + File.separator + "task";
+		
+		Task dto = service.readTask(task_no);
+		
+		if (dto != null) {
+			boolean b = fileManager.doFileDownload(dto.getSaveFilename(),
+					dto.getOriginalFilename(), pathname, resp);
+			
+			if(b) {
+				return;
+			}
+		}
+		
+		resp.setContentType("text/html;charset=utf-8");
+		PrintWriter out = resp.getWriter();
+		out.print("<script>alert('파일 다운로드가 실패 했습니다.');history.back();</script>");
+		
+    }
     
 }
 

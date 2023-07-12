@@ -445,7 +445,22 @@ textarea {
 </style>
 
 
+<script type="text/javascript"> 
+function sendOk() {
+	const f = document.taskForm;
+	let str;
 
+	str = f.task_comment.value.trim();
+	if(!str) {
+		alert("코멘트를 입력하세요.")
+		f.task_comment.focus();
+		return false;
+	}
+	
+	f.action = "${pageContext.request.contextPath}/task/submit";
+    f.submit();
+}
+</script>
 
 <div class="left-side-bar">
          <ul>
@@ -466,22 +481,7 @@ textarea {
         </ul>
 </div>
 
-<script type="text/javascript"> 
-function sendOk() {
-	const f = document.taskForm;
-	let str;
 
-	str = f.task_comment.value.trim();
-	if(!str) {
-		alert("코멘트를 입력하세요.")
-		f.task_comment.focus();
-		return false;
-	}
-	
-	f.action = "${pageContext.request.contextPath}/task/submit";
-    f.submit();
-}
-</script>
 
 <div class="right-contentbody">
 	<div class="body-container">	

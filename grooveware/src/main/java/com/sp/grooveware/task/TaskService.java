@@ -21,4 +21,8 @@ public interface TaskService {
 	public Task readTask1(long task_no);
 	
 	public void submitTask(Task dto, String pathname) throws Exception;
+	
+	public void updateTask(Task dto, String pathname) throws Exception;
+	
+	public int matchTaskmember(long task_no);
 }

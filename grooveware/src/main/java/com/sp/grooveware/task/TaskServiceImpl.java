@@ -187,6 +187,44 @@ public class TaskServiceImpl implements TaskService{
 		
 	}
 
+	@Override
+	public void updateTask(Task dto, String pathname) throws Exception {
+		try {
+			String saveFilename = fileManager.doFileUpload(dto.getSelectFile(), pathname);
+			
+			if (saveFilename != null) {
+				if (dto.getSaveFilename() != null && dto.getSaveFilename().length() !=0) {
+					fileManager.doFileDelete(dto.getSaveFilename(), pathname);
+				}
+			
+				dto.setSaveFilename(saveFilename);
+				dto.setOriginalFilename(dto.getSelectFile().getOriginalFilename());
+			}
+			
+			dao.updateData("task.updateTask1", dto);
+			dao.updateData("task.updateTask2", dto);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		
+	}
+
+	@Override
+	public int matchTaskmember(long task_no) {
+		
+		int taskmember = 0;
+		
+		try {
+			taskmember = dao.selectOne("task.matchTaskmember", task_no);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return taskmember;
+	}
+
 	
 	
 }

@@ -171,7 +171,7 @@
 	
 	<select id="readTask1" parameterType="Long" resultType="com.sp.grooveware.task.Task">
 		SELECT a.emp_no, b.dept_name, c.emp_name, d.pos_name, f.task_no, task_name, task_content, TO_CHAR(task_start_date, 'YYYY-MM-DD') AS task_start_date, TO_CHAR(task_end_date, 'YYYY-MM-DD') AS task_end_date, task_manager, goal_name, task_comment, task_member_no
-			,g.saveFilename, g.originalFilename, identify
+			,g.saveFilename, g.originalFilename, identify, f.goal_no
 		FROM (
 		    SELECT x.emp_no, x.history_no, x.dept_no, x.pos_no FROM emp_history x
 		    LEFT OUTER JOIN emp_history y ON x.emp_no = y.emp_no AND x.history_no &lt; y.history_no
@@ -198,6 +198,32 @@
 		WHERE task_no = #{task_no} AND task_member_no = #{task_member_no}
 	</update>
 		
+	
+	<!-- 수정 -->
+	<update id="updateTask1" parameterType="com.sp.grooveware.task.Task">
+		UPDATE task SET task_name=#{task_name}, task_content=#{task_content}, task_start_date=#{task_start_date, jdbcType=DATE}, task_end_date=#{task_end_date, jdbcType=DATE}
+		WHERE task_no = #{task_no}
+	</update>
+	
+	<update id="updateTask2" parameterType="com.sp.grooveware.task.Task">
+		UPDATE task_file SET saveFilename=#{saveFilename, jdbcType=VARCHAR}, originalFilename=#{originalFilename, jdbcType=VARCHAR}
+		WHERE task_no = #{task_no}
+	</update>
+	
+	<update id="updateTask3" parameterType="com.sp.grooveware.task.Task">
+		UPDATE task_member SET task_member_no = #{task_member_no}
+		WHERE task_no = #{task_no}
+	</update>
+	
+	
+	<!-- 수정할때 담당자 조회 -->
+	<select id="matchTaskmember" parameterType="long" resultType="Integer">
+		select task_member_no
+		from task_member
+		<where>
+		task_no = #{task_no}
+		</where>
+	</select>
 	
 </mapper>
 

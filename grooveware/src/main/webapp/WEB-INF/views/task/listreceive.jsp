@@ -281,7 +281,7 @@ function searchList() {
 										</c:when>
 										<c:otherwise>
 											<a href="${articleUrl}&task_no=${dto.task_no}" class="text-reset" style="font-weight: bold;">
-												${dto.task_name};
+												${dto.task_name}
 											</a>
 										</c:otherwise>
 									</c:choose>
