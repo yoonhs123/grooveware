@@ -325,7 +325,7 @@ font-size: 18px;
 												<c:when test="${not empty listApproval}">
 													<span class="approval-member">  
 														<div class="img_container">
-															<img src="${pageContext.request.contextPath}/resources/images/${vo.emp_save_filename}"  />
+															<img src="${pageContext.request.contextPath}/uploads/insaManage/${vo.emp_save_filename}"  />
 														</div> 
 														<span style="font-weight: normal; word-break: keep-all;"></span>
 														<div style="width: 100%; float: left;">
@@ -446,7 +446,7 @@ font-size: 18px;
 							<label>내용 </label>
 						</div>
 						<textarea name="draft_content" id="ir1" class="form-control"
-							style="width: 93%; padding: 7px 5px; height: 400px;">${dto.draft_content}</textarea>
+							style="width: 100%; padding: 7px 5px; min-height: 400px;">${dto.draft_content}</textarea>
 					</div>
 				</div>
 			</div>

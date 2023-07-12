@@ -197,7 +197,7 @@ $(function() {
 					</div>
 					<div style="width: 100%; float: left; ">
 						<c:forEach var="vo" items="${listApproval}" varStatus="status">
-						    <c:set var="imgPath" value="${pageContext.request.contextPath}/resources/images/${vo.emp_save_filename}" />
+						    <c:set var="imgPath" value="${pageContext.request.contextPath}/uploads/insaManage/${vo.emp_save_filename}" />
 						    <div class="img_container" style="color: #5c5c5c; ${vo.approval_status==2 ? 'border: 4px solid #2196F3;' : ''}">
 						        <img class="imgSize" src="${imgPath}">
 						    </div>
@@ -333,7 +333,7 @@ $(function() {
 					<label>내용 </label>
 				</div>
 				<div
-					style="padding: 15px; height: 400px; width: 100%; border: 1px solid gray; margin-top: 50px; border-radius: 4px; background: white;">${dto.draft_content}</div>
+					style="padding: 15px; min-height: 400px; width: 100%; border: 1px solid gray; margin-top: 50px; border-radius: 4px; background: white;">${dto.draft_content}</div>
 			</div>
 		</div>
 		<div class="board1">
@@ -344,7 +344,7 @@ $(function() {
 				<div class="">
 					<div class="table table-border table-form">
 						<div
-							style="padding: 15px; height: 150px; width: 100%; border: 1px solid #747474; border-radius: 4px; background: white;">
+							style="padding: 50px; height: 150px; width: 100%; border: 1px solid #747474; border-radius: 4px; background: white;">
 							<c:forEach var="vo" items="${listFile}">
 								<div>
 									<a
