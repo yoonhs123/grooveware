@@ -105,14 +105,14 @@
 	<div class="title_container">
 		<div class="resForm-table">
 			<div>
-				<h2><span>|</span>&nbsp;회의실 예약</h2>
+				<h2><span><i class="fa-solid fa-pen-to-square"></i></span>&nbsp;회의실 예약</h2>
 			</div>
 		</div>
 	</div>	
 	<div class="reservation-form">
 		<form name="resForm" method="post" >
 			<div class="res-write-table">
-				  <label for="meetingroom">회&nbsp;&nbsp;&nbsp;의&nbsp;&nbsp;&nbsp;실</label>
+				  <label class="res-write-option" for="meetingroom">회&nbsp;&nbsp;&nbsp;의&nbsp;&nbsp;&nbsp;실</label>
 				  <select id="meetingroom" name="meroom_id" class="meetingroom">
 		       			<option value="">:: 회의실 선택 ::</option>
 			       		<c:forEach var="vo" items="${listMeetingroom}">
@@ -124,32 +124,32 @@
 			</div>
 			
 			<div class="res-write-table">	
-			  <label>예&nbsp;&nbsp;&nbsp;약&nbsp;&nbsp;&nbsp;자</label>
+			  <label class="res-write-option" >예&nbsp;&nbsp;&nbsp;약&nbsp;&nbsp;&nbsp;자</label>
 			  <span style="margin-left : 20px;">${sessionScope.member.emp_name}</span>
 			</div>
 			
 			<div class="res-write-table">
-			  <label for="date">예&nbsp;약&nbsp;날&nbsp;짜</label>
+			  <label class="res-write-option" for="date">예&nbsp;약&nbsp;날&nbsp;짜</label>
 			  <input type="date" id="meroom_resdate" name="meroom_resdate" value="${dto.meroom_resdate}">
 			</div>
 			
 			<div class="res-write-table">
-			  <label for="start-time">시&nbsp;작&nbsp;시&nbsp;간</label>
+			  <label class="res-write-option" for="start-time">시&nbsp;작&nbsp;시&nbsp;간</label>
 			  <input type="time" id="res_starttime" name="res_starttime" value="${dto.res_starttime}">
 			</div>
 			
 			<div class="res-write-table">
-			  <label for="end-time">종&nbsp;료&nbsp;시&nbsp;간</label>
+			  <label class="res-write-option"  for="end-time">종&nbsp;료&nbsp;시&nbsp;간</label>
 			  <input type="time" id="res_endtime" name="res_endtime" value="${dto.res_endtime}">
 			</div>
 			
 			<div class="res-write-table" style="border-bottom: 2px solid #c1c1c1;">
-			  <label for="res_content">예&nbsp;약&nbsp;내&nbsp;용</label>
+			  <label class="res-write-option"  for="res_content">예&nbsp;약&nbsp;내&nbsp;용</label>
 			  <input type="text" id="res_content" name="res_content" value="${dto.res_content}" placeholder="예약 내용을 입력하세요">
 			</div>
 			
 			<div class="res-btn">
-			  <button type="button" class="res-write-btn" onclick="sendOk();">${mode=='write'?'예약하기':'수정완료'}</button>
+			  <button class="res-write-option" type="button" class="res-write-btn" onclick="sendOk();">${mode=='write'?'예약하기':'수정완료'}</button>
 			  <button type="reset" class="res-reset-btn">다시입력</button>
 			  <button type="button" class="res-cancel-btn" onclick="location.href='${pageContext.request.contextPath}/reservation/main';">${mode=='write'?'취소하기':'수정취소'}</button>
 			</div>

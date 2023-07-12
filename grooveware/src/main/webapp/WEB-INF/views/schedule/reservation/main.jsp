@@ -34,7 +34,7 @@
 .mr-res-daytable th{
     padding: 10px;
     font-size: 16.5px;
-    background-color: #f6f6f6;
+
 }
 .mr-res-timetable .time {
     font-weight: bold;
@@ -44,7 +44,7 @@
 }
 
 .mr-res-timetable .reservation {
-    background-color: #CEDDEF;
+    background-color: #FAC858;
 }
 .mr-res-timetable .item {
   	width: 100%; height: 100%;
@@ -70,7 +70,18 @@
     font-size: 20px;
     margin: 0 10px;
 }
-.mr-res-button,
+.mr-res-button{
+	height: 30px;
+	width : 55px;
+	border-radius: 5px;
+    padding: 5px 10px;
+    background-color: #CEDDEF; 
+    color: #404040;
+    border: none;
+    cursor: pointer;
+    font-weight: 550;
+    margin: 0 3px;
+}
 .mr-info-button,
 .mr-res-read-button,
 .mr-res-cancel-button{
@@ -190,7 +201,7 @@ function resRead(meroom_res_no){
 <div class="right-contentbody">
 	<div class="title_container">
 		<div class="table1" style="margin-bottom: 5px;">
-			<div><h2><span>|</span>&nbsp;회의실 예약 현황</h2></div>
+			<div><h2><span><i class="fa-solid fa-business-time"></i></span>&nbsp;회의실 예약 현황</h2></div>
 		</div>
 	</div>
 	<div class="res-date">
@@ -245,7 +256,7 @@ function resRead(meroom_res_no){
 	<div class="title_container">
 		<div class="table1" style="margin-bottom: 5px;">
 			<div>
-				<h2><span>|</span>&nbsp;회의실 예약 상세</h2>
+				<h2><span><i class="fa-solid fa-table"></i></span>&nbsp;회의실 예약 상세</h2>
 			</div>
 		</div>
 	</div>	

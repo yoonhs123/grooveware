@@ -62,7 +62,7 @@ public class DashBoardController {
 	
 		WorkTime workTime = dashService.readWorkTime(info.getEmp_no());
 		MyInsa myInsa = myInsaService.readProfile(info.getEmp_no());
-		List<Approval> approvalList = approService.ApprovalStepList(map);
+		List<Approval> approvalList = approService.listDoc(map);
 		List<Notice> notiList = notiService.listNotice(map);
 
 		map.put("gubun", "dept");

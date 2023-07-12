@@ -116,11 +116,6 @@ main {
 	word-wrap: break-word;
 	box-shadow: 0 3px 3px rgba(0,0,0,0.2);
 	padding: 20px;
-	
-	width: auto; 
-	height: auto;
-    max-width: 70px;
-    max-height: 90px;
 }
 </style>
 
@@ -208,7 +203,7 @@ $(function(){
 			<span class="title fontColor"></span> 
 			<div class="box-profile profile-picture-dash" style="text-align:center; padding: 12px;">
 				
-				<img src="${pageContext.request.contextPath}/uploads/insaManage/${myInsa.emp_save_filename}" style="width: 100%; height: 100%;">
+				<img src="${pageContext.request.contextPath}/uploads/insaManage/${myInsa.emp_save_filename}" style="width: 80%">
 			</div>
 			<div class="box-profile" style="padding: 15px 12px;">
 				<div style="text-align:center; margin: 5px 0; font-size: 18px; font-weight: 600;"> ${myInsa.emp_name} 님 </div>
