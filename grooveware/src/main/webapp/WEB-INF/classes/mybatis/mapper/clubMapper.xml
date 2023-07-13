@@ -27,7 +27,7 @@
 	<!-- 클럽 전체 리스트 조회 -->
 	<select id="listClub" parameterType="map" resultType="com.sp.grooveware.club.Club">
 		SELECT c.club_id, c.club_name, NVL(memberCount,0) member_count, e.emp_name, 
-			   TO_CHAR (c.club_startdate, 'YYYY-MM-DD') club_startdate,
+			   TO_CHAR (c.club_startdate, 'YYYY-MM-DD') club_startdate, club_picture,
 			   NVL(userJoin, 0) userJoin
 		FROM club c
 		LEFT OUTER JOIN (

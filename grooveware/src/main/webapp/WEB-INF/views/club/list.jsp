@@ -287,7 +287,9 @@ $(function(){
         <tbody>
         	<c:forEach var="dto" items="${list}" varStatus="status">
             <tr>
-                <td><img src="${pageContext.request.contextPath}/uploads/insaManage/grooveware" style="width: 100%; height: 85%;"></td>
+                <td>
+                <img src="${pageContext.request.contextPath}/uploads/insaManage/grooveware.jpg" style="width: 35%; height: 60%; object-fit: contain;'">
+                </td>
                 <td> ${dto.club_name} </td>		
                 <td> ${dto.member_count} </td>
                 <td> ${dto.emp_name} </td>
