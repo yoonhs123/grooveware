@@ -291,7 +291,6 @@ font-size: 18px;
 </div>
 
 
-<div class="">
 	<div class="right-contentbody2">
 		<form name="myForm" method="post" class="myForm"
 			enctype="multipart/form-data">
@@ -499,7 +498,6 @@ font-size: 18px;
 		</form>
 	</div>
 
-</div>
 
 
 <script type="text/javascript"
@@ -619,7 +617,7 @@ font-size: 18px;
 	}
 </script>
 
-<script>
+<script type="text/javascript">
 	function login() {
 		location.href = "${pageContext.request.contextPath}/member/login";
 	}

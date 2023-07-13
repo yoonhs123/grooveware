@@ -497,7 +497,7 @@ $(function() {
 				<div class="">
 					<div class="table table-border table-form">
 						<div
-							style="padding: 50px; height: 150px; width: 100%; border: 1px solid #747474; border-radius: 4px; background: white;">
+							style="padding: 20px; height: 100px; width: 100%; border: 1px solid #747474; border-radius: 4px; background: white;">
 							<c:forEach var="vo" items="${listFile}">
 								<div>
 									<a
@@ -510,29 +510,27 @@ $(function() {
 				</div>
 			</div>
 		</div>
-		<c:if test="${ current_state == 3}">
+		<c:if test="${dto.doc_status == 4}">
 			<div class="board1">
 				<div class="file_container_in">
 					<div class="title3">
 						<span> 반려사유</span>
 					</div>
-					<div class="">
 						<div class="table table-border table-form">
 							<c:forEach var="vo" items="${listApproval}">
 								<c:if test="${not empty vo.reject_reason}">
 									<input type="text" name="reject_reason"
-										style="padding: 15px; height: 150px; width: 100%; border: 1px solid gray; border-radius: 4px;"
+										style="padding: 15px; height: 100px; width: 100%; border: 1px solid gray; border-radius: 4px;"
 										readonly="readonly" value="${vo.reject_reason}">
 								</c:if>
 							</c:forEach>
 						</div>
-					</div>
 				</div>
 			</div>
 		</c:if>
 
 		<div class="board4 confirm">
-			<c:if test="${pre_state==2 && state.doc_status!=3 && state.doc_status!=4}">
+			<c:if test="${pre_state==2 && state.approval_status !=2 &&state.doc_status!=3 && state.doc_status!=4}">
 				<button type="button" class="apBtn" style="margin-right: 20px;"
 					onclick="submitContents(${dto.doc_no}, 2);">결재</button>
 				<button type="button" class="apBtn btnApprovalDialog">반려</button>

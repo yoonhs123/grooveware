@@ -253,7 +253,7 @@ height: 100%;
 					<label>내용 </label>
 				</div>
 				<div
-					style="padding: 50px; min-height: 400px; width: 100%; border: 1px solid gray; margin-top: 50px; border-radius: 4px; background: white;">${dto.draft_content}</div>
+					style="padding: 20px; min-height: 400px; width: 100%; border: 1px solid gray; margin-top: 50px; border-radius: 4px; background: white;">${dto.draft_content}</div>
 			</div>
 		</div>
 		<div class="board1">
@@ -263,7 +263,7 @@ height: 100%;
 				</div>
 					<div class="table table-border table-form">
 						<div
-							style="padding: 15px; height: 150px; width: 100%; border: 1px solid #747474; border-radius: 4px; background: white;">
+							style="padding: 20px; height: 100px; width: 100%; border: 1px solid #747474; border-radius: 4px; background: white;">
 							<c:forEach var="vo" items="${listFile}">
 								<div>
 									<a
@@ -286,7 +286,7 @@ height: 100%;
         <c:forEach var="vo" items="${rejectList}">
           <c:if test="${not empty vo.reject_reason}">
             <input type="text" name="reject_reason"
-              style="padding: 15px; height: 150px; width: 100%; border: 1px solid gray; border-radius: 4px;"
+              style="padding: 15px; height: 100px; width: 100%; border: 1px solid gray; border-radius: 4px;"
               readonly="readonly" value="${vo.reject_reason}">
           </c:if>
         </c:forEach>

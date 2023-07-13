@@ -465,8 +465,9 @@ public class approvalController {
 		map.put("emp_no", info.getEmp_no());
 		
 		Approval state = null;
-		
 		state=service.readApproval(map);
+		
+        List<Approval>  rejectList = service.readAp(doc_no);
 		
 		System.out.println("pre_state_step: " + pre_state_step);
 		System.out.println("pre_state: " + pre_state);
@@ -491,6 +492,9 @@ public class approvalController {
 		// doc_status
 		model.addAttribute("state", state);
 
+		model.addAttribute("rejectList", rejectList);
+
+		
 		return ".approval.approvalArticle";
 	}	
 	

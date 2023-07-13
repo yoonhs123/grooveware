@@ -177,7 +177,7 @@ $(function() {
 						<tr>
 							<td>${dto.doc_no}</td>
 							<td>${dto.draft_category == 0 ? '품의서' : '기안서'}</td>
-							<td>
+							<td style="text-align: left; padding: 0% 3% 0% 3%;">
 								<a href="${articleUrl}?doc_no=${dto.doc_no}">${dto.doc_name}</a>
 							</td>
 							<td>${dto.emp_name}</td>
@@ -200,7 +200,7 @@ $(function() {
 						<tr>
 							<td>${dto.doc_no}</td>
 							<td>${dto.draft_category == 0 ? '품의서' : '기안서'}</td>
-							<td>
+							<td style="text-align: left; padding: 0% 3% 0% 3%;">
 								<a href="${articleUrl}?doc_no=${dto.doc_no}">${dto.doc_name}</a>
 							</td>
 							<td>${dto.emp_name}</td>
@@ -226,7 +226,7 @@ $(function() {
 						<tr>
 							<td>${dto.doc_no}</td>
 							<td>${dto.draft_category == 0 ? '품의서' : '기안서'}</td>
-							<td>
+							<td style="text-align: left; padding: 0% 3% 0% 3%;">
 								<a href="${articleUrl}?doc_no=${dto.doc_no}">${dto.doc_name}</a>
 							</td>
 							<td>${dto.emp_name}</td>
