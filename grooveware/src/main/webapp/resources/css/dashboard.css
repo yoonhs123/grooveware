@@ -52,6 +52,7 @@
  
 .box-profile{
  	width : 50%;
+    padding: 15px;
  }
  
 .box-profile > .profile-picture-dash{
