@@ -574,6 +574,7 @@ function ajaxFun(url, method, query, dataType, fn) {
 </script>
 
 
+
 <!-- 모달 -->
 		<div id="myDialogModal" class="modal">
 		  <div class="modal-content">
@@ -721,7 +722,7 @@ function ajaxFun(url, method, query, dataType, fn) {
 						<tr>
 							<th>내&nbsp;&nbsp;&nbsp;&nbsp;용</th>
 							<td> 
-								<textarea name="goal_content" class="form-control">${dto.goal_content}</textarea>
+								<textarea name="goal_content" class="form-control" style="white-space: pre-line;">${dto.goal_content}</textarea>
 							</td>
 						</tr>
 	
