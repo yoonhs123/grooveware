@@ -158,7 +158,6 @@
 					<th> 작성자 </th>
 					<th> 질문등록 </th>
 					<th> 공개여부 </th>
-					<th> 상태 </th>
 				</tr>
 		</thead>
 			
@@ -174,7 +173,6 @@
 								onclick="location.href='${pageContext.request.contextPath}/research/${dto.research_id}/multipleForm';" >질문 작성</button></td>
 					<td><button type="button" class="Quest-info-btn"
 								onclick="location.href='${pageContext.request.contextPath}/research/${dto.research_id}/article';" >상세</button></td>
-					<td>진행중</td>
 				</tr>
 			</c:forEach>
 		</tbody>
