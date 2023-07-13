@@ -191,11 +191,12 @@ public class MyInsaController {
 			@RequestParam(required = false) String month,
 			Model model) throws Exception {
 		
-		Calendar cal = Calendar.getInstance();
+		 Calendar cal = Calendar.getInstance();
 		 int currentYear = cal.get(Calendar.YEAR);
 		 
 		 if(year == null) {
 			 year = String.format("%04d", cal.get(Calendar.YEAR));
+			 month = String.format("%02d", cal.get(Calendar.MONTH) + 1);
 		 }
 		 
 		 model.addAttribute("currentYear", currentYear);

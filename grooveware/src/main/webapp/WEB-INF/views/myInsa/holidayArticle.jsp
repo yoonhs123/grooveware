@@ -60,7 +60,7 @@ function searchDate() {
 <div class="right-contentbody">
 			<div class="board">
 				<div class="main-container" style="width: 100%;">
-					<h2><i class="fa-solid fa-briefcase"></i>&nbsp; '고주승'님 휴가 현황</h2>
+					<h2><i class="fa-solid fa-briefcase"></i>&nbsp; '한장희'님 휴가 현황</h2>
 					<div class="total-worktime" style="">
 						<table class="table table-border table-list total-worktime" style="padding:30px 0px 0px 30px; border: 2px solid #ced4da">
 							<tr style="border-bottom: 2px solid #ced4da">

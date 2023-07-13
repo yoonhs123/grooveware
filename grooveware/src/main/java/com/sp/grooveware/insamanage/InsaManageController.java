@@ -493,6 +493,7 @@ public class InsaManageController {
 		 
 		 if(year == null) {
 			 year = String.format("%04d", cal.get(Calendar.YEAR));
+			 month = String.format("%02d", cal.get(Calendar.MONTH) + 1);
 		 }
 		 
 		 model.addAttribute("currentYear", currentYear);

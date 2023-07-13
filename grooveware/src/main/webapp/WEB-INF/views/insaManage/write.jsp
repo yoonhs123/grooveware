@@ -33,6 +33,12 @@ form input[readonly] { background-color:#f8f9fa; }
 form select[readonly] { background-color:#f8f9fa; }
 textarea:focus, input:focus { outline: none; }
 
+
+.insa-add-border {
+	border: 2px solid #ced4da;
+	border-radius: 8px;
+	padding: 2% 5% 0% 0%;
+}
 </style>
 
 <script type="text/javascript">
@@ -213,6 +219,7 @@ function ajaxFun(url, method, query, dataType, fn) {
 	</ul>
 </div>
    <div class="right-contentbody">
+   <div class="insa-add-border">
 		<div>
 		<h2 style="padding-left: 50px;"> | 사원 정보 입력</h2>
 		
@@ -347,6 +354,7 @@ function ajaxFun(url, method, query, dataType, fn) {
 		 -->
    		</form>   		
    		</div>
+   	</div>
    	</div>
    	
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>

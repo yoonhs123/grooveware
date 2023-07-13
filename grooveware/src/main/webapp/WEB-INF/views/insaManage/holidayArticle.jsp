@@ -61,7 +61,7 @@ function searchDate() {
 			<div class="board">
 				<div class="main-container" style="width: 100%;">
 					<div class="title_container">
-					<h2><i class="fa-solid fa-briefcase"></i>&nbsp; '정유진'님 출근 현황</h2>
+					<h2><i class="fa-solid fa-briefcase"></i>&nbsp; '정유진'님 휴가 현황</h2>
 					</div>
 					<div class="total-worktime" style="">
 						<table class="table table-border table-list total-worktime" style="padding:30px 0px 0px 30px; border: 2px solid #ced4da">
@@ -77,12 +77,12 @@ function searchDate() {
 
 							<tr>
 								<td>0일</td>
-								<td>2일</td>
+								<td>1일</td>
 								<td>0일</td>
 								<td>0일</td>
 								<td>0일</td>
 								<td>0일</td>
-								<td>0일</td>
+								<td>1일</td>
 							</tr>
 						</table>
 					</div>
