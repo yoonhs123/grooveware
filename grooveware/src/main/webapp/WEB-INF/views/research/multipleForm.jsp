@@ -175,7 +175,7 @@ $(function(){
 	    <table class="research-detail-table1" style="margin-bottom: 20px;">
 	      <tr>
 	        <td class="title">
-	          <h3><span>|</span>&nbsp;설문 상세 정보</h3>
+	          <h2><span>|</span>&nbsp;설문 상세 정보</h2>
 	        </td>
 	      </tr>
 	    </table>
@@ -210,7 +210,7 @@ $(function(){
 	    <table class="table2" style="margin-bottom: 20px;">
 	      <tr>
 	        <td class="title">
-	          <h3><span>|</span>&nbsp;설문 문항 작성</h3>
+	          <h2><span>|</span>&nbsp;설문 문항 작성</h2>
 	        </td>
 	      </tr>
 	    </table>

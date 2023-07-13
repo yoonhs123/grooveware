@@ -14,6 +14,8 @@ public class Research {
 	private String research_enddate;
 	private int research_status;
 	
+	private String category;
+	
 	// 설문조사 - 질문
 	private long question_no;
 	private String question_content;
@@ -158,6 +160,12 @@ public class Research {
 	}
 	public void setMultiple_choice(int multiple_choice) {
 		this.multiple_choice = multiple_choice;
+	}
+	public String getCategory() {
+		return category;
+	}
+	public void setCategory(String category) {
+		this.category = category;
 	}
 	
 

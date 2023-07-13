@@ -95,8 +95,19 @@ img {
 	color: #404040;
 }
 .enterClub {
-	background-color: #91CC75; 
+	background-color: #CEDDEF; 
 	color: #404040;
+}
+.clubModal{
+      display: none;
+      position: fixed;
+      z-index: 999999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.4);
 }
 
 </style>
@@ -318,5 +329,5 @@ $(function(){
 	<input type="hidden" name="club_id"> 
 </form>
 
-<div id="clubModal" style="display: none;"></div>
+<div id="clubModal" class="clubModal" style="display: none;"></div>
     

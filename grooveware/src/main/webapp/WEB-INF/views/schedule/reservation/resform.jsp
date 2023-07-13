@@ -149,7 +149,7 @@
 			</div>
 			
 			<div class="res-btn">
-			  <button class="res-write-option" type="button" class="res-write-btn" onclick="sendOk();">${mode=='write'?'예약하기':'수정완료'}</button>
+			  <button type="button" class="res-write-btn" onclick="sendOk();">${mode=='write'?'예약하기':'수정완료'}</button>
 			  <button type="reset" class="res-reset-btn">다시입력</button>
 			  <button type="button" class="res-cancel-btn" onclick="location.href='${pageContext.request.contextPath}/reservation/main';">${mode=='write'?'취소하기':'수정취소'}</button>
 			</div>

@@ -26,6 +26,7 @@
   width: 200px;
   height: 400px;
 }
+
 </style>
 
 <div class="modal-clubcontent">

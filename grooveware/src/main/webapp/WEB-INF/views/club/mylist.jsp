@@ -85,7 +85,7 @@ img {
 	background-color: #73C0DE; 
 }
 .enterClub {
-	background-color: #91CC75; 
+	background-color: #CEDDEF; 
 }
 </style>
 
@@ -249,7 +249,9 @@ $(function(){
         <tbody>
         	<c:forEach var="dto" items="${list}" varStatus="status">
             <tr>
-                <td><img src="https://i.postimg.cc/yYYd1HV1/katara.jpg" alt="img"> </td>
+                <td>
+                <img src="${pageContext.request.contextPath}/uploads/insaManage/grooveware.jpg" style="width: 35%; height: 60%; object-fit: contain;'">
+                </td>
                 <td> ${dto.club_name} </td>		
                 <td> ${dto.member_count} </td>
                 <td> ${dto.emp_name} </td>

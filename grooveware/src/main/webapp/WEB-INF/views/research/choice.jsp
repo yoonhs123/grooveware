@@ -116,7 +116,7 @@ function sendOk(research_id) {
 	    <table class="research-detail-table1" style="margin-bottom: 20px;">
 	      <tr>
 	        <td class="title">
-	          <h3><span>|</span>&nbsp;설문 상세 정보</h3>
+	          <h2><span>|</span>&nbsp;설문 상세 정보</h2>
 	        </td>
 	      </tr>
 	    </table>
@@ -155,7 +155,7 @@ function sendOk(research_id) {
 	    <table class="table2" style="margin-bottom: 20px;">
 	      <tr>
 	        <td class="title">
-	          <h3><span>|</span>&nbsp;설문 문항 정보</h3>
+	          <h2><span>|</span>&nbsp;설문 문항 정보</h2>
 	        </td>
 	      </tr>
 	    </table>
@@ -172,7 +172,7 @@ function sendOk(research_id) {
 				</tr>
 				<tr>
 					<td colspan="2" class="rqBox-content">
-	              		${dto.question_no} <span>|</span> ${dto.question_content}
+	              		${dto.question_content}
 	              		<input type="hidden" name="question_no" value="${dto.question_no}">
 	                </td>
 	            </tr>
@@ -192,6 +192,7 @@ function sendOk(research_id) {
 		            </tr>
 				</c:forEach>
 				<tr>
+					
 					<td>
 						<button type="button" class="reponse-send-btn" onclick="sendOk('${dto.research_id}');">응답제출</button>
 					</td>

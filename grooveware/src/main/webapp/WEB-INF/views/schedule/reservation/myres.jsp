@@ -53,8 +53,7 @@
 }
 
 .mr-res-read-button,
-.mr-res-cancel-button,
-.res-search-btn {
+.mr-res-cancel-button {
 	height: 35px;
 	width : 55px;
 	border-radius: 5px;
@@ -67,7 +66,15 @@
     margin: 0 3px;
 }
 .res-search-btn{
-  margin: 20px 0 15px 0;
+	height: 35px;
+	width : 55px;
+	border-radius: 5px;
+    padding: 5px 10px;
+    background-color: #fff;
+    border: 1px solid #404040;
+    cursor: pointer;
+    font-weight: 600;
+	margin: 20px 0 15px 0;
 }
 
 

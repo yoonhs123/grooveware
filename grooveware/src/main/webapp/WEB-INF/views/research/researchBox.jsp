@@ -174,7 +174,7 @@
 								onclick="location.href='${pageContext.request.contextPath}/research/${dto.research_id}/multipleForm';" >질문 작성</button></td>
 					<td><button type="button" class="Quest-info-btn"
 								onclick="location.href='${pageContext.request.contextPath}/research/${dto.research_id}/article';" >상세</button></td>
-					<td>마감</td>
+					<td>진행중</td>
 				</tr>
 			</c:forEach>
 		</tbody>
