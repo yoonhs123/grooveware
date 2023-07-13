@@ -196,7 +196,7 @@ $(function(){
 		<div class="desc-area commuteBox">
 			<span class="title fontColor"></span> 
 			<div class="box-profile profile-picture-dash" style="text-align:center;">	
-				<img src="${pageContext.request.contextPath}/uploads/insaManage/${myInsa.emp_save_filename}" style="width: 80%; object-fit:cover;">
+				<img src="${pageContext.request.contextPath}/uploads/insaManage/${myInsa.emp_save_filename}" style="width: 80%; object-fit:cover; height: 80%">
 			</div>
 			<div class="box-profile" style="padding: 15px 12px;">
 				<div style="text-align:center; margin: 5px 0; font-size: 20px; font-weight: 600; padding: 10px 0;"> ${myInsa.emp_name}  </div>
